@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Flow Prototypes (Redesign)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#FAF9FC; --bg-subtle:#F1EDF7; --bg-muted:#E8E4F0; --bg-card:#FFFFFF;
+    --text:#161021; --text-subtle:#5C5570; --text-disabled:#A7A1B2;
+    --brand:#D9008D; --brand-hover:#C00080; --brand-subtle:#FFE5F6; --brand-bold:#443152;
+    --on-brand:#FFFFFF; --selected-bg:#FFE5F6; --selected-stroke:#D9008D;
+    --stroke:#E8E4F0; --stroke-strong:#D7D3E0;
+    --positive:#008043; --positive-subtle:#E1FAED;
+    --warning:#E2B203; --warning-subtle:#FFE9A1; --on-warning:#372902;
+    --info:#6D17CE; --info-subtle:#F1E5FF;
+    --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:24px; --r-full:9999px;
+    --sh-md:0 2px 6px rgba(0,0,0,.08); --sh-lg:0 8px 24px rgba(0,0,0,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans Devanagari','Noto Sans',sans-serif;background:#1c1f26;color:#e7e9ee;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+
+  header.doc{padding:36px 32px 0;max-width:1400px;margin:0 auto}
+  .doc-eyebrow{font-family:'Noto Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#D9008D}
+  header.doc h1{font-family:'Noto Sans',sans-serif;font-size:28px;font-weight:700;margin:8px 0 6px;color:#fff}
+  header.doc p.lead{font-family:'Noto Sans',sans-serif;font-size:14px;color:#9aa0ab;max-width:820px;line-height:1.6}
+
+  .tabs{display:flex;gap:8px;margin-top:24px;border-bottom:1px solid #2f333c}
+  .tab{font-family:'Noto Sans',sans-serif;font-size:14px;font-weight:600;color:#9aa0ab;background:transparent;border:none;padding:12px 18px;cursor:pointer;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;transition:color .15s}
+  .tab .material-icons{font-size:19px}
+  .tab .cnt{font-family:'Noto Sans',sans-serif;font-size:11px;font-weight:700;background:#2f333c;color:#c3c8d1;padding:1px 8px;border-radius:var(--r-full)}
+  .tab:hover{color:#e7e9ee}
+  .tab.active{color:#fff;border-bottom-color:var(--brand)}
+  .tab.active .cnt{background:var(--brand);color:#fff}
+
+  .panel{display:none}
+  .panel.active{display:block;animation:fade .2s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+
+  .panel-intro{padding:22px 32px 0;max-width:1400px;margin:0 auto}
+  .panel-intro p{font-family:'Noto Sans',sans-serif;font-size:13.5px;color:#9aa0ab;max-width:820px;line-height:1.6}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-family:'Noto Sans',sans-serif;font-size:12.5px}
+  .legend span{display:inline-flex;align-items:center;gap:7px;color:#c3c8d1}
+  .badge{font-family:'Noto Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:.04em;padding:3px 9px;border-radius:var(--r-full);text-transform:uppercase}
+  .badge.new{background:#D9008D;color:#fff}
+  .badge.imp{background:#E2B203;color:#372902}
+  .badge.kept{background:#3a3f4a;color:#c3c8d1}
+  .os-legend{color:#7fd1ff;background:#16313f;padding:2px 7px;border-radius:5px;font-family:'Noto Sans',sans-serif;font-size:11px;font-weight:700}
+
+  .phase{flex:0 0 auto;align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:64px}
+  .phase .line{flex:1;width:2px;background:#3a3f4a}
+  .phase .lbl{writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Noto Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6a7080;white-space:nowrap}
+
+  .rail{display:flex;gap:28px;overflow-x:auto;padding:18px 32px 48px;align-items:flex-start}
+  .rail::-webkit-scrollbar{height:10px}
+  .rail::-webkit-scrollbar-thumb{background:#3a3f4a;border-radius:10px}
+  .rail::-webkit-scrollbar-track{background:#262a32}
+
+  .screen{flex:0 0 auto;display:flex;flex-direction:column;gap:12px;width:328px}
+  .screen-tag{display:flex;align-items:center;gap:8px;font-family:'Noto Sans',sans-serif;flex-wrap:wrap}
+  .screen-num{width:24px;height:24px;border-radius:var(--r-full);background:#2f333c;color:#9aa0ab;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .screen-name{font-size:14px;font-weight:600;color:#fff}
+  .os-tag{font-family:'Noto Sans',sans-serif;font-size:10px;font-weight:700;color:#7fd1ff;background:#16313f;padding:2px 7px;border-radius:5px}
+  .ch-tag{font-family:'Noto Sans',sans-serif;font-size:10px;font-weight:700;color:#bda7ff;background:#241a3a;padding:2px 7px;border-radius:5px}
+  .posture{font-family:'Noto Sans',sans-serif;font-size:10px;font-weight:700;color:#ffd27f;background:#3a2e10;padding:2px 7px;border-radius:5px}
+  .qstate{font-family:'Noto Sans',sans-serif;font-size:10px;font-weight:700;color:#8fe3b0;background:#0f3322;padding:2px 7px;border-radius:5px}
+  .tool{font-family:'Noto Sans',sans-serif;font-size:10px;font-weight:700;color:#ff9ec8;background:#3a1024;padding:2px 7px;border-radius:5px}
+  .cmtag{font-family:'Noto Sans',sans-serif;font-size:10px;font-weight:700;color:#ffc98f;background:#3a2810;padding:2px 7px;border-radius:5px}
+  .recstate{font-family:'Noto Sans',sans-serif;font-size:10px;font-weight:700;color:#9ad0ff;background:#102a3a;padding:2px 7px;border-radius:5px}
+  .exstate{font-family:'Noto Sans',sans-serif;font-size:10px;font-weight:700;color:#c9b0ff;background:#241a3a;padding:2px 7px;border-radius:5px}
+  .refund-opt{display:flex;align-items:flex-start;gap:11px;padding:13px;background:#fff;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md)}
+  .refund-opt.sel{border-color:var(--brand);background:var(--selected-bg);box-shadow:0 0 0 1px var(--brand)}
+  .refund-opt .ri{width:38px;height:38px;border-radius:var(--r-md);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .refund-opt.sel .ri{background:#fff}
+  .refund-opt .ri .material-icons{font-size:20px;color:var(--brand-bold)}
+  .refund-opt .rt{font-size:14px;font-weight:600;color:var(--text)}
+  .refund-opt .rs{font-size:11.5px;color:var(--text-subtle);margin-top:2px}
+  .refund-opt .ramt{font-size:15px;font-weight:700;color:var(--positive);margin-left:auto;flex:0 0 auto}
+  /* 3-of-4 evidence checklist inside a bubble */
+  .evid{margin-top:9px;background:var(--bg-subtle);border-radius:var(--r-md);padding:10px}
+  .evid-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text);padding:4px 0}
+  .evid-item .material-icons{font-size:16px}
+  .evid-item.ok .material-icons{color:var(--positive)}
+  .evid-item.wait .material-icons{color:var(--text-disabled)}
+  .evid-item.wait{color:var(--text-subtle)}
+  .conn{display:flex;align-items:center;gap:11px;padding:13px;background:#fff;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md)}
+  .conn.sel{border-color:var(--brand);background:var(--selected-bg);box-shadow:0 0 0 1px var(--brand)}
+  .conn-icon{width:38px;height:38px;border-radius:var(--r-md);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .conn.sel .conn-icon{background:#fff}
+  .conn-icon .material-icons{font-size:20px;color:var(--brand-bold)}
+  .conn-name{font-size:14px;font-weight:600;color:var(--text)}
+  .conn-sub{font-size:11.5px;color:var(--text-subtle);margin-top:2px}
+  .member{display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid var(--stroke)}
+  .member .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FFB2E4,#D9008D);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;flex:0 0 auto}
+  .member .av.g{background:linear-gradient(135deg,#A5E5C6,#008043)}
+  .member .av.b{background:linear-gradient(135deg,#B2D6FF,#0B6BCB)}
+  /* RS explainer cards (not phones) */
+  .rs-card{flex:0 0 auto;width:360px;background:#222631;border:1px solid #343a47;border-radius:18px;padding:22px;font-family:'Noto Sans',sans-serif;align-self:flex-start}
+  .rs-card h3{font-size:16px;font-weight:700;color:#fff;display:flex;align-items:center;gap:9px;margin-bottom:10px}
+  .rs-card h3 .material-icons{font-size:21px}
+  .rs-card p{font-size:13px;line-height:1.6;color:#aeb4bf;margin-bottom:10px}
+  .rs-card p b{color:#e7e9ee}
+  .rs-state{display:flex;align-items:center;gap:9px;padding:9px 0;border-top:1px solid #343a47;font-size:12.5px;color:#c3c8d1}
+  .rs-state .badge2{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;flex:0 0 auto}
+  .rs-felt{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-top:1px solid #343a47}
+  .rs-felt .material-icons{font-size:18px;color:#8fe3b0;flex:0 0 auto;margin-top:1px}
+  .rs-felt .ft{font-size:12.5px;color:#c3c8d1;line-height:1.5}
+  .rs-felt .ft b{color:#fff}
+  .rs-felt .ft .where{font-size:10.5px;color:#7fb0ff;font-weight:600}
+  /* internal/ops phone tint */
+  .phone.ops{border-color:#2a2f3a}
+  .ops-banner{flex:0 0 auto;background:#16313f;color:#7fd1ff;font-family:'Noto Sans',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;text-align:center;padding:6px;display:flex;align-items:center;justify-content:center;gap:6px}
+  .ops-banner .material-icons{font-size:14px}
+  .never{flex:0 0 auto;width:328px;align-self:flex-start;background:#2a1620;border:1px solid #5a2d3e;border-radius:18px;padding:18px}
+  .never h4{font-family:'Noto Sans',sans-serif;font-size:14px;font-weight:700;color:#ffb3cf;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .never h4 .material-icons{font-size:19px}
+  .never p.sub{font-family:'Noto Sans',sans-serif;font-size:11.5px;color:#c99aab;line-height:1.5;margin-bottom:12px}
+  .never-item{display:flex;align-items:flex-start;gap:9px;font-family:'Noto Sans',sans-serif;font-size:12.5px;color:#e7c4d2;line-height:1.45;padding:7px 0;border-top:1px solid #45222f}
+  .never-item .material-icons{font-size:17px;color:#ff6b9d;flex:0 0 auto;margin-top:1px}
+  .never-item s{color:#a87889;text-decoration-color:#ff6b9d}
+  .backend-note{display:flex;align-items:flex-start;gap:10px;background:#241a3a;border:1px solid #3a2d5a;border-radius:10px;padding:14px 16px;margin:0 32px 4px;max-width:1340px;font-family:'Noto Sans',sans-serif}
+  .backend-note .material-icons{color:#bda7ff;font-size:20px;flex:0 0 auto;margin-top:1px}
+  .backend-note p{font-size:12.5px;line-height:1.55;color:#c3c8d1}
+  .backend-note b{color:#e7d9ff}
+  .fixnote{font-family:'Noto Sans',sans-serif;font-size:12px;line-height:1.5;color:#9aa0ab;min-height:50px}
+  .fixnote b{color:#ffd9f0}
+  .arrow{display:flex;align-items:center;color:#4a4f5a;flex:0 0 auto;align-self:center;padding-top:130px}
+  .arrow .material-icons{font-size:32px}
+
+  .phone{width:328px;height:710px;background:var(--bg);border-radius:34px;box-shadow:0 14px 40px rgba(0,0,0,.4);position:relative;overflow:hidden;display:flex;flex-direction:column;border:8px solid #11131a}
+  .phone.new-screen{box-shadow:0 0 0 3px #D9008D, 0 14px 40px rgba(0,0,0,.5)}
+  .phone.imp-screen{box-shadow:0 0 0 3px #E2B203, 0 14px 40px rgba(0,0,0,.5)}
+  .statusbar{height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-family:'Noto Sans',sans-serif;font-size:12px;font-weight:600;color:var(--text);flex:0 0 auto}
+  .statusbar .right{display:flex;gap:5px;align-items:center}
+  .statusbar .material-icons{font-size:14px}
+  .topbar{display:flex;align-items:center;gap:10px;padding:4px 16px 10px;flex:0 0 auto}
+  .icon-btn{width:34px;height:34px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--text);flex:0 0 auto}
+  .icon-btn .material-icons{font-size:21px}
+  .topttl{font-size:15px;font-weight:600;color:var(--text)}
+  .topttl-sub{font-size:11px;color:var(--text-subtle);font-weight:500}
+  .steps{display:flex;gap:5px;flex:1;align-items:center}
+  .step-dot{height:4px;border-radius:var(--r-full);background:var(--bg-muted);flex:1}
+  .step-dot.done,.step-dot.active{background:var(--brand)}
+  .step-label{font-family:'Noto Sans',sans-serif;font-size:11px;font-weight:600;color:var(--text-subtle)}
+  .body{flex:1;overflow-y:auto;padding:6px 16px 12px;display:flex;flex-direction:column}
+  .body::-webkit-scrollbar{width:0}
+  .footer{flex:0 0 auto;padding:12px 16px 16px;background:var(--bg);border-top:1px solid var(--stroke)}
+
+  .eyebrow{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--brand);margin-bottom:8px}
+  .eyebrow .material-icons{font-size:15px}
+  h1.s{font-size:20px;font-weight:700;line-height:1.32;color:var(--text);letter-spacing:-.01em}
+  .support{font-size:13px;line-height:1.5;color:var(--text-subtle);margin-top:8px}
+  .cta{width:100%;height:50px;border:none;border-radius:var(--r-lg);background:var(--brand);color:#fff;font-family:inherit;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px}
+  .cta .material-icons{font-size:19px}
+  .cta.sec{background:transparent;color:var(--brand);border:1.5px solid var(--brand);margin-top:8px;height:46px;font-size:14px}
+  .cta.ghost{background:transparent;color:var(--text-subtle);border:none;height:42px;font-size:13px;margin-top:4px}
+  .home-indicator{width:110px;height:4px;border-radius:var(--r-full);background:#11131a;opacity:.85;margin:8px auto 0}
+
+  .card{background:var(--bg-card);border:1.5px solid var(--stroke-strong);border-radius:var(--r-lg);padding:14px}
+  .row{display:flex;justify-content:space-between;align-items:center;font-size:13.5px}
+  .row + .row{margin-top:11px}
+  .row .lbl{color:var(--text-subtle)}
+  .row .val{font-weight:600;color:var(--text)}
+  .divider{height:1px;background:var(--stroke);margin:12px 0}
+  .opt{display:flex;align-items:center;gap:11px;padding:13px;background:var(--bg-card);border:1.5px solid var(--stroke-strong);border-radius:var(--r-md)}
+  .opt.sel{border-color:var(--brand);background:var(--selected-bg);box-shadow:0 0 0 1px var(--brand)}
+  .opt-radio{width:19px;height:19px;border-radius:var(--r-full);border:2px solid var(--stroke-strong);flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+  .opt.sel .opt-radio{border-color:var(--brand)}
+  .opt.sel .opt-radio::after{content:'';width:9px;height:9px;border-radius:var(--r-full);background:var(--brand)}
+  .opt-icon{width:36px;height:36px;border-radius:var(--r-md);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .opt.sel .opt-icon{background:#fff}
+  .opt-icon .material-icons{font-size:20px;color:var(--brand-bold)}
+  .opt-title{font-size:14px;font-weight:600;color:var(--text)}
+  .opt-sub{font-size:11.5px;color:var(--text-subtle);margin-top:2px;line-height:1.4}
+  .input{width:100%;height:48px;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);background:#fff;padding:0 14px;font-family:inherit;font-size:15px;color:var(--text);margin-top:6px}
+  .input::placeholder{color:var(--text-disabled)}
+  .flabel{font-size:12.5px;font-weight:600;color:var(--text)}
+  .trust{display:flex;align-items:flex-start;gap:8px;background:var(--positive-subtle);border-radius:var(--r-md);padding:11px 12px;margin-top:14px}
+  .trust .material-icons{font-size:17px;color:var(--positive);flex:0 0 auto;margin-top:1px}
+  .trust p{font-size:11.5px;line-height:1.45;color:#0a5c33}
+  .trust.warn{background:var(--warning-subtle)}
+  .trust.warn .material-icons{color:#9a7a00}
+  .trust.warn p{color:#5c4a00}
+  .trust.info{background:var(--info-subtle)}
+  .trust.info .material-icons{color:var(--info)}
+  .trust.info p{color:#46108a}
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:var(--r-full)}
+  .pill.green{background:var(--positive-subtle);color:var(--positive)}
+  .pill.refund{background:var(--info-subtle);color:var(--info)}
+  .center{text-align:center}
+
+  .ring{width:110px;height:110px;border-radius:50%;border:6px solid var(--bg-muted);border-top-color:var(--brand);margin:26px auto 22px;animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .success-circle{width:92px;height:92px;border-radius:50%;background:var(--positive-subtle);display:flex;align-items:center;justify-content:center;margin:22px auto 16px}
+  .success-circle .material-icons{font-size:50px;color:var(--positive)}
+
+  .flag{position:absolute;top:0;right:0;font-family:'Noto Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.04em;padding:5px 11px;border-bottom-left-radius:12px;z-index:5;text-transform:uppercase}
+  .flag.new{background:#D9008D;color:#fff}
+  .flag.imp{background:#E2B203;color:#372902}
+
+  .otp-row{display:flex;gap:8px;margin-top:18px}
+  .otp-box{flex:1;height:54px;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);background:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--text)}
+  .otp-box.filled{border-color:var(--brand)}
+
+  .slot-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+  .slot{border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);padding:11px;text-align:center;background:#fff}
+  .slot.sel{border-color:var(--brand);background:var(--selected-bg);box-shadow:0 0 0 1px var(--brand)}
+  .slot .d{font-size:12.5px;font-weight:600;color:var(--text)}
+  .slot .t{font-size:11px;color:var(--text-subtle);margin-top:3px}
+  .daypick{display:flex;gap:8px;margin-top:14px;overflow-x:auto}
+  .day{flex:0 0 auto;width:54px;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);padding:9px 0;text-align:center;background:#fff}
+  .day.sel{border-color:var(--brand);background:var(--brand);color:#fff}
+  .day .dn{font-size:10.5px;opacity:.8}
+  .day .dd{font-size:16px;font-weight:700;margin-top:2px}
+
+  .gauge{width:150px;height:150px;border-radius:50%;margin:18px auto 8px;background:conic-gradient(var(--positive) 0% 72%,var(--bg-muted) 72% 100%);display:flex;align-items:center;justify-content:center}
+  .gauge-inner{width:118px;height:118px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .gauge-num{font-size:32px;font-weight:700;color:var(--text);line-height:1}
+  .gauge-unit{font-size:12px;color:var(--text-subtle);margin-top:3px}
+
+  /* ---- chat ---- */
+  .chat-body{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:12px;background:var(--bg-subtle)}
+  .chat-body::-webkit-scrollbar{width:0}
+  .chat-sticky{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:9px 14px;background:#fff;border-bottom:1px solid var(--stroke)}
+  .chat-sticky .dotpulse{width:9px;height:9px;border-radius:50%;background:var(--brand);flex:0 0 auto}
+  .chat-sticky .cs-t{font-size:11px;color:var(--text-subtle);font-weight:600}
+  .chat-sticky .cs-v{font-size:13px;font-weight:700;color:var(--text)}
+  .chat-sticky.live .dotpulse{background:var(--positive)}
+  .day-sep{align-self:center;font-size:10.5px;font-weight:600;color:var(--text-subtle);background:var(--bg-muted);padding:3px 12px;border-radius:var(--r-full)}
+  .bubble{max-width:86%;padding:11px 13px;border-radius:16px;font-size:13px;line-height:1.5;position:relative}
+  .bubble .time{font-size:9.5px;color:var(--text-disabled);margin-top:5px;display:block}
+  .bot{align-self:flex-start;background:#fff;border:1px solid var(--stroke);border-bottom-left-radius:5px;color:var(--text)}
+  .me{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:5px}
+  .me .time{color:rgba(255,255,255,.7)}
+  .bot.new-msg{border:1.5px solid var(--brand);background:#fff;box-shadow:0 0 0 3px var(--brand-subtle)}
+  .bot.imp-msg{border:1.5px solid var(--warning)}
+  .bubble .b-title{font-weight:700;font-size:13.5px;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+  .bubble .b-title .material-icons{font-size:17px;color:var(--brand)}
+  .bubble.imp-msg .b-title .material-icons{color:#9a7a00}
+  .msg-card{background:var(--bg-subtle);border-radius:var(--r-md);padding:10px;margin-top:9px}
+  .msg-card .row{font-size:12px}
+  .msg-card .row+.row{margin-top:7px}
+  .chat-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;height:42px;border-radius:var(--r-md);background:var(--brand);color:#fff;font-family:inherit;font-size:13.5px;font-weight:600;border:none}
+  .chat-cta .material-icons{font-size:17px}
+  .chat-cta.sec{background:#fff;color:var(--brand);border:1.5px solid var(--brand)}
+  .chat-tech{display:flex;align-items:center;gap:10px;background:var(--bg-subtle);border-radius:var(--r-md);padding:10px;margin-top:9px}
+  .chat-tech .tp{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FFB2E4,#D9008D);display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:700;flex:0 0 auto}
+  .chat-tech .tp.green{background:linear-gradient(135deg,#A5E5C6,#008043)}
+  .chat-tech .tn{font-size:13.5px;font-weight:700;color:var(--text)}
+  .chat-tech .tm{font-size:11px;color:var(--text-subtle);display:flex;align-items:center;gap:4px;margin-top:1px}
+  .chat-tech .tm .material-icons{font-size:13px;color:var(--warning)}
+  .chat-tech .cb{width:38px;height:38px;border-radius:50%;background:var(--positive);display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-left:auto}
+  .chat-tech .cb .material-icons{color:#fff;font-size:18px}
+  .chat-input{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:10px 14px;background:#fff;border-top:1px solid var(--stroke)}
+  .chat-input .box{flex:1;height:42px;border:1.5px solid var(--stroke-strong);border-radius:var(--r-full);background:var(--bg);padding:0 16px;display:flex;align-items:center;font-size:13px;color:var(--text-disabled)}
+  .chat-input .send{width:42px;height:42px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .chat-input .send .material-icons{color:#fff;font-size:20px}
+  .chat-mini-map{height:120px;border-radius:var(--r-md);background:linear-gradient(135deg,#E8E4F0 0%,#F1EDF7 60%,#FFE5F6 100%);position:relative;overflow:hidden;margin-top:9px}
+  .chat-mini-map .route{position:absolute;left:18%;top:70%;width:62%;height:2px;background:repeating-linear-gradient(90deg,var(--brand) 0 7px,transparent 7px 13px)}
+  .chat-mini-map .pa{position:absolute;left:14%;top:64%;color:var(--brand);font-size:22px}
+  .chat-mini-map .pb{position:absolute;right:12%;top:26%;color:var(--positive);font-size:26px}
+</style>
+</head>
+<body>
+  <header class="doc">
+    <div class="doc-eyebrow">Wiom Customer App · Flow Redesign (HTML Prototype)</div>
+    <h1>Wiom Customer Flows — redesigned against the OS</h1>
+    <p class="lead">The customer journey redesigned against the Customer OS. Each OS defines states, transparency and fairness — never chat vs screens — so the app's existing paradigm is kept: transactional steps stay screen-based, status &amp; nudges stay in chat (as today). The highlighted items are the OS-driven fixes delivered within that paradigm.</p>
+    <div class="tabs">
+      <button class="tab active" data-tab="booking"><span class="material-icons">how_to_reg</span>Booking flow<span class="cnt">12 screens</span></button>
+      <button class="tab" data-tab="install"><span class="material-icons">chat</span>Booking → Installation<span class="cnt">chat-driven</span></button>
+      <button class="tab" data-tab="continuity"><span class="material-icons">autorenew</span>Recharge / Continuity<span class="cnt">posture-driven</span></button>
+      <button class="tab" data-tab="sq"><span class="material-icons">network_check</span>Service Quality<span class="cnt">truth-driven</span></button>
+      <button class="tab" data-tab="arr"><span class="material-icons">healing</span>At-Risk Resolution<span class="cnt">problem, not decision</span></button>
+      <button class="tab" data-tab="cm"><span class="material-icons">badge</span>Customer Management<span class="cnt">person, not account</span></button>
+      <button class="tab" data-tab="rs"><span class="material-icons">favorite</span>Relationship-State<span class="cnt">invisible by design</span></button>
+      <button class="tab" data-tab="recovery"><span class="material-icons">build_circle</span>Recovery<span class="cnt">closed ≠ recovered</span></button>
+      <button class="tab" data-tab="exit"><span class="material-icons">logout</span>Exit / Refund<span class="cnt">dignified &amp; reversible</span></button>
+    </div>
+  </header>
+
+  <div class="panel-intro" id="legendWrap">
+    <div class="legend">
+      <span><span class="badge new">New</span> Net-new, fixes an OS gap</span>
+      <span><span class="badge imp">Improved</span> Existing, reworked</span>
+      <span><span class="badge kept">Kept</span> Already strong — carried over</span>
+      <span><span class="os-legend">S#</span> the OS state it implements</span>
+      <span><span class="ch-tag">chat</span> delivered as a chat message (app's current paradigm)</span>
+      <span><span class="posture">posture</span> the Continuity OS posture driving the message</span>
+      <span><span class="qstate">quality</span> the SQ quality-state / fault-domain reflected</span>
+      <span><span class="tool">T#</span> the At-Risk Resolution tool (T1–T8) behind the message</span>
+      <span><span class="cmtag">CM</span> the Customer Management concept reflected</span>
+      <span><span class="recstate">state</span> the Recovery case state / rule reflected</span>
+      <span><span class="exstate">exit</span> the Exit OS state / rule reflected</span>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- PANEL 1 : BOOKING FLOW (screen-based, as in the live app)     -->
+  <!-- ============================================================= -->
+  <div class="panel active" id="panel-booking">
+    <div class="panel-intro"><p>Pre-payment booking — already screen-based in the live app, kept that way. Two new screens (install-contact, status) and three improvements (address moved before payment, doorstep serviceability, real receipt). Scroll sideways →</p></div>
+    <div class="rail">
+
+      <!-- 1. SERVICEABILITY -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Serviceability check</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">Location permission → "checking your area". Carried over as-is.</div>
+        <div class="phone">
+          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div><span class="step-label">1/4</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">my_location</span>आपका इलाक़ा</span>
+            <h1 class="s">देख रहे हैं आपके इलाक़े में नेट है या नहीं</h1>
+            <p class="support">बस कुछ सेकंड — आपकी लोकेशन से पता लगा रहे हैं।</p>
+            <div class="ring"></div>
+            <p class="center" style="font-size:12.5px;color:var(--text-subtle)">📍 लाजपत नगर, नई दिल्ली</p>
+          </div>
+          <div class="footer"><button class="cta" disabled style="background:var(--bg-muted);color:var(--text-disabled)">जाँच हो रही है…</button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 2. SERVICEABLE -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Serviceable result</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">Good news + locality confirmation. Carried over.</div>
+        <div class="phone">
+          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div></div><span class="step-label">1/4</span></div>
+          <div class="body">
+            <div class="success-circle"><span class="material-icons">check_circle</span></div>
+            <h1 class="s center">बढ़िया! आपके इलाक़े में नेट उपलब्ध है</h1>
+            <p class="support center">लाजपत नगर में हम तेज़ और भरोसेमंद नेट देते हैं।</p>
+            <div class="card" style="margin-top:20px">
+              <div class="row"><span class="lbl">स्पीड</span><span class="val">100 Mbps तक</span></div>
+              <div class="row"><span class="lbl">शुरुआत</span><span class="val">सिर्फ़ ₹100 में</span></div>
+              <div class="row"><span class="lbl">सेटअप</span><span class="val">24–48 घंटे में</span></div>
+            </div>
+          </div>
+          <div class="footer"><button class="cta">आगे बढ़ें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 3. COST BREAKDOWN -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Cost breakdown</span><span class="badge imp">Improved</span></div>
+        <div class="fixnote"><b>Fix:</b> full transparency + "रिफ़ंडेबल" framing on the deposit, up front — builds trust before asking for money.</div>
+        <div class="phone imp-screen"><div class="flag imp">Improved</div>
+          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div></div><span class="step-label">2/4</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">receipt_long</span>आज का खर्च</span>
+            <h1 class="s">शुरू करने में कितना लगेगा</h1>
+            <p class="support">कोई छुपा हुआ चार्ज नहीं — सब कुछ साफ़-साफ़।</p>
+            <div class="card" style="margin-top:18px">
+              <div class="row"><span class="lbl">बुकिंग फ़ीस</span><span class="val">₹100</span></div>
+              <div class="row"><span class="lbl">जमा राशि (नेट बॉक्स)</span><span class="val">₹300</span></div>
+              <div class="divider"></div>
+              <div class="row"><span class="lbl" style="font-weight:600;color:var(--text)">आज देना है</span><span class="val" style="font-size:17px">₹400</span></div>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <span class="pill refund"><span class="material-icons" style="font-size:14px">verified_user</span>जमा राशि पूरी रिफ़ंडेबल</span>
+              <span class="pill green"><span class="material-icons" style="font-size:14px">shield</span>UPI सुरक्षित</span>
+            </div>
+            <div class="trust"><span class="material-icons">savings</span><p>जमा राशि खर्च नहीं होती — नेट बॉक्स वापस करने पर ₹300 वापस मिल जाते हैं।</p></div>
+          </div>
+          <div class="footer"><button class="cta">आगे बढ़ें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 4. USER DETAILS -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Name + mobile</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">Captures booker's name & number. Carried over.</div>
+        <div class="phone">
+          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div><span class="step-label">3/4</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">person</span>आपकी जानकारी</span>
+            <h1 class="s">अपना नाम और नंबर बताइए</h1>
+            <p class="support">इसी नंबर पर बुकिंग और सेटअप की जानकारी आएगी।</p>
+            <div style="margin-top:18px"><span class="flabel">आपका नाम</span><input class="input" value="सुनीता शर्मा" readonly /></div>
+            <div style="margin-top:14px"><span class="flabel">मोबाइल नंबर</span><input class="input" value="98765 43210" readonly /></div>
+          </div>
+          <div class="footer"><button class="cta">OTP भेजें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 5. OTP -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">OTP verify</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">Auto-read OTP. Carried over.</div>
+        <div class="phone">
+          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div><span class="step-label">3/4</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">sms</span>वेरिफ़िकेशन</span>
+            <h1 class="s">OTP डालिए</h1>
+            <p class="support">98765 43210 पर भेजा गया कोड डालें।</p>
+            <div class="otp-row"><div class="otp-box filled">4</div><div class="otp-box filled">8</div><div class="otp-box filled">2</div><div class="otp-box">_</div><div class="otp-box">_</div><div class="otp-box">_</div></div>
+            <p class="center" style="font-size:12.5px;color:var(--text-subtle);margin-top:18px">कोड नहीं मिला? <b style="color:var(--brand)">00:24</b> में दोबारा भेजें</p>
+          </div>
+          <div class="footer"><button class="cta">वेरीफ़ाई करें<span class="material-icons">check</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 6. ADDRESS -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Address capture</span><span class="badge imp">Improved</span></div>
+        <div class="fixnote"><b>Fix:</b> moved <b>before</b> payment. Today it's free-text in chat <i>after</i> paying → wrong/incomplete addresses cause failed installs.</div>
+        <div class="phone imp-screen"><div class="flag imp">Moved earlier</div>
+          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div><span class="step-label">3/4</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">location_on</span>नेट कहाँ लगेगा</span>
+            <h1 class="s">अपना पूरा पता बताइए</h1>
+            <p class="support">यहीं नेट बॉक्स लगेगा — पता सही होना ज़रूरी है ताकि सेटअप बिना रुकावट हो।</p>
+            <div style="margin-top:16px"><span class="flabel">घर / मकान नंबर</span><input class="input" placeholder="जैसे, B-42, पहली मंज़िल" /></div>
+            <div style="margin-top:12px"><span class="flabel">नज़दीकी निशानी</span><input class="input" placeholder="जैसे, शिव मंदिर के पास" /></div>
+            <div class="card" style="margin-top:14px;display:flex;align-items:center;gap:10px;padding:12px"><span class="material-icons" style="color:var(--positive)">check_circle</span><div><div style="font-size:12.5px;font-weight:600">लोकेशन पिन हो गई</div><div style="font-size:11px;color:var(--text-subtle)">लाजपत नगर, नई दिल्ली · 110024</div></div></div>
+          </div>
+          <div class="footer"><button class="cta">आगे बढ़ें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 7. INSTALL-CONTACT -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Who'll be home?</span><span class="badge new">New</span><span class="os-tag">S2</span></div>
+        <div class="fixnote"><b>New — Gap #1:</b> dispatch prerequisite. The app never asks who'll be present; the #1 cause of failed installs.</div>
+        <div class="phone new-screen"><div class="flag new">New screen</div>
+          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div><span class="step-label">3/4</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">home_repair_service</span>नेट सेटअप</span>
+            <h1 class="s">सेटअप के समय घर पर कौन होगा?</h1>
+            <p class="support">हमारा साथी नेट लगाने आएगा — घर पर किसी का होना ज़रूरी है।</p>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
+              <div class="opt sel"><div class="opt-radio"></div><div class="opt-icon"><span class="material-icons">person</span></div><div><div class="opt-title">मैं खुद रहूँगी</div><div class="opt-sub">इसी नंबर पर बात होगी — 98XXXXXX10</div></div></div>
+              <div class="opt"><div class="opt-radio"></div><div class="opt-icon"><span class="material-icons">group</span></div><div><div class="opt-title">कोई और रहेगा</div><div class="opt-sub">उनका नाम और नंबर दें</div></div></div>
+            </div>
+            <div class="trust"><span class="material-icons">schedule</span><p>समय आप चुनेंगे — हम बिना बताए कभी नहीं आएँगे।</p></div>
+          </div>
+          <div class="footer"><button class="cta">आगे बढ़ें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 8. CONFIRM LOCATION -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">8</span><span class="screen-name">Confirm install spot</span><span class="badge imp">Improved</span></div>
+        <div class="fixnote"><b>Fix:</b> doorstep serviceability confirmed <b>before</b> payment, not after — no nasty surprise post-pay.</div>
+        <div class="phone imp-screen"><div class="flag imp">Improved</div>
+          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div><span class="step-label">3/4</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">place</span>लोकेशन की पुष्टि</span>
+            <h1 class="s">क्या आप अभी इसी जगह पर हैं?</h1>
+            <p class="support">जहाँ नेट लगवाना है, वहीं से पुष्टि करें — ताकि सेटअप पक्का हो सके।</p>
+            <div class="card" style="margin-top:16px;padding:0;overflow:hidden">
+              <div style="height:140px;background:linear-gradient(135deg,#E8E4F0,#F1EDF7);display:flex;align-items:center;justify-content:center"><span class="material-icons" style="font-size:44px;color:var(--brand)">location_on</span></div>
+              <div style="padding:13px"><div style="font-size:13px;font-weight:600">B-42, लाजपत नगर</div><div style="font-size:11.5px;color:var(--text-subtle);margin-top:2px">नई दिल्ली · 110024</div></div>
+            </div>
+            <div class="trust"><span class="material-icons">check_circle</span><p>यहाँ नेट उपलब्ध है — सेटअप में कोई दिक़्क़त नहीं आएगी।</p></div>
+          </div>
+          <div class="footer"><button class="cta">मैं यहीं हूँ<span class="material-icons">check</span></button><button class="cta sec">बाद में पुष्टि करूँगी</button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 9. PAYMENT METHOD -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">9</span><span class="screen-name">Payment method</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">UPI / QR via Juspay. Carried over.</div>
+        <div class="phone">
+          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div></div><span class="step-label">4/4</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">account_balance_wallet</span>भुगतान</span>
+            <h1 class="s">₹400 का भुगतान करें</h1>
+            <p class="support">बुकिंग फ़ीस ₹100 + जमा राशि ₹300 (रिफ़ंडेबल)</p>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
+              <div class="opt sel"><div class="opt-radio"></div><div class="opt-icon"><span class="material-icons">smartphone</span></div><div><div class="opt-title">UPI से भुगतान</div><div class="opt-sub">GPay, PhonePe, Paytm</div></div></div>
+              <div class="opt"><div class="opt-radio"></div><div class="opt-icon"><span class="material-icons">qr_code_2</span></div><div><div class="opt-title">QR कोड स्कैन करें</div><div class="opt-sub">किसी भी UPI ऐप से</div></div></div>
+            </div>
+            <div class="trust"><span class="material-icons">shield</span><p>आपका पैसा पूरी तरह सुरक्षित है — UPI / NPCI से सुरक्षित।</p></div>
+          </div>
+          <div class="footer"><button class="cta">₹400 भुगतान करें<span class="material-icons">lock</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 10. PAYMENT SUCCESS -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">10</span><span class="screen-name">Payment success</span><span class="badge imp">Improved</span></div>
+        <div class="fixnote"><b>Fix:</b> proper receipt — booking ID + amount + share, answering "सबूत कहाँ?" (where's my proof?).</div>
+        <div class="phone imp-screen"><div class="flag imp">Improved</div>
+          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><div style="flex:1"></div></div>
+          <div class="body">
+            <div class="success-circle"><span class="material-icons">check_circle</span></div>
+            <h1 class="s center">भुगतान हो गया — बुकिंग पक्की!</h1>
+            <p class="support center">₹400 मिल गए। आपका नेट सेटअप शुरू हो रहा है।</p>
+            <div class="card" style="margin-top:20px">
+              <div class="row"><span class="lbl">बुकिंग ID</span><span class="val">WBK-48217</span></div>
+              <div class="row"><span class="lbl">राशि</span><span class="val">₹400</span></div>
+              <div class="row"><span class="lbl">तरीक़ा</span><span class="val">UPI · GPay</span></div>
+              <div class="divider"></div>
+              <div class="row"><span class="lbl">जमा राशि</span><span class="pill refund"><span class="material-icons" style="font-size:13px">verified_user</span>₹300 रिफ़ंडेबल</span></div>
+            </div>
+            <button class="cta sec" style="margin-top:14px"><span class="material-icons" style="font-size:18px">share</span>रसीद शेयर करें</button>
+          </div>
+          <div class="footer"><button class="cta">सेटअप की स्थिति देखें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 11. WIFI NAME -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">11</span><span class="screen-name">WiFi name (SSID)</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">Pick the net name. Carried over.</div>
+        <div class="phone">
+          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div style="flex:1"></div></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">wifi</span>आपका नेट नाम</span>
+            <h1 class="s">अपने नेट का नाम रखिए</h1>
+            <p class="support">यह नाम आपके और घरवालों के फ़ोन में दिखेगा।</p>
+            <div style="margin-top:16px"><span class="flabel">नेट का नाम</span><input class="input" value="Sharma_Home" /></div>
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:9px">
+              <div class="opt sel" style="padding:11px"><div class="opt-radio"></div><div class="opt-title">Sharma_Home</div></div>
+              <div class="opt" style="padding:11px"><div class="opt-radio"></div><div class="opt-title">Sunita_WiFi</div></div>
+              <div class="opt" style="padding:11px"><div class="opt-radio"></div><div class="opt-title">MyHome_Net</div></div>
+            </div>
+          </div>
+          <div class="footer"><button class="cta">नाम सेव करें<span class="material-icons">check</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 12. HANDOFF TO CHAT -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">12</span><span class="screen-name">Into chat</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">After SSID the app opens chat — the home base for the whole install journey (next tab). Carried over.</div>
+        <div class="phone">
+          <div class="statusbar"><span>9:42</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">सेटअप बाक़ी है</div></div></div>
+          <div class="chat-body">
+            <div class="day-sep">आज</div>
+            <div class="bubble bot"><div class="b-title"><span class="material-icons">celebration</span>बधाई हो!</div>आपकी बुकिंग पक्की हो गई है। अब हम आपका नेट सेटअप शुरू कर रहे हैं — सब अपडेट यहीं मिलेंगे।<span class="time">9:42 AM</span></div>
+            <div class="bubble bot">नेट का नाम <b>Sharma_Home</b> सेव हो गया ✅<span class="time">9:42 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- PANEL 2 : BOOKING → INSTALLATION (chat-driven, app paradigm)  -->
+  <!-- ============================================================= -->
+  <div class="panel" id="panel-install">
+    <div class="panel-intro"><p>The post-payment journey lives inside <b>chat</b> — exactly as the current app works. The OS-required states (finding partner, technician, progress, reroute, refund) arrive as <b>chat messages</b>; only the two steps the app already breaks out as chat-launched screens (slot selection, the activation ritual) stay as screens. Scroll sideways →</p></div>
+    <div class="rail">
+
+      <!-- PHASE A -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · Scheduling</div><div class="line"></div></div>
+
+      <!-- A1. CHAT: BOOKING CONFIRMED + FINDING PARTNER -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Confirmed + finding partner</span><span class="badge new">New</span><span class="os-tag">S1·S3</span><span class="ch-tag">chat</span></div>
+        <div class="fixnote"><b>New (in chat):</b> the "finding a partner near you" message + a live sticky banner. Today the post-pay wait is silent.</div>
+        <div class="phone new-screen"><div class="flag new">New msgs</div>
+          <div class="statusbar"><span>9:42</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">साथी ढूँढ रहे हैं…</div></div></div>
+          <div class="chat-body">
+            <div class="day-sep">आज</div>
+            <div class="bubble bot">आपकी बुकिंग पक्की हो गई है (ID: WBK-48217) ✅<span class="time">9:42 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">person_search</span>आपके इलाक़े का साथी ढूँढ रहे हैं</div>लाजपत नगर में आपके सबसे नज़दीकी साथी को जोड़ रहे हैं। तय होते ही आपको यहीं बता देंगे।<span class="time">9:42 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A2. CHAT: SLOT PROMPT -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Slot prompt</span><span class="badge imp">Improved</span><span class="os-tag">S5</span><span class="ch-tag">chat</span></div>
+        <div class="fixnote"><b>Improved (in chat):</b> partner found → a chat prompt with a "समय चुनें" CTA that opens the slot screen (chat-launched, as today).</div>
+        <div class="phone imp-screen"><div class="flag imp">Improved</div>
+          <div class="statusbar"><span>9:44</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">समय चुनना बाक़ी है</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot">आपके इलाक़े का साथी तय हो गया ✅<span class="time">9:44 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">event_available</span>अब सेटअप का समय चुनें</div>आपका साथी कई समयों पर उपलब्ध है — जो आपके लिए सही हो, वो चुन लें।<button class="chat-cta">समय चुनें<span class="material-icons">arrow_forward</span></button><span class="time">9:44 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A3. SLOT SCREEN (chat-launched, real screen) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Choose your slot</span><span class="badge imp">Improved</span><span class="os-tag">S5</span></div>
+        <div class="fixnote"><b>Improved screen:</b> real <b>time windows</b> (was date-only). This is already a chat-launched screen in the app — kept as a screen, content improved.</div>
+        <div class="phone imp-screen"><div class="flag imp">Time windows</div>
+          <div class="statusbar"><span>9:45</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">close</span></button><span class="topttl">समय चुनें</span></div>
+          <div class="body">
+            <h1 class="s">कब सेटअप करवाना चाहेंगी?</h1>
+            <p class="support">आपका साथी इन समयों पर उपलब्ध है।</p>
+            <div class="daypick">
+              <div class="day"><div class="dn">आज</div><div class="dd">12</div></div>
+              <div class="day sel"><div class="dn">कल</div><div class="dd">13</div></div>
+              <div class="day"><div class="dn">सोम</div><div class="dd">14</div></div>
+              <div class="day"><div class="dn">मंगल</div><div class="dd">15</div></div>
+            </div>
+            <div class="slot-grid">
+              <div class="slot"><div class="d">सुबह</div><div class="t">9–11 बजे</div></div>
+              <div class="slot sel"><div class="d">दोपहर</div><div class="t">12–2 बजे</div></div>
+              <div class="slot"><div class="d">शाम</div><div class="t">3–5 बजे</div></div>
+              <div class="slot"><div class="d">शाम</div><div class="t">5–7 बजे</div></div>
+            </div>
+          </div>
+          <div class="footer"><button class="cta">यह समय पक्का करें<span class="material-icons">check</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A4. CHAT: SLOT CONFIRMED -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Slot confirmed</span><span class="badge new">New</span><span class="os-tag">S8</span><span class="ch-tag">chat</span></div>
+        <div class="fixnote"><b>New (in chat):</b> explicit confirmation logged back as a chat message — the customer's deliberate choice on record (never auto).</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>9:46</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">सेटअप: कल 12–2 बजे</div></div></div>
+          <div class="chat-body">
+            <div class="bubble me">मैंने कल दोपहर 12–2 बजे का समय चुना<span class="time">9:46 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">event_available</span>समय पक्का हो गया!</div>
+              <div class="msg-card">
+                <div class="row"><span class="lbl">दिन</span><span class="val">कल, 13 जून</span></div>
+                <div class="row"><span class="lbl">समय</span><span class="val">दोपहर 12–2 बजे</span></div>
+                <div class="row"><span class="lbl">घर पर</span><span class="val">सुनीता (आप)</span></div>
+              </div>
+              सेटअप से पहले याद दिला देंगे। समय बदलना हो तो कभी भी बता दें।<span class="time">9:46 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE B -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · Install day</div><div class="line"></div></div>
+
+      <!-- B1. CHAT: TECHNICIAN ASSIGNED -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Technician assigned</span><span class="badge new">New</span><span class="os-tag">S9</span><span class="ch-tag">chat</span></div>
+        <div class="fixnote"><b>New (in chat) — big trust win:</b> name, photo, rating + call, delivered as a chat card. Today the customer never sees who's coming.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>11:30</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">आज सेटअप · 12–2 बजे</div></div></div>
+          <div class="chat-body">
+            <div class="day-sep">कल</div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">badge</span>आपका साथी तय हो गया</div>आज दोपहर 12–2 बजे के बीच आएँगे।
+              <div class="chat-tech"><div class="tp">रा</div><div><div class="tn">राहुल कुमार</div><div class="tm"><span class="material-icons">star</span>4.8 · 320+ सेटअप</div></div><div class="cb"><span class="material-icons">call</span></div></div>
+              <span class="time">11:30 AM</span></div>
+            <div class="bubble bot">राहुल आने से पहले आपको कॉल करेंगे। 🛡️ ये Wiom के सत्यापित साथी हैं।<span class="time">11:30 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- B2. CHAT: ON THE WAY -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Partner on the way</span><span class="badge new">New</span><span class="os-tag">S9→S10</span><span class="ch-tag">chat</span></div>
+        <div class="fixnote"><b>New (in chat):</b> live "रास्ते में" update + mini-map + call. The pre-arrival window, made transparent.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>12:05</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">राहुल रास्ते में · ~10 मिनट</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">two_wheeler</span>राहुल आपके घर की ओर आ रहे हैं</div>लगभग 10 मिनट में पहुँचेंगे।
+              <div class="chat-mini-map"><span class="material-icons pb">home</span><div class="route"></div><span class="material-icons pa">two_wheeler</span></div>
+              <div class="chat-tech"><div class="tp">रा</div><div><div class="tn">राहुल कुमार</div><div class="tm"><span class="material-icons">star</span>आपका साथी</div></div><div class="cb"><span class="material-icons">call</span></div></div>
+              <span class="time">12:05 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- B3. CHAT: SETUP IN PROGRESS -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Setup in progress</span><span class="badge new">New</span><span class="os-tag">S10</span><span class="ch-tag">chat</span></div>
+        <div class="fixnote"><b>New (in chat):</b> "साथी आपके घर पर है" — the install-attempt state. Highest-leverage addition vs today (invisible).</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>12:18</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">सेटअप चल रहा है…</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot">राहुल आपके घर पहुँच गए ✅ <span style="color:var(--text-subtle)">12:12 PM</span><span class="time">12:12 PM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">home_repair_service</span>नेट लग रहा है</div>राहुल आपके घर पर नेट बॉक्स लगा रहे हैं। बस थोड़ी देर — पूरा होते ही नेट चालू हो जाएगा।<span class="time">12:18 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE C -->
+      <div class="phase"><div class="line"></div><div class="lbl">C · Activation</div><div class="line"></div></div>
+
+      <!-- C1. SCREEN: CONNECT TO NET (chat-launched) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">8</span><span class="screen-name">Connect to net</span><span class="badge kept">Kept</span><span class="os-tag">S10</span></div>
+        <div class="fixnote">Chat launches the activation ritual (already a screen in the app). Connect phone → speed check. Kept.</div>
+        <div class="phone">
+          <div class="statusbar"><span>12:40</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><span class="topttl">नेट से जुड़ें</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">wifi</span>लगभग हो गया</span>
+            <h1 class="s">अपना फ़ोन नेट से जोड़िए</h1>
+            <p class="support">नीचे दिए नेट से कनेक्ट करें — फिर हम स्पीड जाँचेंगे।</p>
+            <div class="card" style="margin-top:16px;display:flex;align-items:center;gap:12px"><span class="material-icons" style="font-size:30px;color:var(--brand)">wifi</span><div style="flex:1"><div style="font-size:14px;font-weight:600">Sharma_Home</div><div style="font-size:11.5px;color:var(--text-subtle)">पासवर्ड: राहुल ने सेट किया</div></div><span class="pill green">जुड़ गया</span></div>
+            <div class="trust"><span class="material-icons">check_circle</span><p>बढ़िया! आप नए नेट से जुड़ गए हैं।</p></div>
+          </div>
+          <div class="footer"><button class="cta">स्पीड जाँचें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- C2. SCREEN: SPEED CHECK -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">9</span><span class="screen-name">Speed check</span><span class="badge imp">Improved</span><span class="os-tag">S14</span></div>
+        <div class="fixnote"><b>Improved screen:</b> a <b>real measured speed test</b> (was a self-rated video) — the verified-completion evidence the OS needs.</div>
+        <div class="phone imp-screen"><div class="flag imp">Real test</div>
+          <div class="statusbar"><span>12:42</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><span class="topttl" style="margin-left:8px">स्पीड जाँच</span></div>
+          <div class="body">
+            <h1 class="s center">आपके नेट की स्पीड</h1>
+            <p class="support center">असली स्पीड माप रहे हैं — कुछ सेकंड…</p>
+            <div class="gauge"><div class="gauge-inner"><div class="gauge-num">94</div><div class="gauge-unit">Mbps</div></div></div>
+            <div class="card"><div class="row"><span class="lbl">डाउनलोड</span><span class="val">94 Mbps</span></div><div class="row"><span class="lbl">अपलोड</span><span class="val">42 Mbps</span></div><div class="row"><span class="lbl">हालत</span><span class="pill green"><span class="material-icons" style="font-size:13px">check_circle</span>बढ़िया</span></div></div>
+            <div class="trust"><span class="material-icons">verified</span><p>आपका नेट सही स्पीड पर चल रहा है — सेटअप सफल माना गया।</p></div>
+          </div>
+          <div class="footer"><button class="cta">आगे बढ़ें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- C3. SCREEN: NET IS LIVE -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">10</span><span class="screen-name">Net is live</span><span class="badge imp">Improved</span><span class="os-tag">S14</span></div>
+        <div class="fixnote"><b>Improved:</b> verified completion (telemetry + speed pass), not just "ticket closed". Flips the customer to active.</div>
+        <div class="phone imp-screen"><div class="flag imp">Verified</div>
+          <div class="statusbar"><span>12:43</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><div style="flex:1"></div></div>
+          <div class="body">
+            <div class="success-circle"><span class="material-icons">celebration</span></div>
+            <h1 class="s center">बधाई हो! आपका नेट चालू है 🎉</h1>
+            <p class="support center">अब पूरा परिवार तेज़ नेट का मज़ा ले सकता है।</p>
+            <div class="card" style="margin-top:18px">
+              <div class="row"><span class="lbl">नेट नाम</span><span class="val">Sharma_Home</span></div>
+              <div class="row"><span class="lbl">स्पीड</span><span class="val">94 Mbps</span></div>
+              <div class="row"><span class="lbl">स्थिति</span><span class="pill green"><span class="material-icons" style="font-size:13px">bolt</span>चालू है</span></div>
+            </div>
+          </div>
+          <div class="footer"><button class="cta">पासवर्ड सेट करें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- C4. SCREEN: SET PASSWORD -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">11</span><span class="screen-name">Set password</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">Create the net password. Carried over.</div>
+        <div class="phone">
+          <div class="statusbar"><span>12:44</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><span class="topttl">पासवर्ड</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">lock</span>सुरक्षा</span>
+            <h1 class="s">अपने नेट का पासवर्ड रखिए</h1>
+            <p class="support">यह पासवर्ड घरवालों को नेट से जोड़ने के लिए चाहिए होगा।</p>
+            <div style="margin-top:16px"><span class="flabel">नया पासवर्ड</span><input class="input" value="••••••••" /></div>
+            <div class="trust"><span class="material-icons">tips_and_updates</span><p>कम-से-कम 8 अक्षर रखें — याद रखने में आसान, पर सुरक्षित।</p></div>
+          </div>
+          <div class="footer"><button class="cta">पासवर्ड सेव करें<span class="material-icons">check</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- C5. SCREEN: SHARE + SELFIE -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">12</span><span class="screen-name">Share + family selfie</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">Share password on WhatsApp + family selfie. The strong emotional close — carried over.</div>
+        <div class="phone">
+          <div class="statusbar"><span>12:46</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><span class="topttl">परिवार के साथ</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">favorite</span>आख़िरी कदम</span>
+            <h1 class="s">घरवालों के साथ नेट शेयर करें</h1>
+            <p class="support">पासवर्ड WhatsApp पर भेजें या एक यादगार फ़ोटो लें।</p>
+            <div class="card" style="margin-top:16px;display:flex;align-items:center;gap:12px"><span class="material-icons" style="font-size:28px;color:#25D366">chat</span><div style="flex:1"><div style="font-size:14px;font-weight:600">WhatsApp पर भेजें</div><div style="font-size:11.5px;color:var(--text-subtle)">नेट नाम + पासवर्ड एक साथ</div></div><span class="material-icons" style="color:var(--text-subtle)">chevron_right</span></div>
+            <div class="card" style="margin-top:10px;display:flex;align-items:center;gap:12px"><span class="material-icons" style="font-size:28px;color:var(--brand)">photo_camera</span><div style="flex:1"><div style="font-size:14px;font-weight:600">परिवार के साथ फ़ोटो</div><div style="font-size:11.5px;color:var(--text-subtle)">नए नेट का जश्न मनाएँ</div></div><span class="material-icons" style="color:var(--text-subtle)">chevron_right</span></div>
+          </div>
+          <div class="footer"><button class="cta">हो गया<span class="material-icons">check</span></button><button class="cta ghost">अभी नहीं</button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE D -->
+      <div class="phase"><div class="line"></div><div class="lbl">D · Exception states</div><div class="line"></div></div>
+
+      <!-- D1. CHAT: RESCHEDULE -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">13</span><span class="screen-name">Reschedule anytime</span><span class="badge new">New</span><span class="os-tag">S12</span><span class="ch-tag">chat</span></div>
+        <div class="fixnote"><b>New (in chat):</b> the customer can type to reschedule any time; bot confirms a no-penalty change + opens slot screen. Universal reschedule right.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>9:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">सेटअप: कल 12–2 बजे</div></div></div>
+          <div class="chat-body">
+            <div class="bubble me">कल मुझे समय नहीं मिलेगा, क्या समय बदल सकते हैं?<span class="time">9:00 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">edit_calendar</span>बिलकुल, कोई दिक़्क़त नहीं</div>जब आपके लिए सही हो वो समय चुन लें — कोई चार्ज नहीं, बुकिंग या जमा राशि पर कोई असर नहीं।<button class="chat-cta">नया समय चुनें<span class="material-icons">arrow_forward</span></button><span class="time">9:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- D2. CHAT: REROUTED -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">14</span><span class="screen-name">Partner reassigned</span><span class="badge new">New</span><span class="os-tag">S11</span><span class="ch-tag">chat</span></div>
+        <div class="fixnote"><b>New (in chat):</b> honest reroute when a partner can't make it (C2 — Wiom owns it). No silent limbo; a new partner, same time.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>11:50</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">आज सेटअप · 12–2 बजे</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot imp-msg"><div class="b-title"><span class="material-icons">swap_horiz</span>हमने आपको नया साथी दिया है</div>पहले वाले साथी आज नहीं आ पाएँगे — इसलिए हमने तुरंत दूसरा साथी जोड़ दिया है। आपका समय वही रहेगा।
+              <div class="chat-tech"><div class="tp green">अ</div><div><div class="tn">अमित सिंह</div><div class="tm"><span class="material-icons">star</span>4.9 · 500+ सेटअप</div></div><div class="cb"><span class="material-icons">call</span></div></div>
+              <span style="display:block;margin-top:9px;font-size:12px;color:var(--text-subtle)">देरी के लिए माफ़ी — यह हमारी ओर से है, आपकी कोई गलती नहीं।</span>
+              <button class="chat-cta sec">समय बदलना है</button>
+              <span class="time">11:50 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- D3. CHAT: CLOSURE + REFUND -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">15</span><span class="screen-name">Couldn't complete → full refund</span><span class="badge new">New</span><span class="os-tag">S7/S13</span><span class="ch-tag">chat</span></div>
+        <div class="fixnote"><b>New (in chat):</b> honest closure when setup truly can't happen — full refund, no blame, no limbo (C2 + attribution). The dignified exit the OS demands.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>3:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">रिफ़ंड प्रक्रिया में</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">handshake</span>अभी हम सेटअप नहीं कर पाए</div>तकनीकी कारण से इस जगह सेटअप संभव नहीं हो पाया — यह हमारी ओर से है, आपकी कोई गलती नहीं।
+              <div class="msg-card">
+                <div class="row"><span class="lbl">आपका पूरा पैसा</span><span class="val">₹400</span></div>
+                <div class="row"><span class="lbl">वापस आएगा</span><span class="val">2–3 दिन में, उसी UPI पर</span></div>
+              </div>
+              पूरा ₹400 बिना कटौती वापस आएगा। आगे जब हम आपके इलाक़े में पहुँचेंगे, सबसे पहले आपको बताएँगे।
+              <button class="chat-cta">रिफ़ंड की स्थिति देखें<span class="material-icons">arrow_forward</span></button>
+              <span class="time">3:00 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- PANEL 3 : RECHARGE / CONTINUITY (posture-driven)              -->
+  <!-- ============================================================= -->
+  <div class="panel" id="panel-continuity">
+    <div class="panel-intro"><p>Keeping an active customer's net running. The Continuity OS turns recharge into a <b>posture-driven</b> system — non-payment is a neutral, reversible pause, never churn, and the system <b>never pressures</b> and <b>never asks you to pay for broken net</b>. Recharge plumbing stays screen-based (as today); posture-driven status &amp; nudges live in chat. Each item shows the posture driving it. Scroll sideways →</p></div>
+    <div class="rail">
+
+      <!-- PHASE A : HEALTHY -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · Active &amp; healthy</div><div class="line"></div></div>
+
+      <!-- A1. CHAT: NET ACTIVE -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Net active</span><span class="badge kept">Kept</span><span class="ch-tag">chat</span><span class="posture">Normal</span></div>
+        <div class="fixnote">Healthy state — sticky banner shows "चालू है". No nudges, no pressure. Carried over.</div>
+        <div class="phone">
+          <div class="statusbar"><span>10:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">चालू है · 12 दिन बाक़ी</div></div></div>
+          <div class="chat-body">
+            <div class="day-sep">आज</div>
+            <div class="bubble bot">आपका नेट बढ़िया चल रहा है 🎉 कुछ भी ज़रूरत हो तो यहीं पूछ लें।<span class="time">10:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A2. CHAT: PRE-EXPIRY REMINDER -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Gentle reminder</span><span class="badge imp">Improved</span><span class="os-tag">CP-CON-05</span><span class="ch-tag">chat</span><span class="posture">Normal</span></div>
+        <div class="fixnote"><b>Fix:</b> a real, cadence-bounded pre-expiry reminder (today the reminder screen exists but nothing triggers it). Calm, benefit-first — no guilt, no urgency.</div>
+        <div class="phone imp-screen"><div class="flag imp">Now triggers</div>
+          <div class="statusbar"><span>9:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">चालू है · 2 दिन बाक़ी</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot imp-msg"><div class="b-title"><span class="material-icons">event</span>2 दिन में रिचार्ज</div>आपका मौजूदा रिचार्ज 2 दिन में पूरा हो रहा है। जब सही लगे, आसानी से रिचार्ज कर सकती हैं।<button class="chat-cta">रिचार्ज देखें<span class="material-icons">arrow_forward</span></button><span class="time">9:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A3. SCREEN: PLANS (kept) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Choose a plan</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">Recharge plan selection — already a screen in the app. Carried over (PayG plans, validity, price).</div>
+        <div class="phone">
+          <div class="statusbar"><span>9:01</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><span class="topttl">रिचार्ज प्लान</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">bolt</span>अपना प्लान चुनें</span>
+            <h1 class="s">कौन-सा रिचार्ज करना है?</h1>
+            <p class="support">जितने दिन का चाहें — एक दिन का भी चलेगा।</p>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+              <div class="opt sel"><div class="opt-radio"></div><div style="flex:1"><div class="opt-title">30 दिन · 100 Mbps</div><div class="opt-sub">सबसे लोकप्रिय</div></div><span class="val" style="font-size:15px">₹500</span></div>
+              <div class="opt"><div class="opt-radio"></div><div style="flex:1"><div class="opt-title">7 दिन · 100 Mbps</div><div class="opt-sub">छोटी अवधि</div></div><span class="val" style="font-size:15px">₹150</span></div>
+              <div class="opt"><div class="opt-radio"></div><div style="flex:1"><div class="opt-title">1 दिन · 100 Mbps</div><div class="opt-sub">आज भर के लिए</div></div><span class="val" style="font-size:15px">₹30</span></div>
+            </div>
+            <div class="trust"><span class="material-icons">check_circle</span><p>कोई भी रिचार्ज आपका नेट तुरंत चालू कर देता है — चाहे 1 दिन का हो या 30 का।</p></div>
+          </div>
+          <div class="footer"><button class="cta">आगे बढ़ें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A4. SCREEN: PAYMENT SUCCESS (kept) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Recharge success</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">Bill summary → UPI/QR payment → success. Plumbing carried over. Recharge reaffirms continuity &amp; resets the window.</div>
+        <div class="phone">
+          <div class="statusbar"><span>9:03</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><div style="flex:1"></div></div>
+          <div class="body">
+            <div class="success-circle"><span class="material-icons">check_circle</span></div>
+            <h1 class="s center">रिचार्ज हो गया!</h1>
+            <p class="support center">आपका नेट अगले 30 दिन के लिए चालू है।</p>
+            <div class="card" style="margin-top:20px">
+              <div class="row"><span class="lbl">प्लान</span><span class="val">30 दिन · 100 Mbps</span></div>
+              <div class="row"><span class="lbl">राशि</span><span class="val">₹500</span></div>
+              <div class="row"><span class="lbl">अगली तारीख़</span><span class="val">13 जुलाई</span></div>
+              <div class="divider"></div>
+              <div class="row"><span class="lbl">स्थिति</span><span class="pill green"><span class="material-icons" style="font-size:13px">bolt</span>चालू है</span></div>
+            </div>
+            <button class="cta sec" style="margin-top:14px"><span class="material-icons" style="font-size:18px">share</span>रसीद शेयर करें</button>
+          </div>
+          <div class="footer"><button class="cta">हो गया<span class="material-icons">check</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE B : RESERVATION WINDOW -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · Reservation window</div><div class="line"></div></div>
+
+      <!-- B1. CHAT: VALIDITY ENDED (reservation, not churn) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Recharge ended</span><span class="badge imp">Improved</span><span class="os-tag">Reservation</span><span class="ch-tag">chat</span><span class="posture">Normal</span></div>
+        <div class="fixnote"><b>Fix:</b> validity end framed as a <b>neutral, reversible pause</b> — not "service suspended". Net off, but connection held, recharge one tap away.</div>
+        <div class="phone imp-screen"><div class="flag imp">Reframed</div>
+          <div class="statusbar"><span>10:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--warning)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">रिचार्ज खत्म · चालू करने के लिए तैयार</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot imp-msg"><div class="b-title"><span class="material-icons">pause_circle</span>आपका रिचार्ज खत्म हो गया</div>कोई बात नहीं — आपका कनेक्शन सुरक्षित है। जब चाहें रिचार्ज करें, नेट तुरंत चालू हो जाएगा।<button class="chat-cta">रिचार्ज करें<span class="material-icons">arrow_forward</span></button><span class="time">10:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- B2. CHAT: VERIFICATION WINDOW -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Clarify intent</span><span class="badge new">New</span><span class="os-tag">T+10–15</span><span class="ch-tag">chat</span><span class="posture">Clarify-state-first</span></div>
+        <div class="fixnote"><b>New:</b> the verification window (T+10–15). Purpose is to <b>clarify what the customer wants</b>, not to ramp up urgency. Offers continue / pause / stop — all neutral.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>9:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--warning)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">कनेक्शन सुरक्षित है</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">help_outline</span>आगे कैसे चलना चाहेंगी?</div>कुछ दिन से नेट बंद है। हम सिर्फ़ समझना चाहते हैं कि आप क्या चाहती हैं — कोई जल्दी नहीं।
+              <button class="chat-cta">रिचार्ज करके चालू रखूँ</button>
+              <button class="chat-cta sec">कुछ दिन के लिए रोकना है</button>
+              <button class="chat-cta sec">अभी नहीं चाहिए</button>
+              <span class="time">9:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- B3. CHAT: LATE REVERSAL / WELCOME BACK -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Welcome back</span><span class="badge new">New</span><span class="os-tag">Reversal</span><span class="ch-tag">chat</span><span class="posture">Normal</span></div>
+        <div class="fixnote"><b>New:</b> recharging any time before pickup instantly restores service — zero fee, zero penalty, one confirmation. Frictionless reversal.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>2:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">फिर से चालू · 30 दिन</div></div></div>
+          <div class="chat-body">
+            <div class="bubble me">मैंने अभी रिचार्ज कर दिया<span class="time">2:00 PM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">celebration</span>वापसी पर स्वागत है!</div>आपका नेट फिर से चालू हो गया — बिना किसी अतिरिक्त चार्ज के। सब कुछ वैसा ही है जैसा पहले था।<span class="time">2:00 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE C : SPECIAL POSTURES -->
+      <div class="phase"><div class="line"></div><div class="lbl">C · Special postures</div><div class="line"></div></div>
+
+      <!-- C1. CHAT: RECOVERY-FIRST -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">8</span><span class="screen-name">Net broken — no nudge</span><span class="badge new">New</span><span class="os-tag">C2</span><span class="ch-tag">chat</span><span class="posture">Recovery-first</span></div>
+        <div class="fixnote"><b>New — the key fairness fix:</b> when net is broken (Wiom's fault), recharge nudges are <b>suppressed entirely</b>. Never ask a customer to pay for service that isn't working.</div>
+        <div class="phone new-screen"><div class="flag new">New posture</div>
+          <div class="statusbar"><span>11:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">दिक़्क़त ठीक कर रहे हैं</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">build_circle</span>हम दिक़्क़त ठीक कर रहे हैं</div>आपके इलाक़े में नेट में दिक़्क़त है — यह हमारी ओर से है। जब तक ठीक न हो, हम आपसे रिचार्ज के लिए नहीं कहेंगे।<span class="time">11:00 AM</span></div>
+            <div class="bubble bot">ठीक होते ही आपको यहीं बता देंगे। आपके बंद दिनों की भरपाई भी कर दी जाएगी।<span class="time">11:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- C2. CHAT: PAUSE CONFIRM (Passive-only) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">9</span><span class="screen-name">Pause confirmed</span><span class="badge new">New</span><span class="os-tag">CUSTOMER_PAUSED</span><span class="ch-tag">chat</span><span class="posture">Passive-only</span></div>
+        <div class="fixnote"><b>New:</b> an explicit pause option. The system goes <b>completely silent</b> (no reminders) while keeping the recharge link live. Pause is legitimate, never churn.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>9:05</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--text-disabled)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">रोका हुआ है</div></div></div>
+          <div class="chat-body">
+            <div class="bubble me">कुछ दिन के लिए रोकना है<span class="time">9:04 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">pause_circle</span>ठीक है, रोक दिया</div>हम आपको बार-बार याद नहीं दिलाएँगे। जब भी वापस चाहिए हो, यहीं से एक टैप में रिचार्ज कर लीजिए।<button class="chat-cta sec">जब चाहें रिचार्ज करें</button><span class="time">9:05 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- C3. SCREEN: MANAGE / AUTOPAY (kept) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">10</span><span class="screen-name">Manage &amp; AutoPay</span><span class="badge kept">Kept</span></div>
+        <div class="fixnote">Plan details, AutoPay, payment history. Already a screen in the app — carried over. AutoPay stays voluntary (no coercion).</div>
+        <div class="phone">
+          <div class="statusbar"><span>10:10</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><span class="topttl">मेरा नेट</span></div>
+          <div class="body">
+            <div class="card"><div class="row"><span class="lbl">मौजूदा प्लान</span><span class="val">30 दिन · 100 Mbps</span></div><div class="row"><span class="lbl">अगली तारीख़</span><span class="val">13 जुलाई</span></div><div class="row"><span class="lbl">स्थिति</span><span class="pill green"><span class="material-icons" style="font-size:13px">bolt</span>चालू है</span></div></div>
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:9px">
+              <div class="card" style="display:flex;align-items:center;gap:11px;padding:13px"><span class="material-icons" style="color:var(--brand)">autorenew</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">AutoPay</div><div style="font-size:11px;color:var(--text-subtle)">हर महीने अपने-आप रिचार्ज · ₹50 बचत</div></div><span class="material-icons" style="color:var(--text-subtle)">chevron_right</span></div>
+              <div class="card" style="display:flex;align-items:center;gap:11px;padding:13px"><span class="material-icons" style="color:var(--brand)">receipt_long</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">पेमेंट हिस्ट्री</div></div><span class="material-icons" style="color:var(--text-subtle)">chevron_right</span></div>
+              <div class="card" style="display:flex;align-items:center;gap:11px;padding:13px"><span class="material-icons" style="color:var(--brand)">wifi</span><div style="flex:1"><div style="font-size:13.5px;font-weight:600">नेट का नाम / पासवर्ड</div></div><span class="material-icons" style="color:var(--text-subtle)">chevron_right</span></div>
+            </div>
+          </div>
+          <div class="footer"><button class="cta">रिचार्ज करें<span class="material-icons">bolt</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- PANEL 4 : SERVICE QUALITY (truth-driven)                      -->
+  <!-- ============================================================= -->
+  <div class="panel" id="panel-sq">
+    <div class="panel-intro"><p>The SQ Driver OS is mostly a <b>backend truth engine</b> — it senses quality from telemetry, classifies a state, and attributes the fault. The customer never sees "SQ state" directly. So this tab is only the <b>customer-facing surfaces</b> that the quality truth enables: honest status, a real speed test, proactive outage messages, fault-aware help, and verified restoration. Each item shows the quality-state / fault-domain it reflects. Scroll sideways →</p></div>
+    <div class="backend-note"><span class="material-icons">dns</span><p><b>What's NOT a screen:</b> telemetry ingestion (router/netbox ping, latency, packet-loss), the 5-state classification (Healthy / Degraded / Intermittent / Unusable / Unknown), confidence scoring, 8-domain fault attribution, and cluster-degradation detection all live in the backend. The app only <b>consumes the emitted truth</b> and <b>feeds one signal up</b> (the speed test). Everything below is that thin customer-facing layer.</p></div>
+    <div class="rail">
+
+      <!-- PHASE A : KNOWING -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · Honest status</div><div class="line"></div></div>
+
+      <!-- A1. CHAT: HEALTHY STATUS (improved — real quality, not just paid) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Quality status</span><span class="badge imp">Improved</span><span class="ch-tag">chat</span><span class="qstate">Healthy</span></div>
+        <div class="fixnote"><b>Fix:</b> status reflects real <b>quality</b>, not just paid/unpaid. "Live" now means working well — backed by telemetry, not assumed.</div>
+        <div class="phone imp-screen"><div class="flag imp">Real quality</div>
+          <div class="statusbar"><span>10:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">बढ़िया चल रहा है · 94 Mbps</div></div></div>
+          <div class="chat-body">
+            <div class="day-sep">आज</div>
+            <div class="bubble bot">आपका नेट बढ़िया स्पीड पर चल रहा है ✅ पिछले 24 घंटे में कोई दिक़्क़त नहीं।<span class="time">10:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A2. SCREEN: REAL SPEED TEST (improved) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Run a speed test</span><span class="badge imp">Improved</span><span class="qstate">signal up</span></div>
+        <div class="fixnote"><b>Fix:</b> a <b>real, on-demand speed test</b> any active customer can run (was a one-time self-rated video). Measured result also feeds SQ telemetry.</div>
+        <div class="phone imp-screen"><div class="flag imp">Real test</div>
+          <div class="statusbar"><span>10:02</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><span class="topttl">स्पीड जाँच</span></div>
+          <div class="body">
+            <h1 class="s center">आपके नेट की स्पीड</h1>
+            <p class="support center">असली स्पीड माप रहे हैं — कुछ सेकंड…</p>
+            <div class="gauge"><div class="gauge-inner"><div class="gauge-num">94</div><div class="gauge-unit">Mbps</div></div></div>
+            <div class="card"><div class="row"><span class="lbl">डाउनलोड</span><span class="val">94 Mbps</span></div><div class="row"><span class="lbl">अपलोड</span><span class="val">42 Mbps</span></div><div class="row"><span class="lbl">पिंग</span><span class="val">12 ms</span></div><div class="row"><span class="lbl">हालत</span><span class="pill green"><span class="material-icons" style="font-size:13px">check_circle</span>बढ़िया</span></div></div>
+            <div class="trust"><span class="material-icons">verified</span><p>स्पीड सही है। अगर फिर भी कुछ धीमा लगे, हमें बताएँ — हम जाँच करेंगे।</p></div>
+          </div>
+          <div class="footer"><button class="cta">दोबारा जाँचें<span class="material-icons">refresh</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE B : PROBLEMS -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · When something's wrong</div><div class="line"></div></div>
+
+      <!-- B1. CHAT: PROACTIVE AREA OUTAGE -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Area outage (proactive)</span><span class="badge new">New</span><span class="os-tag">cluster</span><span class="ch-tag">chat</span><span class="qstate">Unusable · area-wide</span></div>
+        <div class="fixnote"><b>New — the call-deflection fix:</b> "we already know your area is down" before the customer calls. Targets the ~1050 net-down calls/day (~₹30 each).</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>8:30</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">इलाक़े में दिक़्क़त · ठीक कर रहे हैं</div></div></div>
+          <div class="chat-body">
+            <div class="day-sep">आज</div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">cell_tower</span>आपके इलाक़े में नेट की दिक़्क़त है</div>लाजपत नगर में अभी नेट बंद है — हमें पता है और हमारी टीम इसे ठीक कर रही है। आपको कुछ करने की ज़रूरत नहीं।
+              <div class="msg-card"><div class="row"><span class="lbl">अगला अपडेट</span><span class="val">शाम 6 बजे तक</span></div></div>
+              <span class="time">8:30 AM</span></div>
+            <div class="bubble bot">ठीक होते ही हम आपको यहीं बता देंगे। बंद दिनों की भरपाई अपने-आप हो जाएगी।<span class="time">8:30 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- B2. CHAT: FAULT-AWARE — WIOM SIDE -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Net down — Wiom-side</span><span class="badge new">New</span><span class="os-tag">C2</span><span class="ch-tag">chat</span><span class="qstate">Unusable · network</span></div>
+        <div class="fixnote"><b>New:</b> fault-aware handling. When telemetry says it's Wiom's network, we own it — "यह हमारी ओर से है" — and no troubleshooting is dumped on the customer.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>11:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">दिक़्क़त ठीक कर रहे हैं</div></div></div>
+          <div class="chat-body">
+            <div class="bubble me">मेरा नेट नहीं चल रहा<span class="time">10:58 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">build_circle</span>हमें दिक़्क़त दिख रही है — यह हमारी ओर से है</div>आपके नेट बॉक्स तक कनेक्शन में दिक़्क़त है। आपको कुछ करने की ज़रूरत नहीं — हमारी टीम इसे ठीक कर रही है।
+              <div class="msg-card"><div class="row"><span class="lbl">शिकायत नंबर</span><span class="val">#TKT-7741</span></div><div class="row"><span class="lbl">ठीक होने का अनुमान</span><span class="val">आज शाम तक</span></div></div>
+              <span class="time">11:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- B3. CHAT: FAULT-AWARE — CUSTOMER SIDE (troubleshoot) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Net slow — at-home fix</span><span class="badge new">New</span><span class="os-tag">customer_env</span><span class="ch-tag">chat</span><span class="qstate">Degraded · customer-env</span></div>
+        <div class="fixnote"><b>New:</b> when telemetry points to the customer's environment (router placement, too many devices), guide a simple in-app fix — instead of a needless truck-roll or a call.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>7:30</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse" style="background:var(--warning)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">चालू है · थोड़ा धीमा</div></div></div>
+          <div class="chat-body">
+            <div class="bubble me">नेट थोड़ा धीमा चल रहा है<span class="time">7:28 PM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">tips_and_updates</span>एक छोटी कोशिश से ठीक हो सकता है</div>आपका नेट चालू है, पर शायद बहुत सारे डिवाइस जुड़े हैं या नेट बॉक्स थोड़ा दूर है। ये आज़माएँ:
+              <div class="msg-card" style="font-size:12px;line-height:1.7"><div>1. नेट बॉक्स को फ़ोन के पास लाएँ</div><div>2. कुछ डिवाइस कुछ देर बंद करें</div><div>3. नेट बॉक्स को एक बार बंद-चालू करें</div></div>
+              <button class="chat-cta sec">फिर भी ठीक नहीं हुआ</button>
+              <span class="time">7:30 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- B4. CHAT: RDNI (paid, no net) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Paid but no net (RDNI)</span><span class="badge new">New</span><span class="os-tag">platform</span><span class="ch-tag">chat</span><span class="qstate">Unusable · platform</span></div>
+        <div class="fixnote"><b>New:</b> the highest-trust-damage case — recharged but net didn't resume. SQ detects it from telemetry and the app proactively owns it, before the customer panics.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>9:10</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">चालू कर रहे हैं…</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot">रिचार्ज मिल गया ✅ ₹500 · 30 दिन<span class="time">9:08 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">priority_high</span>रिचार्ज हो गया, पर नेट अभी चालू नहीं हुआ</div>हमें यह दिख गया है — यह हमारी ओर से तकनीकी दिक़्क़त है, आपका पैसा सुरक्षित है। हम इसे प्राथमिकता से ठीक कर रहे हैं।
+              <div class="msg-card"><div class="row"><span class="lbl">ठीक होने का अनुमान</span><span class="val">~30 मिनट</span></div></div>
+              <span class="time">9:10 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE C : RESTORED -->
+      <div class="phase"><div class="line"></div><div class="lbl">C · Verified restoration</div><div class="line"></div></div>
+
+      <!-- C1. CHAT: VERIFIED RESTORATION -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Confirmed working again</span><span class="badge new">New</span><span class="os-tag">INV-SQ-16</span><span class="ch-tag">chat</span><span class="qstate">Healthy · restored</span></div>
+        <div class="fixnote"><b>New:</b> "resolved" means <b>telemetry confirms it's working again</b> — not "ticket closed". The customer is told only when the net is actually back.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>5:45</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">फिर से चालू · बढ़िया</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">check_circle</span>आपका नेट फिर से चालू है</div>हमने जाँच लिया है — नेट सही स्पीड पर चल रहा है (94 Mbps)। दिक़्क़त ठीक हो गई।
+              <div class="msg-card"><div class="row"><span class="lbl">बंद रहा</span><span class="val">लगभग 6 घंटे</span></div><div class="row"><span class="lbl">भरपाई</span><span class="pill green"><span class="material-icons" style="font-size:13px">add</span>1 दिन मुफ़्त जोड़ा</span></div></div>
+              <span class="time">5:45 PM</span></div>
+            <div class="bubble bot">परेशानी के लिए माफ़ी। अगर अब भी कुछ दिक़्क़त लगे, यहीं बता दें।<span class="time">5:45 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- PANEL 5 : AT-RISK RESOLUTION (problem, not decision)          -->
+  <!-- ============================================================= -->
+  <div class="panel" id="panel-arr">
+    <div class="panel-intro"><p>When a relationship has accumulated unaddressed damage, this OS <b>resolves the problem</b> — it is <b>not a save desk</b>. Its lock: <b>"act on the problem, never on the decision."</b> The customer is <b>never told they're "at-risk"</b>; every message is event-referenced (about a specific incident), and any goodwill is <b>non-contingent</b> — "we owe you this", never "stay and get this". A customer who leaves with their issue fully resolved is a success. Each item shows the tool (T1–T8) behind it. Scroll sideways →</p></div>
+    <div class="backend-note"><span class="material-icons">dns</span><p><b>What's NOT a screen:</b> the AT_RISK trigger comes from Relationship-State OS (evidence-backed, Medium+ confidence); the 8-tool kit (T1–T8), case lifecycle, attribution and compensation rules are backend / support-side. The customer-facing layer is just a few <b>ordinary-looking, event-referenced</b> chat messages — they must read like good service, not a retention play.</p></div>
+    <div class="rail">
+
+      <!-- PHASE A : ACKNOWLEDGE & FIX -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · Acknowledge &amp; fix</div><div class="line"></div></div>
+
+      <!-- A1. CHAT: T1 ACKNOWLEDGMENT -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Acknowledgment</span><span class="badge new">New</span><span class="ch-tag">chat</span><span class="tool">T1</span></div>
+        <div class="fixnote"><b>New (in chat):</b> an event-referenced acknowledgment of the actual problem — "we saw your net dropped 3 times". Never "you're at risk", never a survey.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>10:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse" style="background:var(--warning)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">चालू है · हम नज़र रख रहे हैं</div></div></div>
+          <div class="chat-body">
+            <div class="day-sep">आज</div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">support_agent</span>हमने ध्यान दिया है</div>पिछले हफ़्ते आपका नेट 3 बार बंद हुआ — यह सही नहीं था, और इसके लिए हमें खेद है। हम इसे ठीक से देख रहे हैं।<span class="time">10:00 AM</span></div>
+            <div class="bubble bot">अगला कदम: हमारी टीम आपके इलाक़े के कनेक्शन की जाँच कर रही है। 2 दिन में अपडेट देंगे।<span class="time">10:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A2. CHAT: T3/T4 INVESTIGATION FLAGGED -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Being investigated</span><span class="badge new">New</span><span class="ch-tag">chat</span><span class="tool">T3 · T4</span></div>
+        <div class="fixnote"><b>New (in chat):</b> the OS flags SQ/Recovery to prioritise the root cause. The customer just sees honest progress — no jargon, no classification leak.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>9:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">जाँच चल रही है</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">manage_search</span>हमने जड़ तक जाँच शुरू की है</div>आपके बार-बार नेट बंद होने का कारण ढूँढने के लिए हमने अपनी तकनीकी टीम को लगाया है — ताकि यह दोबारा न हो।
+              <div class="msg-card"><div class="row"><span class="lbl">शिकायत</span><span class="val">#TKT-7741</span></div><div class="row"><span class="lbl">अगला अपडेट</span><span class="val">कल तक</span></div></div>
+              <span class="time">9:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A3. CHAT: T5 NON-CONTINGENT COMPENSATION -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Making it right</span><span class="badge new">New</span><span class="os-tag">C3</span><span class="ch-tag">chat</span><span class="tool">T5</span></div>
+        <div class="fixnote"><b>New — the key fairness line:</b> compensation is <b>non-contingent</b> — "we owe you this for the trouble", paid whether you stay or leave. Never "stay and get X".</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>11:30</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">दिक़्क़त ठीक हुई</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot">अच्छी ख़बर — आपके नेट की दिक़्क़त ठीक हो गई है ✅<span class="time">11:30 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">volunteer_activism</span>परेशानी की भरपाई</div>पिछले हफ़्ते की दिक़्क़त के लिए हमने आपके खाते में <b>5 दिन मुफ़्त नेट</b> जोड़ दिए हैं। यह हमारी ओर से है — चाहे आप आगे जारी रखें या नहीं।
+              <div class="msg-card"><div class="row"><span class="lbl">जोड़ा गया</span><span class="pill green"><span class="material-icons" style="font-size:13px">add</span>5 दिन मुफ़्त</span></div></div>
+              <span class="time">11:30 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE B : OUTCOMES -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · Either outcome is success</div><div class="line"></div></div>
+
+      <!-- B1. CHAT: RESOLVED, STAYS -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Resolved (stays)</span><span class="badge new">New</span><span class="ch-tag">chat</span><span class="tool">close</span></div>
+        <div class="fixnote"><b>New (in chat):</b> the problem is fixed and the relationship is healthy again — no "thanks for staying!", no upsell. Just quiet closure.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>6:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">चालू है · बढ़िया</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">check_circle</span>सब ठीक है</div>आपका नेट अब बढ़िया चल रहा है, और पिछली दिक़्क़त पूरी तरह सुलझ गई है। कुछ भी हो तो हम यहीं हैं।<span class="time">6:00 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- B2. CHAT: CUSTOMER STILL WANTS TO LEAVE — CLEAN HANDOFF -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Still wants to leave</span><span class="badge new">New</span><span class="os-tag">F4 → Exit</span><span class="ch-tag">chat</span><span class="tool">T7</span></div>
+        <div class="fixnote"><b>New — no obstruction:</b> if the customer still wants to go, no save attempt, no "are you sure?". Issue stays resolved, clean handoff to Exit. Leaving-with-resolution is a success.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>12:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--text-disabled)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">आपकी पसंद का सम्मान</div></div></div>
+          <div class="chat-body">
+            <div class="bubble me">दिक़्क़त ठीक हो गई, पर अब मुझे नेट नहीं चाहिए<span class="time">11:58 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">handshake</span>आपकी पसंद का पूरा सम्मान है</div>कोई बात नहीं — आपका फ़ैसला आपका है। हम आपको रोकने की कोशिश नहीं करेंगे। आगे की प्रक्रिया आसान रहेगी, और जो भी हमारी ओर से बकाया है वो पूरा मिलेगा।<button class="chat-cta sec">आगे क्या होगा, देखें</button><span class="time">12:00 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- THE "NEVER DOES" CARD -->
+      <div class="never">
+        <h4><span class="material-icons">block</span>What these screens never do</h4>
+        <p class="sub">The OS forbids the save-desk reflexes. By design, the customer never sees any of these:</p>
+        <div class="never-item"><span class="material-icons">block</span><div>Tell the customer they're <s>"at-risk" / "flagged" / "marked"</s> — classification stays internal (D6)</div></div>
+        <div class="never-item"><span class="material-icons">block</span><div>A <s>"are you sure you want to leave?"</s> obstruction, or any guilt framing</div></div>
+        <div class="never-item"><span class="material-icons">block</span><div><s>Discounts, save coupons, "stay &amp; get ₹X"</s> — compensation is never contingent on staying (D16)</div></div>
+        <div class="never-item"><span class="material-icons">block</span><div><s>Win-back / "come back" campaigns</s> after they leave</div></div>
+        <div class="never-item"><span class="material-icons">block</span><div><s>A satisfaction survey</s> standing in for actually fixing the problem</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- PANEL 6 : CUSTOMER MANAGEMENT (person, not account)           -->
+  <!-- ============================================================= -->
+  <div class="panel" id="panel-cm">
+    <div class="panel-intro"><p>Knowing <b>who the customer is</b> — as a durable person, not a single account. CM OS gives one person a stable identity across all their connections, phone changes and exits, with memory and obligations that follow the person. Its lock: <b>"remembers and resolves — it does not score, rank or predict."</b> The standout fix: the app today keeps only the first connection and silently drops the rest — the root cause of "I recharged but it's not reflecting". Each item shows the CM concept. Scroll sideways →</p></div>
+    <div class="backend-note"><span class="material-icons">dns</span><p><b>What's NOT a screen:</b> the durable <code style="color:#ffd9a0">customer_id</code>, identity resolution &amp; confidence, the 5 memory domains, household graph and the person-level obligation ledger all live in the backend. The app's job is to <b>resolve to the right person</b>, show <b>all</b> their connections, and surface what's owed. Below is that customer-facing layer.</p></div>
+    <div class="rail">
+
+      <!-- PHASE A : ONE PERSON, MANY CONNECTIONS -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · One person, many connections</div><div class="line"></div></div>
+
+      <!-- A1. SCREEN: CONNECTION SWITCHER (the nasArray[0] fix) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Which connection?</span><span class="badge new">New</span><span class="cmtag">1 person → N connections</span></div>
+        <div class="fixnote"><b>New — the smoking-gun fix:</b> the app today keeps only <code>nasArray[0]</code> and hides the rest. This shows <b>all</b> of a person's connections so recharge lands on the right one.</div>
+        <div class="phone new-screen"><div class="flag new">New screen</div>
+          <div class="statusbar"><span>10:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><span class="topttl">मेरे कनेक्शन</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">lan</span>आपके 2 कनेक्शन हैं</span>
+            <h1 class="s">किस कनेक्शन को देखना है?</h1>
+            <p class="support">आपके नाम पर एक से ज़्यादा नेट हैं — सही वाला चुनें।</p>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+              <div class="conn sel"><div class="conn-icon"><span class="material-icons">home</span></div><div style="flex:1"><div class="conn-name">Sharma_Home</div><div class="conn-sub">B-42, लाजपत नगर · चालू · 12 दिन बाक़ी</div></div><span class="pill green">चालू</span></div>
+              <div class="conn"><div class="conn-icon"><span class="material-icons">store</span></div><div style="flex:1"><div class="conn-name">Sharma_Shop</div><div class="conn-sub">दुकान, मेन मार्केट · रिचार्ज खत्म</div></div><span class="pill" style="background:var(--warning-subtle);color:#9a7a00">रिचार्ज</span></div>
+            </div>
+            <div class="trust"><span class="material-icons">info</span><p>हर कनेक्शन का रिचार्ज अलग होता है। रिचार्ज से पहले देख लें कि कौन-सा चुना है।</p></div>
+          </div>
+          <div class="footer"><button class="cta">यह कनेक्शन खोलें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A2. SCREEN: ACTIVE CONNECTION LABEL ON RECHARGE -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Recharge — which one</span><span class="badge imp">Improved</span><span class="cmtag">active connection</span></div>
+        <div class="fixnote"><b>Fix:</b> recharge &amp; manage screens always show <b>which connection</b> is active — so the customer never recharges the wrong account by mistake.</div>
+        <div class="phone imp-screen"><div class="flag imp">Shows which</div>
+          <div class="statusbar"><span>10:01</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><span class="topttl">रिचार्ज</span></div>
+          <div class="body">
+            <div class="card" style="display:flex;align-items:center;gap:11px;padding:12px;border-color:var(--brand)"><div class="conn-icon" style="background:var(--brand-subtle)"><span class="material-icons">store</span></div><div style="flex:1"><div style="font-size:11px;color:var(--text-subtle)">रिचार्ज होगा</div><div style="font-size:14px;font-weight:700">Sharma_Shop</div></div><button style="background:none;border:none;color:var(--brand);font-size:12.5px;font-weight:600;font-family:inherit">बदलें</button></div>
+            <span class="eyebrow" style="margin-top:16px"><span class="material-icons">bolt</span>प्लान चुनें</span>
+            <h1 class="s">दुकान के नेट का रिचार्ज</h1>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+              <div class="opt sel"><div class="opt-radio"></div><div style="flex:1"><div class="opt-title">30 दिन · 100 Mbps</div></div><span class="val" style="font-size:15px">₹500</span></div>
+              <div class="opt"><div class="opt-radio"></div><div style="flex:1"><div class="opt-title">7 दिन · 100 Mbps</div></div><span class="val" style="font-size:15px">₹150</span></div>
+            </div>
+            <div class="trust"><span class="material-icons">check_circle</span><p>आप <b>Sharma_Shop</b> का रिचार्ज कर रहे हैं — घर वाला नेट इससे अलग है।</p></div>
+          </div>
+          <div class="footer"><button class="cta">₹500 रिचार्ज करें<span class="material-icons">lock</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A3. CHAT: WELCOME BACK (re-entry recognition) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Welcome back</span><span class="badge new">New</span><span class="ch-tag">chat</span><span class="cmtag">identity continuity</span></div>
+        <div class="fixnote"><b>New:</b> a returning customer is recognised — not treated as a stranger (today logout wipes everything). Warm, honest, no surveillance framing.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>11:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">वापसी पर स्वागत</div></div></div>
+          <div class="chat-body">
+            <div class="day-sep">आज</div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">waving_hand</span>वापस आने पर स्वागत है, सुनीता!</div>आपको फिर से देखकर अच्छा लगा। आपका पुराना पता और नेट का नाम हमारे पास सुरक्षित है — दोबारा भरने की ज़रूरत नहीं।<button class="chat-cta">वहीं से शुरू करें<span class="material-icons">arrow_forward</span></button><span class="time">11:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE B : MEMORY & OBLIGATIONS -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · Memory &amp; what we owe</div><div class="line"></div></div>
+
+      <!-- B1. CHAT: OPEN OBLIGATION SURFACED -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">We owe you</span><span class="badge new">New</span><span class="os-tag">C2</span><span class="ch-tag">chat</span><span class="cmtag">obligation ledger</span></div>
+        <div class="fixnote"><b>New:</b> anything Wiom owes (a pending refund/credit) follows the <b>person</b> and is surfaced — it never vanishes on connection-switch, exit or logout.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>9:30</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">एक रिफ़ंड बाक़ी है</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">account_balance_wallet</span>हमारी ओर से आपका एक रिफ़ंड बाक़ी है</div>पिछली बार जब आपने दुकान का कनेक्शन बंद किया था, उसकी जमा राशि अभी आपको नहीं मिली थी। वो हमारे रिकॉर्ड में है।
+              <div class="msg-card"><div class="row"><span class="lbl">बकाया जमा राशि</span><span class="val">₹300</span></div><div class="row"><span class="lbl">किसके लिए</span><span class="val">Sharma_Shop (बंद)</span></div></div>
+              <button class="chat-cta">अभी रिफ़ंड पाएँ<span class="material-icons">arrow_forward</span></button>
+              <span class="time">9:30 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- B2. SCREEN: HOUSEHOLD MEMBERS -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Household members</span><span class="badge new">New</span><span class="cmtag">known household</span></div>
+        <div class="fixnote"><b>New:</b> explicitly-added family members on a connection (known household only — never inferred). Lets a household member also see status &amp; recharge.</div>
+        <div class="phone new-screen"><div class="flag new">New screen</div>
+          <div class="statusbar"><span>10:20</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><span class="topttl">घर के सदस्य</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">family_restroom</span>Sharma_Home</span>
+            <h1 class="s">इस नेट के सदस्य</h1>
+            <p class="support">जिन्हें आप जोड़ेंगी, वो भी नेट की स्थिति देख सकते हैं और रिचार्ज कर सकते हैं।</p>
+            <div style="margin-top:14px">
+              <div class="member"><div class="av">सु</div><div style="flex:1"><div style="font-size:13.5px;font-weight:600">सुनीता शर्मा</div><div style="font-size:11px;color:var(--text-subtle)">98XXXXXX10 · मुख्य सदस्य (आप)</div></div></div>
+              <div class="member"><div class="av g">रा</div><div style="flex:1"><div style="font-size:13.5px;font-weight:600">राजेश शर्मा</div><div style="font-size:11px;color:var(--text-subtle)">97XXXXXX22 · जोड़ा गया</div></div><span class="material-icons" style="color:var(--text-subtle)">more_vert</span></div>
+            </div>
+            <button class="cta sec" style="margin-top:16px"><span class="material-icons" style="font-size:18px">person_add</span>सदस्य जोड़ें</button>
+            <div class="trust"><span class="material-icons">lock</span><p>सिर्फ़ वही जुड़ते हैं जिन्हें आप ख़ुद जोड़ें — हम अपने-आप किसी को नहीं जोड़ते।</p></div>
+          </div>
+          <div class="footer"><button class="cta">हो गया<span class="material-icons">check</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- B3. SCREEN: YOUR DATA / PROFILE (C4) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Your details</span><span class="badge new">New</span><span class="os-tag">C4</span><span class="cmtag">see &amp; correct</span></div>
+        <div class="fixnote"><b>New:</b> the customer can see what Wiom knows about them and correct it — no hidden scores, no labels. Just plain, editable facts (C4 clarity).</div>
+        <div class="phone new-screen"><div class="flag new">New screen</div>
+          <div class="statusbar"><span>10:25</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><span class="topttl">आपकी जानकारी</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">person</span>सुनीता शर्मा</span>
+            <h1 class="s">हमारे पास आपकी जानकारी</h1>
+            <p class="support">यह सब आपका है — कभी भी देख और बदल सकती हैं।</p>
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:9px">
+              <div class="card" style="display:flex;align-items:center;gap:11px;padding:13px"><span class="material-icons" style="color:var(--brand)">call</span><div style="flex:1"><div style="font-size:11px;color:var(--text-subtle)">मोबाइल नंबर</div><div style="font-size:13.5px;font-weight:600">98765 43210</div></div><button style="background:none;border:none;color:var(--brand);font-size:12.5px;font-weight:600;font-family:inherit">बदलें</button></div>
+              <div class="card" style="display:flex;align-items:center;gap:11px;padding:13px"><span class="material-icons" style="color:var(--brand)">location_on</span><div style="flex:1"><div style="font-size:11px;color:var(--text-subtle)">पता</div><div style="font-size:13.5px;font-weight:600">B-42, लाजपत नगर</div></div><button style="background:none;border:none;color:var(--brand);font-size:12.5px;font-weight:600;font-family:inherit">बदलें</button></div>
+              <div class="card" style="display:flex;align-items:center;gap:11px;padding:13px"><span class="material-icons" style="color:var(--brand)">lan</span><div style="flex:1"><div style="font-size:11px;color:var(--text-subtle)">आपके कनेक्शन</div><div style="font-size:13.5px;font-weight:600">2 (घर · दुकान)</div></div><span class="material-icons" style="color:var(--text-subtle)">chevron_right</span></div>
+            </div>
+            <div class="trust"><span class="material-icons">verified_user</span><p>हम आपकी कोई गुप्त रेटिंग नहीं रखते — सिर्फ़ वही जानकारी जो आप ऊपर देख सकती हैं।</p></div>
+          </div>
+          <div class="footer"><button class="cta sec" style="margin-top:0">मेरा डेटा डाउनलोड करें</button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- PANEL 7 : RELATIONSHIP-STATE (invisible by design)            -->
+  <!-- ============================================================= -->
+  <div class="panel" id="panel-rs">
+    <div class="panel-intro"><p>Relationship-State OS is the <b>interpretive backbone</b> — it reads signals from SQ, Recovery, Continuity and CM, and classifies each relationship (Healthy, Fragile, At-Risk, Paused) with confidence. But here's the honest part: <b>this OS has no customer screens, by design.</b> Its lock-bearing rule (INV-RS-08) is that classifications are <b>internal-only</b> — telling a customer "you're at-risk" is a constitutional violation. So this tab explains what the OS does, shows <b>where you already felt it</b> in other tabs, and shows the <b>one legitimate surface</b>: an internal support view (not the customer app).</p></div>
+    <div class="backend-note"><span class="material-icons">visibility_off</span><p><b>Why there are (almost) no screens here:</b> the customer must <b>never</b> be shown their classification — no "at-risk" label, no "fragile" badge, no health score, no "we noticed you've been unhappy". The customer only experiences the <b>effects</b> (gentler tone, no pressure, proactive help) through the other OSes. Fabricating customer screens for this OS would break it.</p></div>
+    <div class="rail">
+
+      <!-- PHASE A : WHAT IT IS -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · What it does (no UI)</div><div class="line"></div></div>
+
+      <!-- A1. EXPLAINER: THE CLASSIFIER -->
+      <div class="rs-card">
+        <h3><span class="material-icons" style="color:#ff9ec8">hub</span>The interpretive backbone</h3>
+        <p>RS OS doesn't talk to the customer. It <b>synthesises evidence</b> from the other OSes into one canonical, person-level read of the relationship — with explicit confidence — and emits it for the others to act on.</p>
+        <p style="color:#8fe3b0;font-weight:600;font-size:12px">CLASSIFIES — never scores, never predicts, never shown to the customer.</p>
+        <div class="rs-state"><span class="badge2" style="background:#0f3322;color:#8fe3b0">Healthy</span> default — sustained good experience</div>
+        <div class="rs-state"><span class="badge2" style="background:#3a2810;color:#ffc98f">Fragile</span> damage memory — treat gently</div>
+        <div class="rs-state"><span class="badge2" style="background:#3a1024;color:#ff9ec8">At-Risk</span> evidence + exit signal → triggers ARR</div>
+        <div class="rs-state"><span class="badge2" style="background:#241a3a;color:#bda7ff">Paused</span> explicit pause — legitimate, not churn</div>
+        <div class="rs-state"><span class="badge2" style="background:#2a2f3a;color:#9aa0ab">Unknown</span> not enough evidence — honest, not a guess</div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A2. EXPLAINER: WHERE YOU ALREADY FELT IT -->
+      <div class="rs-card">
+        <h3><span class="material-icons" style="color:#8fe3b0">touch_app</span>Where you already felt it</h3>
+        <p>The customer never sees the classification — but they feel its effects across the tabs you've already reviewed. That <b>is</b> RS OS working correctly:</p>
+        <div class="rs-felt"><span class="material-icons">autorenew</span><div class="ft"><b>Softened tone when Fragile</b> — gentler reminders, no pressure.<br/><span class="where">→ Continuity tab</span></div></div>
+        <div class="rs-felt"><span class="material-icons">pause_circle</span><div class="ft"><b>Passive-only when Paused</b> — system goes silent.<br/><span class="where">→ Continuity tab · "Pause confirmed"</span></div></div>
+        <div class="rs-felt"><span class="material-icons">healing</span><div class="ft"><b>At-Risk triggers resolution</b> — the acknowledgment + fix.<br/><span class="where">→ At-Risk Resolution tab</span></div></div>
+        <div class="rs-felt"><span class="material-icons">build_circle</span><div class="ft"><b>Recovery-first when net's broken</b> — no recharge nudge.<br/><span class="where">→ Service Quality &amp; Continuity tabs</span></div></div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE B : THE ONE LEGITIMATE SURFACE -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · The one internal surface</div><div class="line"></div></div>
+
+      <!-- B1. OPS VIEW (NOT customer app) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Support agent view</span><span class="badge new">New</span><span class="cmtag">internal only</span></div>
+        <div class="fixnote"><b>Internal, not the customer app:</b> support tools <i>may</i> consume RS classification as context — with full confidence + evidence, and a hard rule never to read it out to the customer.</div>
+        <div class="phone ops"><div class="flag" style="background:#16313f;color:#7fd1ff">Internal</div>
+          <div class="statusbar"><span>2:30</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="ops-banner"><span class="material-icons">badge</span>Wiom Support Tool · आंतरिक · ग्राहक को न दिखाएँ</div>
+          <div class="body" style="background:var(--bg-subtle)">
+            <div class="card" style="margin-top:10px"><div class="row"><span class="lbl">ग्राहक</span><span class="val">सुनीता शर्मा</span></div><div class="row"><span class="lbl">कनेक्शन</span><span class="val">Sharma_Home</span></div></div>
+            <div class="card" style="margin-top:10px">
+              <div style="font-size:11px;color:var(--text-subtle);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Relationship state</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:8px"><span class="pill" style="background:#FFE9A1;color:#5c4a00"><span class="material-icons" style="font-size:13px">shield</span>Fragile</span><span style="font-size:11px;color:var(--text-subtle)">confidence: Medium</span></div>
+              <div class="divider"></div>
+              <div style="font-size:11px;color:var(--text-subtle);font-weight:600">सबूत (evidence)</div>
+              <div style="font-size:12px;color:var(--text);line-height:1.7;margin-top:5px">• पिछले हफ़्ते 3 बार नेट बंद (SQ)<br/>• 1 शिकायत, अभी ठीक हुई (Recovery)<br/>• रिचार्ज समय पर (Continuity)</div>
+            </div>
+            <div class="trust warn"><span class="material-icons">visibility_off</span><p><b>नियम:</b> ग्राहक को कभी न कहें "आप at-risk हैं"। यह सिर्फ़ आपके संदर्भ के लिए है — बात हमेशा असली दिक़्क़त की करें, लेबल की नहीं।</p></div>
+          </div>
+          <div class="footer"><button class="cta" style="height:44px;font-size:14px">घटना के बारे में बात करें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- THE "NEVER SURFACED" CARD -->
+      <div class="never">
+        <h4><span class="material-icons">visibility_off</span>Never surfaced to the customer</h4>
+        <p class="sub">RS OS is invisible by constitutional rule. The customer app must never show:</p>
+        <div class="never-item"><span class="material-icons">block</span><div>A <s>health score / relationship score / "trust level"</s> of any kind</div></div>
+        <div class="never-item"><span class="material-icons">block</span><div>An <s>"at-risk" / "fragile" / "loyal" / "VIP"</s> label or badge</div></div>
+        <div class="never-item"><span class="material-icons">block</span><div><s>"We noticed you've been unhappy / inactive"</s> — classification-referenced copy</div></div>
+        <div class="never-item"><span class="material-icons">block</span><div><s>Different prices or tiers</s> derived from the classification</div></div>
+        <div class="never-item"><span class="material-icons">check_circle</span><div style="color:#8fe3b0">What the customer <b>does</b> get: gentler, fairer, more proactive service — without ever being told why.</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- PANEL 8 : RECOVERY (closed ≠ recovered)                       -->
+  <!-- ============================================================= -->
+  <div class="panel" id="panel-recovery">
+    <div class="panel-intro"><p>When something breaks, Recovery OS turns the incident into <b>restored stability</b> — or tracked <b>Recovery Debt</b>. Its lock: <b>"closed ≠ recovered"</b> — a ticket being closed is <i>not</i> proof the net works again. A case only completes when evidence confirms it (the 3-of-4 rule), and Wiom-caused downtime is made good <b>proportionally</b> (a 6-hour outage → free time added). Net-down <b>detection</b> lives in SQ (Tab 4) and relationship-damage comp in At-Risk Resolution (Tab 5); this tab is the <b>case lifecycle</b> in between. Each item shows the case state. Scroll sideways →</p></div>
+    <div class="backend-note"><span class="material-icons">dns</span><p><b>What's NOT a screen:</b> the case state machine (triggered → acknowledged → in-progress → verified → closed), the 3-of-4 evidence rule, the compensation rate-card, Recovery Debt and Failed-Recovery-Re-entry detection are backend. The customer-facing layer is honest case updates + a verified close + the make-good — all in chat.</p></div>
+    <div class="rail">
+
+      <!-- PHASE A : OPEN & WORK -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · Open &amp; work the case</div><div class="line"></div></div>
+
+      <!-- A1. CHAT: ACKNOWLEDGED + ETA -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Case acknowledged</span><span class="badge imp">Improved</span><span class="ch-tag">chat</span><span class="recstate">acknowledged</span></div>
+        <div class="fixnote"><b>Fix:</b> the moment a problem is known, the customer is told — with an owner and an ETA. Today the ticket vanishes into the backend with no orientation.</div>
+        <div class="phone imp-screen"><div class="flag imp">No more silence</div>
+          <div class="statusbar"><span>11:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">शिकायत दर्ज · ठीक कर रहे हैं</div></div></div>
+          <div class="chat-body">
+            <div class="day-sep">आज</div>
+            <div class="bubble me">मेरा नेट नहीं चल रहा<span class="time">10:58 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">assignment_turned_in</span>हमने आपकी शिकायत दर्ज कर ली</div>हमें दिक़्क़त दिख रही है और हमारी टीम इसे देख रही है।
+              <div class="msg-card"><div class="row"><span class="lbl">शिकायत नंबर</span><span class="val">#TKT-7741</span></div><div class="row"><span class="lbl">ठीक होने का अनुमान</span><span class="val">आज शाम 6 बजे तक</span></div></div>
+              <span class="time">11:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A2. CHAT: LIVE CASE STATUS -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Live case status</span><span class="badge new">New</span><span class="ch-tag">chat</span><span class="recstate">in-progress</span></div>
+        <div class="fixnote"><b>New:</b> honest progress updates while the case is open — what's happening, what's next, by when. No empty "we're checking" loops.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>2:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">#TKT-7741 · काम जारी</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot">आपके इलाक़े के कनेक्शन की जाँच हो गई — दिक़्क़त मिल गई है।<span class="time">1:30 PM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">engineering</span>ठीक करने का काम चल रहा है</div>हमारी टीम लाइन ठीक कर रही है। अगला अपडेट 4 बजे तक — या उससे पहले अगर ठीक हो गया।<span class="time">2:00 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE B : VERIFY & MAKE GOOD -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · Verify &amp; make good</div><div class="line"></div></div>
+
+      <!-- B1. CHAT: VERIFIED RESTORATION (3-of-4) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Verified restoration</span><span class="badge new">New</span><span class="os-tag">3-of-4</span><span class="ch-tag">chat</span><span class="recstate">verified</span></div>
+        <div class="fixnote"><b>New — the core fix:</b> "resolved" only when evidence confirms it (telemetry healthy + customer confirms), not when an agent closes the ticket (INV-REC-01).</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>4:30</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">फिर से चालू · पुष्टि बाक़ी</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">fact_check</span>लगता है नेट ठीक हो गया</div>हमने जाँचा — आपका नेट अब सही स्पीड पर चल रहा है।
+              <div class="evid">
+                <div class="evid-item ok"><span class="material-icons">check_circle</span>लाइन ठीक की गई</div>
+                <div class="evid-item ok"><span class="material-icons">check_circle</span>टेलीमेट्री: स्पीड सामान्य (94 Mbps)</div>
+                <div class="evid-item ok"><span class="material-icons">check_circle</span>आपको सूचित किया</div>
+                <div class="evid-item wait"><span class="material-icons">radio_button_unchecked</span>आपकी पुष्टि बाक़ी</div>
+              </div>
+              क्या आपका नेट अब सही चल रहा है?
+              <button class="chat-cta">हाँ, ठीक है</button>
+              <button class="chat-cta sec">नहीं, अब भी दिक़्क़त है</button>
+              <span class="time">4:30 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- B2. CHAT: PROPORTIONAL COMPENSATION -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Proportional make-good</span><span class="badge new">New</span><span class="os-tag">C3</span><span class="ch-tag">chat</span><span class="recstate">closed + comp</span></div>
+        <div class="fixnote"><b>New:</b> Wiom-caused downtime is made good <b>proportionally</b> — outage hours → free time added (extensions before coupons). Today: nothing for downtime.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>4:32</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky live"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">चालू है · दिक़्क़त सुलझी</div></div></div>
+          <div class="chat-body">
+            <div class="bubble me">हाँ, अब ठीक चल रहा है<span class="time">4:31 PM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">volunteer_activism</span>आपके बंद समय की भरपाई</div>नेट लगभग 6 घंटे बंद रहा — यह हमारी ओर से था। इसकी भरपाई में हमने आपके खाते में मुफ़्त नेट जोड़ दिया है।
+              <div class="msg-card"><div class="row"><span class="lbl">बंद रहा</span><span class="val">~6 घंटे</span></div><div class="row"><span class="lbl">जोड़ा गया</span><span class="pill green"><span class="material-icons" style="font-size:13px">add</span>1 दिन मुफ़्त नेट</span></div></div>
+              अपने-आप जुड़ गया — कुछ करने की ज़रूरत नहीं।<span class="time">4:32 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE C : RECURRENCE -->
+      <div class="phase"><div class="line"></div><div class="lbl">C · When it keeps happening</div><div class="line"></div></div>
+
+      <!-- C1. CHAT: RECURRENCE / FAILED-RECOVERY-RE-ENTRY -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">This keeps happening</span><span class="badge new">New</span><span class="os-tag">re-entry</span><span class="ch-tag">chat</span><span class="recstate">Recovery Debt ↑</span></div>
+        <div class="fixnote"><b>New:</b> a recurring issue is treated as <b>damage-compounding</b>, not a fresh ticket — escalated harder, and it adds to Recovery Debt (which can trigger At-Risk Resolution).</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>9:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">बार-बार दिक़्क़त · ऊपर भेजा</div></div></div>
+          <div class="chat-body">
+            <div class="bubble me">यह दिक़्क़त फिर से आ गई<span class="time">8:58 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">priority_high</span>यह बार-बार हो रहा है — हम इसे हल्के में नहीं ले रहे</div>आपके साथ यह तीसरी बार है। हम इसे एक नई शिकायत की तरह नहीं, बल्कि एक बड़ी समस्या की तरह देख रहे हैं — और सीधे सीनियर टीम को भेज रहे हैं ताकि जड़ से ठीक हो।
+              <div class="msg-card"><div class="row"><span class="lbl">पिछली बार</span><span class="val">3 बार · 30 दिन में</span></div><div class="row"><span class="lbl">अब</span><span class="val">प्राथमिकता · सीनियर टीम</span></div></div>
+              <span class="time">9:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- PANEL 9 : EXIT / REFUND (dignified & reversible)              -->
+  <!-- ============================================================= -->
+  <div class="panel" id="panel-exit">
+    <div class="panel-intro"><p>When a customer leaves, Exit OS governs the moment of <b>maximum power asymmetry</b> — Wiom holds the device, the money and the channels. Its lock: <b>"finalize custody, don't judge departure; silence is the harm."</b> So exit is <b>never silent</b> (two clear messages), <b>reversible</b> until the device is picked up, and the <b>refundable deposit leads every message</b>. The app already has the pickup + UPI-refund screens; the OS adds the fairness wrapper. Each item shows the exit state. Scroll sideways →</p></div>
+    <div class="backend-note"><span class="material-icons">dns</span><p><b>What's NOT a screen:</b> the two state machines (relationship: initiated → final; custody: with-customer → recovered/disputed/not-recovered), attribution, the bond-refund rate-card and the reversibility windows are backend. The customer-facing layer is honest exit messages, the refund choice, and a frictionless way back.</p></div>
+    <div class="rail">
+
+      <!-- PHASE A : NO SILENT EXIT -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · No silent exit</div><div class="line"></div></div>
+
+      <!-- A1. CHAT: EXIT INITIATED — SD-FIRST -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Exit started</span><span class="badge new">New</span><span class="ch-tag">chat</span><span class="exstate">EXIT_INITIATED</span></div>
+        <div class="fixnote"><b>New — no silent exit:</b> the first of two bookend messages. The <b>refundable deposit leads</b> — "your ₹300 is with us, we don't want your money stuck" — never punitive "return your device".</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>10:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">सेवा बंद हो रही है</div></div></div>
+          <div class="chat-body">
+            <div class="day-sep">आज</div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">savings</span>आपकी ₹300 जमा राशि अभी हमारे पास है</div>आपकी सेवा बंद हो रही है। हम नहीं चाहते कि आपका पैसा हमारे पास अटका रहे — आइए इसे आपको वापस दिलाएँ।
+              <div class="msg-card"><div class="row"><span class="lbl">वापस मिलेगी</span><span class="val">₹300 (पूरी)</span></div></div>
+              <button class="chat-cta">रिफ़ंड का तरीक़ा चुनें<span class="material-icons">arrow_forward</span></button>
+              <span class="time">10:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- A2. SCREEN: REFUND CHOICE (self-return vs pickup) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Choose refund path</span><span class="badge imp">Improved</span><span class="exstate">custody</span></div>
+        <div class="fixnote"><b>Improved:</b> self-return earns the <b>full</b> ₹300 (offered first); pickup deducts a small charge. Already a screen in the app — clarified with the fair, transparent tiers.</div>
+        <div class="phone imp-screen"><div class="flag imp">Fair tiers</div>
+          <div class="statusbar"><span>10:01</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><span class="topttl">नेट बॉक्स वापसी</span></div>
+          <div class="body">
+            <span class="eyebrow"><span class="material-icons">inventory_2</span>₹300 वापस पाएँ</span>
+            <h1 class="s">नेट बॉक्स कैसे लौटाना चाहेंगी?</h1>
+            <p class="support">दोनों तरीक़े आसान हैं — जो सही लगे चुनें।</p>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+              <div class="refund-opt sel"><div class="ri"><span class="material-icons">directions_walk</span></div><div style="flex:1"><div class="rt">खुद जाकर दें</div><div class="rs">पास की Wiom दुकान पर · पूरी राशि</div></div><span class="ramt">₹300</span></div>
+              <div class="refund-opt"><div class="ri"><span class="material-icons">two_wheeler</span></div><div style="flex:1"><div class="rt">घर से पिकअप</div><div class="rs">हमारा साथी ले जाएगा · ₹50 चार्ज</div></div><span class="ramt">₹250</span></div>
+            </div>
+            <div class="trust"><span class="material-icons">check_circle</span><p>नेट बॉक्स मिलते ही ₹300 आपके UPI पर 2–3 दिन में वापस आ जाएँगे।</p></div>
+          </div>
+          <div class="footer"><button class="cta">आगे बढ़ें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE B : REVERSIBLE -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · Reversible till pickup</div><div class="line"></div></div>
+
+      <!-- B1. CHAT: REVERSIBILITY OFFERED -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">You can still stay</span><span class="badge new">New</span><span class="ch-tag">chat</span><span class="exstate">reversible</span></div>
+        <div class="fixnote"><b>New:</b> exit stays reversible until the device is picked up — recharge any time and it's cancelled, zero fee, zero penalty. Stated as a calm fact, not a save plea.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>10:02</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--info)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">पिकअप तय हो रहा है</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot">पिकअप के लिए साथी तय कर रहे हैं — आपको समय बता देंगे।<span class="time">10:02 AM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">undo</span>मन बदल जाए तो कोई दिक़्क़त नहीं</div>नेट बॉक्स लेने आने तक, आप जब चाहें रिचार्ज करके नेट दोबारा चालू कर सकती हैं — कोई चार्ज नहीं, कोई जुर्माना नहीं।<button class="chat-cta sec">रिचार्ज करके जारी रखूँ</button><span class="time">10:02 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE C : CLEAN CLOSE -->
+      <div class="phase"><div class="line"></div><div class="lbl">C · Clean close</div><div class="line"></div></div>
+
+      <!-- C1. CHAT: EXITED FINAL — REFUND DONE -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Closed + refunded</span><span class="badge new">New</span><span class="ch-tag">chat</span><span class="exstate">EXITED_FINAL</span></div>
+        <div class="fixnote"><b>New — the second bookend:</b> a clear close with refund confirmed + the door left open ("come back anytime, your details stay safe"). No "lost customer", no win-back spam.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>3:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--positive)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">सेवा बंद · रिफ़ंड हो गया</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot">नेट बॉक्स मिल गया, धन्यवाद ✅<span class="time">2:30 PM</span></div>
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">check_circle</span>आपका रिफ़ंड हो गया</div>आपके ₹300 आपके UPI पर भेज दिए गए हैं।
+              <div class="msg-card"><div class="row"><span class="lbl">रिफ़ंड</span><span class="val">₹300 · UPI</span></div><div class="row"><span class="lbl">स्थिति</span><span class="pill green"><span class="material-icons" style="font-size:13px">check</span>पूरा हुआ</span></div></div>
+              आपके साथ रहना अच्छा लगा। जब भी दोबारा नेट चाहिए हो, आपका पता और जानकारी सुरक्षित है — आसानी से वापस आ सकती हैं।<span class="time">3:00 PM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- C2. CHAT: DEVICE NOT PICKED UP — HELD BOND (honest, no penalty default) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Device pickup pending</span><span class="badge new">New</span><span class="ch-tag">chat</span><span class="exstate">held bond</span></div>
+        <div class="fixnote"><b>New:</b> if pickup couldn't happen, the deposit is <b>held (not forfeited)</b> and the customer is told honestly with a clear next step — no silent forfeiture, no accusation.</div>
+        <div class="phone new-screen"><div class="flag new">New msg</div>
+          <div class="statusbar"><span>11:00</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-sticky"><span class="dotpulse" style="background:var(--warning)"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">नेट बॉक्स वापसी बाक़ी</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot new-msg"><div class="b-title"><span class="material-icons">schedule</span>नेट बॉक्स अभी वापस नहीं हो पाया</div>कोई बात नहीं — आपकी ₹300 जमा राशि सुरक्षित है, अभी हमारे पास ही है। नेट बॉक्स लौटाते ही पूरी राशि वापस मिल जाएगी।
+              <button class="chat-cta">पिकअप दोबारा बुक करें</button>
+              <button class="chat-cta sec">खुद जाकर दूँगी</button>
+              <span class="time">11:00 AM</span></div>
+          </div>
+          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- THE "NEVER DOES" CARD -->
+      <div class="never">
+        <h4><span class="material-icons">block</span>What exit never does</h4>
+        <p class="sub">Dignity at maximum power asymmetry means refusing these reflexes:</p>
+        <div class="never-item"><span class="material-icons">block</span><div>A <s>silent exit</s> — service just stopping with no message. Two bookend messages are mandatory.</div></div>
+        <div class="never-item"><span class="material-icons">block</span><div><s>"Are you sure you want to leave?"</s> friction, guilt, or urgency to keep the device</div></div>
+        <div class="never-item"><span class="material-icons">block</span><div><s>Silently forfeiting the deposit</s> — it's held, never quietly kept</div></div>
+        <div class="never-item"><span class="material-icons">block</span><div>A <s>penalty or fee</s> for changing your mind during the reversible window</div></div>
+        <div class="never-item"><span class="material-icons">block</span><div><s>"Lost customer" framing</s> or win-back spam after exit — only refund &amp; obligation messages</div></div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    const id = t.dataset.tab;
+    tabs.forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    panels.forEach(p=>p.classList.toggle('active', p.id === 'panel-'+id));
+    window.scrollTo(0,0);
+  }));
+</script>
+</body>
+</html>
