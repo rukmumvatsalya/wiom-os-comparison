@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom Customer OS — Old vs New Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{
+    /* bg — Wiom DS */
+    --bg-primary:#FFFFFF; --bg-secondary:#FAF9FC; --bg-tertiary:#F1EDF7; --bg-muted:#E8E4F0;
+    --bg-brand:#D9008D; --bg-brand-hover:#C00080; --bg-brand-subtle:#FFE5F6;
+    --bg-brand-bold:#443152;
+    --bg-success-subtle:#E1FAED; --bg-warning:#E2B203; --bg-warning-subtle:#FFE9A1;
+    --bg-danger:#D92130; --bg-danger-subtle:#FFE5E7; --bg-info:#6D17CE; --bg-info-subtle:#F1E5FF;
+    /* text — Wiom DS */
+    --text-primary:#161021; --text-secondary:#5C5570; --text-tertiary:#5C5570;
+    --text-disabled:#A7A1B2; --text-brand:#D9008D; --text-on-brand:#FFFFFF;
+    --text-warning:#161021; --text-danger:#D92130; --text-info:#6D17CE; --text-success:#008043;
+    /* stroke — Wiom DS */
+    --stroke-default:#E8E4F0; --stroke-strong:#D7D3E0; --stroke-brand:#D9008D; --stroke-focus:#D9008D;
+    /* radius */
+    --r-sm:4px; --r-md:8px; --r-lg:12px; --r-xl:16px; --r-full:9999px;
+    /* shadow — Wiom DS */
+    --sh-xs:0 1px 3px 0 rgba(0,0,0,.15);
+    --sh-sm:0 1px 3px 0 rgba(0,0,0,.15);
+    --sh-md:0 2px 6px 0 rgba(0,0,0,.15);
+    --sh-lg:0 4px 12px 0 rgba(0,0,0,.15);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Noto Sans',sans-serif;background:var(--bg-secondary);
+    color:var(--text-primary);line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  /* ---------- Layout ---------- */
+  .app{display:flex;min-height:100vh}
+  .sidebar{
+    width:280px;flex:0 0 280px;background:var(--bg-primary);
+    border-right:1px solid var(--stroke-default);padding:24px 16px;
+    position:sticky;top:0;height:100vh;overflow-y:auto;
+  }
+  .main{flex:1;min-width:0;padding:40px 48px 80px;max-width:1280px}
+  /* ---------- Sidebar ---------- */
+  .brand{display:flex;align-items:center;gap:10px;padding:0 8px 20px;margin-bottom:8px;border-bottom:1px solid var(--stroke-default)}
+  .brand-logo{width:32px;height:32px;border-radius:var(--r-md);background:var(--bg-brand);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px}
+  .brand-name{font-size:14px;font-weight:700;color:var(--text-primary);line-height:1.2}
+  .brand-sub{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.04em}
+  .nav-label{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.04em;padding:16px 8px 8px}
+  .tab-btn{
+    display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+    padding:10px 12px;border:none;background:transparent;border-radius:var(--r-md);
+    font-family:inherit;font-size:14px;font-weight:500;color:var(--text-secondary);
+    cursor:pointer;margin-bottom:2px;transition:background .12s,color .12s;
+  }
+  .tab-btn:hover{background:var(--bg-tertiary)}
+  .tab-btn.active{background:var(--bg-brand-subtle);color:var(--text-brand);font-weight:600}
+  .tab-btn .material-icons{font-size:20px}
+  .tab-btn.disabled{color:var(--text-disabled);cursor:not-allowed}
+  .tab-btn.disabled:hover{background:transparent}
+  .tab-btn .pill{margin-left:auto;font-size:10px;font-weight:600;padding:2px 8px;border-radius:var(--r-full);background:var(--bg-tertiary);color:var(--text-tertiary)}
+  .tab-btn.active .pill{background:var(--bg-brand);color:#fff}
+  .tab-btn .pill.soon{background:var(--bg-warning-subtle);color:var(--text-warning)}
+  /* ---------- Content ---------- */
+  .tab-panel{display:none;animation:fade .2s ease}
+  .tab-panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  .page-eyebrow{font-size:11px;font-weight:600;color:var(--text-brand);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+  h1.page-title{font-size:30px;font-weight:700;line-height:1.27;margin-bottom:8px}
+  .page-meta{font-size:13px;color:var(--text-tertiary);margin-bottom:8px}
+  .page-lead{font-size:16px;color:var(--text-secondary);max-width:760px;margin-bottom:32px}
+
+  h2{font-size:20px;font-weight:600;margin:40px 0 16px;padding-top:8px;display:flex;align-items:center;gap:10px}
+  h2 .material-icons{font-size:22px;color:var(--icon-brand,#1A7F37)}
+  h3{font-size:16px;font-weight:600;margin:24px 0 12px}
+  p{color:var(--text-secondary);margin-bottom:12px;font-size:14px}
+  strong{color:var(--text-primary);font-weight:600}
+
+  .card{background:var(--bg-primary);border:1px solid var(--stroke-default);border-radius:var(--r-lg);box-shadow:var(--sh-sm);padding:24px;margin-bottom:24px}
+  .card.tight{padding:16px}
+
+  /* callout */
+  .callout{display:flex;gap:12px;padding:16px 20px;border-radius:var(--r-lg);margin-bottom:24px;border:1px solid}
+  .callout .material-icons{font-size:22px;flex:0 0 auto;margin-top:1px}
+  .callout-title{font-weight:600;color:var(--text-primary);margin-bottom:4px;font-size:14px}
+  .callout p{margin:0;font-size:14px}
+  .callout.key{background:var(--bg-brand-subtle);border-color:#FFB2E4}
+  .callout.key .material-icons{color:var(--text-brand)}
+  .callout.warn{background:var(--bg-warning-subtle);border-color:#FAE2C0}
+  .callout.warn .material-icons{color:var(--text-warning)}
+  .callout.info{background:var(--bg-info-subtle);border-color:#C5DEF6}
+  .callout.info .material-icons{color:var(--text-info)}
+
+  /* diagram */
+  .flow{background:#0E1116;color:#D7DBE0;border-radius:var(--r-lg);padding:20px 24px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.7;overflow-x:auto;margin-bottom:24px;white-space:pre}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;background:var(--bg-primary);border:1px solid var(--stroke-default);border-radius:var(--r-lg);overflow:hidden;margin-bottom:24px;font-size:13px}
+  thead th{background:var(--bg-secondary);text-align:left;font-size:13px;font-weight:600;color:var(--text-primary);padding:12px 14px;border-bottom:1px solid var(--stroke-default)}
+  tbody td{padding:12px 14px;border-bottom:1px solid var(--stroke-default);color:var(--text-secondary);vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:var(--bg-secondary)}
+  td code,p code,li code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:var(--bg-tertiary);padding:1px 6px;border-radius:var(--r-sm);color:var(--text-primary)}
+  .state-id{font-weight:700;color:var(--text-primary);white-space:nowrap}
+
+  /* status chips */
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:var(--r-full);white-space:nowrap}
+  .chip .dot{width:7px;height:7px;border-radius:var(--r-full)}
+  .chip.green{background:var(--bg-success-subtle);color:var(--text-success)}
+  .chip.green .dot{background:var(--text-success)}
+  .chip.amber{background:var(--bg-warning-subtle);color:#372902}
+  .chip.amber .dot{background:var(--bg-warning)}
+  .chip.red{background:var(--bg-danger-subtle);color:var(--text-danger)}
+  .chip.red .dot{background:var(--text-danger)}
+  .chip.gray{background:var(--bg-tertiary);color:var(--text-tertiary)}
+  .chip.gray .dot{background:var(--text-tertiary)}
+  .chip.green2{background:var(--bg-success-subtle);color:var(--text-success)}
+  .chip.green2 .dot{background:var(--text-success)}
+
+  /* severity tag inline */
+  .sev{font-size:11px;font-weight:700;padding:2px 8px;border-radius:var(--r-sm);letter-spacing:.02em}
+  .sev.crit{background:var(--bg-danger);color:#fff}
+  .sev.high{background:var(--bg-warning);color:#372902}
+  .sev.med{background:var(--bg-muted);color:var(--text-secondary)}
+
+  /* stat row */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+  .stat{background:var(--bg-primary);border:1px solid var(--stroke-default);border-radius:var(--r-lg);box-shadow:var(--sh-xs);padding:20px}
+  .stat .num{font-size:30px;font-weight:700;line-height:1;margin-bottom:6px}
+  .stat .lbl{font-size:12px;color:var(--text-tertiary);font-weight:500}
+  .stat.red .num{color:var(--text-danger)}
+  .stat.amber .num{color:var(--text-warning)}
+  .stat.green .num{color:var(--text-success)}
+
+  /* gap blocks */
+  .gap{border:1px solid var(--stroke-default);border-left:4px solid var(--stroke-strong);border-radius:var(--r-md);padding:18px 20px;margin-bottom:16px;background:var(--bg-primary)}
+  .gap.crit{border-left-color:var(--bg-danger)}
+  .gap.high{border-left-color:var(--bg-warning)}
+  .gap-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+  .gap-num{width:24px;height:24px;border-radius:var(--r-full);background:var(--text-primary);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .gap-title{font-size:15px;font-weight:600;color:var(--text-primary)}
+  .gap .fix{font-size:13px;background:var(--bg-success-subtle);border-radius:var(--r-md);padding:10px 12px;margin-top:10px;color:var(--text-primary)}
+  .gap .fix b{color:var(--text-success)}
+
+  ul.clean{list-style:none;margin:0 0 16px}
+  ul.clean li{position:relative;padding-left:24px;margin-bottom:8px;color:var(--text-secondary);font-size:14px}
+  ul.clean li::before{content:'check_circle';font-family:'Material Icons';position:absolute;left:0;top:0;font-size:17px;color:var(--text-success)}
+  ul.clean.warn li::before{content:'cancel';color:var(--text-danger)}
+
+  .divider{height:1px;background:var(--stroke-default);margin:40px 0}
+  .footnote{font-size:12px;color:var(--text-tertiary);margin-top:8px}
+
+  .placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;color:var(--text-tertiary)}
+  .placeholder .material-icons{font-size:48px;margin-bottom:16px;color:var(--stroke-strong)}
+  .placeholder h2{justify-content:center;color:var(--text-secondary)}
+  .src{font-size:12px;color:var(--text-tertiary);font-family:ui-monospace,Menlo,Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">W</div>
+      <div>
+        <div class="brand-name">Customer OS</div>
+        <div class="brand-sub">Old vs New Analysis</div>
+      </div>
+    </div>
+
+    <div class="nav-label">Operating Systems</div>
+    <button class="tab-btn active" data-tab="b2i">
+      <span class="material-icons">router</span>
+      Booking → Install
+      <span class="pill">1</span>
+    </button>
+    <button class="tab-btn" data-tab="continuity">
+      <span class="material-icons">autorenew</span>
+      Recharge / Continuity
+      <span class="pill">2</span>
+    </button>
+    <button class="tab-btn" data-tab="sq">
+      <span class="material-icons">verified</span>
+      Service Quality (SQ)
+      <span class="pill">3</span>
+    </button>
+    <button class="tab-btn" data-tab="arr">
+      <span class="material-icons">healing</span>
+      At-Risk Resolution
+      <span class="pill">4</span>
+    </button>
+    <button class="tab-btn" data-tab="cm">
+      <span class="material-icons">badge</span>
+      Customer Management
+      <span class="pill">5</span>
+    </button>
+    <button class="tab-btn" data-tab="rs">
+      <span class="material-icons">favorite</span>
+      Relationship-State
+      <span class="pill">6</span>
+    </button>
+    <button class="tab-btn" data-tab="recovery">
+      <span class="material-icons">build_circle</span>
+      Recovery
+      <span class="pill">7</span>
+    </button>
+    <button class="tab-btn" data-tab="exit">
+      <span class="material-icons">logout</span>
+      Exit / Refund
+      <span class="pill">8</span>
+    </button>
+
+    <div class="nav-label">Reference</div>
+    <button class="tab-btn" data-tab="legend">
+      <span class="material-icons">help_outline</span>
+      How to read this
+    </button>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+
+    <!-- ===================== TAB 1: B2I ===================== -->
+    <section class="tab-panel active" id="tab-b2i">
+      <div class="page-eyebrow">OS #1 · Booking-to-Install</div>
+      <h1 class="page-title">Booking → Install OS: Current App vs New OS</h1>
+      <div class="page-meta">App: <code>customer-app-kotlin</code> &nbsp;·&nbsp; Spec: <span class="src">wiom-cust-b2i-os-v3.1-locked-20260519</span> &nbsp;·&nbsp; Updated 2026-05-29</div>
+      <p class="page-lead">
+        How the existing Kotlin customer app handles the journey from booking to a live connection, measured against what the new
+        Booking-to-Install (B2I) OS requires. The OS exists to make the journey <strong>transparent and fair</strong> — so every
+        customer always knows what's happening, and never pays for Wiom's mistakes.
+      </p>
+
+      <!-- snapshot stats -->
+      <div class="stats">
+        <div class="stat"><div class="num">16</div><div class="lbl">States the OS defines</div></div>
+        <div class="stat amber"><div class="num">~3</div><div class="lbl">States the app implements well</div></div>
+        <div class="stat red"><div class="num">6</div><div class="lbl">States fully missing in app</div></div>
+        <div class="stat red"><div class="num">70%</div><div class="lbl">of chat is "kab lagega" (the problem)</div></div>
+      </div>
+
+      <!-- core mismatch -->
+      <h2><span class="material-icons">compare_arrows</span>The core mismatch</h2>
+      <p>
+        The app treats <strong>payment as the finish line</strong> and the journey afterwards as a linear chat script.
+        The OS treats <strong>payment (<code>booking_fee_paid</code>) as the starting gun</strong> — the entry into a governed
+        16-state machine where every state has an owner and a clock. The app has essentially one status variable
+        (<code>installationStatus</code>: PENDING / INSTALLED / RENEWAL) and a 7-value sticky banner. Everything between
+        "slot picked" and "WiFi connected" — the exact window where real customers get stuck — is invisible in the app.
+      </p>
+      <div class="flow">CURRENT APP        location → cost → OTP → <b style="color:#7EE2A8">PAYMENT</b> → SSID → [dumps to chat] → address → slot → connect WiFi → done
+                                                  │  (treated as the finish line)
+
+NEW B2I OS                                  <b style="color:#7EE2A8">booking_fee_paid</b> ──────────────────────────────────► INSTALL DONE
+                                            (the starting gun: 16 governed states, each with an owner + a clock)</div>
+
+      <div class="callout key">
+        <span class="material-icons">vpn_key</span>
+        <div>
+          <div class="callout-title">One-line takeaway</div>
+          <p>The app has built the <em>pre-payment funnel</em> and the <em>final "it works!" celebration</em> beautifully — but the
+          <strong>coordination middle</strong> (who's home, finding a partner, slot confirmation, technician on the way, what went wrong)
+          is where the OS lives, and where the app is mostly silent.</p>
+        </div>
+      </div>
+
+      <!-- 16 state map -->
+      <h2><span class="material-icons">account_tree</span>State-by-state map (all 16 OS states)</h2>
+      <table>
+        <thead><tr><th style="width:130px">OS State</th><th>What the OS requires</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><span class="state-id">S0</span> Details Pending</td><td>Address + SSID before progressing</td><td>SaveAddress flow (landmark + voice + map)</td><td><span class="chip green"><span class="dot"></span>Exists</span></td></tr>
+          <tr><td><span class="state-id">S1</span> Booking Created</td><td>Canonical "a valid paid booking exists" state</td><td><code>installationStatus=PENDING</code> + sticky banner</td><td><span class="chip amber"><span class="dot"></span>Implicit</span></td></tr>
+          <tr><td><span class="state-id">S2</span> Install-Contact Pending</td><td>"Who will be home?" — <strong>dispatch prerequisite</strong> (INV-B2I-02)</td><td><strong>Nothing.</strong> No alternate-contact capture; assumes booker is home</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><span class="state-id">S3</span> Awaiting CSP Assignment</td><td>"We're finding a partner near you"</td><td>Customer sees nothing</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><span class="state-id">S4</span> Slot Proposal Pending</td><td>CSP proposes 2+ time options within a window</td><td>Backend returns dates; no "who proposed", no window</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><span class="state-id">S5</span> Slot Proposed, Awaiting Customer</td><td>Customer must choose; clock running</td><td><code>SlotSelectionScreen</code> (date-only, no time window)</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><span class="state-id">S6</span> Escalation In Progress</td><td>WhatsApp → IVR → Push on silence</td><td><strong>Nothing.</strong> No timeout, no escalation ladder</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><span class="state-id">S7</span> Closure Proposed</td><td>"Respond, or we close this with a full refund"</td><td><strong>Nothing</strong></td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><span class="state-id">S8</span> Slot Confirmed</td><td><strong>Explicit</strong> customer action, logged, never auto (INV-B2I-01)</td><td><code>acceptSlot(date)</code> — closest match, but no confirmation contract</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><span class="state-id">S9</span> Technician Assigned</td><td>Technician name + ETA window shown to customer</td><td><strong>No technician info ever shown</strong></td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><span class="state-id">S10</span> Install Attempt In Progress</td><td>"Install in progress" + mandatory structured outcome (INV-B2I-03)</td><td><strong>Nothing</strong> customer-side</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><span class="state-id">S11</span> Booking Rerouted</td><td>"We've reassigned you to a new partner"</td><td><strong>Nothing</strong></td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><span class="state-id">S12</span> Reschedule Requested</td><td>Right from any state, counted + tolerance limited (INV-B2I-05)</td><td>Re-do slot via chat CTA; not counted/limited</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><span class="state-id">S13</span> Dropped + Attribution</td><td>Tri-bucket: customer-truth / CSP-execution / system; no "unknown" (INV-B2I-04)</td><td>Cancel-with-reason exists; <strong>no attribution model</strong></td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><span class="state-id">S14</span> Install Completed</td><td>Verified via OTP / speed test / telemetry → active stock</td><td>Speed-test <em>video</em> + WiFi connect + selfie — self-reported, not verified</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><span class="state-id">S15</span> Exit OS Handoff</td><td>Refund / closure / history handoff</td><td><code>REFUND_IN_PROCESS</code> banner exists as a hook</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+        </tbody>
+      </table>
+      <p class="footnote">
+        <strong>Score:</strong> ~3 green · 7 partial · 6 fully missing. The 6 missing states (S2, S3, S6, S7, S9, S11) are exactly the
+        coordination states that cause the "kab lagega" anxiety the OS is built to eliminate.
+      </p>
+
+      <!-- biggest gaps -->
+      <h2><span class="material-icons">priority_high</span>The 5 biggest gaps to improve</h2>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">1</span><span class="gap-title">No install-contact capture (S2)</span><span class="sev crit">CRITICAL</span></div>
+        <p>The OS makes "who will be home?" a hard dispatch prerequisite (INV-B2I-02). The app assumes the booker is always home — the single biggest cause of failed installs. Also ties into the known multi-account identity gap.</p>
+        <div class="fix"><b>Fix →</b> A new screen after address: <em>"सेटअप के समय घर पर कौन होगा?"</em> (same as me / someone else + phone). Block dispatch until resolved.</div>
+      </div>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">2</span><span class="gap-title">No status / tracking surface (S3, S9, S10, S11)</span><span class="sev crit">CRITICAL</span></div>
+        <p>70% of chat is "when will it happen?". The app's only answer is a sticky banner that jumps from "Setup pending" straight to "Live" — it never shows <em>finding partner → slot confirmed → technician assigned → on the way → installing</em>. The OS requires the customer always knows the state (Constitution rule C4).</p>
+        <div class="fix"><b>Fix →</b> A real order-tracking screen showing the live state, the next step, and an ETA.</div>
+      </div>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">3</span><span class="gap-title">No anti-limbo clocks or escalation (S6, S7)</span><span class="sev crit">CRITICAL</span></div>
+        <p>The app has zero timeouts after booking. A silent customer or a non-responsive CSP leaves the booking in limbo forever. The OS says <em>every state has a clock</em> (INV-B2I-07); silence triggers WhatsApp → IVR → Push, then an honest closure-with-refund — never silent consent.</p>
+        <div class="fix"><b>Fix →</b> Server-driven timeouts + escalation ladder; app needs surfaces to reflect "we're trying to reach you" and "respond or we refund".</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">4</span><span class="gap-title">No technician visibility (S9 / S10)</span><span class="sev high">HIGH</span></div>
+        <p>The customer never sees technician name, ETA, or "on the way". The OS makes this a required notification — and it's the trust-builder that actually makes a customer "go home happy".</p>
+        <div class="fix"><b>Fix →</b> Technician card (name + photo + ETA window) plus an en-route notification.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">5</span><span class="gap-title">Drops have no structured attribution (S13)</span><span class="sev high">HIGH</span></div>
+        <p>The cancel flow collects a reason but has no customer / CSP / system bucket. The OS forbids "unknown" (INV-B2I-04) because attribution is what drives <em>fair</em> refunds — the customer never pays for Wiom's mistakes (Constitution rule C2).</p>
+        <div class="fix"><b>Fix →</b> Structured outcome model + honest messaging: "This one was on us — full refund on the way."</div>
+      </div>
+
+      <!-- fairness principles -->
+      <h2><span class="material-icons">balance</span>Fairness principles the OS enforces (C1–C4)</h2>
+      <table>
+        <thead><tr><th style="width:150px">Rule</th><th>What it means</th><th>Where the app falls short</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C1 · Canonical Truth</strong></td><td>One source of truth everywhere; divergence = system failure</td><td>State scattered across session flags + chat; no single canonical store surfaced</td></tr>
+          <tr><td><strong>C2 · System-Owned Failure</strong></td><td>If Wiom broke it, Wiom owns it; customer never pays for our mistakes</td><td>No attribution → can't tell whose fault a drop was → refunds can't be deterministic</td></tr>
+          <tr><td><strong>C3 · Restorative Recovery</strong></td><td>Compensation formula-based, automatic, same for everyone</td><td>No reroute/reschedule ceilings; no automatic recovery path</td></tr>
+          <tr><td><strong>C4 · Clarity of State</strong></td><td>Customer always knows what's happening with their service</td><td>The "kab lagega" problem — the banner hides the entire coordination window</td></tr>
+        </tbody>
+      </table>
+
+      <!-- what app does well -->
+      <h2><span class="material-icons">thumb_up</span>What the app already does well (keep &amp; extend)</h2>
+      <ul class="clean">
+        <li><strong>Pre-payment funnel</strong> — serviceability, cost breakdown (with A/B variants), OTP, Juspay + QR payment with polling/recovery. Maps cleanly to S0→S1.</li>
+        <li><strong>Completion ritual</strong> — WiFi connect → speed test → password → family selfie → rating is genuinely strong emotional design. It just needs <em>verification</em> (telemetry/OTP) to satisfy S14.</li>
+        <li><strong>Reschedule via chat</strong> already exists — just needs to become a governed, counted right with a tolerance limit (CP-11).</li>
+        <li><strong>Refund-in-process</strong> state already exists — a real hook for S15 Exit handoff.</li>
+      </ul>
+
+      <h2><span class="material-icons">report_problem</span>What's only skeletal (needs real work)</h2>
+      <ul class="clean warn">
+        <li><strong>Install-contact</strong> — not captured at all.</li>
+        <li><strong>Coordination states</strong> S3/S6/S7/S9/S10/S11 — no customer-facing surface.</li>
+        <li><strong>Clocks &amp; escalation</strong> — only OTP-resend (30s) and payment (5min) timers exist; nothing post-booking.</li>
+        <li><strong>Attribution</strong> — drops are unstructured; no tri-bucket.</li>
+        <li><strong>Install verification</strong> — completion is self-reported, not machine-verified.</li>
+        <li><strong>Notifications</strong> — no app-level install-stage push; relies on CleverTap campaigns.</li>
+      </ul>
+
+      <div class="divider"></div>
+      <p class="footnote">
+        Sources — App: <span class="src">feature/booking</span>, <span class="src">feature/chat</span>, <span class="src">feature/installation</span>, <span class="src">core/model/BookingResponse.kt</span>.
+        OS: <span class="src">os-specs/wiom-cust-b2i-os-v3.1-locked-20260519.md</span>, <span class="src">one-pagers/b2i-os-onepager.md</span>, registries ESR/SPR/Routing v2.0.
+      </p>
+    </section>
+
+    <!-- ===================== TAB 2: CONTINUITY ===================== -->
+    <section class="tab-panel" id="tab-continuity">
+      <div class="page-eyebrow">OS #2 · Recharge / Continuity</div>
+      <h1 class="page-title">Recharge / Continuity OS: Current App vs New OS</h1>
+      <div class="page-meta">App: <code>customer-app-kotlin</code> (feature/renewal) &nbsp;·&nbsp; Spec: <span class="src">wiom-cust-continuity-os-v1.0.1-locked-20260528</span> &nbsp;·&nbsp; Updated 2026-05-29</div>
+      <p class="page-lead">
+        How the existing app keeps an active customer's connection running — recharges, plan renewal, expiry, grace — measured against
+        the new Continuity OS. The OS's whole reason to exist: <strong>"It handles customers correctly. It does not manufacture recharges."</strong>
+        Non-payment is treated as a neutral, reversible pause — never as churn, never with pressure.
+      </p>
+
+      <!-- snapshot stats -->
+      <div class="stats">
+        <div class="stat"><div class="num">8</div><div class="lbl">Postures the OS defines</div></div>
+        <div class="stat amber"><div class="num">1</div><div class="lbl">Posture the app effectively has (Normal)</div></div>
+        <div class="stat red"><div class="num">7</div><div class="lbl">Postures missing in app</div></div>
+        <div class="stat red"><div class="num">15-day</div><div class="lbl">reservation window — app has none</div></div>
+      </div>
+
+      <!-- core mismatch -->
+      <h2><span class="material-icons">compare_arrows</span>The core mismatch</h2>
+      <p>
+        Both sides agree the customer is <strong>PayG / recharge-based</strong> (the app has even built the forced ₹500→recharge migration).
+        But they diverge on <strong>what non-payment means</strong>. The app treats expiry as a problem to fix: validity ends → <code>GRACE</code> →
+        net blocked → "Recharge" nudge → if you don't pay, the router gets recalled (<code>ROUTER_REFUND_ORDER_*</code>) and service is stopped.
+        The OS treats non-payment as a <strong>neutral, reversible pause</strong>: a recharge is a <em>voluntary reaffirmation</em>, absence of one
+        licenses <em>no</em> inference about the customer, and a 15-day reservation window protects the connection with <strong>zero coercion</strong>.
+      </p>
+      <div class="flow">CURRENT APP        ACTIVE → (validity ends) → <b style="color:#F2B8D6">GRACE</b> → net blocked + "Recharge!" → no pay → <b style="color:#F2B8D6">ROUTER RECALL → SERVICE STOPPED</b>
+                                                    │ one posture: nudge to pay        │ lapse treated as churn/exit
+
+NEW CONTINUITY OS  ACTIVE → (validity ends) → <b style="color:#7EE2A8">RESERVATION WINDOW (T+0…T+15)</b> → 8 postures chosen by signals → reaffirm anytime → instant restart
+                                              │ net off, but relationship alive, support intact, NO pressure, fully reversible to T+25</div>
+
+      <div class="callout key">
+        <span class="material-icons">vpn_key</span>
+        <div>
+          <div class="callout-title">One-line takeaway</div>
+          <p>The app has the <strong>recharge plumbing</strong> (plans, Juspay/QR, autopay, migration, receipts) — genuinely solid. What it lacks is
+          the <strong>continuity doctrine</strong>: a reservation window instead of a recall, posture instead of one-size nudging, and the hard rule
+          that <em>silence is never read as churn and never met with pressure</em>.</p>
+        </div>
+      </div>
+
+      <!-- 8 postures map -->
+      <h2><span class="material-icons">tune</span>Posture map (the 8 OS postures)</h2>
+      <p>The OS picks exactly one posture per cycle, driven by signals from SQ Driver, Recovery, and Relationship-State OS. The app has no posture engine — it shows the same "Recharge" nudge to everyone, regardless of why they haven't paid.</p>
+      <table>
+        <thead><tr><th style="width:160px">OS Posture</th><th>What it requires</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Normal</strong></td><td>Truthful state + low-friction recharge, no persuasion</td><td>"Net inactive" banner + Recharge CTA → plans → pay</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><strong>Softened</strong></td><td>Lower pressure when quality is degraded / customer fragile</td><td>No quality/fragility input; same nudge regardless</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Deferred</strong></td><td>Pause proactive prompts when quality is unknown/unusable</td><td>No concept</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Recovery-first</strong></td><td>Never ask to pay for broken net — route to Recovery first</td><td>No SQ/Recovery awareness; will still nudge to recharge</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Education-first</strong></td><td>Route to support/education when fault is customer-environment</td><td>No concept</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Clarify-state-first</strong></td><td>Verify intention in T+10–T+15 window, not increase urgency</td><td>No verification window</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Passive-only</strong></td><td>Go fully silent on explicit pause; keep recharge path live</td><td>No "pause" concept; banner + nudges continue</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Grace-extension</strong></td><td>Extend window only on authorized Recovery/Credit compensation</td><td>Backend grace exists but not compensation-driven</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+        </tbody>
+      </table>
+
+      <!-- reservation window -->
+      <h2><span class="material-icons">schedule</span>The reservation window (T+0 → T+15) vs the app's grace→recall</h2>
+      <table>
+        <thead><tr><th style="width:200px">OS concept</th><th>What the OS requires</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Reservation window</strong> (15 days)</td><td>Connection held, customer keeps app + support + recharge; net off but relationship alive</td><td>Backend "GRACE" (~7d) then router recall begins</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><strong>Reservation-mode degradation</strong> (C2 Scenario A)</td><td>Binary: paid = net on, unpaid = net off. No "slow mode" coercion</td><td>Net blocked on expiry — matches the binary intent</td><td><span class="chip green"><span class="dot"></span>Aligned</span></td></tr>
+          <tr><td><strong>Reaffirmation primitive</strong></td><td>Any recharge — even 1-day — resets the 15-day window, equally valid</td><td>Recharge reactivates, but no window-reset semantics; treated as renewal</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><strong>Late-response reversal</strong> (T+15→T+25)</td><td>Customer can recharge during recall window → reverts to ACTIVE</td><td>Once router recall completes → <code>SERVICE_STOPPED</code>, no easy reversal surfaced</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Reservation expiry ≠ exit</strong></td><td>RESERVATION_EXPIRED is a custody event, not churn classification</td><td>App conflates non-payment with router-recall / service-stopped (exit-like)</td><td><span class="chip red"><span class="dot"></span>Conflated</span></td></tr>
+        </tbody>
+      </table>
+
+      <!-- biggest gaps -->
+      <h2><span class="material-icons">priority_high</span>The 5 biggest gaps to improve</h2>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">1</span><span class="gap-title">Lapse is treated as churn, not a reversible pause</span><span class="sev crit">CRITICAL</span></div>
+        <p>The app's path is expiry → grace → <code>ROUTER_REFUND_ORDER_*</code> → <code>SERVICE_STOPPED</code>. The OS's core doctrine (INV-CON-01, INV-CON-13) is that <em>absence of recharge is neutral</em> and "lapsed customer" as a classification is prohibited. Reservation expiry is a custody event, never an exit.</p>
+        <div class="fix"><b>Fix →</b> Replace the grace→recall framing with a 15-day reservation window + a T+15→T+25 reversal window. Keep app, support, and recharge fully accessible throughout.</div>
+      </div>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">2</span><span class="gap-title">No posture engine — one nudge for everyone</span><span class="sev crit">CRITICAL</span></div>
+        <p>The app shows the same "Recharge" CTA whether the net is broken (Wiom's fault), the customer explicitly paused, or quality is degraded. The OS selects 1 of 8 postures from SQ / Recovery / Relationship-State signals. Most importantly: <strong>never ask a customer to pay for broken internet</strong> (Recovery-first).</p>
+        <div class="fix"><b>Fix →</b> Drive the recharge surface from a server-decided posture (CONTINUITY_POSTURE_DECIDED). At minimum wire Recovery-first + Passive-only before nudging.</div>
+      </div>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">3</span><span class="gap-title">No "pause" concept (Passive-only posture)</span><span class="sev high">HIGH</span></div>
+        <p>A customer who deliberately wants to pause (travel, seasonal) has no path — the app keeps nudging. The OS's Passive-only posture goes <em>completely silent</em> while keeping the recharge link live, and reads the pause as legitimate, not churn.</p>
+        <div class="fix"><b>Fix →</b> Add an explicit "pause my net" path that silences reminders and preserves a one-tap restart.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">4</span><span class="gap-title">Pre-expiry reminders are skeletal</span><span class="sev high">HIGH</span></div>
+        <p>There's a <code>MorningReminderScreen</code> but nothing triggers it; <code>NotificationEventScheduler</code> only handles booking, not renewal. No "3 days left" countdown, no renewal WorkManager job — reminders rely entirely on backend CleverTap pushes. The OS needs disciplined, cadence-bounded, non-coercive reminders (CP-CON-05/06).</p>
+        <div class="fix"><b>Fix →</b> Add a renewal reminder worker + an in-app days-left surface, with cadence caps and messaging discipline (no guilt/urgency framing).</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">5</span><span class="gap-title">Messaging risks coercion; no anti-pressure guardrail</span><span class="sev high">HIGH</span></div>
+        <p>The blocked-net "Recharge" banner is the only lever, and there's no guardrail against recharge-under-pressure. The OS bans guilt framing, urgency pressure, and abnormalizing pause across all postures (INV-CON-11), and actively measures a "recharge-under-pressure" guardrail KRA — if it rises, cadence must relax.</p>
+        <div class="fix"><b>Fix →</b> Audit all recharge/expiry copy against the messaging-discipline rules; instrument a pressure guardrail metric.</div>
+      </div>
+
+      <!-- fairness principles -->
+      <h2><span class="material-icons">balance</span>Fairness principles the OS enforces (C1–C4)</h2>
+      <table>
+        <thead><tr><th style="width:150px">Rule</th><th>What it means here</th><th>Where the app falls short</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C1 · Canonical Truth</strong></td><td>Continuity-state is one canonical truth per service instance</td><td>State derived ad-hoc from <code>CustomerStatus</code> → sticky banner; no canonical posture/continuity-state</td></tr>
+          <tr><td><strong>C2 · System-Owned Failure</strong></td><td>No recharge pressure while Wiom-caused degradation is unresolved (Recovery-first)</td><td>App has no quality/recovery awareness — will nudge to pay for broken net</td></tr>
+          <tr><td><strong>C3 · Restorative Recovery</strong></td><td>Grace-extension only from authorized compensation; consistent for all</td><td>Grace is a fixed backend window, not compensation-driven or restorative</td></tr>
+          <tr><td><strong>C4 · Clarity of State</strong></td><td>Truthful state + recharge path visible regardless of posture</td><td>Mostly met for active/grace; breaks down at recall/stopped (limbo, no clear reversal)</td></tr>
+        </tbody>
+      </table>
+
+      <!-- what app does well -->
+      <h2><span class="material-icons">thumb_up</span>What the app already does well (keep &amp; extend)</h2>
+      <ul class="clean">
+        <li><strong>Recharge plumbing</strong> — plans, bill summary, coupons, Juspay + QR + WhatsApp, status polling, receipts. Maps cleanly to the Normal posture's "low-friction recharge".</li>
+        <li><strong>PayG migration already built</strong> — the forced ₹500→recharge migration (with idempotency) aligns with the OS's PayG-default doctrine.</li>
+        <li><strong>Binary net (paid=on / unpaid=off)</strong> — already matches C2 Scenario A; no coercive "slow mode".</li>
+        <li><strong>AutoPay / mandate</strong> — exists with discounts and clean cancel/restart; a hook for voluntary, non-coercive reaffirmation.</li>
+        <li><strong>Refund / router-recovery states</strong> exist — reusable as the Exit-OS handoff surface (once de-conflated from "lapse").</li>
+      </ul>
+
+      <h2><span class="material-icons">report_problem</span>What's only skeletal (needs real work)</h2>
+      <ul class="clean warn">
+        <li><strong>Reservation window</strong> — only a short backend grace; no 15-day custody window or T+15→T+25 reversal.</li>
+        <li><strong>Posture engine</strong> — none; one nudge fits all.</li>
+        <li><strong>Pause</strong> — no Passive-only path.</li>
+        <li><strong>Reminders</strong> — orphan reminder screen; no renewal worker; no days-left UI.</li>
+        <li><strong>Anti-coercion guardrails</strong> — no messaging-discipline audit, no pressure metric.</li>
+        <li><strong>Cross-OS signals</strong> — no consumption of SQ / Recovery / Relationship-State to modulate behavior.</li>
+      </ul>
+
+      <div class="divider"></div>
+      <p class="footnote">
+        Sources — App: <span class="src">feature/renewal</span>, <span class="src">core/model/RenewalModels.kt</span> (CustomerStatus, RenewalPlan, MandateInfo), <span class="src">core/data/store/RenewalDataStore.kt</span>, <span class="src">feature/chat/ChatScreen.kt</span> (ChatStickyState).
+        OS: <span class="src">os-specs/wiom-cust-continuity-os-v1.0.1-locked-20260528.md</span>, <span class="src">one-pagers/continuity-os-onepager.md</span>, ESR/SPR v2.0 (CONTINUITY_* events, CP-CON-01…10), <span class="src">architecture v1.1.1</span> (Continuity Paradigm).
+      </p>
+    </section>
+
+    <!-- ===================== TAB 3: SQ DRIVER ===================== -->
+    <section class="tab-panel" id="tab-sq">
+      <div class="page-eyebrow">OS #3 · Service Quality Driver</div>
+      <h1 class="page-title">Service Quality (SQ) Driver OS: Current App vs New OS</h1>
+      <div class="page-meta">App: <code>customer-app-kotlin</code> &nbsp;·&nbsp; Spec: <span class="src">wiom-cust-sq-driver-os-v1.0-locked-20260519</span> &nbsp;·&nbsp; Updated 2026-05-29</div>
+      <p class="page-lead">
+        How the existing app senses and represents whether a customer's internet is actually working, measured against the new SQ Driver OS.
+        The OS is an <strong>epistemic engine</strong> — its only job is to emit honest, decomposed <em>quality truth</em> per connection.
+        Its one-line lock: <strong>"SQ Driver emits truth. It does not fix internet."</strong> This is the foundation every other OS reads from.
+      </p>
+
+      <!-- snapshot stats -->
+      <div class="stats">
+        <div class="stat"><div class="num">5</div><div class="lbl">Quality states the OS defines</div></div>
+        <div class="stat red"><div class="num">2</div><div class="lbl">App's quality states (active / inactive)</div></div>
+        <div class="stat red"><div class="num">0</div><div class="lbl">Real quality signals the app measures</div></div>
+        <div class="stat amber"><div class="num">~1050</div><div class="lbl">net-down calls/day the OS aims to cut</div></div>
+      </div>
+
+      <!-- core mismatch -->
+      <h2><span class="material-icons">compare_arrows</span>The core mismatch</h2>
+      <p>
+        This is the starkest gap of the three OSes so far. The app has <strong>almost no quality-truth layer at all</strong>. "Quality" is a single
+        binary backend flag (<code>NET_ACTIVE</code> / <code>INTERNET_INACTIVE</code>); the only "speed test" is a <strong>video the customer watches and
+        self-rates</strong> ("did it play smoothly?"); and when net is down, the app just <strong>captures a complaint and routes it to a call center</strong>.
+        The OS, by contrast, is a continuous epistemic system: it ingests router/netbox telemetry, classifies one of 5 quality states with a
+        <em>confidence</em> score, attributes the fault to one of 8 domains (Wiom-side vs customer-side), and emits that decomposed truth for
+        Continuity, Recovery, and Relationship-State OS to act on.
+      </p>
+      <div class="flow">CURRENT APP        net works? → <b style="color:#F2B8D6">binary flag</b> (active/inactive) ·· "speed test" = a <b style="color:#F2B8D6">video you self-rate</b> ·· net down → <b style="color:#F2B8D6">make a ticket → call centre</b>
+                       no telemetry · no measurement · no fault attribution · no confidence · ~1050 calls/day
+
+NEW SQ DRIVER OS   telemetry + complaints → <b style="color:#7EE2A8">5 quality states × confidence × 8 fault-domains</b> → QUALITY_STATE_CHANGED → Continuity / Recovery / Relationship-State
+                   decomposed truth · "Unknown" is honest · attribution-not-blame · the canonical quality layer everything else reads</div>
+
+      <div class="callout key">
+        <span class="material-icons">vpn_key</span>
+        <div>
+          <div class="callout-title">One-line takeaway</div>
+          <p>The app is a <strong>thin complaint-capture UI</strong> — all quality intelligence is absent or backend/CSP-hidden. The OS makes quality a
+          <strong>first-class, canonical, decomposed truth</strong>. Without this layer, Continuity's "Recovery-first" posture and Recovery's proactive
+          cases are <em>blind</em> — which is exactly why net-down today collapses into ~1050 calls/day.</p>
+        </div>
+      </div>
+
+      <!-- 5 quality states map -->
+      <h2><span class="material-icons">network_check</span>Quality-state map (the 5 OS states)</h2>
+      <table>
+        <thead><tr><th style="width:150px">OS State</th><th>What it requires (evidence-based)</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Healthy</strong></td><td>Telemetry within learned baseline; "all good"</td><td><code>NET_ACTIVE</code> flag = "Live" (means "paid", not "working well")</td><td><span class="chip amber"><span class="dot"></span>Proxy only</span></td></tr>
+          <tr><td><strong>Degraded</strong></td><td>Sustained below-baseline performance ("slow")</td><td><strong>No concept.</strong> App can't tell slow from fine</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Intermittent</strong></td><td>Repeated flips/instability in observation window</td><td><strong>No concept.</strong> "Frequent disconnection" only as a ticket label</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Unusable</strong></td><td>Sustained outage / below absolute floor</td><td>Inferred only via customer complaint → ticket; not measured</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Unknown</strong></td><td>Insufficient data — emitted honestly, not hidden</td><td>App has no confidence concept; absence ≈ assumed-fine</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+        </tbody>
+      </table>
+      <p class="footnote">The OS's own data: <strong>Unknown (74.1% continuation) performs worse than Unusable (82.8%)</strong> — epistemic invisibility is more dangerous than known-bad service. The app lives almost entirely in that invisible zone.</p>
+
+      <!-- core concepts -->
+      <h2><span class="material-icons">psychology</span>Core OS concepts vs app capability</h2>
+      <table>
+        <thead><tr><th style="width:200px">OS concept</th><th>What the OS requires</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Telemetry ingestion</strong></td><td>Router/netbox uptime, ping, latency, packet loss, reconnects (5-min cadence)</td><td>App reads <em>none</em>; only basic Android wifi connected/disconnected</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Real speed test</strong></td><td>Measured throughput vs baseline / absolute floor</td><td>A video the customer watches + self-rates "smooth / kept buffering"</td><td><span class="chip red"><span class="dot"></span>Fake</span></td></tr>
+          <tr><td><strong>Confidence scoring</strong></td><td>Every emission carries low/med/high confidence + source</td><td>No confidence model anywhere</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Fault attribution</strong> (8 domains)</td><td>upstream / local / endpoint / install-topology / customer-env / customer-behavior / platform / unknown</td><td>App can't distinguish Wiom-fault vs customer-device; all backend-hidden</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Decomposed truth</strong></td><td>STATE + FAULT_DOMAIN + SCOPE + CONFIDENCE — never a single 0–100 score</td><td>Single binary flag (the opposite of decomposed)</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Cluster / area degradation</strong></td><td>Cross-netbox correlation → "your area is down"</td><td>No proactive outage awareness; customer finds out by failing to connect</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>RDNI detection</strong> (paid, no net)</td><td>Detect recharge-done-no-internet → Unusable + platform_system, high confidence</td><td>No detection; surfaces only as a customer complaint</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+        </tbody>
+      </table>
+
+      <!-- biggest gaps -->
+      <h2><span class="material-icons">priority_high</span>The 5 biggest gaps to improve</h2>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">1</span><span class="gap-title">No quality-truth layer at all — only a paid/unpaid flag</span><span class="sev crit">CRITICAL</span></div>
+        <p>The app's "Live" status means <em>paid</em>, not <em>working</em>. A customer with terrible speed still shows <code>NET_ACTIVE</code>. The OS exists precisely to make quality a canonical, observed truth (C1). Every downstream OS depends on it — without it, "never ask a customer to pay for broken net" is unenforceable.</p>
+        <div class="fix"><b>Fix →</b> Stand up the SQ telemetry pipeline + emit <code>QUALITY_STATE_CHANGED</code>; surface a real quality state in the app distinct from the recharge flag.</div>
+      </div>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">2</span><span class="gap-title">Net-down deflects to ~1050 calls/day instead of self-resolving</span><span class="sev crit">CRITICAL</span></div>
+        <p>When net is down/slow the app captures a ticket and points the customer at the call centre — no diagnosis, no status, no "we already know your area is down". The OS's cluster-degradation + attribution would let the app proactively say "we see it, we're on it," deflecting the call entirely (the known ~1050 calls/day, ~₹30 each).</p>
+        <div class="fix"><b>Fix →</b> Consume <code>CLUSTER_DEGRADATION_DETECTED</code> + quality state to show proactive "known issue / being fixed" status before offering a ticket.</div>
+      </div>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">3</span><span class="gap-title">The "speed test" measures nothing</span><span class="sev high">HIGH</span></div>
+        <p>It's a video the customer watches and self-rates. It can't distinguish Degraded from Healthy, produces no metric, and only runs once at install. The OS needs measured throughput against a baseline/floor.</p>
+        <div class="fix"><b>Fix →</b> Add a real on-demand speed/health check for active customers that feeds (and is reconciled against) SQ telemetry.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">4</span><span class="gap-title">No fault attribution → C2 can't be honored</span><span class="sev high">HIGH</span></div>
+        <p>The app can't tell a Wiom network fault from the customer's router placement or device. The OS's 8-domain attribution is what lets the system own its own failures (C2) and route customer-side issues to education instead of a truck-roll.</p>
+        <div class="fix"><b>Fix →</b> Surface FAULT_DOMAIN-driven guidance: Wiom-side → "on us, being fixed"; customer-side → in-app troubleshooting (placement, restart).</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">5</span><span class="gap-title">Ticket closure treated as resolution; no restoration verification</span><span class="sev high">HIGH</span></div>
+        <p>Once a ticket is made, the customer sees nothing more and closure is assumed to mean "fixed". The OS rule INV-SQ-16 is explicit: <em>ticket closure ≠ quality restoration</em> — only sustained healthy telemetry counts, with a restoration-window check.</p>
+        <div class="fix"><b>Fix →</b> Show live ticket/restoration status; mark "resolved" only after the SQ restoration window confirms sustained healthy telemetry.</div>
+      </div>
+
+      <!-- fairness principles -->
+      <h2><span class="material-icons">balance</span>Fairness principles the OS enforces (C1–C4)</h2>
+      <table>
+        <thead><tr><th style="width:150px">Rule</th><th>What it means here</th><th>Where the app falls short</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C1 · Canonical Truth</strong></td><td>SQ is the single source of operational quality truth</td><td>No quality truth exists; only a paid/unpaid flag stands in for it</td></tr>
+          <tr><td><strong>C2 · System-Owned Failure</strong></td><td>Honest attribution; Wiom-side faults never shifted to the customer</td><td>No attribution at all — can't prove a fault is Wiom's, so can't own it</td></tr>
+          <tr><td><strong>C3 · Restorative Recovery</strong></td><td>SQ emits the truth that triggers Recovery's restoration obligations</td><td>No emission → Recovery is blind → no proportional restoration</td></tr>
+          <tr><td><strong>C4 · Clarity of State</strong></td><td>Quality state is translatable to the customer ("slow", "area down")</td><td>Customer only ever sees binary live/inactive; degradation is invisible</td></tr>
+        </tbody>
+      </table>
+
+      <!-- what app does well -->
+      <h2><span class="material-icons">thumb_up</span>What the app already does well (keep &amp; extend)</h2>
+      <ul class="clean">
+        <li><strong>Structured ticket subtypes</strong> — <code>INTERNET_SUPPLY_DOWN</code> / <code>FREQUENT_DISCONNECTION</code> map cleanly to Unusable / Intermittent; a starting point for fault taxonomy.</li>
+        <li><strong>pingStatus() hook</strong> — the app already pings router reachability on complaint; a real (if thin) telemetry seed to build on.</li>
+        <li><strong>Install-time quality gate</strong> — the speed-check ritual establishes the idea of a quality checkpoint; just needs to become a real measurement.</li>
+        <li><strong>Binary net flag + recharge link</strong> — fine for Continuity, and a clean surface to layer real quality state onto.</li>
+      </ul>
+
+      <h2><span class="material-icons">report_problem</span>What's missing entirely (needs ground-up work)</h2>
+      <ul class="clean warn">
+        <li><strong>Telemetry ingestion</strong> — no router/netbox signals read or sent.</li>
+        <li><strong>5 quality states + confidence</strong> — none; only binary.</li>
+        <li><strong>Fault attribution</strong> — no Wiom-side vs customer-side distinction.</li>
+        <li><strong>Real speed test</strong> — current one is a self-rated video.</li>
+        <li><strong>Proactive outage / cluster messaging</strong> — none; purely reactive.</li>
+        <li><strong>Restoration verification</strong> — ticket closure assumed = fixed.</li>
+        <li><strong>RDNI detection</strong> — paid-but-no-internet not detected.</li>
+      </ul>
+
+      <div class="callout info">
+        <span class="material-icons">info</span>
+        <div>
+          <div class="callout-title">Important nuance — SQ is mostly NOT a customer-app feature</div>
+          <p>SQ Driver is a <strong>backend epistemic OS</strong>; the customer never sees "SQ state" directly. So most gaps here are <em>platform/telemetry</em> gaps, not screens to design. The app's role is to (a) feed signals up (real speed test, pingStatus) and (b) faithfully <em>translate</em> the emitted quality state into honest customer-facing status — which today it cannot, because the truth layer beneath it doesn't exist.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="footnote">
+        Sources — App: <span class="src">core/model/BookingResponse.kt</span> (ChatStickyState), <span class="src">feature/installation/SpeedTestVideoScreen.kt</span>, <span class="src">feature/installation/SlowInternetScreen.kt</span>, <span class="src">feature/chat/ChatViewModel.kt</span> (createTicket, pingStatus), <span class="src">core/model/RenewalModels.kt</span> (TicketSubType).
+        OS: <span class="src">os-specs/wiom-cust-sq-driver-os-v1.0-locked-20260519.md</span>, <span class="src">one-pagers/sq-driver-onepager.md</span>, ESR v2.0 (QUALITY_STATE_CHANGED, QUALITY_INVESTIGATION_TRIGGERED, CLUSTER_DEGRADATION_DETECTED), SPR v2.0 (CP-SQ-01…14).
+      </p>
+    </section>
+
+    <!-- ===================== TAB 4: AT-RISK RESOLUTION ===================== -->
+    <section class="tab-panel" id="tab-arr">
+      <div class="page-eyebrow">OS #4 · At-Risk Resolution</div>
+      <h1 class="page-title">At-Risk Resolution OS: Current App vs New OS</h1>
+      <div class="page-meta">App: <code>customer-app-kotlin</code> &nbsp;·&nbsp; Spec: <span class="src">wiom-cust-at-risk-resolution-os-v1.0-locked-20260528</span> (formerly "Retention OS") &nbsp;·&nbsp; Updated 2026-05-29</div>
+      <p class="page-lead">
+        How the existing app treats a customer who is unhappy, lapsing, or trying to leave — measured against the new At-Risk Resolution OS.
+        This OS is deliberately <strong>NOT a retention/save desk</strong>. Its one-line lock: <strong>"Act on the problem, never on the decision."</strong>
+        A customer who leaves with their deterioration fully resolved is counted as a <em>success</em>.
+      </p>
+
+      <!-- snapshot stats -->
+      <div class="stats">
+        <div class="stat"><div class="num">8</div><div class="lbl">Governed tools (T1–T8) the OS allows</div></div>
+        <div class="stat red"><div class="num">0</div><div class="lbl">At-risk concept in the app</div></div>
+        <div class="stat amber"><div class="num">29</div><div class="lbl">anti-coercion doctrines the OS enforces</div></div>
+        <div class="stat green"><div class="num">None</div><div class="lbl">save/retention metric — by design</div></div>
+      </div>
+
+      <!-- core mismatch -->
+      <h2><span class="material-icons">compare_arrows</span>The core mismatch</h2>
+      <p>
+        This is an <strong>inverse</strong> gap from the others. It's not that the app does a primitive version of this OS — it's that the app has
+        <strong>no at-risk concept at all</strong>, while the OS is an elaborate machine specifically built to <em>prevent</em> the manipulative
+        "retention" the app might naïvely add. Today: everyone is treated identically; a cancellation reason is captured and (for some reasons)
+        routed to a <strong>support call</strong> — exactly the "save desk" path the OS prohibits; a lapsed customer just gets <strong>router recovery</strong>,
+        no re-engagement; and a 1-star rating triggers nothing. The OS instead: consumes an evidence-backed <code>AT_RISK</code> signal, opens a
+        governed case, and resolves the <em>underlying problem</em> with a bounded 8-tool kit — never a discount, never a "please stay."
+      </p>
+      <div class="flow">CURRENT APP        unhappy / leaving → capture reason → (some) <b style="color:#F2B8D6">route to support call</b> ·· lapsed → <b style="color:#F2B8D6">router recall</b> ·· 1★ rating → nothing
+                       no at-risk concept · everyone treated the same · reason logged, not actioned · the "call" can become an ad-hoc save desk
+
+NEW ARR OS         RS OS emits <b style="color:#7EE2A8">AT_RISK (evidence-backed)</b> → governed case → resolve the PROBLEM via T1–T8 → free decision
+                   "act on the problem, never the decision" · non-contingent compensation · exit-with-resolution = success · NO save offers</div>
+
+      <div class="callout key">
+        <span class="material-icons">vpn_key</span>
+        <div>
+          <div class="callout-title">One-line takeaway</div>
+          <p>The right move here is <strong>not</strong> "add retention features." The OS's whole point is that a save desk is the wrong answer. The app
+          needs to (a) gain an evidence-backed at-risk concept fed from Relationship-State OS, and (b) <em>retire</em> the ad-hoc reason→call→improvise
+          path in favour of governed problem-resolution. The app's biggest risk isn't doing too little — it's that its support-call path can quietly
+          become the coercive save desk the OS exists to forbid.</p>
+        </div>
+      </div>
+
+      <!-- state map -->
+      <h2><span class="material-icons">account_tree</span>State / lifecycle map</h2>
+      <table>
+        <thead><tr><th style="width:200px">OS state / concept</th><th>What the OS requires</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>AT_RISK</strong> (entry)</td><td>Evidence-backed Medium+ classification from Relationship-State OS — the sole automatic trigger</td><td><strong>No at-risk concept.</strong> No risk score, flag, or tier anywhere</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>RESOLVING_ACTIVE</strong></td><td>Governed intervention in progress (T1–T8 applied to the problem)</td><td>No case/resolution state; cancellation is a one-shot transaction</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>RESOLVING_MONITORING</strong></td><td>Obligations discharged; watchful-waiting, 30-day cap, signed</td><td>No concept</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Resolved → ACTIVE_ENTITLED</strong></td><td>Deterioration resolved + 30-day positive trajectory</td><td>No concept (recharge simply reactivates)</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>at-risk-resolution-failed → Exit</strong></td><td>Structured F1–F4/UNKNOWN payload, clean handoff to Exit OS</td><td>Cancellation → router recall; no structured failure taxonomy</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+        </tbody>
+      </table>
+
+      <!-- toolkit map -->
+      <h2><span class="material-icons">build</span>The 8 governed tools vs what the app does</h2>
+      <p>The OS allows exactly these 8 tools and nothing else (improvisation is a doctrine violation). Critically, <strong>discounts, save offers, loyalty programs, and "stay and get X" framing are explicitly prohibited.</strong></p>
+      <table>
+        <thead><tr><th style="width:230px">OS tool</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>T1</strong> Acknowledgment (event-referenced)</td><td>No structured acknowledgment; generic chat/support</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>T2</strong> Recovery-debt discharge escalation</td><td>No obligation ledger surfaced</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>T3</strong> SQ investigation flag</td><td>No SQ layer to flag (see Tab 3)</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>T4</strong> Recovery action flag</td><td>No Recovery OS integration</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>T5</strong> Non-contingent compensation</td><td>No compensation concept; any "offer" today would be contingent on staying (prohibited)</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>T6</strong> Reservation-window extension request</td><td>Fixed backend grace; not corrective-action-driven</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>T7</strong> Confirm-and-handoff (non-Wiom cases)</td><td>Reason→call→cancel, but no verify-then-clean-handoff discipline</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><strong>T8</strong> Documented watchful-waiting</td><td>No concept</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td style="color:var(--text-danger)"><strong>✗ Discounts / save offers / "stay &amp; get X"</strong></td><td>Not in app today — but the reason→support-call path is where this could creep in</td><td><span class="chip amber"><span class="dot"></span>Risk</span></td></tr>
+        </tbody>
+      </table>
+
+      <!-- biggest gaps -->
+      <h2><span class="material-icons">priority_high</span>The 5 biggest gaps to improve</h2>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">1</span><span class="gap-title">No at-risk concept — everyone treated identically</span><span class="sev crit">CRITICAL</span></div>
+        <p>The app has no risk score, flag, or tier. A loyal customer with a genuine grievance and a casual one-time user follow the exact same exit path. The OS triggers only on evidence-backed Medium+ <code>AT_RISK</code> from Relationship-State OS — meaning effort goes where there's real, evidenced deterioration.</p>
+        <div class="fix"><b>Fix →</b> Consume <code>AT_RISK</code> classification (depends on Relationship-State OS, Tab 5) and open a governed case instead of a flat cancellation transaction.</div>
+      </div>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">2</span><span class="gap-title">The reason→support-call path risks becoming a coercive save desk</span><span class="sev crit">CRITICAL</span></div>
+        <p>Today, reasons like "high price" / "process unclear" route to a support call with no governed script — the exact place where ad-hoc discounts and "please stay" pressure appear. The OS forbids save desks, save budgets, win-back campaigns, and discretionary retention spend (D16). This is the app's single biggest <em>fairness</em> risk.</p>
+        <div class="fix"><b>Fix →</b> Replace improvised support saves with the bounded T1–T8 kit; route the underlying problem (price confusion → clarify; quality → SQ/Recovery), never a counter-offer to stay.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">3</span><span class="gap-title">Cancellation reasons are logged, not resolved</span><span class="sev high">HIGH</span></div>
+        <p>Reasons are captured (7 booking categories, 4 autopay) and fired to analytics, but nothing acts on them in-app. The OS turns the reason into a resolution path — fix what we broke, discharge what we owe, or verify-and-clean-handoff.</p>
+        <div class="fix"><b>Fix →</b> Map each reason to a governed tool/owner; close the loop with the customer (event-referenced), not just a log entry.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">4</span><span class="gap-title">Lapse = router recall, with no resolution attempt</span><span class="sev high">HIGH</span></div>
+        <p>A lapsing customer goes straight to <code>ROUTER_REFUND_ORDER_*</code> logistics. If their lapse was driven by an unresolved Wiom failure, that deterioration is never addressed — the app just recovers the hardware. The OS requires AT_RISK resolution to act <em>before</em> Continuity fires <code>RESERVATION_EXPIRED</code> (CP-ARR-07 ≤ CP-CON-10).</p>
+        <div class="fix"><b>Fix →</b> Before recall, check for an open at-risk case; resolve the problem first, then either restore or hand to Exit with a structured reason.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">5</span><span class="gap-title">Unhappiness signals (1★, repeat complaints) trigger nothing</span><span class="sev high">HIGH</span></div>
+        <p>Low ratings are collected only for ticket closure; repeat complaints don't escalate. These are exactly the deterioration signals that should feed an at-risk classification — but with the OS's discipline (signals feed RS OS evidence; they are <em>not</em> a save trigger and the customer is never told they're "at risk").</p>
+        <div class="fix"><b>Fix →</b> Route dissatisfaction signals into Relationship-State OS evidence (not a save trigger); let governed resolution follow only on Medium+ AT_RISK.</div>
+      </div>
+
+      <!-- fairness principles -->
+      <h2><span class="material-icons">balance</span>Fairness principles the OS enforces (C1–C4)</h2>
+      <table>
+        <thead><tr><th style="width:150px">Rule</th><th>What it means here</th><th>Where the app falls short</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C1 · Canonical Truth</strong></td><td>Sole author of <code>RESOLVING</code>; every case has structured reason + evidence; no silent closes</td><td>No case/state concept; cancellations close silently after a logged reason</td></tr>
+          <tr><td><strong>C2 · System-Owned Failure</strong></td><td>Only legitimate ground to act is "Wiom failed and hasn't made it right"</td><td>No way to tell if a leave is Wiom-caused; can't act on the right ground</td></tr>
+          <tr><td><strong>C3 · Restorative Recovery</strong></td><td>T5 compensation is non-contingent on staying (same payout on exit)</td><td>No compensation; any retention "offer" would be staying-contingent (prohibited)</td></tr>
+          <tr><td><strong>C4 · Clarity of State</strong></td><td>Customer never told they're "at risk"; all comms event-referenced</td><td>N/A today (no at-risk concept) — but a future build must honor this</td></tr>
+        </tbody>
+      </table>
+
+      <!-- what app does well -->
+      <h2><span class="material-icons">thumb_up</span>What the app already does well (keep &amp; extend)</h2>
+      <ul class="clean">
+        <li><strong>Structured cancellation reasons</strong> — 7 booking + 4 autopay categories; a clean substrate for reason-aware resolution (just needs to be actioned, not logged).</li>
+        <li><strong>Reschedule / change-address alternatives</strong> — for "wrong address" / "not available on date", the app already offers a fix instead of just cancelling — this is genuinely OS-aligned (resolve the problem).</li>
+        <li><strong>No save-offer machinery yet</strong> — the app hasn't built discounts/win-back, so there's nothing prohibited to tear out; it can adopt the OS discipline cleanly.</li>
+        <li><strong>Rating sentiment split</strong> (positive/negative reasons) — a ready feed for deterioration evidence into Relationship-State OS.</li>
+      </ul>
+
+      <h2><span class="material-icons">report_problem</span>What's missing entirely (needs ground-up work)</h2>
+      <ul class="clean warn">
+        <li><strong>At-risk classification</strong> — no concept; depends on Relationship-State OS.</li>
+        <li><strong>Governed case + RESOLVING states</strong> — none.</li>
+        <li><strong>T1–T8 toolkit</strong> — no bounded resolution tools.</li>
+        <li><strong>Non-contingent compensation</strong> — no concept.</li>
+        <li><strong>Structured failure taxonomy → Exit</strong> — cancellation isn't classified.</li>
+        <li><strong>Anti-coercion guardrails</strong> — nothing stops the support call becoming a save desk.</li>
+      </ul>
+
+      <div class="callout info">
+        <span class="material-icons">link</span>
+        <div>
+          <div class="callout-title">Dependency note</div>
+          <p>This OS can't function without <strong>Relationship-State OS</strong> (the source of the <code>AT_RISK</code> signal) and leans on <strong>SQ</strong> + <strong>Recovery</strong> (Tabs 3 &amp; future) for its T3/T4 flags and Continuity for T6. It also hands failures to <strong>Exit OS</strong>. So sequencing-wise, Relationship-State is the natural next tab.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="footnote">
+        Sources — App: <span class="src">feature/chat/CancelBookingReasonScreen.kt</span>, <span class="src">feature/chat/ChatViewModel.kt</span>, <span class="src">core/model/CancelBookingRequest.kt</span>, <span class="src">feature/renewal/RouterRecoveryScreen.kt</span>, <span class="src">StopAutoPayReasonViewModel.kt</span>, <span class="src">RatingViewModel.kt</span>.
+        OS: <span class="src">os-specs/wiom-cust-at-risk-resolution-os-v1.0-locked-20260528.md</span>, <span class="src">one-pagers/arr-os-onepager.md</span>, ESR v2.0 (ARR_CASE_OPENED, RESOLVING_STATE_CHANGED, +4), SPR v2.0 (CP-ARR-01…11). Note: "Retention OS" → "At-Risk Resolution OS" permanent rename.
+      </p>
+    </section>
+
+    <!-- ===================== TAB 5: CUSTOMER MANAGEMENT ===================== -->
+    <section class="tab-panel" id="tab-cm">
+      <div class="page-eyebrow">OS #5 · Customer Management</div>
+      <h1 class="page-title">Customer Management OS: Current App vs New OS</h1>
+      <div class="page-meta">App: <code>customer-app-kotlin</code> &nbsp;·&nbsp; Spec: <span class="src">wiom-cust-customer-management-os-v1.0-locked-20260520</span> &nbsp;·&nbsp; Updated 2026-05-29</div>
+      <p class="page-lead">
+        How the app understands <strong>who the customer is</strong> — identity, multiple connections, household, and memory — measured against the
+        new Customer Management OS. CM OS is the <strong>semantic / identity layer</strong>: the only OS that operates at the <em>person</em> level
+        (<code>customer_id</code>) while every other OS works per service instance. Its lock line: <strong>"CM OS remembers and resolves. It does not score, rank, predict, or act."</strong>
+      </p>
+
+      <div class="stats">
+        <div class="stat"><div class="num">4</div><div class="lbl">Identifiers in the OS model (person→...→connection)</div></div>
+        <div class="stat red"><div class="num">1</div><div class="lbl">Connection the app keeps (<code>nasArray[0]</code>)</div></div>
+        <div class="stat red"><div class="num">0</div><div class="lbl">Person-level / household model in the app</div></div>
+        <div class="stat amber"><div class="num">1</div><div class="lbl">line of code behind the recharge confusion</div></div>
+      </div>
+
+      <h2><span class="material-icons">compare_arrows</span>The core mismatch</h2>
+      <p>
+        The app's identity model is <strong>one mobile → one account → one connection</strong>, resolved at login and frozen for the session.
+        The OS models a <strong>durable person</strong> (<code>customer_id</code>) who can hold <em>many</em> service instances, across phone changes,
+        exits, and re-entries, with cross-service memory and a person-level obligation ledger. The gap isn't subtle: the backend already returns
+        <em>all</em> of a person's connections in the login response (<code>nasesJson</code> array), but the app keeps only the first and silently
+        discards the rest — which is the exact, documented cause of the "I recharged but it's not reflecting" support calls.
+      </p>
+      <div class="flow">CURRENT APP        mobile → <b style="color:#F2B8D6">accountId / nasArray[0]</b> (rest discarded) → frozen for session · no person model · no household · memory per-account only
+
+NEW CM OS          <b style="color:#7EE2A8">customer_id (person, durable forever)</b> → 1:N service_instance_id → netbox_id → connection_id
+                   honest-confidence identity · known household · cross-service memory · obligation ledger survives exit · payer = event, not role</div>
+
+      <div class="callout warn">
+        <span class="material-icons">bug_report</span>
+        <div>
+          <div class="callout-title">The smoking gun — one line of code</div>
+          <p>In <code>SessionManager.parseAndSaveNasData()</code>, the app does <code>nasArray.getJSONObject(0)</code> and saves only that connection. The backend sends the whole array, so the infrastructure already supports multiple connections per person — the app just throws them away. A customer with two connections taps "Recharge", the app charges connection #0, they were looking at #1 → <em>"recharge not reflecting"</em> → support call. This is a CM-OS-shaped gap with a near-trivial first fix.</p>
+        </div>
+      </div>
+
+      <div class="callout key">
+        <span class="material-icons">vpn_key</span>
+        <div>
+          <div class="callout-title">One-line takeaway</div>
+          <p>The app has <strong>no person model at all</strong> — identity is a per-session bundle of <code>mobile + accountId + nasId</code>. CM OS makes the <em>person</em> the durable spine that every other OS hangs off. Note: CM OS is mostly a <strong>backend semantic layer</strong> activating fully at second-service launch — but its <em>identity + memory substrate is needed now</em>, and the app's single-connection assumption actively breaks today.</p>
+        </div>
+      </div>
+
+      <h2><span class="material-icons">account_tree</span>Identity model map</h2>
+      <table>
+        <thead><tr><th style="width:210px">OS concept</th><th>What the OS requires</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>customer_id</strong> (person)</td><td>Durable person identity, minted at OTP sign-up, persists forever</td><td>No person id; identity = mobile, re-bound on phone change with no continuity</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>1 person → N service instances</strong></td><td>One person can hold many connections, resolved together</td><td>Keeps only <code>nasArray[0]</code>; rest discarded silently</td><td><span class="chip red"><span class="dot"></span>Broken</span></td></tr>
+          <tr><td><strong>service_instance / netbox / connection</strong></td><td>Four-identifier model cleanly separated</td><td>Has <code>accountId</code>, <code>nasId</code>, <code>deviceId</code> — but flattened 1:1, not a person graph</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><strong>Honest-confidence resolution</strong></td><td>Resolution + attribution confidence explicit; false-split &gt; false-merge</td><td>No confidence concept; identity is assumed exact</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Known household</strong></td><td>Persons explicitly linked to a service instance (known-only, never inferred)</td><td>"Family" is flavor text in install copy; no household model</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Payer vs user</strong></td><td>Payment is an observed event with an observed actor — never an authored role</td><td>No payer/user distinction; recharge assumes account holder pays</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Cross-service / person memory</strong></td><td>5 memory domains, survive exit &amp; re-entry, person-keyed</td><td>Memory is per-account, rebuilt each load; logout wipes everything</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Obligation ledger (survives exit)</strong></td><td>Undischarged Wiom obligations follow the person, no long-stop</td><td>No obligation ledger; debt/credit not carried across accounts or exits</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="material-icons">priority_high</span>The 5 biggest gaps to improve</h2>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">1</span><span class="gap-title">App keeps one connection, discards the rest — recharge confusion</span><span class="sev crit">CRITICAL</span></div>
+        <p>The backend returns all of a person's connections; the app saves <code>nasArray[0]</code> only. A multi-connection customer can't see or pick the right one, so recharges land on the wrong account → the documented "not reflecting" calls. This is the single highest-leverage, lowest-effort fix in the whole doc.</p>
+        <div class="fix"><b>Fix →</b> Parse &amp; store all NAS entries; add a "Which connection?" picker + show the active SSID/connection on every recharge/manage surface.</div>
+      </div>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">2</span><span class="gap-title">No person identity — only a per-session mobile bundle</span><span class="sev crit">CRITICAL</span></div>
+        <p>There's no durable <code>customer_id</code>. On phone change the app just swaps the mobile with no continuity; on logout everything is wiped. CM OS makes the person the spine that Relationship-State, Recovery, Continuity and Exit all hang off — without it, none of them can reason about "this person" across connections or time.</p>
+        <div class="fix"><b>Fix →</b> Introduce a backend person id minted at sign-up; bind connections, history and obligations to it (not to the mobile).</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">3</span><span class="gap-title">No person-level memory — history is per-account &amp; ephemeral</span><span class="sev high">HIGH</span></div>
+        <p>Payment/interaction history is fetched per <code>nasId</code> and rebuilt each load; logout clears it. CM OS keeps 5 memory domains that survive exit and re-entry. Without it, a returning customer is a stranger and prior issues vanish.</p>
+        <div class="fix"><b>Fix →</b> Persist person-level memory server-side; surface "welcome back" context and unified history across a person's connections.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">4</span><span class="gap-title">Obligations don't follow the person</span><span class="sev high">HIGH</span></div>
+        <p>If Wiom owes a refund/credit and the customer switches connection or exits, nothing carries it. CM OS's person-level obligation ledger has no long-stop and auto-reactivates on contact (C2: Wiom's failure doesn't expire because the customer left).</p>
+        <div class="fix"><b>Fix →</b> Build a person-keyed obligation ledger (source, amount, status, settlement path); surface open obligations on any of the person's connections.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">5</span><span class="gap-title">No payer-vs-user distinction → payer anomalies invisible</span><span class="sev high">HIGH</span></div>
+        <p>The app assumes the account holder pays. When a family member/neighbour recharges, or one person funds several connections, there's no model for it — feeding both the recharge confusion and identity-integrity blind spots. CM OS records payment as an <em>observed event</em> and emits <code>PAYER_ANOMALY_DETECTED</code>.</p>
+        <div class="fix"><b>Fix →</b> Capture the paying actor per transaction as an event; reconcile against the person model rather than assuming holder = payer.</div>
+      </div>
+
+      <h2><span class="material-icons">balance</span>Fairness principles the OS enforces (C1–C4)</h2>
+      <table>
+        <thead><tr><th style="width:150px">Rule</th><th>What it means here</th><th>Where the app falls short</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C1 · Canonical Truth</strong></td><td>CM OS is the sole author of person identity; one durable <code>customer_id</code></td><td>Identity scattered across mobile/account/nas; no canonical person</td></tr>
+          <tr><td><strong>C2 · System-Owned Failure</strong></td><td>Obligations Wiom owes survive exit; don't expire because the customer left</td><td>No obligation ledger; anything owed is lost on switch/exit/logout</td></tr>
+          <tr><td><strong>C3 · Restorative Recovery</strong></td><td>Every obligation has source, amount, settlement path — traceable &amp; disputable</td><td>No structured obligations to restore against</td></tr>
+          <tr><td><strong>C4 · Clarity of State</strong></td><td>Customer can see/dispute their data; no hidden scores or labels</td><td>No profile-of-record or data-access/dispute path; also can't tell which connection they're viewing</td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="material-icons">thumb_up</span>What the app already does well (keep &amp; extend)</h2>
+      <ul class="clean">
+        <li><strong>Backend already returns all connections</strong> (<code>nasesJson</code> array) — the multi-connection data exists; the app just needs to use it. The hardest part is already done.</li>
+        <li><strong>WhoAmI session restore</strong> — a clean hook to evolve into a real person-resolution call.</li>
+        <li><strong>Verified phone re-bind guard</strong> — change-number already blocks numbers already registered (<code>PARTNER_ALREADY_EXIST</code>), aligned with CM-OS's HIGH-bar re-bind.</li>
+        <li><strong>Manage screen identity panel</strong> — name / mobile / connection already shown; a natural place to add a connection switcher + SSID label.</li>
+        <li><strong>No scoring/ranking machinery</strong> — the app hasn't built anything CM OS prohibits (scores, models), so it can adopt the "remember &amp; resolve, don't score" doctrine cleanly.</li>
+      </ul>
+
+      <h2><span class="material-icons">report_problem</span>What's missing entirely (needs ground-up work)</h2>
+      <ul class="clean warn">
+        <li><strong>Durable person id</strong> — none; identity = mobile.</li>
+        <li><strong>Multi-connection handling</strong> — only first connection kept.</li>
+        <li><strong>Known-household model</strong> — none.</li>
+        <li><strong>Payer-vs-user events</strong> — none.</li>
+        <li><strong>Person-level memory</strong> — per-account &amp; wiped on logout.</li>
+        <li><strong>Obligation ledger</strong> — none; nothing survives exit.</li>
+        <li><strong>Honest-confidence identity resolution</strong> — none.</li>
+      </ul>
+
+      <div class="callout info">
+        <span class="material-icons">schedule</span>
+        <div>
+          <div class="callout-title">Activation note — needed now vs. later</div>
+          <p>CM OS is layered: its <strong>cross-service</strong> features fully activate at second-service launch (OTT/TV/etc.), so they're rightly future work. But its <strong>identity + memory substrate is needed now</strong> — and the app's single-connection assumption is actively breaking with today's multi-connection home-internet customers. Fix the <code>nasArray[0]</code> gap first; build the person spine in parallel. CM OS is also the natural backbone for <strong>Relationship-State OS</strong> (person-level classification) — a good next tab.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="footnote">
+        Sources — App: <span class="src">core/data/session/SessionManager.kt</span> (parseAndSaveNasData → nasArray[0], saveFromUserData), <span class="src">core/model/LoginModels.kt</span> (RenewalUserData, nasesJson), <span class="src">feature/renewal/ManageScreen.kt</span>, <span class="src">ChangePhoneNumberScreen.kt</span>, <span class="src">BookingRepository.kt</span> (WhoAmI).
+        OS: <span class="src">os-specs/wiom-cust-customer-management-os-v1.0-locked-20260520.md</span>, <span class="src">one-pagers/cm-os-onepager.md</span>, ESR v2.0 (CUSTOMER_CREATED, IDENTITY_RESOLVED, IDENTITY_CORRECTED, PERSON_MEMORY_AVAILABLE, HOUSEHOLD_LINKAGE_CHANGED), SPR v2.0 (CP-CM-01…14).
+      </p>
+    </section>
+
+    <!-- ===================== TAB 6: RELATIONSHIP-STATE ===================== -->
+    <section class="tab-panel" id="tab-rs">
+      <div class="page-eyebrow">OS #6 · Relationship-State</div>
+      <h1 class="page-title">Relationship-State OS: Current App vs New OS</h1>
+      <div class="page-meta">App: <code>customer-app-kotlin</code> &nbsp;·&nbsp; Spec: <span class="src">wiom-cust-relationship-state-os-v1.1-locked-20260528</span> (formerly "Customer Health OS") &nbsp;·&nbsp; Updated 2026-05-29</div>
+      <p class="page-lead">
+        How the app interprets <strong>the state of Wiom's relationship with a person</strong> — at-risk, fragile, paused vs lapsed — measured against the
+        new Relationship-State OS. RS OS is the <strong>foundational interpretive layer</strong>: the canonical, person-level classifier every other
+        relationship-aware OS reads from. Its lock line: <strong>"RS OS classifies the relationship. It does not score the customer."</strong>
+      </p>
+
+      <div class="stats">
+        <div class="stat"><div class="num">6+3</div><div class="lbl">States + overlays the OS classifies</div></div>
+        <div class="stat red"><div class="num">0</div><div class="lbl">Interpreted classifications in the app</div></div>
+        <div class="stat red"><div class="num">0</div><div class="lbl">Cross-signal synthesis (all siloed)</div></div>
+        <div class="stat amber"><div class="num">5+</div><div class="lbl">OSes that depend on this layer</div></div>
+      </div>
+
+      <h2><span class="material-icons">compare_arrows</span>The core mismatch</h2>
+      <p>
+        The app has <strong>only raw transactional flags</strong> — paid/unpaid (<code>CustomerStatus</code>), installed/not (<code>installationStatus</code>),
+        a binary <code>isWiomMember</code> product flag. There is <strong>no interpreted relationship state anywhere</strong>: no at-risk, no fragile,
+        no pause-vs-lapse distinction, no confidence, no memory of a bad experience. The OS is exactly the missing layer: it synthesizes evidence
+        from SQ, Recovery, Continuity and CM OS into <strong>one canonical, person-level classification with explicit confidence</strong> — and it is
+        the <em>sole automatic trigger</em> for At-Risk Resolution (Tab 4) and the driver of Continuity's Paused/Softened postures (Tab 2). Without it,
+        those OSes are blind.
+      </p>
+      <div class="flow">CURRENT APP        raw flags only → <b style="color:#F2B8D6">ACTIVE / GRACE / INACTIVE</b> · installed/not · isWiomMember · signals siloed per feature · no synthesis · no memory
+
+NEW RS OS          SQ + Recovery + Continuity + CM evidence → <b style="color:#7EE2A8">one person-level classification + overlay + confidence</b>
+                   6 states (ACTIVE_ENTITLED / AT_RISK / RESOLVING / CUSTOMER_PAUSED / EXITED / UNKNOWN) · overlays (Fragile / Stable / Deep Active)
+                   internal-only · evidence-grounded · multi-source · "Unknown is honest" · feeds At-Risk Resolution, Continuity, Exit, Recovery, CM</div>
+
+      <div class="callout key">
+        <span class="material-icons">vpn_key</span>
+        <div>
+          <div class="callout-title">One-line takeaway</div>
+          <p>This is the <strong>connective tissue</strong> missing from the whole system. The app knows <em>whether you paid</em> and <em>whether you're installed</em> — nothing about the <em>health or trajectory</em> of the relationship. RS OS turns the app's siloed signals into one interpreted truth. It's deliberately <strong>invisible to the customer</strong> — they never see "you're at-risk"; they only feel the effects (gentler when Fragile, no pressure when Paused, proactive help when At-Risk).</p>
+        </div>
+      </div>
+
+      <h2><span class="material-icons">account_tree</span>Classification map (6 states + 3 overlays)</h2>
+      <table>
+        <thead><tr><th style="width:175px">OS classification</th><th>What it requires (evidence-based)</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ACTIVE_ENTITLED</strong></td><td>Funded/reservation-protected continuity — the default healthy state</td><td><code>CustomerStatus.ACTIVE</code> — a raw billing fact, not a relationship judgment</td><td><span class="chip amber"><span class="dot"></span>Proxy only</span></td></tr>
+          <tr><td><strong>AT_RISK</strong></td><td>Positive deterioration evidence + exit signal, multi-source, Medium+ confidence</td><td><strong>No concept.</strong> No risk tier, flag, or evidence anywhere</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>RESOLVING</strong></td><td>An At-Risk Resolution case is active (reflected, not authored here)</td><td>No concept (depends on Tab 4)</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>CUSTOMER_PAUSED</strong></td><td>Explicit, deliberate pause — legitimate PayG, never inferred from silence</td><td>No pause concept; non-payment collapses to GRACE→recall</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>EXITED</strong></td><td>No active instances; terminal but reversible via re-entry</td><td><code>SERVICE_STOPPED</code> / router-recall — a logistics state, not a relationship one</td><td><span class="chip amber"><span class="dot"></span>Proxy only</span></td></tr>
+          <tr><td><strong>UNKNOWN</strong> (honest)</td><td>Insufficient evidence to classify — a first-class honest state</td><td><code>UNKNOWN</code> exists but only as a parse-fallback, not epistemic honesty</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Overlay: Fragile</strong></td><td>Damage-memory — relationship carries past harm, treat more gently</td><td><strong>No damage memory.</strong> A customer with 5 past complaints = a happy one</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Overlay: Stable / Deep Active</strong></td><td>Default / strong sustained healthy engagement</td><td>No engagement synthesis; app opens emitted to analytics, never read back</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="material-icons">psychology</span>Core OS concepts vs app capability</h2>
+      <table>
+        <thead><tr><th style="width:200px">OS concept</th><th>What the OS requires</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Classify, not score</strong></td><td>Categorical states + confidence — never a 0–100, churn %, or value rank</td><td>No classification at all (and also no score — so nothing prohibited to remove)</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Cross-signal synthesis</strong></td><td>Combine quality + recovery + payment + engagement into one view</td><td>Fully siloed; each feature reads its own backend slice</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Confidence tiers</strong> (Low/Med/High)</td><td>Every classification carries explicit confidence + evidence refs</td><td>All status is binary &amp; absolute; no confidence concept</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Positive deterioration evidence</strong></td><td>AT_RISK needs affirmative damage signals; silence ≠ deterioration</td><td>No deterioration concept; non-payment is treated as the problem</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Person-level (customer_id)</strong></td><td>One person = one relationship across all their instances</td><td>No person model (see Tab 5); state is per-account</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Internal-only</strong></td><td>Customer never sees the classification — felt, not shown</td><td>N/A today (nothing to show) — but a future build must honor this</td><td><span class="chip gray"><span class="dot"></span>N/A</span></td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="material-icons">priority_high</span>The 5 biggest gaps to improve</h2>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">1</span><span class="gap-title">No interpreted relationship state — only raw billing flags</span><span class="sev crit">CRITICAL</span></div>
+        <p>The app knows paid/unpaid and installed/not, nothing about relationship health. RS OS is the canonical layer that turns evidence into one person-level classification. It's the keystone: At-Risk Resolution, Continuity's postures, Exit handling and Recovery prioritization all depend on it — so its absence is why those OSes can't function in the app today.</p>
+        <div class="fix"><b>Fix →</b> Build RS OS as the backend interpretive layer first; have the app consume <code>RELATIONSHIP_STATE_CHANGED</code> to drive differentiated (but invisible) treatment.</div>
+      </div>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">2</span><span class="gap-title">No pause-vs-lapse-vs-churn distinction</span><span class="sev crit">CRITICAL</span></div>
+        <p>A traveller who deliberately paused, a customer who forgot to recharge, and one who's leaving angry all collapse into the same GRACE→router-recall path. RS OS separates <code>CUSTOMER_PAUSED</code> (legitimate, no pressure) from AT_RISK (evidence-backed deterioration) from EXITED — and crucially, <em>non-recharge alone is never deterioration</em>.</p>
+        <div class="fix"><b>Fix →</b> Introduce explicit pause + evidence-backed at-risk classification so the system stops treating every non-payer identically.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">3</span><span class="gap-title">No cross-signal synthesis — everything siloed</span><span class="sev high">HIGH</span></div>
+        <p>Payment, quality, complaints and engagement each live in their own feature and never combine. RS OS's whole job is multi-source synthesis (and it <em>requires</em> multi-source corroboration before any AT_RISK call). Engagement events are even emitted to analytics but never read back into the app.</p>
+        <div class="fix"><b>Fix →</b> Create a person-level synthesis layer that ingests SQ/Recovery/Continuity/CM signals into one classification with confidence.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">4</span><span class="gap-title">No fragility / damage memory</span><span class="sev high">HIGH</span></div>
+        <p>The app starts every interaction fresh — a customer who suffered repeated outages is treated identically to a delighted one. RS OS's Fragile overlay is damage-memory that persists after an incident resolves and makes downstream OSes treat the person more gently (e.g. Continuity → Softened).</p>
+        <div class="fix"><b>Fix →</b> Persist a person-level fragility overlay from past deterioration; let Continuity/Recovery/ARR soften treatment accordingly.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">5</span><span class="gap-title">No confidence / evidence; "Unknown" isn't honest</span><span class="sev high">HIGH</span></div>
+        <p>Every status is taken as absolute backend truth, and the app's <code>UNKNOWN</code> is just a parse-fallback. RS OS attaches explicit confidence + evidence to every classification and treats UNKNOWN as a first-class honest state — preferring an honest Unknown over a confident wrong call.</p>
+        <div class="fix"><b>Fix →</b> Carry confidence + evidence references on relationship state; never silently treat insufficient evidence as "healthy".</div>
+      </div>
+
+      <h2><span class="material-icons">balance</span>Fairness principles the OS enforces (C1–C4)</h2>
+      <table>
+        <thead><tr><th style="width:150px">Rule</th><th>What it means here</th><th>Where the app falls short</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C1 · Canonical Truth</strong></td><td>One person → one canonical relationship classification; no other OS may classify</td><td>No classification exists; raw flags scattered per feature</td></tr>
+          <tr><td><strong>C2 · System-Owned Failure</strong></td><td>Don't label a person AT_RISK when the deterioration is Wiom-caused &amp; unaddressed</td><td>No attribution-aware classification at all (depends on SQ, Tab 3)</td></tr>
+          <tr><td><strong>C3 · Restorative Recovery</strong></td><td>Classification feeds restorative action only — never penalty or price hike</td><td>N/A (no classification) — but a guardrail to honor when built</td></tr>
+          <tr><td><strong>C4 · Clarity of State</strong> (internal)</td><td>Clarity is for Wiom's internal consumers; customer is <em>never</em> shown the state</td><td>N/A today; a future build must keep it strictly internal</td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="material-icons">thumb_up</span>What the app already does well (keep &amp; extend)</h2>
+      <ul class="clean">
+        <li><strong>Rich behavioral telemetry already emitted</strong> — booking, payment, complaint, app-open events flow to CleverTap/Firebase; a ready evidence stream to feed RS OS (it just needs to come back as classification).</li>
+        <li><strong>Clean raw signals exist</strong> — payment status, ticket subtypes, ratings sentiment — the inputs RS OS synthesizes are already produced, just not combined.</li>
+        <li><strong>No scoring/ranking machinery</strong> — the app has built nothing RS OS prohibits (no churn %, no value tiers), so it can adopt "classify, don't score" cleanly.</li>
+        <li><strong>isWiomMember is honestly just a product flag</strong> — not misused as a relationship tier, which keeps the path clear for a proper classification layer.</li>
+      </ul>
+
+      <h2><span class="material-icons">report_problem</span>What's missing entirely (needs ground-up work)</h2>
+      <ul class="clean warn">
+        <li><strong>Any interpreted classification</strong> — at-risk / fragile / paused / healthy.</li>
+        <li><strong>Cross-signal synthesis layer</strong> — none.</li>
+        <li><strong>Confidence + evidence</strong> — none.</li>
+        <li><strong>Pause vs lapse vs churn distinction</strong> — collapsed.</li>
+        <li><strong>Fragility / damage memory</strong> — none.</li>
+        <li><strong>Person-level classification</strong> — depends on CM OS (Tab 5).</li>
+      </ul>
+
+      <div class="callout info">
+        <span class="material-icons">hub</span>
+        <div>
+          <div class="callout-title">Why this is the keystone</div>
+          <p>RS OS is "foundational interpretive infrastructure" — <strong>At-Risk Resolution</strong> (its Medium+ AT_RISK is the sole trigger), <strong>Continuity</strong> (PAUSED→Passive-only, Fragile→Softened), <strong>Exit</strong>, <strong>Recovery</strong>, and <strong>CM</strong> all consume it, and it sits on top of <strong>CM OS</strong> identity (Tab 5) and <strong>SQ</strong> quality evidence (Tab 3). It's mostly a <em>backend</em> layer — but it's the single most connective gap in the whole comparison: build it and four other OSes light up.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="footnote">
+        Sources — App: <span class="src">core/model/RenewalModels.kt</span> (CustomerStatus, isWiomMember), <span class="src">core/model/ChatModels.kt</span> (ChatStickyState), <span class="src">core/data/session/SessionManager.kt</span> (installationStatus), per-feature ViewModels (siloed signals), analytics (one-directional telemetry).
+        OS: <span class="src">os-specs/wiom-cust-relationship-state-os-v1.1-locked-20260528.md</span>, <span class="src">one-pagers/rs-os-onepager.md</span>, ESR v2.0 (RELATIONSHIP_STATE_CHANGED, RELATIONSHIP_STATE_CONFIDENCE_CHANGED, FRAGILITY_OVERLAY_CHANGED), SPR v2.0 (CP-RS-*). Note: "Customer Health OS" → "Relationship-State OS" rename; CP-CH → CP-RS.
+      </p>
+    </section>
+
+    <!-- ===================== TAB 7: RECOVERY ===================== -->
+    <section class="tab-panel" id="tab-recovery">
+      <div class="page-eyebrow">OS #7 · Recovery</div>
+      <h1 class="page-title">Recovery OS: Current App vs New OS</h1>
+      <div class="page-meta">App: <code>customer-app-kotlin</code> &nbsp;·&nbsp; Spec: <span class="src">wiom-cust-recovery-os-v1.0-locked-20260519</span> &nbsp;·&nbsp; Updated 2026-05-29</div>
+      <p class="page-lead">
+        How the app makes things right after a service failure — outage credit, resolution tracking, compensation — measured against the new
+        Recovery OS. Recovery is the <strong>engine of C3 (restorative recovery)</strong>: it turns an incident into either restored stability or
+        tracked <strong>Recovery Debt</strong>. Its lock line: <strong>"Recovery OS prevents and exposes Recovery Debt. It does not prove trust survived."</strong>
+      </p>
+
+      <div class="stats">
+        <div class="stat"><div class="num">6</div><div class="lbl">Workflow states + the 3-of-4 closure rule</div></div>
+        <div class="stat red"><div class="num">0</div><div class="lbl">Compensation / downtime-credit in the app</div></div>
+        <div class="stat red"><div class="num">0</div><div class="lbl">Obligation tracking (Wiom owes you)</div></div>
+        <div class="stat amber"><div class="num">closed</div><div class="lbl">= app's definition of "resolved"</div></div>
+      </div>
+
+      <h2><span class="material-icons">compare_arrows</span>The core mismatch</h2>
+      <p>
+        The app has <strong>tickets and ratings, but no restorative machinery at all</strong>. When net is down for days, there is
+        <strong>no credit, no validity extension, no make-good</strong> — and an issue is "resolved" the moment an agent <em>closes the ticket</em>,
+        with no check that the internet is actually working again. The OS inverts exactly this: ticket closure is explicitly <em>not</em> recovery
+        (INV-REC-01); a case only completes under a <strong>3-of-4 evidence rule</strong> (operational + technical-telemetry + workflow + experiential),
+        compensation is <strong>formula-based and proportional</strong> (a 2-hour outage → 2 hours added), and any unresolved harm becomes
+        <strong>Recovery Debt</strong> that persists and compounds.
+      </p>
+      <div class="flow">CURRENT APP        net down → ticket → troubleshoot → <b style="color:#F2B8D6">agent closes ticket = "resolved"</b> ·· no credit · no SLA · no obligation · closed ticket vanishes
+
+NEW RECOVERY OS    SQ failure / complaint → case (triggered→ack→in_progress→verified→<b style="color:#7EE2A8">complete</b>) under 3-of-4 evidence rule
+                   proportional compensation (extensions before coupons) · Recovery Debt persists · Failed-Recovery-Re-entry is first-class · "closed ≠ recovered"</div>
+
+      <div class="callout key">
+        <span class="material-icons">vpn_key</span>
+        <div>
+          <div class="callout-title">One-line takeaway</div>
+          <p>This is where <strong>C2 (system-owned failure)</strong> and <strong>C3 (restorative recovery)</strong> actually get <em>executed</em> — and the app has none of it. Today the system can take days of a customer's money for net that didn't work and call the issue "resolved" by closing a ticket. The OS makes the failure Wiom's to own, the compensation proportional and automatic, and "resolved" mean <em>verified working</em> — not <em>ticket-closed</em>.</p>
+        </div>
+      </div>
+
+      <h2><span class="material-icons">account_tree</span>Recovery-case lifecycle map</h2>
+      <table>
+        <thead><tr><th style="width:185px">OS state / concept</th><th>What the OS requires</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Triggered</strong></td><td>Auto-open from an SQ failure (proactive) OR a complaint (reactive)</td><td>Reactive only — a ticket on customer complaint; no proactive open (no SQ, Tab 3)</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><strong>Acknowledged / In-progress</strong></td><td>Owner assigned; customer kept oriented with ETA + updates</td><td>Ticket goes to backend; no visible owner, ETA, or progress to the customer</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Technical: degraded → restored</strong></td><td>Restoration authored by <em>telemetry</em>, not by a human marking it done</td><td>No telemetry; "restored" is never verified</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Complete</strong> (3-of-4 evidence)</td><td>operational + technical + workflow + experiential — ≥3 positive to close</td><td>Agent closes the ticket; <strong>closure ≠ verified restoration</strong></td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Compensation determined</strong></td><td>Proportional, rule-based; extensions before coupons; DEPENDENT-weighted</td><td><strong>No compensation engine at all</strong></td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Recovery Debt</strong> (longitudinal)</td><td>Severity-weighted memory of unresolved/repeat harm; survives closure</td><td>No debt/obligation concept; closed tickets vanish from the app</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Failed Recovery Re-entry</strong></td><td>Same root cause recurring = damage-compounding, escalated posture</td><td>Reopen exists, but a recurrence is treated like a fresh first-time issue</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="material-icons">priority_high</span>The 5 biggest gaps to improve</h2>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">1</span><span class="gap-title">No compensation / downtime credit — failures cost the customer</span><span class="sev crit">CRITICAL</span></div>
+        <p>Net down for 4 days = no credit, no extension, no make-good. This is a direct C2/C3 violation: the customer paid for service they didn't get and Wiom keeps the money. The OS's anchor is proportional restoration — extensions before coupons (a 2-hour outage → 2 free hours), automatic and formula-based.</p>
+        <div class="fix"><b>Fix →</b> Build a proportional compensation engine (outage_duration × severity × DEPENDENT weight) issuing validity extensions; surface "we added X for the outage".</div>
+      </div>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">2</span><span class="gap-title">"Resolved" = ticket closed, not net restored</span><span class="sev crit">CRITICAL</span></div>
+        <p>An agent (or the app on rating) closes the ticket and the issue vanishes — with no verification the internet works. INV-REC-01 is explicit: <em>ticket closure ≠ recovery</em>. The OS only completes a case under the 3-of-4 evidence rule, with technical restoration authored by telemetry.</p>
+        <div class="fix"><b>Fix →</b> Gate "resolved" on verified restoration (telemetry healthy + customer not contradicting); stop equating closure with recovery.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">3</span><span class="gap-title">No resolution-status surface — the ticket disappears</span><span class="sev high">HIGH</span></div>
+        <p>After raising a complaint the customer sees no owner, no ETA, no "being worked on", no history — the ticket falls into the backend. The OS makes communication obligatory and architectural (acknowledgment → ETA → updates → restoration → closure), keeping the customer oriented throughout (C4).</p>
+        <div class="fix"><b>Fix →</b> Add a recovery-case tracker showing live state + next-update ETA; consume <code>RECOVERY_COMMUNICATION_OBLIGATION</code>.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">4</span><span class="gap-title">No obligation tracking — Wiom forgets what it owes</span><span class="sev high">HIGH</span></div>
+        <p>There's no record that Wiom owes a fix, a credit, or a follow-up; closed tickets leave no trace across sessions. The OS treats open restorative obligations as governed stock (Recovery Debt) that persists and feeds CM OS's person-level obligation ledger (Tab 5).</p>
+        <div class="fix"><b>Fix →</b> Track open obligations (fix owed / credit owed / follow-up owed) that survive sessions and reconcile against the person.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">5</span><span class="gap-title">No recurrence escalation &amp; no SLA</span><span class="sev high">HIGH</span></div>
+        <p>The same outage recurring is handled like a brand-new complaint — no "this keeps happening" escalation — and there's no SLA shown or enforced. The OS makes Failed Recovery Re-entry first-class (heavier posture, Fragile trigger) and attaches SLAs/clocks to every state.</p>
+        <div class="fix"><b>Fix →</b> Detect same-root-cause recurrence within a window → escalate + compound Recovery Debt; show and track an SLA per case.</div>
+      </div>
+
+      <h2><span class="material-icons">balance</span>Fairness principles the OS enforces (C1–C4)</h2>
+      <table>
+        <thead><tr><th style="width:150px">Rule</th><th>What it means here</th><th>Where the app falls short</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C1 · Canonical Truth</strong></td><td>Recovery owns the canonical recovery state-of-record per service instance</td><td>No recovery state machine; ticket status is backend-only, not canonical</td></tr>
+          <tr><td><strong>C2 · System-Owned Failure</strong></td><td>Wiom-side fault → Wiom's obligation; customer bears no burden of proof</td><td>No attribution + no make-good → the customer effectively bears the cost</td></tr>
+          <tr><td><strong>C3 · Restorative Recovery</strong></td><td>Proportional, rule-based compensation — the OS <em>is</em> the C3 engine</td><td>No compensation of any kind exists; C3 is entirely unimplemented</td></tr>
+          <tr><td><strong>C4 · Clarity of State</strong></td><td>Customer stays oriented: what's happening, what's next, what to do</td><td>Ticket vanishes into backend; no orientation, ETA, or updates</td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="material-icons">thumb_up</span>What the app already does well (keep &amp; extend)</h2>
+      <ul class="clean">
+        <li><strong>Ticket create / reopen / rate / close</strong> already exist — the workflow scaffolding to hang a real case lifecycle on.</li>
+        <li><strong>Structured ticket subtypes</strong> (<code>INTERNET_SUPPLY_DOWN</code> / <code>FREQUENT_DISCONNECTION</code>) — a usable seed for trigger classification.</li>
+        <li><strong>pingStatus() diagnostic</strong> — a first (thin) technical-evidence signal the 3-of-4 rule could build on.</li>
+        <li><strong>Reopen path</strong> exists — the hook to evolve into first-class Failed-Recovery-Re-entry detection.</li>
+        <li><strong>Validity-extension plumbing</strong> already exists for recharge — the natural rail for proportional "extensions before coupons" compensation.</li>
+      </ul>
+
+      <h2><span class="material-icons">report_problem</span>What's missing entirely (needs ground-up work)</h2>
+      <ul class="clean warn">
+        <li><strong>Compensation engine</strong> — none (no credit, extension-for-outage, or rate-card).</li>
+        <li><strong>Verified closure (3-of-4)</strong> — closure = ticket-closed, not net-restored.</li>
+        <li><strong>Recovery-case tracker / orientation</strong> — none customer-facing.</li>
+        <li><strong>Obligation / Recovery Debt</strong> — no concept; nothing persists.</li>
+        <li><strong>Recurrence escalation</strong> — recurrence treated as fresh.</li>
+        <li><strong>SLAs &amp; clocks</strong> — none shown or enforced.</li>
+        <li><strong>Proactive case-open from quality failure</strong> — depends on SQ (Tab 3).</li>
+      </ul>
+
+      <div class="callout info">
+        <span class="material-icons">hub</span>
+        <div>
+          <div class="callout-title">Where Recovery sits in the system</div>
+          <p>Recovery consumes <strong>quality truth from SQ</strong> (Tab 3) to open cases, and feeds <strong>Continuity</strong> (Recovery-first / Grace-extension postures, Tab 2), <strong>At-Risk Resolution</strong> (its T2/T4 flags, Tab 4), <strong>Relationship-State</strong> (Fragile/AT_RISK evidence, Tab 6), and <strong>CM OS</strong> (the person-level obligation ledger, Tab 5). It is the operational heart of "the customer never pays for Wiom's mistake" — and right now that promise has no engine behind it in the app.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="footnote">
+        Sources — App: <span class="src">core/data/repository/RenewalRepository.kt</span> (createTicket / reopenTicket / rateTicket / closeTicket / pingStatus / complaintRestart), <span class="src">feature/chat/ChatViewModel.kt</span>, <span class="src">feature/renewal/RatingViewModel.kt</span>, <span class="src">core/model/RenewalModels.kt</span> (TicketSubType, SecurityDepositModel), <span class="src">PaymentHistoryModels.kt</span> (refundStatus).
+        OS: <span class="src">os-specs/wiom-cust-recovery-os-v1.0-locked-20260519.md</span>, <span class="src">one-pagers/recovery-os-onepager.md</span>, ESR v2.0 (RECOVERY_CASE_STATE_CHANGED, RECOVERY_COMPENSATION_DETERMINED, FAILED_RECOVERY_REENTRY_DETECTED, RECOVERY_COMMUNICATION_OBLIGATION), SPR v2.0 (CP-REC-01…15).
+      </p>
+    </section>
+
+    <!-- ===================== TAB 8: EXIT ===================== -->
+    <section class="tab-panel" id="tab-exit">
+      <div class="page-eyebrow">OS #8 · Exit / Refund</div>
+      <h1 class="page-title">Exit OS: Current App vs New OS</h1>
+      <div class="page-meta">App: <code>customer-app-kotlin</code> &nbsp;·&nbsp; Spec: <span class="src">wiom-cust-exit-os-v1.0.1-locked-20260528</span> &nbsp;·&nbsp; Updated 2026-05-29</div>
+      <p class="page-lead">
+        How the app handles a customer leaving — service termination, router recovery, deposit refund, closure — measured against the new
+        Exit OS. Exit OS is the <strong>integrity / boundary steward</strong>, governing custody finalization under maximum power asymmetry
+        (Wiom holds the device, the money, and the channels). Its lock line: <strong>"Exit OS finalizes custody. It does not judge departure. Silence, not exit itself, is the primary harm-prevention target."</strong>
+      </p>
+
+      <div class="stats">
+        <div class="stat"><div class="num">2</div><div class="lbl">Orthogonal state machines (relationship + custody)</div></div>
+        <div class="stat red"><div class="num">1</div><div class="lbl">Collapsed state path in the app</div></div>
+        <div class="stat red"><div class="num">27%</div><div class="lbl">of pickups never marked in the system</div></div>
+        <div class="stat red"><div class="num">38.5%</div><div class="lbl">silent unrecovered devices today</div></div>
+      </div>
+
+      <h2><span class="material-icons">compare_arrows</span>The core mismatch</h2>
+      <p>
+        The app's exit is an <strong>implicit, logistics-only drift</strong>: there's no "leave" button — a customer lapses → <code>GRACE</code> →
+        <code>SERVICE_STOPPED</code>, and in parallel the router-recovery + deposit-refund flow runs (self-drop vs pickup, UPI). It's reasonably
+        clean (no save-desk obstruction), but it <strong>collapses relationship and custody into one path</strong>, has <strong>no real reversibility</strong>
+        once stopped, <strong>no closure/refund-status surface</strong>, and <strong>wipes all memory on logout</strong>. The OS separates
+        <strong>relationship-side</strong> (EXIT_INITIATED → EXITED_FINAL) from <strong>custody-side</strong> (device states), makes exit
+        <strong>frictionlessly reversible</strong> until physical pickup, requires <strong>two bookend communications</strong> (no silent exit),
+        and <strong>preserves person-level memory + obligations</strong> after the service instance closes.
+      </p>
+      <div class="flow">CURRENT APP        lapse → <b style="color:#F2B8D6">GRACE → SERVICE_STOPPED</b> (one collapsed path) + router pickup + deposit refund (UPI) · no reversal · memory wiped on logout
+
+NEW EXIT OS        relationship: ACTIVE → RESERVATION_EXPIRED → <b style="color:#7EE2A8">EXIT_INITIATED → EXITED_FINAL</b> (5 closure conditions)
+                   custody:      DEVICE_WITH_CUSTOMER → RECOVERY_IN_PROGRESS → RECOVERED / DISPUTED / NOT_RECOVERED   (kept separate)
+                   reversible until pickup (recharge = instant, zero-fee) · 2 bookend comms · SD-first dignity · person-memory preserved</div>
+
+      <div class="callout key">
+        <span class="material-icons">vpn_key</span>
+        <div>
+          <div class="callout-title">One-line takeaway</div>
+          <p>The app already does the <strong>logistics</strong> (get the router back, refund the deposit) — but the OS is about <strong>integrity at the moment of maximum power asymmetry</strong>: never let an exit go silent, keep it reversible, keep the customer oriented on their money, and never let the device/refund land in limbo. The app's real-world pain — 27% of pickups unmarked, 38.5% silent unrecovered devices, 524 orders stuck with money held — is exactly the canonical-custody-truth failure the two-state-machine design fixes.</p>
+        </div>
+      </div>
+
+      <h2><span class="material-icons">account_tree</span>State map — two machines vs one collapsed path</h2>
+      <table>
+        <thead><tr><th style="width:200px">OS state / concept</th><th>What the OS requires</th><th>Current app reality</th><th style="width:120px">Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Two orthogonal state machines</strong></td><td>Relationship-side and custody-side tracked independently; collapsing prohibited</td><td>One blended path: <code>CustomerStatus</code> mixes relationship + <code>ROUTER_REFUND_ORDER_*</code> custody</td><td><span class="chip red"><span class="dot"></span>Collapsed</span></td></tr>
+          <tr><td><strong>EXIT_INITIATED</strong> (reason-coded)</td><td>Explicit start with a mandatory reason from a 9-code taxonomy</td><td>No explicit exit; implicit lapse → GRACE. No exit-reason taxonomy</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Custody states</strong> (recovered / disputed / not-recovered)</td><td>Device truth with pickup-proof; disputes &amp; non-return are first-class</td><td><code>ROUTER_REFUND_ORDER_CREATED/PROCESSING/COMPLETED</code> — refund logistics, no dispute/non-return modeling</td><td><span class="chip amber"><span class="dot"></span>Partial</span></td></tr>
+          <tr><td><strong>Reversibility</strong> (recharge until pickup)</td><td>Frictionless reversal until physical pickup — zero fee, zero penalty (RECALL_CANCELLED)</td><td>Reversible only in GRACE; once <code>SERVICE_STOPPED</code> it's effectively one-way (rebook from scratch)</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>EXITED_FINAL</strong> (5 closure conditions)</td><td>Terminal only when custody + refund + comms + trust signal + obligations all resolved</td><td>No final state; customer drifts into <code>SERVICE_STOPPED</code> silently</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+          <tr><td><strong>Memory preservation</strong></td><td>service_instance closes but person + trust signals + obligations persist (via CM OS)</td><td>Logout wipes the entire session; returning customer is a stranger</td><td><span class="chip red"><span class="dot"></span>Missing</span></td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="material-icons">priority_high</span>The 5 biggest gaps to improve</h2>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">1</span><span class="gap-title">Custody &amp; refund land in limbo — devices and money get stuck</span><span class="sev crit">CRITICAL</span></div>
+        <p>The app blends relationship + custody into one status and has no canonical device-truth: 27% of pickups are never marked, 38.5% of devices go silently unrecovered, and 524 orders sit with the device taken but money held. The OS's separate custody state machine with pickup-proof + a 60-day bond long-stop is precisely the fix.</p>
+        <div class="fix"><b>Fix →</b> Split custody from relationship state; require pickup-proof (netbox match + condition + scan/OTP); add a bond-hold long-stop so nothing sits in limbo.</div>
+      </div>
+
+      <div class="gap crit">
+        <div class="gap-head"><span class="gap-num">2</span><span class="gap-title">Silent exit — no bookend communication, no closure</span><span class="sev crit">CRITICAL</span></div>
+        <p>Service just stops; the customer sees "Service suspended" with no path, no refund timeline, no closure. The OS's No-Silent-Exit rule mandates two multi-channel bookend comms (start + finish) and an SD-first frame: <em>"Your ₹300 deposit is still with Wiom — we don't want your money blocked."</em> Silence is the OS's primary harm target.</p>
+        <div class="fix"><b>Fix →</b> Send a start-of-exit + end-of-exit message (SMS/WhatsApp, not app-only) with refund amount + timeline; show a real closure state.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">3</span><span class="gap-title">No real reversibility once stopped</span><span class="sev high">HIGH</span></div>
+        <p>Reversal only works during GRACE; once <code>SERVICE_STOPPED</code> the only path is a full cold rebook. The OS keeps exit reversible right up to physical pickup — recharge during the window instantly cancels the recall (Wiom absorbs the dispatch cost), with zero fee or penalty, because friction-on-return punishes the exact outcome you want.</p>
+        <div class="fix"><b>Fix →</b> Add a recall-cancelled path: recharge any time before pickup → instant reactivation, zero fee, one confirmation.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">4</span><span class="gap-title">No refund-status surface or SLA</span><span class="sev high">HIGH</span></div>
+        <p>After UPI is submitted the customer sees a state flag but no timeline, no "refund by X", no completion event. The OS makes refund treatment rule-based (self-return ₹300 vs pickup −₹50) with a target refund window the customer is told about (C4 clarity).</p>
+        <div class="fix"><b>Fix →</b> Show refund amount, method-based tier, and a committed timeline; track and surface PROCESSING → COMPLETED.</div>
+      </div>
+
+      <div class="gap high">
+        <div class="gap-head"><span class="gap-num">5</span><span class="gap-title">Memory wiped on logout — and obligations can vanish</span><span class="sev high">HIGH</span></div>
+        <p>Logout clears everything; a returning customer starts cold, and anything Wiom owed (a pending refund, a Recovery credit) has no person-level home. The OS closes the service instance but preserves the person, trust signals, and live obligations (INV-EXIT-19: exit never extinguishes obligations) via CM OS.</p>
+        <div class="fix"><b>Fix →</b> Persist person-level history + open obligations across exit/logout; greet returners with context, never drop what Wiom owes.</div>
+      </div>
+
+      <h2><span class="material-icons">balance</span>Fairness principles the OS enforces (C1–C4)</h2>
+      <table>
+        <thead><tr><th style="width:150px">Rule</th><th>What it means here</th><th>Where the app falls short</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C1 · Canonical Truth</strong></td><td>Sole author of EXIT_INITIATED / EXITED_FINAL; every exit has a structured reason</td><td>No canonical exit state or reason taxonomy; status conflates relationship + custody</td></tr>
+          <tr><td><strong>C2 · System-Owned Failure</strong></td><td>Wiom-can't-serve / CSP-failure exits = full refund, zero customer cost</td><td>Refund is flat deposit logic; no attribution-aware "this was on us → full refund"</td></tr>
+          <tr><td><strong>C3 · Restorative Recovery</strong></td><td>Exit never extinguishes outstanding obligations — carried as person-level liability</td><td>Obligations have no person-level home; wiped/forgotten on logout</td></tr>
+          <tr><td><strong>C4 · Clarity of State</strong></td><td>No silent exit; refund timeline + options communicated multi-channel</td><td>Silent state change to "Service suspended"; no timeline, no bookend comms</td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="material-icons">thumb_up</span>What the app already does well (keep &amp; extend)</h2>
+      <ul class="clean">
+        <li><strong>Clean, non-obstructive exit</strong> — no save-desk popups, no dark patterns, no "are you sure you want to leave?" friction. This is genuinely OS-aligned (exit dignity).</li>
+        <li><strong>Self-return vs pickup choice already exists</strong> — with the pickup charge deducted — mapping almost directly to the OS's refund tiers (self-return earns the max tier).</li>
+        <li><strong>UPI-based deposit refund</strong> plumbing is built — the rail for rule-based refund execution.</li>
+        <li><strong>SD-as-refund framing for migrants</strong> ("reward"/"refund" labels) — a seed of the OS's SD-first dignity messaging.</li>
+        <li><strong>Router-refund order states</strong> exist — a foundation to evolve into a proper custody state machine.</li>
+      </ul>
+
+      <h2><span class="material-icons">report_problem</span>What's missing entirely (needs ground-up work)</h2>
+      <ul class="clean warn">
+        <li><strong>Separate relationship vs custody state machines</strong> — currently collapsed.</li>
+        <li><strong>Explicit, reason-coded exit</strong> — no "leave" action, no taxonomy.</li>
+        <li><strong>Frictionless reversibility to pickup</strong> — only GRACE is reversible.</li>
+        <li><strong>Bookend communications + closure state</strong> — exit is silent.</li>
+        <li><strong>Refund SLA / status surface</strong> — none.</li>
+        <li><strong>Dispute &amp; device-non-return handling</strong> — no model.</li>
+        <li><strong>Memory + obligation preservation</strong> — wiped on logout.</li>
+      </ul>
+
+      <div class="callout info">
+        <span class="material-icons">hub</span>
+        <div>
+          <div class="callout-title">Where Exit closes the loop</div>
+          <p>Exit OS receives from <strong>Continuity</strong> (RESERVATION_EXPIRED, Tab 2) and <strong>At-Risk Resolution</strong> (failed-resolution handoff, Tab 4); composes attribution from <strong>SQ</strong>, <strong>Recovery</strong> and <strong>Relationship-State</strong> (Tabs 3, 7, 6); and feeds <strong>CM OS</strong> the trust signal + preserved memory + carried obligations (Tab 5). It's the terminal boundary of the whole lifecycle — and the place the app's biggest <em>operational</em> losses (unmarked pickups, stuck refunds) live today.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="footnote">
+        Sources — App: <span class="src">core/model/RenewalModels.kt</span> (CustomerStatus, SecurityDepositModel), <span class="src">feature/renewal/RouterRecoveryScreen.kt</span> + <span class="src">RouterRecoveryUpiViewModel.kt</span>, <span class="src">feature/renewal/ManageViewModel.kt</span> (logout, refund-completed), <span class="src">feature/chat/ChatScreen.kt</span> (SERVICE_STOPPED), <span class="src">SessionManager.clear()</span>.
+        OS: <span class="src">os-specs/wiom-cust-exit-os-v1.0.1-locked-20260528.md</span>, <span class="src">one-pagers/exit-os-onepager.md</span>, ESR v2.0 (EXIT_INITIATED, EXITED_FINAL, CUSTODY_STATE_CHANGED, DEVICE_NON_RETURN_SIGNAL, REFUND_TRIGGERED, RECALL_CANCELLED, NETBOX_RETURNED_TO_POOL), SPR v2.0 (CP-EXIT-01…08).
+      </p>
+    </section>
+
+    <!-- ===================== TAB: LEGEND ===================== -->
+    <section class="tab-panel" id="tab-legend">
+      <div class="page-eyebrow">Reference</div>
+      <h1 class="page-title">How to read this document</h1>
+      <p class="page-lead">This is a living comparison doc. Each OS gets its own tab. Every tab follows the same structure so they're easy to scan side-by-side as the analysis grows.</p>
+
+      <h2><span class="material-icons">label</span>Status chips</h2>
+      <div class="card">
+        <p style="margin-bottom:12px"><span class="chip green"><span class="dot"></span>Exists</span> &nbsp; The app implements this in a way that satisfies (or nearly satisfies) the OS requirement.</p>
+        <p style="margin-bottom:12px"><span class="chip amber"><span class="dot"></span>Partial / Implicit</span> &nbsp; Something exists but is incomplete, implicit, or doesn't meet the OS contract.</p>
+        <p style="margin:0"><span class="chip red"><span class="dot"></span>Missing</span> &nbsp; No customer-facing implementation in the current app.</p>
+      </div>
+
+      <h2><span class="material-icons">priority_high</span>Severity tags</h2>
+      <div class="card">
+        <p style="margin-bottom:12px"><span class="sev crit">CRITICAL</span> &nbsp; Breaks a Constitution rule (C1–C4) or blocks a core OS guarantee. Fix first.</p>
+        <p style="margin-bottom:12px"><span class="sev high">HIGH</span> &nbsp; Materially hurts fairness, trust, or transparency.</p>
+        <p style="margin:0"><span class="sev med">MED</span> &nbsp; Worth improving but not load-bearing.</p>
+      </div>
+
+      <h2><span class="material-icons">view_agenda</span>Each OS tab contains</h2>
+      <ul class="clean">
+        <li>Snapshot stats (states / coverage / the headline problem)</li>
+        <li>The core mismatch (a plain-language framing + a diagram)</li>
+        <li>A state-by-state (or stage-by-stage) map: OS requirement vs app reality vs status</li>
+        <li>The biggest gaps to improve, with a concrete fix each</li>
+        <li>Fairness principles the OS enforces and where the app falls short</li>
+        <li>What the app already does well, and what's only skeletal</li>
+        <li>Sources (app paths + OS spec files)</li>
+      </ul>
+
+      <div class="callout info">
+        <span class="material-icons">add_circle</span>
+        <div>
+          <div class="callout-title">Adding the next OS</div>
+          <p>Just say "compare the [X] OS" and a new tab gets added here following the same template. The planned OSes are already stubbed in the sidebar.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn[data-tab]');
+  const panels = document.querySelectorAll('.tab-panel');
+  tabs.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const id = btn.getAttribute('data-tab');
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      panels.forEach(p=>p.classList.toggle('active', p.id === 'tab-'+id));
+      document.querySelector('.main').scrollTo(0,0);
+      window.scrollTo(0,0);
+    });
+  });
+</script>
+</body>
+</html>
