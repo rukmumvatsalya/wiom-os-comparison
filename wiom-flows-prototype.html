@@ -201,6 +201,25 @@
   .flag{position:absolute;top:0;right:0;font-family:'Noto Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.04em;padding:5px 11px;border-bottom-left-radius:12px;z-index:5;text-transform:uppercase}
   .flag.new{background:#D9008D;color:#fff}
   .flag.imp{background:#E2B203;color:#372902}
+  .flag.real{background:#0f3322;color:#8fe3b0}
+
+  /* image-anchored real screens */
+  .phone.real{padding:0;background:#000;overflow:hidden}
+  .phone.real img{width:100%;height:100%;object-fit:cover;display:block}
+  .method-note{margin:0 32px 6px;max-width:1340px;background:#0f3322;border:1px solid #1c5638;border-radius:12px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;font-family:'Noto Sans',sans-serif}
+  .method-note .material-icons{color:#8fe3b0;font-size:20px;flex:0 0 auto;margin-top:1px}
+  .method-note p{font-size:12.5px;line-height:1.55;color:#b9d8c6}
+  .method-note b{color:#d9f5e4}
+  .os-add{flex:0 0 auto;width:300px;align-self:flex-start;margin-top:54px;background:#241a3a;border:1px solid #3a2d5a;border-radius:14px;padding:16px}
+  .os-add h5{font-family:'Noto Sans',sans-serif;font-size:12px;font-weight:700;color:#bda7ff;text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:7px;margin-bottom:8px}
+  .os-add h5 .material-icons{font-size:16px}
+  .os-add p{font-family:'Noto Sans',sans-serif;font-size:12.5px;line-height:1.55;color:#cfc4e6}
+  .os-add p b{color:#fff}
+  .os-add .ref{font-family:'Noto Sans',sans-serif;font-size:11px;color:#8a7fb0;margin-top:8px}
+  .fab-warn{margin:0 32px 6px;max-width:1340px;background:#3a2810;border:1px solid #5c4310;border-radius:12px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;font-family:'Noto Sans',sans-serif}
+  .fab-warn .material-icons{color:#ffc98f;font-size:20px;flex:0 0 auto;margin-top:1px}
+  .fab-warn p{font-size:12.5px;line-height:1.55;color:#e6cfa6}
+  .fab-warn b{color:#ffe2b8}
 
   .otp-row{display:flex;gap:8px;margin-top:18px}
   .otp-box{flex:1;height:54px;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);background:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--text)}
@@ -303,264 +322,144 @@
   <!-- PANEL 1 : BOOKING FLOW (screen-based, as in the live app)     -->
   <!-- ============================================================= -->
   <div class="panel active" id="panel-booking">
-    <div class="panel-intro"><p>Pre-payment booking — already screen-based in the live app, kept that way. Two new screens (install-contact, status) and three improvements (address moved before payment, doorstep serviceability, real receipt). Scroll sideways →</p></div>
+    <div class="panel-intro"><p>The <b>real</b> booking flow, anchored to the live Figma. Every "Current" screen below is the <b>actual exported app screen</b> — not a redraw. The only thing added is where the B2I OS introduces a genuinely missing state. Scroll sideways →</p></div>
+    <div class="method-note"><span class="material-icons">verified</span><p><b>How to read this honestly:</b> screens tagged <b>Current</b> are the real app images, shown untouched. After auditing against B2I, the things I previously called "improvements" were already in the app — <b>confirm-location-before-payment</b> (screen 8) and <b>refundable-deposit framing</b> (screens 4 &amp; 6) already exist. So the <b>only</b> true B2I gap in booking is <b>install-contact ("who will be home?")</b>, shown as the one New screen.</p></div>
     <div class="rail">
 
-      <!-- 1. SERVICEABILITY -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Serviceability check</span><span class="badge kept">Kept</span></div>
-        <div class="fixnote">Location permission → "checking your area". Carried over as-is.</div>
-        <div class="phone">
-          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div><span class="step-label">1/4</span></div>
-          <div class="body">
-            <span class="eyebrow"><span class="material-icons">my_location</span>आपका इलाक़ा</span>
-            <h1 class="s">देख रहे हैं आपके इलाक़े में नेट है या नहीं</h1>
-            <p class="support">बस कुछ सेकंड — आपकी लोकेशन से पता लगा रहे हैं।</p>
-            <div class="ring"></div>
-            <p class="center" style="font-size:12.5px;color:var(--text-subtle)">📍 लाजपत नगर, नई दिल्ली</p>
-          </div>
-          <div class="footer"><button class="cta" disabled style="background:var(--bg-muted);color:var(--text-disabled)">जाँच हो रही है…</button><div class="home-indicator"></div></div>
-        </div>
+        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Recharge-based intro</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — "रिचार्ज वाला घर का नेट". Untouched.</div>
+        <div class="phone real"><img src="booking-real/02.png" alt="intro"/></div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 2. SERVICEABLE -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Serviceable result</span><span class="badge kept">Kept</span></div>
-        <div class="fixnote">Good news + locality confirmation. Carried over.</div>
-        <div class="phone">
-          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div></div><span class="step-label">1/4</span></div>
-          <div class="body">
-            <div class="success-circle"><span class="material-icons">check_circle</span></div>
-            <h1 class="s center">बढ़िया! आपके इलाक़े में नेट उपलब्ध है</h1>
-            <p class="support center">लाजपत नगर में हम तेज़ और भरोसेमंद नेट देते हैं।</p>
-            <div class="card" style="margin-top:20px">
-              <div class="row"><span class="lbl">स्पीड</span><span class="val">100 Mbps तक</span></div>
-              <div class="row"><span class="lbl">शुरुआत</span><span class="val">सिर्फ़ ₹100 में</span></div>
-              <div class="row"><span class="lbl">सेटअप</span><span class="val">24–48 घंटे में</span></div>
-            </div>
-          </div>
-          <div class="footer"><button class="cta">आगे बढ़ें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
-        </div>
+        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Serviceable result</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — "यहाँ घर का नेट लग सकता है". Untouched.</div>
+        <div class="phone real"><img src="booking-real/03.png" alt="serviceable"/></div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 3. COST BREAKDOWN -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Cost breakdown</span><span class="badge imp">Improved</span></div>
-        <div class="fixnote"><b>Fix:</b> full transparency + "रिफ़ंडेबल" framing on the deposit, up front — builds trust before asking for money.</div>
-        <div class="phone imp-screen"><div class="flag imp">Improved</div>
-          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div></div><span class="step-label">2/4</span></div>
-          <div class="body">
-            <span class="eyebrow"><span class="material-icons">receipt_long</span>आज का खर्च</span>
-            <h1 class="s">शुरू करने में कितना लगेगा</h1>
-            <p class="support">कोई छुपा हुआ चार्ज नहीं — सब कुछ साफ़-साफ़।</p>
-            <div class="card" style="margin-top:18px">
-              <div class="row"><span class="lbl">बुकिंग फ़ीस</span><span class="val">₹100</span></div>
-              <div class="row"><span class="lbl">जमा राशि (नेट बॉक्स)</span><span class="val">₹300</span></div>
-              <div class="divider"></div>
-              <div class="row"><span class="lbl" style="font-weight:600;color:var(--text)">आज देना है</span><span class="val" style="font-size:17px">₹400</span></div>
-            </div>
-            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-              <span class="pill refund"><span class="material-icons" style="font-size:14px">verified_user</span>जमा राशि पूरी रिफ़ंडेबल</span>
-              <span class="pill green"><span class="material-icons" style="font-size:14px">shield</span>UPI सुरक्षित</span>
-            </div>
-            <div class="trust"><span class="material-icons">savings</span><p>जमा राशि खर्च नहीं होती — नेट बॉक्स वापस करने पर ₹300 वापस मिल जाते हैं।</p></div>
-          </div>
-          <div class="footer"><button class="cta">आगे बढ़ें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
-        </div>
+        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">How it works</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — 3-step explainer. Untouched.</div>
+        <div class="phone real"><img src="booking-real/04.png" alt="how it works"/></div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 4. USER DETAILS -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Name + mobile</span><span class="badge kept">Kept</span></div>
-        <div class="fixnote">Captures booker's name & number. Carried over.</div>
-        <div class="phone">
-          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div><span class="step-label">3/4</span></div>
-          <div class="body">
-            <span class="eyebrow"><span class="material-icons">person</span>आपकी जानकारी</span>
-            <h1 class="s">अपना नाम और नंबर बताइए</h1>
-            <p class="support">इसी नंबर पर बुकिंग और सेटअप की जानकारी आएगी।</p>
-            <div style="margin-top:18px"><span class="flabel">आपका नाम</span><input class="input" value="सुनीता शर्मा" readonly /></div>
-            <div style="margin-top:14px"><span class="flabel">मोबाइल नंबर</span><input class="input" value="98765 43210" readonly /></div>
-          </div>
-          <div class="footer"><button class="cta">OTP भेजें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
-        </div>
+        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">How it starts</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — visit + security fee. Note: <b>refundable framing already here</b> ("लौटाने पर यह रकम वापस मिल जाती है").</div>
+        <div class="phone real"><img src="booking-real/05.png" alt="how it starts"/></div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 5. OTP -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">OTP verify</span><span class="badge kept">Kept</span></div>
-        <div class="fixnote">Auto-read OTP. Carried over.</div>
-        <div class="phone">
-          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div><span class="step-label">3/4</span></div>
-          <div class="body">
-            <span class="eyebrow"><span class="material-icons">sms</span>वेरिफ़िकेशन</span>
-            <h1 class="s">OTP डालिए</h1>
-            <p class="support">98765 43210 पर भेजा गया कोड डालें।</p>
-            <div class="otp-row"><div class="otp-box filled">4</div><div class="otp-box filled">8</div><div class="otp-box filled">2</div><div class="otp-box">_</div><div class="otp-box">_</div><div class="otp-box">_</div></div>
-            <p class="center" style="font-size:12.5px;color:var(--text-subtle);margin-top:18px">कोड नहीं मिला? <b style="color:var(--brand)">00:24</b> में दोबारा भेजें</p>
-          </div>
-          <div class="footer"><button class="cta">वेरीफ़ाई करें<span class="material-icons">check</span></button><div class="home-indicator"></div></div>
-        </div>
+        <div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Plan durations</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app sheet — 1/2/7/14/28 day recharge options. Untouched.</div>
+        <div class="phone real"><img src="booking-real/06.png" alt="durations"/></div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 6. ADDRESS -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Address capture</span><span class="badge imp">Improved</span></div>
-        <div class="fixnote"><b>Fix:</b> moved <b>before</b> payment. Today it's free-text in chat <i>after</i> paying → wrong/incomplete addresses cause failed installs.</div>
-        <div class="phone imp-screen"><div class="flag imp">Moved earlier</div>
-          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div><span class="step-label">3/4</span></div>
-          <div class="body">
-            <span class="eyebrow"><span class="material-icons">location_on</span>नेट कहाँ लगेगा</span>
-            <h1 class="s">अपना पूरा पता बताइए</h1>
-            <p class="support">यहीं नेट बॉक्स लगेगा — पता सही होना ज़रूरी है ताकि सेटअप बिना रुकावट हो।</p>
-            <div style="margin-top:16px"><span class="flabel">घर / मकान नंबर</span><input class="input" placeholder="जैसे, B-42, पहली मंज़िल" /></div>
-            <div style="margin-top:12px"><span class="flabel">नज़दीकी निशानी</span><input class="input" placeholder="जैसे, शिव मंदिर के पास" /></div>
-            <div class="card" style="margin-top:14px;display:flex;align-items:center;gap:10px;padding:12px"><span class="material-icons" style="color:var(--positive)">check_circle</span><div><div style="font-size:12.5px;font-weight:600">लोकेशन पिन हो गई</div><div style="font-size:11px;color:var(--text-subtle)">लाजपत नगर, नई दिल्ली · 110024</div></div></div>
-          </div>
-          <div class="footer"><button class="cta">आगे बढ़ें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
-        </div>
+        <div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Cost breakdown</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — ₹100 + ₹300. <b>Refundable already shown</b> ("नेट बॉक्स वापस → पैसे वापस"). Untouched.</div>
+        <div class="phone real"><img src="booking-real/07.png" alt="cost"/></div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 7. INSTALL-CONTACT -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Who'll be home?</span><span class="badge new">New</span><span class="os-tag">S2</span></div>
-        <div class="fixnote"><b>New — Gap #1:</b> dispatch prerequisite. The app never asks who'll be present; the #1 cause of failed installs.</div>
+        <div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Name + mobile</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — number + name, then "₹100 का भुगतान करें". Untouched.</div>
+        <div class="phone real"><img src="booking-real/09.png" alt="details"/></div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">8</span><span class="screen-name">Confirm location</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — <b>"पेमेंट से पहले नेट लगवाने की लोकेशन कन्फर्म करें"</b>. This already does the pre-pay location check. Untouched.</div>
+        <div class="phone real"><img src="booking-real/10.png" alt="confirm location"/></div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">9</span><span class="screen-name">Payment methods</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — UPI / cards / netbanking. Untouched.</div>
+        <div class="phone real"><img src="booking-real/12.png" alt="payment"/></div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">10</span><span class="screen-name">Who'll be home?</span><span class="badge new">New · B2I</span><span class="os-tag">S2</span></div>
+        <div class="fixnote"><b>The only genuine B2I gap in booking:</b> the app never asks who will be present for setup (dispatch prerequisite). New screen, in the app's own visual language.</div>
         <div class="phone new-screen"><div class="flag new">New screen</div>
-          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div><span class="step-label">3/4</span></div>
+          <div class="statusbar"><span>04:35 PM</span><span class="right"><span class="material-icons">wifi</span><span class="material-icons">signal_cellular_alt</span><span class="material-icons">battery_full</span></span></div>
+          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div style="flex:1"></div><button class="icon-btn"><span class="material-icons">support_agent</span></button></div>
           <div class="body">
-            <span class="eyebrow"><span class="material-icons">home_repair_service</span>नेट सेटअप</span>
+            <div style="display:flex;justify-content:center;margin:8px 0 14px"><span class="material-icons" style="font-size:54px;color:var(--brand)">groups</span></div>
             <h1 class="s">सेटअप के समय घर पर कौन होगा?</h1>
-            <p class="support">हमारा साथी नेट लगाने आएगा — घर पर किसी का होना ज़रूरी है।</p>
+            <p class="support">हमारा साथी नेट लगाने आएगा — घर पर किसी का होना ज़रूरी है, ताकि सेटअप बिना रुकावट हो।</p>
             <div style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
-              <div class="opt sel"><div class="opt-radio"></div><div class="opt-icon"><span class="material-icons">person</span></div><div><div class="opt-title">मैं खुद रहूँगी</div><div class="opt-sub">इसी नंबर पर बात होगी — 98XXXXXX10</div></div></div>
+              <div class="opt sel"><div class="opt-radio"></div><div class="opt-icon"><span class="material-icons">person</span></div><div><div class="opt-title">मैं खुद रहूँगा/रहूँगी</div><div class="opt-sub">इसी नंबर पर बात होगी — 98XXXXXX10</div></div></div>
               <div class="opt"><div class="opt-radio"></div><div class="opt-icon"><span class="material-icons">group</span></div><div><div class="opt-title">कोई और रहेगा</div><div class="opt-sub">उनका नाम और नंबर दें</div></div></div>
             </div>
-            <div class="trust"><span class="material-icons">schedule</span><p>समय आप चुनेंगे — हम बिना बताए कभी नहीं आएँगे।</p></div>
           </div>
-          <div class="footer"><button class="cta">आगे बढ़ें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
+          <div class="footer"><button class="cta">अगला कदम</button><div class="home-indicator"></div></div>
+        </div>
+        <div class="os-add">
+          <h5><span class="material-icons">policy</span>Why B2I requires this</h5>
+          <p>B2I makes <b>install-contact a dispatch prerequisite</b> — a technician can't be sent until the system knows who will be home. Today's flow never captures it, which is a leading cause of failed visits.</p>
+          <p class="ref">B2I OS · state S2 · INV-B2I-02</p>
         </div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 8. CONFIRM LOCATION -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">8</span><span class="screen-name">Confirm install spot</span><span class="badge imp">Improved</span></div>
-        <div class="fixnote"><b>Fix:</b> doorstep serviceability confirmed <b>before</b> payment, not after — no nasty surprise post-pay.</div>
-        <div class="phone imp-screen"><div class="flag imp">Improved</div>
-          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div><span class="step-label">3/4</span></div>
-          <div class="body">
-            <span class="eyebrow"><span class="material-icons">place</span>लोकेशन की पुष्टि</span>
-            <h1 class="s">क्या आप अभी इसी जगह पर हैं?</h1>
-            <p class="support">जहाँ नेट लगवाना है, वहीं से पुष्टि करें — ताकि सेटअप पक्का हो सके।</p>
-            <div class="card" style="margin-top:16px;padding:0;overflow:hidden">
-              <div style="height:140px;background:linear-gradient(135deg,#E8E4F0,#F1EDF7);display:flex;align-items:center;justify-content:center"><span class="material-icons" style="font-size:44px;color:var(--brand)">location_on</span></div>
-              <div style="padding:13px"><div style="font-size:13px;font-weight:600">B-42, लाजपत नगर</div><div style="font-size:11.5px;color:var(--text-subtle);margin-top:2px">नई दिल्ली · 110024</div></div>
-            </div>
-            <div class="trust"><span class="material-icons">check_circle</span><p>यहाँ नेट उपलब्ध है — सेटअप में कोई दिक़्क़त नहीं आएगी।</p></div>
-          </div>
-          <div class="footer"><button class="cta">मैं यहीं हूँ<span class="material-icons">check</span></button><button class="cta sec">बाद में पुष्टि करूँगी</button><div class="home-indicator"></div></div>
-        </div>
+        <div class="screen-tag"><span class="screen-num">11</span><span class="screen-name">Payment status</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — "धैर्य रखें, भुगतान की स्थिति जाँची जा रही है". Untouched.</div>
+        <div class="phone real"><img src="booking-real/13.png" alt="payment status"/></div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 9. PAYMENT METHOD -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">9</span><span class="screen-name">Payment method</span><span class="badge kept">Kept</span></div>
-        <div class="fixnote">UPI / QR via Juspay. Carried over.</div>
-        <div class="phone">
-          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div></div><span class="step-label">4/4</span></div>
-          <div class="body">
-            <span class="eyebrow"><span class="material-icons">account_balance_wallet</span>भुगतान</span>
-            <h1 class="s">₹400 का भुगतान करें</h1>
-            <p class="support">बुकिंग फ़ीस ₹100 + जमा राशि ₹300 (रिफ़ंडेबल)</p>
-            <div style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
-              <div class="opt sel"><div class="opt-radio"></div><div class="opt-icon"><span class="material-icons">smartphone</span></div><div><div class="opt-title">UPI से भुगतान</div><div class="opt-sub">GPay, PhonePe, Paytm</div></div></div>
-              <div class="opt"><div class="opt-radio"></div><div class="opt-icon"><span class="material-icons">qr_code_2</span></div><div><div class="opt-title">QR कोड स्कैन करें</div><div class="opt-sub">किसी भी UPI ऐप से</div></div></div>
-            </div>
-            <div class="trust"><span class="material-icons">shield</span><p>आपका पैसा पूरी तरह सुरक्षित है — UPI / NPCI से सुरक्षित।</p></div>
-          </div>
-          <div class="footer"><button class="cta">₹400 भुगतान करें<span class="material-icons">lock</span></button><div class="home-indicator"></div></div>
-        </div>
+        <div class="screen-tag"><span class="screen-num">12</span><span class="screen-name">Net name (SSID)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — choose a net name. Untouched.</div>
+        <div class="phone real"><img src="booking-real/14.png" alt="ssid"/></div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 10. PAYMENT SUCCESS -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">10</span><span class="screen-name">Payment success</span><span class="badge imp">Improved</span></div>
-        <div class="fixnote"><b>Fix:</b> proper receipt — booking ID + amount + share, answering "सबूत कहाँ?" (where's my proof?).</div>
-        <div class="phone imp-screen"><div class="flag imp">Improved</div>
-          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="topbar"><div style="flex:1"></div></div>
-          <div class="body">
-            <div class="success-circle"><span class="material-icons">check_circle</span></div>
-            <h1 class="s center">भुगतान हो गया — बुकिंग पक्की!</h1>
-            <p class="support center">₹400 मिल गए। आपका नेट सेटअप शुरू हो रहा है।</p>
-            <div class="card" style="margin-top:20px">
-              <div class="row"><span class="lbl">बुकिंग ID</span><span class="val">WBK-48217</span></div>
-              <div class="row"><span class="lbl">राशि</span><span class="val">₹400</span></div>
-              <div class="row"><span class="lbl">तरीक़ा</span><span class="val">UPI · GPay</span></div>
-              <div class="divider"></div>
-              <div class="row"><span class="lbl">जमा राशि</span><span class="pill refund"><span class="material-icons" style="font-size:13px">verified_user</span>₹300 रिफ़ंडेबल</span></div>
-            </div>
-            <button class="cta sec" style="margin-top:14px"><span class="material-icons" style="font-size:18px">share</span>रसीद शेयर करें</button>
-          </div>
-          <div class="footer"><button class="cta">सेटअप की स्थिति देखें<span class="material-icons">arrow_forward</span></button><div class="home-indicator"></div></div>
-        </div>
+        <div class="screen-tag"><span class="screen-num">13</span><span class="screen-name">Net name saved</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — name confirmed → "अब पता भरें". Untouched.</div>
+        <div class="phone real"><img src="booking-real/15.png" alt="ssid saved"/></div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 11. WIFI NAME -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">11</span><span class="screen-name">WiFi name (SSID)</span><span class="badge kept">Kept</span></div>
-        <div class="fixnote">Pick the net name. Carried over.</div>
-        <div class="phone">
-          <div class="statusbar"><span>9:41</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="topbar"><button class="icon-btn"><span class="material-icons">arrow_back</span></button><div style="flex:1"></div></div>
-          <div class="body">
-            <span class="eyebrow"><span class="material-icons">wifi</span>आपका नेट नाम</span>
-            <h1 class="s">अपने नेट का नाम रखिए</h1>
-            <p class="support">यह नाम आपके और घरवालों के फ़ोन में दिखेगा।</p>
-            <div style="margin-top:16px"><span class="flabel">नेट का नाम</span><input class="input" value="Sharma_Home" /></div>
-            <div style="margin-top:14px;display:flex;flex-direction:column;gap:9px">
-              <div class="opt sel" style="padding:11px"><div class="opt-radio"></div><div class="opt-title">Sharma_Home</div></div>
-              <div class="opt" style="padding:11px"><div class="opt-radio"></div><div class="opt-title">Sunita_WiFi</div></div>
-              <div class="opt" style="padding:11px"><div class="opt-radio"></div><div class="opt-title">MyHome_Net</div></div>
-            </div>
-          </div>
-          <div class="footer"><button class="cta">नाम सेव करें<span class="material-icons">check</span></button><div class="home-indicator"></div></div>
-        </div>
+        <div class="screen-tag"><span class="screen-num">14</span><span class="screen-name">Full address</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — house / street / locality. Untouched.</div>
+        <div class="phone real"><img src="booking-real/16.png" alt="address"/></div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 12. HANDOFF TO CHAT -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">12</span><span class="screen-name">Into chat</span><span class="badge kept">Kept</span></div>
-        <div class="fixnote">After SSID the app opens chat — the home base for the whole install journey (next tab). Carried over.</div>
-        <div class="phone">
-          <div class="statusbar"><span>9:42</span><span class="right"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
-          <div class="chat-sticky"><span class="dotpulse"></span><div><div class="cs-t">घर का नेट · सुनीता</div><div class="cs-v">सेटअप बाक़ी है</div></div></div>
-          <div class="chat-body">
-            <div class="day-sep">आज</div>
-            <div class="bubble bot"><div class="b-title"><span class="material-icons">celebration</span>बधाई हो!</div>आपकी बुकिंग पक्की हो गई है। अब हम आपका नेट सेटअप शुरू कर रहे हैं — सब अपडेट यहीं मिलेंगे।<span class="time">9:42 AM</span></div>
-            <div class="bubble bot">नेट का नाम <b>Sharma_Home</b> सेव हो गया ✅<span class="time">9:42 AM</span></div>
-          </div>
-          <div class="chat-input"><div class="box">कुछ पूछना है? यहाँ लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
-        </div>
+        <div class="screen-tag"><span class="screen-num">15</span><span class="screen-name">Landmark confirm</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — landmark type + name. Untouched.</div>
+        <div class="phone real"><img src="booking-real/17.png" alt="landmark"/></div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">16</span><span class="screen-name">Voice directions</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — optional voice note for directions. Untouched.</div>
+        <div class="phone real"><img src="booking-real/18.png" alt="voice"/></div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">17</span><span class="screen-name">Booking confirmed → chat</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real app screen — booking confirmed, hands into chat (scheduling via callback). Untouched.</div>
+        <div class="phone real"><img src="booking-real/19.png" alt="confirmed chat"/></div>
       </div>
 
     </div>
@@ -571,6 +470,7 @@
   <!-- ============================================================= -->
   <div class="panel" id="panel-install">
     <div class="panel-intro"><p>The post-payment journey lives inside <b>chat</b> — exactly as the current app works. The OS-required states (finding partner, technician, progress, reroute, refund) arrive as <b>chat messages</b>; only the two steps the app already breaks out as chat-launched screens (slot selection, the activation ritual) stay as screens. Scroll sideways →</p></div>
+    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Not anchored to real designs yet.</b> The screens in this tab are illustrative mockups in my own style, built before the real Figma was available — they are <b>not</b> the live app and any "Current/Kept" framing here is a placeholder. Treat only the OS-driven idea as the takeaway; the visuals will be re-anchored to the real designs once that flow’s Figma is shared. (The Booking tab is already corrected.)</p></div>
     <div class="rail">
 
       <!-- PHASE A -->
@@ -883,6 +783,7 @@
   <!-- ============================================================= -->
   <div class="panel" id="panel-continuity">
     <div class="panel-intro"><p>Keeping an active customer's net running. The Continuity OS turns recharge into a <b>posture-driven</b> system — non-payment is a neutral, reversible pause, never churn, and the system <b>never pressures</b> and <b>never asks you to pay for broken net</b>. Recharge plumbing stays screen-based (as today); posture-driven status &amp; nudges live in chat. Each item shows the posture driving it. Scroll sideways →</p></div>
+    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Not anchored to real designs yet.</b> The screens in this tab are illustrative mockups in my own style, built before the real Figma was available — they are <b>not</b> the live app and any "Current/Kept" framing here is a placeholder. Treat only the OS-driven idea as the takeaway; the visuals will be re-anchored to the real designs once that flow’s Figma is shared. (The Booking tab is already corrected.)</p></div>
     <div class="rail">
 
       <!-- PHASE A : HEALTHY -->
@@ -1082,6 +983,7 @@
   <!-- ============================================================= -->
   <div class="panel" id="panel-sq">
     <div class="panel-intro"><p>The SQ Driver OS is mostly a <b>backend truth engine</b> — it senses quality from telemetry, classifies a state, and attributes the fault. The customer never sees "SQ state" directly. So this tab is only the <b>customer-facing surfaces</b> that the quality truth enables: honest status, a real speed test, proactive outage messages, fault-aware help, and verified restoration. Each item shows the quality-state / fault-domain it reflects. Scroll sideways →</p></div>
+    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Not anchored to real designs yet.</b> The screens in this tab are illustrative mockups in my own style, built before the real Figma was available — they are <b>not</b> the live app and any "Current/Kept" framing here is a placeholder. Treat only the OS-driven idea as the takeaway; the visuals will be re-anchored to the real designs once that flow’s Figma is shared. (The Booking tab is already corrected.)</p></div>
     <div class="backend-note"><span class="material-icons">dns</span><p><b>What's NOT a screen:</b> telemetry ingestion (router/netbox ping, latency, packet-loss), the 5-state classification (Healthy / Degraded / Intermittent / Unusable / Unknown), confidence scoring, 8-domain fault attribution, and cluster-degradation detection all live in the backend. The app only <b>consumes the emitted truth</b> and <b>feeds one signal up</b> (the speed test). Everything below is that thin customer-facing layer.</p></div>
     <div class="rail">
 
@@ -1228,6 +1130,7 @@
   <!-- ============================================================= -->
   <div class="panel" id="panel-arr">
     <div class="panel-intro"><p>When a relationship has accumulated unaddressed damage, this OS <b>resolves the problem</b> — it is <b>not a save desk</b>. Its lock: <b>"act on the problem, never on the decision."</b> The customer is <b>never told they're "at-risk"</b>; every message is event-referenced (about a specific incident), and any goodwill is <b>non-contingent</b> — "we owe you this", never "stay and get this". A customer who leaves with their issue fully resolved is a success. Each item shows the tool (T1–T8) behind it. Scroll sideways →</p></div>
+    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Not anchored to real designs yet.</b> The screens in this tab are illustrative mockups in my own style, built before the real Figma was available — they are <b>not</b> the live app and any "Current/Kept" framing here is a placeholder. Treat only the OS-driven idea as the takeaway; the visuals will be re-anchored to the real designs once that flow’s Figma is shared. (The Booking tab is already corrected.)</p></div>
     <div class="backend-note"><span class="material-icons">dns</span><p><b>What's NOT a screen:</b> the AT_RISK trigger comes from Relationship-State OS (evidence-backed, Medium+ confidence); the 8-tool kit (T1–T8), case lifecycle, attribution and compensation rules are backend / support-side. The customer-facing layer is just a few <b>ordinary-looking, event-referenced</b> chat messages — they must read like good service, not a retention play.</p></div>
     <div class="rail">
 
@@ -1339,6 +1242,7 @@
   <!-- ============================================================= -->
   <div class="panel" id="panel-cm">
     <div class="panel-intro"><p>Knowing <b>who the customer is</b> — as a durable person, not a single account. CM OS gives one person a stable identity across all their connections, phone changes and exits, with memory and obligations that follow the person. Its lock: <b>"remembers and resolves — it does not score, rank or predict."</b> The standout fix: the app today keeps only the first connection and silently drops the rest — the root cause of "I recharged but it's not reflecting". Each item shows the CM concept. Scroll sideways →</p></div>
+    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Not anchored to real designs yet.</b> The screens in this tab are illustrative mockups in my own style, built before the real Figma was available — they are <b>not</b> the live app and any "Current/Kept" framing here is a placeholder. Treat only the OS-driven idea as the takeaway; the visuals will be re-anchored to the real designs once that flow’s Figma is shared. (The Booking tab is already corrected.)</p></div>
     <div class="backend-note"><span class="material-icons">dns</span><p><b>What's NOT a screen:</b> the durable <code style="color:#ffd9a0">customer_id</code>, identity resolution &amp; confidence, the 5 memory domains, household graph and the person-level obligation ledger all live in the backend. The app's job is to <b>resolve to the right person</b>, show <b>all</b> their connections, and surface what's owed. Below is that customer-facing layer.</p></div>
     <div class="rail">
 
@@ -1479,6 +1383,7 @@
   <!-- ============================================================= -->
   <div class="panel" id="panel-rs">
     <div class="panel-intro"><p>Relationship-State OS is the <b>interpretive backbone</b> — it reads signals from SQ, Recovery, Continuity and CM, and classifies each relationship (Healthy, Fragile, At-Risk, Paused) with confidence. But here's the honest part: <b>this OS has no customer screens, by design.</b> Its lock-bearing rule (INV-RS-08) is that classifications are <b>internal-only</b> — telling a customer "you're at-risk" is a constitutional violation. So this tab explains what the OS does, shows <b>where you already felt it</b> in other tabs, and shows the <b>one legitimate surface</b>: an internal support view (not the customer app).</p></div>
+    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Not anchored to real designs yet.</b> The screens in this tab are illustrative mockups in my own style, built before the real Figma was available — they are <b>not</b> the live app and any "Current/Kept" framing here is a placeholder. Treat only the OS-driven idea as the takeaway; the visuals will be re-anchored to the real designs once that flow’s Figma is shared. (The Booking tab is already corrected.)</p></div>
     <div class="backend-note"><span class="material-icons">visibility_off</span><p><b>Why there are (almost) no screens here:</b> the customer must <b>never</b> be shown their classification — no "at-risk" label, no "fragile" badge, no health score, no "we noticed you've been unhappy". The customer only experiences the <b>effects</b> (gentler tone, no pressure, proactive help) through the other OSes. Fabricating customer screens for this OS would break it.</p></div>
     <div class="rail">
 
@@ -1554,6 +1459,7 @@
   <!-- ============================================================= -->
   <div class="panel" id="panel-recovery">
     <div class="panel-intro"><p>When something breaks, Recovery OS turns the incident into <b>restored stability</b> — or tracked <b>Recovery Debt</b>. Its lock: <b>"closed ≠ recovered"</b> — a ticket being closed is <i>not</i> proof the net works again. A case only completes when evidence confirms it (the 3-of-4 rule), and Wiom-caused downtime is made good <b>proportionally</b> (a 6-hour outage → free time added). Net-down <b>detection</b> lives in SQ (Tab 4) and relationship-damage comp in At-Risk Resolution (Tab 5); this tab is the <b>case lifecycle</b> in between. Each item shows the case state. Scroll sideways →</p></div>
+    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Not anchored to real designs yet.</b> The screens in this tab are illustrative mockups in my own style, built before the real Figma was available — they are <b>not</b> the live app and any "Current/Kept" framing here is a placeholder. Treat only the OS-driven idea as the takeaway; the visuals will be re-anchored to the real designs once that flow’s Figma is shared. (The Booking tab is already corrected.)</p></div>
     <div class="backend-note"><span class="material-icons">dns</span><p><b>What's NOT a screen:</b> the case state machine (triggered → acknowledged → in-progress → verified → closed), the 3-of-4 evidence rule, the compensation rate-card, Recovery Debt and Failed-Recovery-Re-entry detection are backend. The customer-facing layer is honest case updates + a verified close + the make-good — all in chat.</p></div>
     <div class="rail">
 
@@ -1669,6 +1575,7 @@
   <!-- ============================================================= -->
   <div class="panel" id="panel-exit">
     <div class="panel-intro"><p>When a customer leaves, Exit OS governs the moment of <b>maximum power asymmetry</b> — Wiom holds the device, the money and the channels. Its lock: <b>"finalize custody, don't judge departure; silence is the harm."</b> So exit is <b>never silent</b> (two clear messages), <b>reversible</b> until the device is picked up, and the <b>refundable deposit leads every message</b>. The app already has the pickup + UPI-refund screens; the OS adds the fairness wrapper. Each item shows the exit state. Scroll sideways →</p></div>
+    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Not anchored to real designs yet.</b> The screens in this tab are illustrative mockups in my own style, built before the real Figma was available — they are <b>not</b> the live app and any "Current/Kept" framing here is a placeholder. Treat only the OS-driven idea as the takeaway; the visuals will be re-anchored to the real designs once that flow’s Figma is shared. (The Booking tab is already corrected.)</p></div>
     <div class="backend-note"><span class="material-icons">dns</span><p><b>What's NOT a screen:</b> the two state machines (relationship: initiated → final; custody: with-customer → recovered/disputed/not-recovered), attribution, the bond-refund rate-card and the reversibility windows are backend. The customer-facing layer is honest exit messages, the refund choice, and a frictionless way back.</p></div>
     <div class="rail">
 
