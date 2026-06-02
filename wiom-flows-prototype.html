@@ -324,7 +324,7 @@
   <!-- ============================================================= -->
   <div class="panel active" id="panel-booking">
     <div class="panel-intro"><p>The <b>real</b> booking flow, anchored to the live Figma. Every "Current" screen below is the <b>actual exported app screen</b> — not a redraw. The only thing added is where the B2I OS introduces a genuinely missing state. Scroll sideways →</p></div>
-    <div class="method-note"><span class="material-icons">verified</span><p><b>How to read this honestly:</b> screens tagged <b>Current</b> are the real app images, shown untouched. After auditing against B2I, the things I previously called "improvements" were already in the app — <b>confirm-location-before-payment</b> (screen 8) and <b>refundable-deposit framing</b> (screens 4 &amp; 6) already exist. So the <b>only</b> true B2I gap in booking is <b>install-contact ("who will be home?")</b>, shown as the one New screen.</p></div>
+    <div class="method-note"><span class="material-icons">verified</span><p><b>How to read this honestly:</b> screens tagged <b>Current</b> are the real app images, shown untouched. After auditing against B2I, the things I previously called "improvements" were already in the app — <b>confirm-location-before-payment</b> (screen 8) and <b>refundable-deposit framing</b> (screens 4 &amp; 6) already exist. Two OSes touch this flow: <b>B2I</b> adds the one new screen — <b>install-contact ("who will be home?")</b>; and <b>CM OS</b> adds <b>returning-customer recognition + data carry-forward</b> at the OTP step (annotated on screen 7). Everything else is the untouched live app.</p></div>
     <div class="rail">
 
       <div class="screen">
@@ -370,9 +370,14 @@
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Name + mobile</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real app screen — number + name, then "₹100 का भुगतान करें". Untouched.</div>
+        <div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Name + mobile (OTP sign-up)</span><span class="badge kept">Current</span><span class="cmtag">CM adds</span></div>
+        <div class="fixnote">Real app screen — number + name, then "₹100 का भुगतान करें". Screen itself untouched; CM OS adds returning-customer behaviour →</div>
         <div class="phone real"><img src="booking-real/09.png" alt="details"/></div>
+        <div class="os-add">
+          <h5><span class="material-icons">policy</span>What CM OS adds here</h5>
+          <p>This OTP step is where CM OS <b>creates / resolves the person</b> (<code style="color:#ffd9a0">customer_id</code>). For a <b>returning customer</b> it must recognise them — "वापसी पर स्वागत है" — and <b>carry forward saved details</b> (address, net-name) instead of asking again.</p>
+          <p class="ref">CM OS · sign-up + re-entry boundary (CM-2)</p>
+        </div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
