@@ -270,8 +270,15 @@
   .abody::-webkit-scrollbar{width:0}
   .ah1{font-family:'Noto Sans Devanagari',sans-serif;font-size:17px;font-weight:700;color:#161021;line-height:1.35;margin-top:6px}
   .asub{font-family:'Noto Sans Devanagari',sans-serif;font-size:12px;color:#5C5570;line-height:1.5;margin-top:8px}
-  .abtn{flex:0 0 auto;margin:0 14px 14px;height:46px;border-radius:24px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px}
-  .abtn.ghost{background:transparent;color:#D9008D}
+  .abtn{flex:0 0 auto;margin:0 14px 14px;height:48px;border:none;outline:none;border-radius:24px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari',sans-serif;font-size:14.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;box-shadow:0 4px 12px rgba(217,0,141,.22)}
+  .abtn.ghost{background:transparent;color:#D9008D;box-shadow:none;font-weight:600}
+  /* Wiom selectable option row (reason cards) */
+  .optrow{display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid #E8E4F0;border-radius:14px;padding:14px 14px;font-family:'Noto Sans Devanagari',sans-serif;font-size:13.5px;color:#161021;line-height:1.4;cursor:pointer;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .optrow .ord{width:20px;height:20px;border-radius:50%;border:2px solid #D7D3E0;flex:0 0 auto}
+  .optrow.sel{border-color:#D9008D;background:#FFF0F8}
+  .optrow.sel .ord{border-color:#D9008D;background:radial-gradient(#D9008D 0 5px,#fff 6px)}
+  .optrow .otext{flex:1}
+  .optrow .material-icons{font-size:20px;color:#A7A1B2;flex:0 0 auto}
   .sgauge{width:148px;height:148px;border-radius:50%;margin:18px auto 6px;background:conic-gradient(#008043 0% 72%, #E6E3EC 72% 100%);display:flex;align-items:center;justify-content:center}
   .sgauge.run{background:conic-gradient(#D9008D 0% 30%, #E6E3EC 30% 100%)}
   .sgauge .si{width:118px;height:118px;border-radius:50%;background:#F7F7F9;display:flex;flex-direction:column;align-items:center;justify-content:center}
@@ -1883,14 +1890,14 @@
           <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
           <div class="abody" style="align-items:stretch;text-align:left">
             <div class="ah1" style="text-align:left">क्या समस्या आ रही है?</div>
-            <div style="display:flex;flex-direction:column;gap:9px;margin-top:14px">
-              <div class="scard" style="text-align:left">मुझे आगे की प्रक्रिया समझ नहीं आ रही</div>
-              <div class="scard" style="text-align:left">कीमत ज़्यादा लग रही है</div>
-              <div class="scard" style="text-align:left">गलत पते पर बुक कर दिया</div>
-              <div class="scard" style="text-align:left">मैं इस समय उपलब्ध नहीं हूँ</div>
-              <div class="scard" style="text-align:left">नेट लगने में देरी हो रही है</div>
-              <div class="scard" style="text-align:left">अभी जरूरत नहीं है</div>
-              <div class="scard" style="text-align:left">कोई अन्य कारण</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+              <div class="optrow sel"><span class="ord"></span><span class="otext">मुझे आगे की प्रक्रिया समझ नहीं आ रही</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">कीमत ज़्यादा लग रही है</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">गलत पते पर बुक कर दिया</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">मैं इस समय उपलब्ध नहीं हूँ</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">नेट लगने में देरी हो रही है</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">अभी जरूरत नहीं है</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">कोई अन्य कारण</span></div>
             </div>
           </div>
           <button class="abtn">आगे बढ़ें</button>
