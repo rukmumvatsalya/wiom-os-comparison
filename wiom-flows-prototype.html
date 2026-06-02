@@ -372,6 +372,7 @@
       <button class="tab" data-tab="rs"><span class="material-icons">favorite</span>Relationship-State<span class="cnt">invisible by design</span></button>
       <button class="tab" data-tab="recovery"><span class="material-icons">build_circle</span>Recovery<span class="cnt">closed ≠ recovered</span></button>
       <button class="tab" data-tab="exit"><span class="material-icons">logout</span>Exit / Refund<span class="cnt">dignified &amp; reversible</span></button>
+      <button class="tab" data-tab="login"><span class="material-icons">login</span>Existing-user Login<span class="cnt">real Figma</span></button>
     </div>
   </header>
 
@@ -1737,6 +1738,101 @@
         <div class="never-item"><span class="material-icons">block</span><div>A <s>penalty or fee</s> for changing your mind during the reversible window</div></div>
         <div class="never-item"><span class="material-icons">block</span><div><s>"Lost customer" framing</s> or win-back spam after exit — only refund &amp; obligation messages</div></div>
       </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- PANEL : EXISTING-USER LOGIN (real Figma)                      -->
+  <!-- ============================================================= -->
+  <div class="panel" id="panel-login">
+    <div class="panel-intro"><p>The <b>real</b> existing-user login flow, anchored to the live Figma — every "Current" screen is the actual exported app screen, untouched. Login <b>is</b> identity resolution, so this flow is governed by <b>Customer Management OS</b>; the OS-driven changes are marked New/Improved with an "OS adds →" card. Scroll sideways →</p></div>
+    <div class="method-note"><span class="material-icons">verified</span><p><b>OS audit:</b> CM OS owns this flow (it mints &amp; resolves <code style="color:#ffd9a0">customer_id</code> at OTP sign-in). Three OS-driven changes: (1) prefer the <b>registered-number / OTP</b> path for identity certainty — net-name+password (SSID) is weaker evidence and risks a false-merge; (2) <b>recognise the returning person</b> ("welcome back" + carry-forward) after OTP; (3) if the person has <b>more than one connection</b>, let them pick which. Other OSes activate only after login. The "not registered → new booking" edge already exists and is kept.</p></div>
+    <div class="rail">
+
+      <!-- PHASE A : ENTRY -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · Entry</div><div class="line"></div></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Splash → लॉगिन करें</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — recharge-net splash with "लॉगिन करें" top-left. Untouched.</div>
+        <div class="phone real"><img src="login-real/a01.png" alt="splash login"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE B : LOGIN -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · Account login</div><div class="line"></div></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Login: net name + password</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "अपने अकाउंट में लॉगिन करें" with net name + net password, filled. Untouched.</div>
+        <div class="phone real"><img src="login-real/a08.png" alt="login filled"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Login error</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "नाम गलत है / पासवर्ड गलत है" inline errors. Untouched.</div>
+        <div class="phone real"><img src="login-real/a09.png" alt="login error"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS IMPROVE: prefer OTP path -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">3a</span><span class="screen-name">Prefer registered-number login</span><span class="badge imp">Improved · CM</span></div>
+        <div class="fixnote"><b>Real screen shown untouched; CM improves the emphasis →</b> net-name+password (SSID) is weaker identity evidence and can match the wrong account (the Figma's own "SSID not unique → error" note). CM-2 prefers the stronger OTP path.</div>
+        <div class="phone real"><img src="login-real/a08.png" alt="login prefer otp"/></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>What CM improves here</h5><p>Make <b>"रजिस्टर्ड नंबर से लॉगिन करें" (OTP)</b> the primary, most-prominent option; keep net-name+password as a secondary convenience. Phone+OTP is <b>strong possession evidence</b>; SSID can be non-unique → a false-merge risk CM-2 forbids.</p><p class="ref">CM OS · CM-2 (false-split &gt; false-merge)</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Registered-number entry</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "रजिस्टर्ड नंबर से लॉगिन करें", phone number input. Untouched.</div>
+        <div class="phone real"><img src="login-real/b01.png" alt="phone entry"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">OTP verify</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "अपना फोन नंबर वेरीफाई करें", 4-digit OTP + resend. Untouched.</div>
+        <div class="phone real"><img src="login-real/b07.png" alt="otp verify"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS NEW: welcome back / re-entry recognition -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">5a</span><span class="screen-name">Welcome back</span><span class="badge new">New · CM</span></div>
+        <div class="fixnote"><b>OS adds:</b> after OTP, CM OS recognises the returning person (durable <code>customer_id</code>) and carries prior history — instead of treating them as a stranger. Real app style.</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · CM</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">&#8734;</div><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody">
+            <div style="margin:14px 0 4px"><span class="material-icons" style="font-size:50px;color:#D9008D">waving_hand</span></div>
+            <div class="ah1">वापस आने पर स्वागत है, रमेश!</div>
+            <div class="asub">आपका अकाउंट मिल गया — आपका पुराना नेट, पता और जानकारी सब सुरक्षित है। दोबारा भरने की ज़रूरत नहीं।</div>
+            <div class="scard" style="text-align:left"><div class="sr"><span class="k">आपका नेट</span><span class="v">Wiom Ramesh 1234</span></div><div class="sr"><span class="k">पता</span><span class="v">Rajiv Colony, Sec 40</span></div></div>
+          </div>
+          <button class="abtn">होम पर जाएँ</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why CM adds this</h5><p>The <code>customer_id</code> is durable across phone change &amp; re-entry. On a recognised return, CM provides prior history so the customer is greeted and never re-onboarded from scratch.</p><p class="ref">CM OS · re-entry recognition (MEDIUM) · IDENTITY_RESOLVED</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS NEW: which connection (multi-connection) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">5b</span><span class="screen-name">Which connection? (if &gt;1)</span><span class="badge new">New · CM</span></div>
+        <div class="fixnote"><b>OS adds:</b> if the person has more than one connection, let them pick which to open — instead of silently defaulting to the first (the documented recharge-confusion root cause). Shown only when &gt;1.</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · CM</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:left">आपके 2 कनेक्शन हैं — कौन-सा खोलें?</div>
+            <div class="asub" style="text-align:left">आपके नाम पर एक से ज़्यादा नेट हैं। सही वाला चुनें।</div>
+            <div class="scard" style="margin-top:14px;border:1.5px solid #D9008D"><div style="display:flex;align-items:center;gap:9px"><span class="material-icons" style="color:#D9008D">home</span><div style="flex:1"><div style="font-size:13px;font-weight:700">Wiom Ramesh 1234</div><div style="font-size:11px;color:#5C5570">घर · Rajiv Colony · चालू है</div></div><span class="sok"><span class="material-icons">check_circle</span>चालू</span></div></div>
+            <div class="scard" style="margin-top:10px"><div style="display:flex;align-items:center;gap:9px"><span class="material-icons" style="color:#5C5570">store</span><div style="flex:1"><div style="font-size:13px;font-weight:700">Wiom Ramesh Shop</div><div style="font-size:11px;color:#5C5570">दुकान · रिचार्ज खत्म</div></div></div></div>
+          </div>
+          <button class="abtn">यह कनेक्शन खोलें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why CM adds this</h5><p>One person can hold many connections. CM resolves at the <b>person</b> level and surfaces <b>all</b> of them — so login doesn't silently land on the wrong one (the "recharge not reflecting" root cause).</p><p class="ref">CM OS · 1 person → N service instances · PERSON_MEMORY_AVAILABLE</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE C : EDGE & LANDING -->
+      <div class="phase"><div class="line"></div><div class="lbl">C · Edge &amp; landing</div><div class="line"></div></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Number not registered</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "व्योम पर रजिस्टर्ड नहीं है" → "रजिस्टर्ड नंबर से लॉगिन करें" / "नई बुकिंग करें". Good edge handling. Untouched.</div>
+        <div class="phone real"><img src="login-real/b02.png" alt="not registered"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Logged in → home (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — chat home, status "चालू है" + recharge offer. Hands to the active-customer experience. Untouched.</div>
+        <div class="phone real"><img src="login-real/b06.png" alt="home chat"/></div></div>
 
     </div>
   </div>
