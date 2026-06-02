@@ -382,6 +382,7 @@
       <button class="tab" data-tab="login"><span class="material-icons">login</span>Existing-user Login<span class="cnt">real Figma</span></button>
       <button class="tab" data-tab="cancel"><span class="material-icons">cancel</span>Cancellation<span class="cnt">resolution &gt; save desk</span></button>
       <button class="tab" data-tab="ticket"><span class="material-icons">confirmation_number</span>Service Tickets<span class="cnt">decision tree</span></button>
+      <button class="tab" data-tab="manage"><span class="material-icons">settings</span>Manage / Settings<span class="cnt">real Figma</span></button>
     </div>
   </header>
 
@@ -2199,6 +2200,89 @@
             <div class="vbubble">नेट लगभग 6 घंटे बंद रहा — इसकी भरपाई में हमने आपके खाते में <b>1 दिन मुफ़्त नेट</b> जोड़ दिया है।<span class="vt">4:30 PM</span></div></div>
           <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
         <div class="os-add"><h5><span class="material-icons">policy</span>Why Recovery + SQ add this</h5><p>"Closed ≠ recovered." Close only on <b>telemetry-confirmed restoration + customer confirmation</b>, and make good the downtime proportionally (extension before coupon).</p><p class="ref">Recovery OS · INV-REC-01 · 3-of-4 · SQ verified · C3</p></div></div>
+
+    </div>
+  </div>
+
+  <div class="panel" id="panel-manage">
+    <div class="panel-intro"><p>The <b>manage / settings hub</b> — anchored to the real Figma, untouched. From chat the customer taps <b>⋮ → मैनेज करें</b> to reach a settings list; each row routes to a different flow (autopay, coupon, net name/password, payment info, net-box return → Exit, help, logout). This hub is governed mainly by <b>Customer Management OS</b> (identity, data-access, connections) with <b>Continuity</b> (pause) touching it. Scroll sideways →</p></div>
+    <div class="method-note"><span class="material-icons">verified</span><p><b>OS audit:</b> the list itself is OS-aligned and kept as-is. Three OS-required <b>additions</b> to the hub: a <b>connection switcher</b> when a person has &gt;1 connection (CM — the recharge-confusion fix), an explicit <b>"pause my net"</b> entry (Continuity — pause is legitimate), and a <b>"my data — see &amp; correct / download"</b> entry (CM — app data-access is authoritative). Routing of existing rows is unchanged.</p></div>
+    <div class="rail">
+
+      <!-- PHASE A : REACH SETTINGS -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · Reach settings</div><div class="line"></div></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Chat → ⋮</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — chat home; the 3-dot menu (top-right) opens manage/help. Untouched.</div>
+        <div class="phone real"><img src="manage-real/chat.png" alt="chat with 3-dot"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">3-dot menu</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — overflow menu: "मैनेज करें" / "मदद के लिए कॉल करें". Untouched.</div>
+        <div class="phone real"><img src="manage-real/menu.png" alt="overflow menu"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Manage list</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "मैनेज करें": account block (डिवाइस ID / नाम / फ़ोन ✏️) + ऑटो-पे · कूपन · नेट का नाम बदलें · पासवर्ड बदलें · भुगतान की जानकारी · नेट-बॉक्स वापस करें · मदद लें · लॉगआउट. Each routes to its flow. Untouched.</div>
+        <div class="phone real"><img src="manage-real/list.png" alt="manage list"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE B : OS ADDITIONS -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · OS additions to the hub</div><div class="line"></div></div>
+
+      <!-- CM: connection switcher -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">3a</span><span class="screen-name">Connection switcher (if &gt;1)</span><span class="badge new">New · CM</span></div>
+        <div class="fixnote"><b>OS adds:</b> a person with more than one connection needs to pick which one they're managing — instead of the app silently defaulting to the first (the documented "recharge not reflecting" root cause). Shown at the top of manage when &gt;1.</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · CM</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><span style="font-family:'Noto Sans Devanagari';font-weight:700;font-size:15px;margin-left:8px">मैनेज करें</span><div class="aact"><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:left;font-size:15px">कौन-सा कनेक्शन मैनेज करें?</div>
+            <div class="asub" style="text-align:left">आपके नाम पर 2 नेट हैं — सही वाला चुनें।</div>
+            <div class="optrow sel" style="margin-top:14px"><span class="ord"></span><div class="otext"><div style="font-weight:700">Wiom Ramesh 1234</div><div style="font-size:11px;color:#5C5570">घर · चालू है</div></div></div>
+            <div class="optrow" style="margin-top:10px"><span class="ord"></span><div class="otext"><div style="font-weight:700">Wiom Ramesh Shop</div><div style="font-size:11px;color:#5C5570">दुकान · रिचार्ज खत्म</div></div></div>
+          </div>
+          <button class="abtn">इसे मैनेज करें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why CM adds this</h5><p>CM resolves at the <b>person</b> level and surfaces <b>all</b> connections — so managing/recharging never silently lands on the wrong one.</p><p class="ref">CM OS · 1 person → N connections</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- Continuity: pause entry -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">3b</span><span class="screen-name">Pause my net (new list entry)</span><span class="badge new">New · Continuity</span></div>
+        <div class="fixnote"><b>OS adds</b> a "नेट कुछ दिन रोकें" entry to the manage list. Pause is legitimate (not churn) — today there's no deliberate-pause path, so non-use is the only option. Tapping it goes silent (Passive-only) with one-tap restart.</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><span style="font-family:'Noto Sans Devanagari';font-weight:700;font-size:15px;margin-left:8px">नेट रोकें</span><div class="aact"><span class="material-icons">translate</span></div></div>
+          <div class="abody">
+            <div style="margin:14px 0 4px"><span class="material-icons" style="font-size:48px;color:#D9008D">pause_circle</span></div>
+            <div class="ah1">कुछ दिन के लिए नेट रोकें</div>
+            <div class="asub">कहीं जा रहे हैं या कुछ दिन ज़रूरत नहीं? कोई बात नहीं — रोक दें। हम बार-बार याद नहीं दिलाएँगे, और जब चाहें एक टैप में वापस चालू कर सकते हैं।</div>
+            <div class="scard" style="margin-top:14px;text-align:left"><div class="sr"><span class="k">कनेक्शन सुरक्षित रहेगा</span><span class="sok"><span class="material-icons">check_circle</span>हाँ</span></div><div class="sr"><span class="k">कोई चार्ज</span><span class="v">नहीं</span></div></div>
+          </div>
+          <button class="abtn">नेट रोकें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">रहने दें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why Continuity adds this</h5><p>Pause is a legitimate PayG choice. An explicit pause goes <b>completely silent</b> (no reminders) while keeping the recharge link live — never treated as churn.</p><p class="ref">Continuity OS · CUSTOMER_PAUSED · Passive-only · no-abnormalization-of-pause</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- CM: my data see & correct -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">3c</span><span class="screen-name">My data — see &amp; correct</span><span class="badge new">New · CM</span></div>
+        <div class="fixnote"><b>OS adds</b> a "मेरी जानकारी" entry: the customer can see what Wiom holds, correct it, and download it — no hidden scores/labels. App data-access is authoritative per CM.</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · CM</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><span style="font-family:'Noto Sans Devanagari';font-weight:700;font-size:15px;margin-left:8px">मेरी जानकारी</span><div class="aact"><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:left;font-size:15px">हमारे पास आपकी जानकारी</div>
+            <div class="asub" style="text-align:left">यह सब आपका है — कभी भी देख और बदल सकते हैं।</div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-top:14px">
+              <div class="optrow"><span class="material-icons">call</span><div class="otext"><div style="font-size:11px;color:#5C5570">मोबाइल नंबर</div><div style="font-weight:600">9999911111</div></div><span style="color:#D9008D;font-size:12px;font-weight:600">बदलें</span></div>
+              <div class="optrow"><span class="material-icons">location_on</span><div class="otext"><div style="font-size:11px;color:#5C5570">पता</div><div style="font-weight:600">Rajiv Colony, Sec 40</div></div><span style="color:#D9008D;font-size:12px;font-weight:600">बदलें</span></div>
+              <div class="optrow"><span class="material-icons">lan</span><div class="otext"><div style="font-size:11px;color:#5C5570">आपके कनेक्शन</div><div style="font-weight:600">2 (घर · दुकान)</div></div><span class="material-icons">chevron_right</span></div>
+            </div>
+          </div>
+          <button class="abtn ghost">मेरा डेटा डाउनलोड करें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why CM adds this</h5><p>Explicit app data-access requests &amp; preference updates are authoritative. The customer sees/corrects their own data — and CM keeps <b>no hidden rating</b> behind it.</p><p class="ref">CM OS · app data-access authoritative · C4 clarity</p></div></div>
 
     </div>
   </div>
