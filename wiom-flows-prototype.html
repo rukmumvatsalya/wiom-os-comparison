@@ -515,261 +515,240 @@
   <!-- PANEL 2 : BOOKING → INSTALLATION (chat-driven, app paradigm)  -->
   <!-- ============================================================= -->
   <div class="panel" id="panel-install">
-    <div class="panel-intro"><p>The <b>real</b> booking-confirmation → installation journey, anchored to the live Figma. It is <b>chat-driven</b>, exactly as the app works, and it starts in the chat thread. Every "Current" screen is the actual exported app screen — untouched. Scroll sideways →</p></div>
-    <div class="method-note"><span class="material-icons">verified</span><p><b>Honest audit result:</b> almost everything I had earlier invented as "New" for installation <b>already exists</b> in the real app — finding-engineer, technician name + call, engineer-arrived/installing, slot confirm, net-live, refundable framing. So this tab shows the real screens, and adds <b>only</b> what an OS genuinely requires. The few new screens are drawn in the app's <b>own chat style</b> (व्योम top bar, flat grey bubbles, pink-text CTA rows).</p></div>
+    <div class="panel-intro"><p>The <b>complete, real</b> booking-confirmation → installation journey, every screen in order from the live Figma — chat-driven, untouched. Nothing curated out. The only additions are the few screens an OS genuinely requires, drawn in the app's own chat style. Scroll sideways →</p></div>
+    <div class="method-note"><span class="material-icons">verified</span><p><b>Honest note:</b> all "Current" screens are the real exported app images, shown complete. Earlier I had skipped real steps (Wi-Fi connect sub-flow, password entry, WhatsApp share, selfie, rating, thank-you + happy-code, recharge-validity) — those are all included now. OS-added screens are marked New/Improved with an "OS adds →" card.</p></div>
     <div class="rail">
 
       <!-- PHASE A : SCHEDULING -->
       <div class="phase"><div class="line"></div><div class="lbl">A · Scheduling</div><div class="line"></div></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Chat: pick install day</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real chat entry — bot asks the install day with CTAs "यह दिन सही है" / "कोई अन्य दिन चुनें". This is where the flow actually starts. Untouched.</div>
-        <div class="phone real"><img src="install-real/i01.png" alt="chat ask day"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Chat: ask install day</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real chat entry — bot asks the install day with CTAs "यह दिन सही है" / "कोई अन्य दिन चुनें". The flow starts here. Untouched.</div>
+        <div class="phone real"><img src="install-real/i01.png" alt="chat ask day"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Day prompt (chat)</span><span class="badge kept">Current</span></div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Day prompt (chat)</span><span class="badge kept">Current</span></div>
         <div class="fixnote">Real chat — "नेट लगवाने का दिन पक्का करें". Untouched.</div>
-        <div class="phone real"><img src="install-real/i02.png" alt="day prompt chat"/></div>
-      </div>
+        <div class="phone real"><img src="install-real/i02.png" alt="day prompt"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Day picker</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real chat-launched screen — "नेट कब लगवाना चाहते हैं?" date picker. Untouched.</div>
-        <div class="phone real"><img src="install-real/i03.png" alt="day picker"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Day picker</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "नेट कब लगवाना चाहते हैं?" date picker. Untouched.</div>
+        <div class="phone real"><img src="install-real/i03.png" alt="day picker"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Day confirmed + finding engineer</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real chat — day confirmed → "इंजीनियर ढूंढा जा रहा है". The S3/S8 states already exist. Untouched.</div>
-        <div class="phone real"><img src="install-real/i06.png" alt="finding engineer"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Day confirmed + finding engineer</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real chat — day confirmed → "इंजीनियर ढूंढा जा रहा है" (S3/S8 already exist). Untouched.</div>
+        <div class="phone real"><img src="install-real/i06.png" alt="finding engineer"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- OS ADD: reschedule (B2I S12) — faithful chat style -->
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Reschedule anytime</span><span class="badge new">New · B2I</span><span class="os-tag">S12</span></div>
-        <div class="fixnote"><b>OS adds:</b> today reschedule is only offered at day-pick. B2I gives a universal reschedule right from any state — as a chat action, no penalty. Drawn in the app's real chat style.</div>
+      <!-- OS ADD: reschedule (B2I S12) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Reschedule anytime</span><span class="badge new">New · B2I</span><span class="os-tag">S12</span></div>
+        <div class="fixnote"><b>OS adds:</b> universal reschedule right from any state — chat action, no penalty. Real chat style.</div>
         <div class="vphone"><div class="vflag">New</div>
           <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
           <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
-          <div class="vchat">
-            <div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
             <div class="vbubble me">उस दिन मैं घर पर नहीं रहूँगा, क्या दिन बदल सकते हैं?<span class="vt">10:15 AM</span></div>
-            <div class="vbubble">बिलकुल, कोई दिक़्क़त नहीं। जो दिन आपके लिए सही हो वो चुन लें — कोई चार्ज नहीं, बुकिंग या जमा राशि पर कोई असर नहीं।
-              <div class="vcta">नया दिन चुनें</div><span class="vt">10:15 AM</span></div>
-          </div>
-          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div>
-        </div>
-        <div class="os-add">
-          <h5><span class="material-icons">policy</span>Why B2I adds this</h5>
-          <p>B2I makes <b>reschedule a universal right</b> from any active state — not just at day-selection — with no penalty, so a customer is never stuck with a slot that no longer works.</p>
-          <p class="ref">B2I OS · state S12 · INV-B2I-05</p>
-        </div>
-      </div>
+            <div class="vbubble">बिलकुल, कोई दिक़्क़त नहीं। जो दिन आपके लिए सही हो वो चुन लें — कोई चार्ज नहीं, बुकिंग या जमा राशि पर कोई असर नहीं।<div class="vcta">नया दिन चुनें</div><span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why B2I adds this</h5><p>B2I makes <b>reschedule a universal right</b> from any active state — not just at day-pick — with no penalty.</p><p class="ref">B2I OS · state S12 · INV-B2I-05</p></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- PHASE B : KYC + PRE-INSTALL -->
+      <!-- PHASE B : ENGINEER & KYC -->
       <div class="phase"><div class="line"></div><div class="lbl">B · Engineer &amp; KYC</div><div class="line"></div></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Engineer assigned</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real chat — "रोहित कुमार" with call button (S9 already exists). Untouched.</div>
-        <div class="phone real"><img src="install-real/i08.png" alt="engineer assigned"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Engineer assigned</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real chat — "रोहित कुमार" + call (S9 already exists). Untouched.</div>
+        <div class="phone real"><img src="install-real/i08.png" alt="engineer assigned"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Aadhaar verification (chat)</span><span class="badge kept">Current</span></div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Aadhaar verification (chat)</span><span class="badge kept">Current</span></div>
         <div class="fixnote">Real chat — Aadhaar needed for install. Untouched.</div>
-        <div class="phone real"><img src="install-real/i09.png" alt="aadhaar chat"/></div>
-      </div>
+        <div class="phone real"><img src="install-real/i09.png" alt="aadhaar chat"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">8</span><span class="screen-name">Aadhaar upload</span><span class="badge kept">Current</span></div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">8</span><span class="screen-name">Aadhaar upload</span><span class="badge kept">Current</span></div>
         <div class="fixnote">Real screen — capture Aadhaar front. Untouched.</div>
-        <div class="phone real"><img src="install-real/i10.png" alt="aadhaar upload"/></div>
-      </div>
+        <div class="phone real"><img src="install-real/i10.png" alt="aadhaar upload"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">9</span><span class="screen-name">Aadhaar captured</span><span class="badge kept">Current</span></div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">9</span><span class="screen-name">Aadhaar captured</span><span class="badge kept">Current</span></div>
         <div class="fixnote">Real screen — front captured, capture back. Untouched.</div>
-        <div class="phone real"><img src="install-real/i11.png" alt="aadhaar captured"/></div>
-      </div>
+        <div class="phone real"><img src="install-real/i11.png" alt="aadhaar captured"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">10</span><span class="screen-name">Aadhaar share</span><span class="badge kept">Current</span></div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">10</span><span class="screen-name">Aadhaar share</span><span class="badge kept">Current</span></div>
         <div class="fixnote">Real screen — both sides → "आधार कार्ड शेयर करें". Untouched.</div>
-        <div class="phone real"><img src="install-real/i12.png" alt="aadhaar share"/></div>
-      </div>
+        <div class="phone real"><img src="install-real/i12.png" alt="aadhaar share"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
       <!-- PHASE C : INSTALL DAY -->
       <div class="phase"><div class="line"></div><div class="lbl">C · Install day</div><div class="line"></div></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">11</span><span class="screen-name">Engineer arrived</span><span class="badge kept">Current</span></div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">11</span><span class="screen-name">Engineer arrived</span><span class="badge kept">Current</span></div>
         <div class="fixnote">Real chat — "इंजीनियर घर पे आ गया है" (S10 already exists). Untouched.</div>
-        <div class="phone real"><img src="install-real/i17.png" alt="engineer arrived"/></div>
-      </div>
+        <div class="phone real"><img src="install-real/i17.png" alt="engineer arrived"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- OS ADD: reroute (B2I S11) — faithful chat style -->
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">12</span><span class="screen-name">Engineer reassigned</span><span class="badge new">New · B2I</span><span class="os-tag">S11</span></div>
-        <div class="fixnote"><b>OS adds:</b> if the assigned engineer can't come, B2I requires an honest reroute message (Wiom owns it) instead of silent delay. Drawn in the app's real chat style.</div>
+      <!-- OS ADD: reroute (B2I S11) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">12</span><span class="screen-name">Engineer reassigned</span><span class="badge new">New · B2I</span><span class="os-tag">S11</span></div>
+        <div class="fixnote"><b>OS adds:</b> honest reroute when the engineer can't come — Wiom owns it, new engineer, same time. Real chat style.</div>
         <div class="vphone"><div class="vflag">New</div>
           <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
           <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
-          <div class="vchat">
-            <div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
-            <div class="vbubble">रोहित आज नहीं आ पाएँगे — इसलिए हमने तुरंत आपके लिए दूसरा इंजीनियर भेज दिया है। आपका समय वही रहेगा।
-              <div class="vtech"><div class="va"><span class="material-icons">person</span></div><div class="vtn">अमित सिंह</div><div class="vc"><span class="material-icons">call</span></div></div>
-              <span class="vt">10:15 AM</span></div>
-            <div class="vbubble">देरी के लिए माफ़ी — यह हमारी ओर से है, आपकी कोई गलती नहीं।<span class="vt">10:15 AM</span></div>
-          </div>
-          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div>
-        </div>
-        <div class="os-add">
-          <h5><span class="material-icons">policy</span>Why B2I adds this</h5>
-          <p>When a partner can't make the visit, B2I requires a <b>visible reroute</b> — Wiom owns the slip, a new partner is assigned, and the customer is told. No silent limbo.</p>
-          <p class="ref">B2I OS · state S11 (BOOKING_REROUTED) · C2</p>
-        </div>
-      </div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
+            <div class="vbubble">रोहित आज नहीं आ पाएँगे — इसलिए हमने तुरंत आपके लिए दूसरा इंजीनियर भेज दिया है। आपका समय वही रहेगा।<div class="vtech"><div class="va"><span class="material-icons">person</span></div><div class="vtn">अमित सिंह</div><div class="vc"><span class="material-icons">call</span></div></div><span class="vt">10:15 AM</span></div>
+            <div class="vbubble">देरी के लिए माफ़ी — यह हमारी ओर से है, आपकी कोई गलती नहीं।<span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why B2I adds this</h5><p>When a partner can't make the visit, B2I requires a <b>visible reroute</b> — no silent limbo.</p><p class="ref">B2I OS · state S11 (BOOKING_REROUTED) · C2</p></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">13</span><span class="screen-name">Security deposit (chat)</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real chat — ₹300 security, "नेट बॉक्स वापस → पैसे वापस" (refundable already shown). Untouched.</div>
-        <div class="phone real"><img src="install-real/i18.png" alt="deposit chat"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">13</span><span class="screen-name">Security deposit (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real chat — ₹300 security, "नेट बॉक्स वापस → पैसे वापस". Untouched.</div>
+        <div class="phone real"><img src="install-real/i18.png" alt="deposit chat"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">14</span><span class="screen-name">Deposit bill</span><span class="badge kept">Current</span></div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">14</span><span class="screen-name">Deposit bill</span><span class="badge kept">Current</span></div>
         <div class="fixnote">Real screen — bill ₹300, refundable note. Untouched.</div>
-        <div class="phone real"><img src="install-real/i20.png" alt="deposit bill"/></div>
-      </div>
+        <div class="phone real"><img src="install-real/i20.png" alt="deposit bill"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">15</span><span class="screen-name">Installing (with video)</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real chat — "नेटबॉक्स लग रहा है, 20–30 मिनट" + explainer video (S10). Untouched.</div>
-        <div class="phone real"><img src="install-real/i26.png" alt="installing"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">15</span><span class="screen-name">Payment success</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "भुगतान सफल हुआ! ₹300". Untouched.</div>
+        <div class="phone real"><img src="install-real/i23.png" alt="payment success"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- OS ADD: couldn't complete -> refund (B2I S13) — faithful chat style -->
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">16</span><span class="screen-name">Couldn't complete → full refund</span><span class="badge new">New · B2I</span><span class="os-tag">S13</span></div>
-        <div class="fixnote"><b>OS adds:</b> if setup genuinely can't be done, B2I requires honest closure — full refund, no blame, no limbo. Today there is no such surface. Drawn in the app's real chat style.</div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">16</span><span class="screen-name">Installing (with video)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real chat — "नेटबॉक्स लग रहा है, 20–30 मिनट" + video (S10). Untouched.</div>
+        <div class="phone real"><img src="install-real/i26.png" alt="installing"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS ADD: couldn't complete -> refund (B2I S13) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">17</span><span class="screen-name">Couldn't complete → full refund</span><span class="badge new">New · B2I</span><span class="os-tag">S13</span></div>
+        <div class="fixnote"><b>OS adds:</b> honest closure if setup can't happen — full refund, no blame, no limbo. Real chat style.</div>
         <div class="vphone"><div class="vflag">New</div>
           <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
           <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
-          <div class="vchat">
-            <div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>रिफ़ंड प्रक्रिया में</b></div></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>रिफ़ंड प्रक्रिया में</b></div></div></div>
             <div class="vbubble">अभी हम आपके यहाँ सेटअप नहीं कर पाए। तकनीकी कारण से इस जगह नेट लगाना संभव नहीं हुआ — यह हमारी ओर से है, आपकी कोई गलती नहीं।<span class="vt">10:15 AM</span></div>
-            <div class="vbubble">आपका पूरा पैसा बिना कटौती वापस आ जाएगा।
-              <div class="vmini"><div class="vr"><span class="k">वापस मिलेगा</span><span class="v">₹400</span></div><div class="vr"><span class="k">कब</span><span class="v">2–3 दिन में, उसी UPI पर</span></div></div>
-              आगे जब हम आपके इलाक़े में पहुँचेंगे, सबसे पहले आपको बताएँगे।<span class="vt">10:15 AM</span></div>
-          </div>
-          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div>
-        </div>
-        <div class="os-add">
-          <h5><span class="material-icons">policy</span>Why B2I adds this</h5>
-          <p>Every booking must reach a clean outcome. If install can't happen, B2I requires an <b>honest drop with full refund and attribution</b> — never silent limbo, never customer blame.</p>
-          <p class="ref">B2I OS · state S13 (BOOKING_DROPPED) · INV-B2I-04 · C2</p>
-        </div>
-      </div>
+            <div class="vbubble">आपका पूरा पैसा बिना कटौती वापस आ जाएगा।<div class="vmini"><div class="vr"><span class="k">वापस मिलेगा</span><span class="v">₹400</span></div><div class="vr"><span class="k">कब</span><span class="v">2–3 दिन, उसी UPI पर</span></div></div>आगे जब हम आपके इलाक़े में पहुँचेंगे, सबसे पहले आपको बताएँगे।<span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why B2I adds this</h5><p>Every booking must reach a clean outcome — an <b>honest drop with full refund + attribution</b>, never silent limbo.</p><p class="ref">B2I OS · state S13 (BOOKING_DROPPED) · INV-B2I-04 · C2</p></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- PHASE D : ACTIVATION -->
-      <div class="phase"><div class="line"></div><div class="lbl">D · Activation</div><div class="line"></div></div>
+      <!-- PHASE D : CONNECT THE NET -->
+      <div class="phase"><div class="line"></div><div class="lbl">D · Connect the net</div><div class="line"></div></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">17</span><span class="screen-name">Net live (chat)</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real chat — "नेट चल गया", connect prompt (S14 already exists). Untouched.</div>
-        <div class="phone real"><img src="install-real/i28.png" alt="net live chat"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">18</span><span class="screen-name">Net live + connect prompt (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real chat — "नेट चल गया", "2 दिन का नेट दिया जा रहा है, फ़ोन से कनेक्ट करें" → "नेट कनेक्ट करें". Untouched.</div>
+        <div class="phone real"><img src="install-real/i28.png" alt="net live connect prompt"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">18</span><span class="screen-name">Connect to net</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real screen — "यह है आपके नेट का नाम" → connect. Untouched.</div>
-        <div class="phone real"><img src="install-real/i29.png" alt="connect"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">19</span><span class="screen-name">Your net name</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "यह है आपके नेट का नाम" → "कनेक्ट करें". Untouched.</div>
+        <div class="phone real"><img src="install-real/i29.png" alt="net name connect"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">19</span><span class="screen-name">Net connected</span><span class="badge kept">Current</span></div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">20</span><span class="screen-name">Wi-Fi settings</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — phone Wi-Fi list, pick the net. Untouched.</div>
+        <div class="phone real"><img src="install-real/i30.png" alt="wifi settings"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">21</span><span class="screen-name">Connecting…</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — connecting loader. Untouched.</div>
+        <div class="phone real"><img src="install-real/i31.png" alt="connecting loader"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">22</span><span class="screen-name">Net connected</span><span class="badge kept">Current</span></div>
         <div class="fixnote">Real screen — "आपके घर का नेट कनेक्ट हो गया है". Untouched.</div>
-        <div class="phone real"><img src="install-real/i32.png" alt="connected"/></div>
-      </div>
+        <div class="phone real"><img src="install-real/i32.png" alt="connected"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
       <!-- OS IMPROVE: real speed test (SQ S14) -->
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">20</span><span class="screen-name">Speed check</span><span class="badge imp">Improved · SQ</span><span class="os-tag">S14</span></div>
-        <div class="fixnote"><b>Real screen shown untouched; SQ improves it →</b> today this is a video the customer <b>self-rates</b> ("रुक-रुक कर / बढ़िया"). SQ needs a real measured test as completion evidence.</div>
-        <div class="phone real"><img src="install-real/i33.png" alt="speed video self-rate"/></div>
-        <div class="os-add">
-          <h5><span class="material-icons">policy</span>What SQ improves here</h5>
-          <p>The current "speed check" is a <b>video the customer rates by feel</b> — it produces no measurement. SQ requires a <b>real measured speed test</b> (Mbps/latency) so "installed &amp; working" is verified by telemetry, not opinion.</p>
-          <p class="ref">SQ Driver OS · verified completion · INV-SQ-16</p>
-        </div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">23</span><span class="screen-name">Speed check (video)</span><span class="badge imp">Improved · SQ</span><span class="os-tag">S14</span></div>
+        <div class="fixnote"><b>Real screen shown untouched; SQ improves it →</b> today this is a video the customer <b>self-rates</b>. SQ needs a real measured test as completion evidence.</div>
+        <div class="phone real"><img src="install-real/i33.png" alt="speed video"/></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>What SQ improves here</h5><p>The current "speed check" is a <b>video rated by feel</b> — no measurement. SQ requires a <b>real measured speed test</b> (Mbps/latency) so "installed &amp; working" is telemetry-verified.</p><p class="ref">SQ Driver OS · verified completion · INV-SQ-16</p></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">21</span><span class="screen-name">Congratulations</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real screen — "बधाइयाँ" → set password. Untouched.</div>
-        <div class="phone real"><img src="install-real/i36.png" alt="congrats"/></div>
-      </div>
+      <!-- PHASE E : PASSWORD -->
+      <div class="phase"><div class="line"></div><div class="lbl">E · Password</div><div class="line"></div></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">24</span><span class="screen-name">Congratulations</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "बधाइयाँ" → "पासवर्ड सेट करें". Untouched.</div>
+        <div class="phone real"><img src="install-real/i36.png" alt="congrats"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">22</span><span class="screen-name">Set password</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real screen — "घर के नेट का पासवर्ड सेट करें". Untouched.</div>
-        <div class="phone real"><img src="install-real/i37.png" alt="set password"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">25</span><span class="screen-name">Set password</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "घर के नेट का पासवर्ड सेट करें", min 8 chars. Untouched.</div>
+        <div class="phone real"><img src="install-real/i37.png" alt="set password"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- PHASE E : SHARE & RATE -->
-      <div class="phase"><div class="line"></div><div class="lbl">E · Share &amp; rate</div><div class="line"></div></div>
-
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">23</span><span class="screen-name">Password set → share</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real screen — share net with family (WhatsApp / QR). Untouched.</div>
-        <div class="phone real"><img src="install-real/i43.png" alt="share"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">26</span><span class="screen-name">Password entry</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — typing password → "नेट का पासवर्ड सेव करें". Untouched.</div>
+        <div class="phone real"><img src="install-real/i40.png" alt="password entry"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">24</span><span class="screen-name">Family selfie</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real screen — family selfie celebration (optional). Untouched.</div>
-        <div class="phone real"><img src="install-real/i46.png" alt="selfie"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">27</span><span class="screen-name">Password set → share</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "पासवर्ड सेट हो गया, परिवार के साथ नेट शेयर करें" + WhatsApp / QR. Untouched.</div>
+        <div class="phone real"><img src="install-real/i42.png" alt="password set share"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">25</span><span class="screen-name">Rate experience</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real screen — "अपने नेट लगवाने के अनुभव को रेट करें". Untouched.</div>
-        <div class="phone real"><img src="install-real/i49.png" alt="rate"/></div>
-      </div>
+      <!-- PHASE F : SHARE -->
+      <div class="phase"><div class="line"></div><div class="lbl">F · Share with family</div><div class="line"></div></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">28</span><span class="screen-name">Share net details</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — net name + password card, "Whatsapp पर शेयर करें" / "QR कोड दिखाएं". Untouched.</div>
+        <div class="phone real"><img src="install-real/i43.png" alt="share details"/></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <div class="screen">
-        <div class="screen-tag"><span class="screen-num">26</span><span class="screen-name">Now on recharge (chat)</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Real chat — net active, "2 दिन का रिचार्ज है" → hands to Continuity. Untouched.</div>
-        <div class="phone real"><img src="install-real/i52.png" alt="now on recharge"/></div>
-      </div>
+      <div class="screen"><div class="screen-tag"><span class="screen-num">29</span><span class="screen-name">WhatsApp share</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — WhatsApp "Send to" sheet. Untouched.</div>
+        <div class="phone real"><img src="install-real/i44.png" alt="whatsapp share"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">30</span><span class="screen-name">Net shared → selfie prompt</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "परिवार के साथ नेट शेयर हो गया है" → "सेल्फी लेकर शेयर करें" / skip. Untouched.</div>
+        <div class="phone real"><img src="install-real/i46.png" alt="net shared selfie prompt"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">31</span><span class="screen-name">Selfie capture</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — front-camera family selfie capture. Untouched.</div>
+        <div class="phone real"><img src="install-real/i47.png" alt="selfie capture"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">32</span><span class="screen-name">Selfie preview + share</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — selfie preview → "सेल्फी Whatsapp पर शेयर करें" / skip. Untouched.</div>
+        <div class="phone real"><img src="install-real/i48.png" alt="selfie preview"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE G : RATE & WRAP -->
+      <div class="phase"><div class="line"></div><div class="lbl">G · Rate &amp; wrap up</div><div class="line"></div></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">33</span><span class="screen-name">Selfie shared → rate prompt</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "सेल्फी शेयर हो गई है" → "अपने नेट लगवाने के अनुभव को रेट करें". Untouched.</div>
+        <div class="phone real"><img src="install-real/i49.png" alt="rate prompt"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">34</span><span class="screen-name">Rate experience (stars)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — 1–5 star rating + reasons + Play Store rating. Untouched.</div>
+        <div class="phone real"><img src="install-real/r09.png" alt="rate stars"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">35</span><span class="screen-name">Thanks + happy code (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real chat — "अनुभव शेयर करने के लिए धन्यवाद" + "हैप्पी कोड: 1244 इंजीनियर से शेयर करें". Untouched.</div>
+        <div class="phone real"><img src="install-real/r07.png" alt="thanks happy code"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">36</span><span class="screen-name">Recharge validity (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real chat — "आपका नेट 2 दिन के लिए रिचार्ज है, 28 दिसंबर शाम 5 बजे तक चालू रहेगा". Untouched.</div>
+        <div class="phone real"><img src="install-real/i00.png" alt="recharge validity"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">37</span><span class="screen-name">Next recharge CTA (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real chat — "अगला रिचार्ज करने के लिए नीचे बटन पर क्लिक करें" → "अगला रिचार्ज करें". Hands to Continuity. Untouched.</div>
+        <div class="phone real"><img src="install-real/r08.png" alt="next recharge"/></div></div>
 
     </div>
   </div>
