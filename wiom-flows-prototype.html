@@ -1839,17 +1839,17 @@
   </div>
 
   <div class="panel" id="panel-cancel">
-    <div class="panel-intro"><p>The <b>cancellation / retention</b> flow, reviewed against the OS. This flow is governed by <b>At-Risk Resolution OS</b> (act on the problem, never the decision) and <b>Exit OS</b> (dignified, no-penalty exit). The current prototype is a <b>retention funnel</b> built to discourage cancellation — which is exactly the "save desk" the OS prohibits. The redesign keeps the genuinely good part (reason → fix), and removes the coercive parts. Scroll sideways →</p></div>
-    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Source note:</b> these "Current" screens are faithful <b>reconstructions</b> of the existing HTML prototype (sauravg666.github.io/cancellation-retention-flow), not exported Figma — the real app's chat style is matched, but pixel-exact images weren't available. The OS analysis stands regardless of pixels.</p></div>
-    <div class="method-note"><span class="material-icons">policy</span><p><b>OS verdict:</b> the reason-capture → <b>offer-a-fix</b> (change address / reschedule) step is OS-aligned and kept. But two parts are <b>coercion the OS forbids</b>: the "if you have a problem we'll fix it so you don't need to cancel" <b>deflection framing</b>, and the final <b>₹100-refund-denial gate</b> used to deter exit. ARR D1 = act on the problem not the decision; Exit OS = non-accusatory, good-faith refund. These are redesigned.</p></div>
+    <div class="panel-intro"><p>The <b>cancellation</b> flow, reviewed against the OS. Structure follows the prototype faithfully: the cancel request happens in <b>chat</b>, but reason-selection and each reason's <b>follow-up are full-page screens</b> (back-arrow top bar, heading, option cards, bottom button). Governed by <b>At-Risk Resolution OS</b> (act on the problem, not the decision) and <b>Exit OS</b> (dignified, no-penalty exit). Scroll sideways →</p></div>
+    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Source note:</b> "Current" screens are faithful <b>reconstructions</b> of the existing HTML prototype (sauravg666.github.io/cancellation-retention-flow), not exported Figma. Structure (chat vs full-page) now matches the prototype.</p></div>
+    <div class="method-note"><span class="material-icons">policy</span><p><b>OS verdict:</b> reason-capture → <b>offer-a-fix</b> per reason (change address / reschedule / clarify) is OS-aligned and kept. Two coercive parts are redesigned: the entry <b>deflection framing</b> ("so you don't need to cancel"), and the final <b>₹100-refund-denial deterrent gate</b> → non-accusatory close with attribution-aware good-faith refund.</p></div>
     <div class="rail">
 
-      <!-- PHASE A : INTENT -->
-      <div class="phase"><div class="line"></div><div class="lbl">A · Cancel intent</div><div class="line"></div></div>
+      <!-- PHASE A : CANCEL INTENT (chat) -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · Cancel intent (chat)</div><div class="line"></div></div>
 
-      <!-- 1. CURRENT: cancel request + deflection -->
-      <div class="screen"><div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Cancel request → deflection</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Reconstructed from prototype — user asks to cancel, bot deflects: "if you have a booking problem we can fix it so cancellation isn't necessary".</div>
+      <!-- 1. CURRENT: cancel request + deflection (chat) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Cancel request → deflection (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — in chat, user asks to cancel; bot deflects: "if you have a problem we can fix it so cancellation isn't necessary" → "अपनी समस्या बताएं".</div>
         <div class="vphone">
           <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
           <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
@@ -1859,121 +1859,169 @@
           <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- OS IMPROVE: honest acknowledgment, no deflection -->
-      <div class="screen"><div class="screen-tag"><span class="screen-num">1a</span><span class="screen-name">Honest acknowledgment</span><span class="badge imp">Improved · ARR</span></div>
-        <div class="fixnote"><b>OS replaces the deflection with this:</b> acknowledge the request plainly, ask what went wrong to fix the <b>problem</b> — without implying "so you don't cancel". Same reason-capture, no coercive framing.</div>
+      <!-- OS IMPROVE: honest acknowledgment (chat) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">1a</span><span class="screen-name">Honest acknowledgment (chat)</span><span class="badge imp">Improved · ARR</span></div>
+        <div class="fixnote"><b>OS replaces the deflection:</b> acknowledge plainly, offer to fix the problem AND give a direct cancel path — no "so you don't need to cancel" framing.</div>
         <div class="vphone"><div class="vflag">Improved</div>
           <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
           <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
           <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
             <div class="vbubble me">मुझे नेट की बुकिंग कैंसिल करनी है<span class="vt">10:15 AM</span></div>
-            <div class="vbubble">ठीक है, हम आपकी बुकिंग कैंसिल कर सकते हैं। बस एक बात — अगर कोई दिक्कत है, तो शायद हम उसे ठीक कर पाएँ। बताएँगे क्या हुआ?<div class="vcta">क्या दिक्कत है, बताएँ</div><div class="vcta">सीधे कैंसिल करें</div><span class="vt">10:15 AM</span></div></div>
+            <div class="vbubble">ठीक है, हम कैंसिल कर सकते हैं। बस एक बात — अगर कोई दिक्कत है तो शायद हम उसे ठीक कर पाएँ। बताएँगे क्या हुआ?<div class="vcta">क्या दिक्कत है, बताएँ</div><div class="vcta">सीधे कैंसिल करें</div><span class="vt">10:15 AM</span></div></div>
           <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
-        <div class="os-add"><h5><span class="material-icons">policy</span>What ARR improves</h5><p>Acknowledge the decision, offer to fix the <b>problem</b> — but give a <b>direct "cancel"</b> path too. No "so you don't need to cancel" deflection (that acts on the decision, not the problem).</p><p class="ref">ARR OS · D1 (Problem-Not-Decision) · INV-ARR-01</p></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>What ARR improves</h5><p>Offer to fix the <b>problem</b>, but give a <b>direct cancel</b> path too. No deflection that acts on the decision.</p><p class="ref">ARR OS · D1 · INV-ARR-01</p></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- PHASE B : REASON -->
-      <div class="phase"><div class="line"></div><div class="lbl">B · What went wrong</div><div class="line"></div></div>
+      <!-- PHASE B : REASON (full page) -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · Reason (full page)</div><div class="line"></div></div>
 
-      <!-- 2. CURRENT: reason list -->
-      <div class="screen"><div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Reason list</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Reconstructed — "क्या समस्या आ रही है" with 7 reasons (process unclear / price high / wrong address / not available / install delayed / don't need now / other). Good structured capture — kept.</div>
-        <div class="vphone">
-          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
-          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
-          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
-            <div class="vbubble">क्या समस्या आ रही है?
-              <div class="vcta">मुझे आगे की प्रक्रिया समझ नहीं आ रही</div>
-              <div class="vcta">कीमत ज़्यादा लग रही है</div>
-              <div class="vcta">गलत पते पर बुक कर दिया</div>
-              <div class="vcta">मैं इस समय उपलब्ध नहीं हूँ</div>
-              <div class="vcta">नेट लगने में देरी हो रही है</div>
-              <div class="vcta">अभी जरूरत नहीं है</div>
-              <div class="vcta">कोई अन्य कारण</div>
-              <span class="vt">10:15 AM</span></div></div>
-          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <!-- 2. CURRENT: reason selection — FULL PAGE -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Reason selection (full page)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — <b>full-page screen</b>: "क्या समस्या आ रही है" with 7 option cards. Not chat. Kept.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:left">क्या समस्या आ रही है?</div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-top:14px">
+              <div class="scard" style="text-align:left">मुझे आगे की प्रक्रिया समझ नहीं आ रही</div>
+              <div class="scard" style="text-align:left">कीमत ज़्यादा लग रही है</div>
+              <div class="scard" style="text-align:left">गलत पते पर बुक कर दिया</div>
+              <div class="scard" style="text-align:left">मैं इस समय उपलब्ध नहीं हूँ</div>
+              <div class="scard" style="text-align:left">नेट लगने में देरी हो रही है</div>
+              <div class="scard" style="text-align:left">अभी जरूरत नहीं है</div>
+              <div class="scard" style="text-align:left">कोई अन्य कारण</div>
+            </div>
+          </div>
+          <button class="abtn">आगे बढ़ें</button>
+        </div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- PHASE C : FIX THE PROBLEM -->
-      <div class="phase"><div class="line"></div><div class="lbl">C · Fix the problem</div><div class="line"></div></div>
+      <!-- PHASE C : PER-REASON FOLLOW-UPS (full page) -->
+      <div class="phase"><div class="line"></div><div class="lbl">C · Per-reason follow-ups (full page)</div><div class="line"></div></div>
 
-      <!-- 3. CURRENT: address fix branch -->
-      <div class="screen"><div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Fix: change address</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Reconstructed — wrong-address → offer to change address instead of cancelling. This is genuinely OS-aligned (resolve the real problem). Kept.</div>
-        <div class="vphone">
-          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
-          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
-          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
-            <div class="vbubble me">गलत पते पर बुक कर दिया<span class="vt">10:15 AM</span></div>
-            <div class="vbubble">कोई बात नहीं — आप नेट लगाने का पता आसानी से बदल सकते हैं, कैंसिल करने की ज़रूरत नहीं।<div class="vcta">पता बदलें</div><div class="vcta">फिर भी कैंसिल करें</div><span class="vt">10:15 AM</span></div></div>
-          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <!-- 3. CURRENT: process-unclear follow-up -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Process unclear → help</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — full-page follow-up for "प्रक्रिया समझ नहीं आ रही": explains next steps / offers help, with cancel as secondary. Kept.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody">
+            <div style="margin:14px 0 4px"><span class="material-icons" style="font-size:48px;color:#D9008D">help_outline</span></div>
+            <div class="ah1">आगे की प्रक्रिया आसान है</div>
+            <div class="asub">बस पता कन्फर्म करना है, फिर इंजीनियर आकर नेट लगा देगा। हम हर कदम पर आपके साथ हैं। चाहें तो हमसे बात भी कर सकते हैं।</div>
+          </div>
+          <button class="abtn">आगे बढ़ें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">बुकिंग कैंसिल करें</button>
+        </div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 4. CURRENT: reschedule fix branch -->
-      <div class="screen"><div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Fix: reschedule</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Reconstructed — timing/availability → offer to pick a new day/time. OS-aligned. Kept.</div>
-        <div class="vphone">
-          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
-          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
-          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
-            <div class="vbubble me">मैं इस समय उपलब्ध नहीं हूँ<span class="vt">10:15 AM</span></div>
-            <div class="vbubble">कोई दिक्कत नहीं — आप अपने हिसाब से नया दिन / समय चुन सकते हैं।<div class="vcta">नया दिन/समय चुनें</div><div class="vcta">फिर भी कैंसिल करें</div><span class="vt">10:15 AM</span></div></div>
-          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <!-- 4. CURRENT: wrong-address follow-up -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Wrong address → change</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — full-page follow-up: "पता बदल सकते हैं" with "पता बदलें" primary, "बुकिंग कैंसिल करें" secondary. OS-aligned (fix the problem). Kept.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody">
+            <div style="margin:14px 0 4px"><span class="material-icons" style="font-size:48px;color:#D9008D">edit_location_alt</span></div>
+            <div class="ah1">पता आसानी से बदला जा सकता है</div>
+            <div class="asub">गलत पते पर बुक हो गया? कोई बात नहीं — कैंसिल करने की ज़रूरत नहीं, बस सही पता डाल दें।</div>
+          </div>
+          <button class="abtn">पता बदलें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">बुकिंग कैंसिल करें</button>
+        </div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- OS NEW: price-confusion -> clarify (not a discount) -->
-      <div class="screen"><div class="screen-tag"><span class="screen-num">4a</span><span class="screen-name">Fix: price confusion → clarify</span><span class="badge new">New · ARR</span></div>
-        <div class="fixnote"><b>OS adds:</b> for "price too high", resolve the <b>confusion</b> — explain the refundable deposit &amp; PayG (you pay only when you use it). Crucially <b>not a discount / save-offer</b> (ARR forbids segmented save pricing).</div>
-        <div class="vphone"><div class="vflag">New</div>
-          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
-          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
-          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
-            <div class="vbubble me">कीमत ज़्यादा लग रही है<span class="vt">10:15 AM</span></div>
-            <div class="vbubble">एक बात साफ़ कर दें — ₹300 जमा राशि है, नेट बॉक्स लौटाने पर पूरी वापस मिल जाती है। और आगे आप सिर्फ़ इस्तेमाल के दिनों का रिचार्ज करते हैं — चाहें तो 1 दिन का भी।<div class="vmini"><div class="vr"><span class="k">जमा राशि (रिफ़ंडेबल)</span><span class="v">₹300</span></div><div class="vr"><span class="k">रिचार्ज</span><span class="v">₹25/दिन से</span></div></div><div class="vcta">समझ गया, जारी रखें</div><div class="vcta">फिर भी कैंसिल करें</div><span class="vt">10:15 AM</span></div></div>
-          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
-        <div class="os-add"><h5><span class="material-icons">policy</span>Why ARR adds this (and what it must NOT be)</h5><p>Resolve the <b>misunderstanding</b> with honest facts (refundable deposit, PayG). It must <b>never</b> become a discount, coupon, or "stay &amp; get X" — ARR bans segmented save-pricing. If they still want out, the cancel path stays one tap away.</p><p class="ref">ARR OS · resolve the problem · No-Parallel-Save-Desks (D16)</p></div></div>
+      <!-- 5. CURRENT: not-available / delayed / dont-need -> reschedule follow-up -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Not available / delayed → reschedule</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — full-page follow-up for timing reasons: "नया दिन / समय चुन सकते हैं" with reschedule primary, cancel secondary. OS-aligned. Kept.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody">
+            <div style="margin:14px 0 4px"><span class="material-icons" style="font-size:48px;color:#D9008D">event_available</span></div>
+            <div class="ah1">अपने हिसाब से समय चुनें</div>
+            <div class="asub">अभी समय नहीं है या देरी हो रही है? आप जब चाहें, उस दिन/समय का सेटअप चुन सकते हैं — कैंसिल करने की ज़रूरत नहीं।</div>
+          </div>
+          <button class="abtn">नया दिन/समय चुनें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">बुकिंग कैंसिल करें</button>
+        </div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- 5. CURRENT: other reason free text -->
-      <div class="screen"><div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Other reason (free text)</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Reconstructed — "कोई अन्य कारण" → free-text box (50–200 chars) + cancel / go back. Structured reason capture, kept.</div>
-        <div class="vphone">
-          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
-          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
-          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
-            <div class="vbubble">कैंसिल करने का कारण नीचे लिखें — ताकि हम सुधार सकें।<div style="background:#fff;border:1px solid #e6e3ec;border-radius:10px;padding:9px;margin-top:9px;font-size:11.5px;color:#a8a2b4">यहाँ लिखें… (कम से कम 50 अक्षर)</div><div class="vcta">बुकिंग कैंसिल करें</div><div class="vcta">वापस जाएं</div><span class="vt">10:15 AM</span></div></div>
-          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <!-- OS NEW: price-confusion follow-up (clarify, not discount) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">5a</span><span class="screen-name">Price high → clarify</span><span class="badge new">New · ARR</span></div>
+        <div class="fixnote"><b>OS adds</b> a full-page follow-up for "कीमत ज़्यादा": resolve the <b>confusion</b> (refundable deposit + PayG). Explicitly <b>not</b> a discount / save-offer (ARR bans segmented save-pricing).</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:left">कीमत को साफ़ कर दें</div>
+            <div class="asub" style="text-align:left">₹300 जमा राशि है — नेट बॉक्स लौटाने पर पूरी वापस। आगे आप सिर्फ़ इस्तेमाल के दिनों का रिचार्ज करते हैं, चाहें तो 1 दिन का भी।</div>
+            <div class="scard" style="margin-top:14px;text-align:left"><div class="sr"><span class="k">जमा राशि (रिफ़ंडेबल)</span><span class="v">₹300</span></div><div class="sr"><span class="k">रिचार्ज</span><span class="v">₹25/दिन से</span></div></div>
+          </div>
+          <button class="abtn">समझ गया, जारी रखें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">फिर भी कैंसिल करें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why ARR adds this (and what it must NOT be)</h5><p>Resolve the <b>misunderstanding</b> with honest facts. Never a discount, coupon, or "stay &amp; get X" — ARR bans segmented save-pricing. Cancel stays one tap away.</p><p class="ref">ARR OS · resolve the problem · D16 No-Parallel-Save-Desks</p></div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- PHASE D : EXIT -->
-      <div class="phase"><div class="line"></div><div class="lbl">D · Clean exit</div><div class="line"></div></div>
-
-      <!-- 6. CURRENT: refund-denial gate (the problem) -->
-      <div class="screen"><div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Refund-denial gate</span><span class="badge kept">Current</span></div>
-        <div class="fixnote">Reconstructed — the final gate: "कैंसिल करने पर ₹100 वापस नहीं मिलेगा। फिर भी कैंसिल करना चाहते हैं?" This is the coercive part the OS flags.</div>
-        <div class="vphone">
-          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
-          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
-          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
-            <div class="vbubble">बुकिंग कैंसिल करने पर ₹100 वापस नहीं मिलेगा। क्या आप फिर भी कैंसिल करना चाहते हैं?<div class="vcta">हाँ, कैंसिल करें</div><div class="vcta">नहीं, बुकिंग जारी रखें</div><span class="vt">10:15 AM</span></div></div>
-          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <!-- 6. CURRENT: other reason free text -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Other reason (full page)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — full-page: "बुकिंग कैंसिल करने का कारण नीचे लिखें", text input (min 50 chars), cancel / go back. Kept.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:left">कैंसिल करने का कारण लिखें</div>
+            <div class="asub" style="text-align:left">ताकि हम सुधार कर सकें।</div>
+            <div style="background:#fff;border:1px solid #e6e3ec;border-radius:12px;padding:12px;margin-top:12px;height:110px;font-size:12px;color:#a8a2b4;text-align:left">यहाँ लिखें…</div>
+            <div style="font-size:10.5px;color:#8a8594;margin-top:6px">कम से कम 50 अक्षर ज़रूरी हैं</div>
+          </div>
+          <button class="abtn">बुकिंग कैंसिल करें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">वापस जाएं</button>
+        </div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- OS IMPROVE: honest, non-coercive close + correct refund -->
-      <div class="screen"><div class="screen-tag"><span class="screen-num">6a</span><span class="screen-name">Honest exit + correct refund</span><span class="badge imp">Improved · Exit</span></div>
-        <div class="fixnote"><b>OS replaces the deterrent gate:</b> state the refund facts plainly without using them as a threat — and apply <b>good-faith / attribution-aware refund</b>. If the issue was Wiom's (delay, confusion we caused), the booking fee is returned too.</div>
-        <div class="vphone"><div class="vflag">Improved</div>
-          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
-          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
-          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>कैंसिल हो रही है</b></div></div></div>
-            <div class="vbubble">ठीक है, हम आपकी बुकिंग कैंसिल कर रहे हैं। आपकी पसंद का पूरा सम्मान है।<div class="vmini"><div class="vr"><span class="k">जमा राशि</span><span class="v">₹300 वापस</span></div><div class="vr"><span class="k">बुकिंग फ़ीस</span><span class="v">₹100 वापस*</span></div></div><span style="display:block;font-size:10px;color:#8a8594;margin-top:4px">*देरी या हमारी ओर से दिक्कत होने पर ₹100 भी पूरा वापस।</span><div class="vcta">कैंसिल कन्फर्म करें</div><div class="vcta">रहने दें, जारी रखूँ</div><span class="vt">10:15 AM</span></div></div>
-          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
-        <div class="os-add"><h5><span class="material-icons">policy</span>What Exit OS changes</h5><p>No threat-framing ("₹100 नहीं मिलेगा" used as a deterrent). State refund facts <b>non-accusatorily</b>, and apply <b>attribution-aware good-faith refund</b> — if the cause was Wiom's (delay/confusion), the fee returns too (C2).</p><p class="ref">Exit OS · #25 Non-Accusatory-Closure · #15 Bond-Refund good-faith · C2</p></div></div>
+      <!-- PHASE D : EXIT (full page) -->
+      <div class="phase"><div class="line"></div><div class="lbl">D · Exit</div><div class="line"></div></div>
+
+      <!-- 7. CURRENT: refund-denial gate (full page) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Refund-denial gate (full page)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — full-page final gate: "कैंसिल करने पर ₹100 वापस नहीं मिलेगा। फिर भी कैंसिल करना चाहते हैं?" The coercive part the OS flags.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody">
+            <div style="margin:14px 0 4px"><span class="material-icons" style="font-size:48px;color:#E2B203">warning</span></div>
+            <div class="ah1">बुकिंग कैंसिल करने पर ₹100 वापस नहीं मिलेगा</div>
+            <div class="asub">क्या आप फिर भी कैंसिल करना चाहते हैं?</div>
+          </div>
+          <button class="abtn">हाँ, कैंसिल करें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">नहीं, बुकिंग जारी रखें</button>
+        </div></div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- OS NEW: confirmed + clean handoff -->
-      <div class="screen"><div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Cancelled — confirmed</span><span class="badge new">New · Exit</span></div>
-        <div class="fixnote"><b>OS adds the closure bookend:</b> no-silent-exit — confirm the cancellation, the refund + timeline, and leave the door open. No "lost customer", no win-back spam.</div>
+      <!-- OS IMPROVE: honest exit + correct refund (full page) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">7a</span><span class="screen-name">Honest exit + correct refund</span><span class="badge imp">Improved · Exit</span></div>
+        <div class="fixnote"><b>OS replaces the deterrent gate:</b> state refund facts non-accusatorily and apply attribution-aware good-faith refund — if the cause was Wiom's (delay/confusion), the ₹100 returns too.</div>
+        <div class="aphone"><div class="aflag">Improved</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:left">आपकी बुकिंग कैंसिल कर रहे हैं</div>
+            <div class="asub" style="text-align:left">आपकी पसंद का पूरा सम्मान है। आपका रिफ़ंड इस तरह होगा:</div>
+            <div class="scard" style="margin-top:12px;text-align:left"><div class="sr"><span class="k">जमा राशि</span><span class="v">₹300 वापस</span></div><div class="sr"><span class="k">बुकिंग फ़ीस</span><span class="v">₹100 वापस*</span></div></div>
+            <div style="font-size:10px;color:#8a8594;margin-top:6px;text-align:left">*देरी या हमारी ओर से दिक्कत होने पर ₹100 भी पूरा वापस।</div>
+          </div>
+          <button class="abtn">कैंसिल कन्फर्म करें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">रहने दें, जारी रखूँ</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>What Exit OS changes</h5><p>No threat-framing. State refund facts <b>non-accusatorily</b>; apply <b>attribution-aware good-faith refund</b> — Wiom-caused → fee returns too.</p><p class="ref">Exit OS · #25 Non-Accusatory · #15 Bond-Refund · C2</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS NEW: confirmed exit bookend (chat) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">8</span><span class="screen-name">Cancelled — confirmed (chat)</span><span class="badge new">New · Exit</span></div>
+        <div class="fixnote"><b>OS adds the closure bookend</b> back in chat: no-silent-exit — confirm cancellation + refund + timeline, door left open. No win-back spam.</div>
         <div class="vphone"><div class="vflag">New</div>
           <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
           <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
@@ -1981,7 +2029,7 @@
             <div class="vbubble">आपकी बुकिंग कैंसिल हो गई है। ₹400 आपके UPI पर 2–3 दिन में वापस आ जाएँगे।<span class="vt">10:15 AM</span></div>
             <div class="vbubble">आपके साथ बातचीत अच्छी रही। जब भी दोबारा नेट चाहिए हो, आपकी जानकारी सुरक्षित है — आसानी से वापस आ सकते हैं।<div class="vcta">रिफ़ंड की स्थिति देखें</div><span class="vt">10:15 AM</span></div></div>
           <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
-        <div class="os-add"><h5><span class="material-icons">policy</span>Why Exit adds this</h5><p>Exit must never be silent. A clear closure message + refund confirmation + an open door (memory preserved) — and crucially <b>no win-back spam</b> afterward.</p><p class="ref">Exit OS · #25 No-Silent-Exit · #22 Re-entry-Recognition · #24 Post-Exit-Obligation-Only</p></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why Exit adds this</h5><p>Exit must never be silent. Clear closure + refund confirmation + open door (memory preserved) — and no win-back spam.</p><p class="ref">Exit OS · #25 No-Silent-Exit · #22 Re-entry-Recognition · #24 Post-Exit-Obligation-Only</p></div></div>
 
     </div>
   </div>
