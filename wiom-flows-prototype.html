@@ -381,6 +381,7 @@
       <button class="tab" data-tab="exit"><span class="material-icons">logout</span>Exit / Refund<span class="cnt">dignified &amp; reversible</span></button>
       <button class="tab" data-tab="login"><span class="material-icons">login</span>Existing-user Login<span class="cnt">real Figma</span></button>
       <button class="tab" data-tab="cancel"><span class="material-icons">cancel</span>Cancellation<span class="cnt">resolution &gt; save desk</span></button>
+      <button class="tab" data-tab="ticket"><span class="material-icons">confirmation_number</span>Service Tickets<span class="cnt">decision tree</span></button>
     </div>
   </header>
 
@@ -2037,6 +2038,167 @@
             <div class="vbubble">आपके साथ बातचीत अच्छी रही। जब भी दोबारा नेट चाहिए हो, आपकी जानकारी सुरक्षित है — आसानी से वापस आ सकते हैं।<div class="vcta">रिफ़ंड की स्थिति देखें</div><span class="vt">10:15 AM</span></div></div>
           <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
         <div class="os-add"><h5><span class="material-icons">policy</span>Why Exit adds this</h5><p>Exit must never be silent. Clear closure + refund confirmation + open door (memory preserved) — and no win-back spam.</p><p class="ref">Exit OS · #25 No-Silent-Exit · #22 Re-entry-Recognition · #24 Post-Exit-Obligation-Only</p></div></div>
+
+    </div>
+  </div>
+
+  <div class="panel" id="panel-ticket">
+    <div class="panel-intro"><p>The <b>service-ticket / complaint-intake</b> flow, reviewed against the OS. It's a <b>chat</b> experience driven by a backend <b>decision tree</b> (gates A–D) that produces several state-based outcomes — recharge-prompt, already-open, reopen, self-resolved, or ticket-created. Governed by <b>SQ Driver OS</b> (the ping/netbox telemetry checks) and <b>Recovery OS</b> (ticket lifecycle, "closed ≠ recovered", verified restoration). Scroll sideways →</p></div>
+    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Source note:</b> "Current" screens are faithful <b>reconstructions</b> of the existing prototype (abhishekgarg-wiom.github.io/Chat-complaint-intake/v5), rebuilt in the locked Wiom chat style. A separate part of this flow will be added later, as you noted.</p></div>
+    <div class="method-note"><span class="material-icons">account_tree</span><p><b>How it works (backend decision tree):</b> when the customer reports a problem, four gates run before anything is shown — <b>A</b> plan active? · <b>B</b> open ticket already? · <b>C</b> resolved in last 48h? · <b>D</b> does the net box ping? Each gate routes to a different chat outcome below. The gates themselves are not customer screens — they're the logic, shown here as backend cards.</p></div>
+    <div class="rail">
+
+      <!-- ENTRY -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · Intake (chat)</div><div class="line"></div></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Report a problem (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — customer types "मेरा नेट नहीं चल रहा". Bot picks it up; the 4 backend gates then decide the path. Untouched.</div>
+        <div class="vphone">
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>चालू है</b></div></div></div>
+            <div class="vbubble me">मेरा नेट नहीं चल रहा<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">समझ गए — हम अभी देखते हैं क्या दिक्कत है। एक पल…<span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- BACKEND GATES card -->
+      <div class="screen" style="width:340px">
+        <div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Decision tree (backend)</span><span class="cmtag">logic, not a screen</span></div>
+        <div class="fixnote">The 4 gates that run before any reply. Not shown to the customer — each routes to one of the chat outcomes that follow.</div>
+        <div class="rs-card" style="width:300px;margin-top:54px">
+          <h3><span class="material-icons" style="color:#9ad0ff">account_tree</span>Gates A → D</h3>
+          <div class="rs-state"><span class="badge2" style="background:#102a3a;color:#9ad0ff">A</span> plan active? &nbsp;<span style="color:#8a8594">no → recharge prompt</span></div>
+          <div class="rs-state"><span class="badge2" style="background:#102a3a;color:#9ad0ff">B</span> open ticket? &nbsp;<span style="color:#8a8594">yes → "already on it"</span></div>
+          <div class="rs-state"><span class="badge2" style="background:#102a3a;color:#9ad0ff">C</span> resolved &lt;48h? &nbsp;<span style="color:#8a8594">yes → reopen ask</span></div>
+          <div class="rs-state"><span class="badge2" style="background:#102a3a;color:#9ad0ff">D</span> net box ping? &nbsp;<span style="color:#8a8594">fail → netbox check · ok → fresh flow</span></div>
+          <p style="margin-top:10px;color:#8fe3b0;font-weight:600;font-size:12px">SQ telemetry (ping) + Recovery (ticket dedupe / reopen) drive these.</p>
+        </div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OUTCOME: A inactive plan -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · Outcome paths</div><div class="line"></div></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Gate A — plan expired (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — expired plan: no ticket, just an honest recharge prompt. OS-aligned (don't open a fault ticket for a billing state). Untouched.</div>
+        <div class="vphone">
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>रिचार्ज ज़रूरी है</b></div></div></div>
+            <div class="vbubble me">मेरा नेट नहीं चल रहा<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">वर्मा जी, आपका <b>₹150</b> वाला रिचार्ज प्लान <b>5 दिसंबर</b> को खत्म हो गया है। इसी वजह से नेट नहीं चल रहा। रिचार्ज करते ही नेट फिर चल जाएगा।<div class="vcta">अभी रिचार्ज करें</div><span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OUTCOME: B open ticket -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Gate B — ticket already open (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — a ticket is already open: bot shows ID + engineer + ETA, no duplicate raised. OS-aligned (dedup, one canonical case). Untouched.</div>
+        <div class="vphone">
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">रोहित कुमार · 13 दिसं, 5pm तक</div></div></div>
+            <div class="vbubble me">मेरा नेट नहीं चल रहा<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">आपकी एक शिकायत पहले से दर्ज है और हमारी टीम उस पर काम कर रही है।<div class="vmini"><div class="vr"><span class="k">टिकट ID</span><span class="v">#612345</span></div><div class="vr"><span class="k">समस्या</span><span class="v">नेट नहीं चल रहा</span></div></div>दोबारा शिकायत की ज़रूरत नहीं — 13 दिसंबर शाम 5 बजे तक समाधान की उम्मीद है।<div class="vcta">इंजीनियर को कॉल करें</div><span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OUTCOME: C resolved reopen ask -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Gate C — recently resolved? (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — resolved within 48h: bot asks if the same issue is back, before opening anything. Untouched.</div>
+        <div class="vphone">
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>चालू है</b></div></div></div>
+            <div class="vbubble me">मेरा नेट नहीं चल रहा<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">कल आपकी "<b>नेट नहीं चल रहा</b>" वाली समस्या टिकट #612301 में सुलझा दी गई थी। क्या वही दिक्कत फिर से आ रही है?<div class="vcta">हाँ, वही दिक्कत है</div><div class="vcta">नहीं, अलग दिक्कत है</div><span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OUTCOME: C reopen same -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Reopened — same issue (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — same issue back → the SAME ticket is reopened (not a new one), escalated attention. Untouched.</div>
+        <div class="vphone">
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">समस्या पर फिर से काम शुरू</div></div></div>
+            <div class="vbubble me">हाँ, वही दिक्कत है<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">क्षमा करें कि समस्या फिर आ रही है। आपकी शिकायत <b>टिकट #612301</b> फिर से दर्ज कर ली गई है और टीम दोबारा काम कर रही है — इसे और ध्यान से देखा जा रहा है।<div class="vcta">इंजीनियर को कॉल करें</div><span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OUTCOME: D netbox check -->
+      <div class="phase"><div class="line"></div><div class="lbl">C · Troubleshoot (Gate D)</div><div class="line"></div></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Ping fail → net box on? (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — net box doesn't ping: bot asks if the box is on, with side-by-side choices. Untouched.</div>
+        <div class="vphone">
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>चालू है</b></div></div></div>
+            <div class="vbubble me">मेरा नेट नहीं चल रहा<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">हम आपके नेट बॉक्स से कनेक्ट नहीं कर पा रहे हैं। कृपया देख लें — क्या आपका <b>नेट बॉक्स चालू</b> है?<div class="vcta">हाँ, चालू है</div><div class="vcta">नहीं, बंद है</div><span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">8</span><span class="screen-name">Box off → 3-step fix (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — box off: 3 quick self-fix steps + media, then "हो गया, अब चेक करते हैं". Untouched.</div>
+        <div class="vphone">
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>चालू है</b></div></div></div>
+            <div class="vbubble me">नहीं, बंद है<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">समझ गए। पहले ये 3 चीजें करके देख लें —<br/><b>1.</b> नेट बॉक्स चालू करें<br/><b>2.</b> लाइटें स्थिर होने तक रुकें<br/><b>3.</b> मोबाइल को <b>Wiom Ramesh 1234</b> से जोड़ें<div class="vcta">हो गया, अब चेक करते हैं</div><span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">9</span><span class="screen-name">Recheck → resolved (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — recheck "हाँ, सही है" → resolved, no ticket needed. Untouched.</div>
+        <div class="vphone">
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>चालू है</b></div></div></div>
+            <div class="vbubble me">हाँ, सही है<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">बढ़िया! 🎉 आपका नेट अब सही चल रहा है। आगे कभी भी दिक्कत हो तो यहीं चैट में बता दें — हम हमेशा तैयार हैं।<span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">10</span><span class="screen-name">Still down → ticket created (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — still down: ticket raised with ID + engineer + ETA + call. Untouched.</div>
+        <div class="vphone">
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">शिकायत दर्ज हो गई · रोहित कुमार</div></div></div>
+            <div class="vbubble me">अभी दिक्कत है<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">आपकी शिकायत दर्ज हो गई है और टीम ने काम शुरू कर दिया है।<div class="vmini"><div class="vr"><span class="k">टिकट ID</span><span class="v">#634210</span></div><div class="vr"><span class="k">समस्या</span><span class="v">नेट नहीं चल रहा</span></div></div>13 दिसंबर शाम 5 बजे तक समाधान की उम्मीद है।<div class="vcta">इंजीनियर को कॉल करें</div><span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS DELTAS -->
+      <div class="phase"><div class="line"></div><div class="lbl">D · OS improvements</div><div class="line"></div></div>
+
+      <!-- OS NEW: live ticket status (Recovery) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">10a</span><span class="screen-name">Live ticket status</span><span class="badge new">New · Recovery</span><span class="recstate">in-progress</span></div>
+        <div class="fixnote"><b>OS adds:</b> after a ticket is raised, the customer can see honest live progress (acknowledged → working → next update), not silence until an engineer shows up.</div>
+        <div class="vphone"><div class="vflag">New</div>
+          <div class="vstatus"><span>02:00 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">#634210 · काम जारी</div></div></div>
+            <div class="vbubble">आपकी शिकायत पर अपडेट: आपके इलाक़े की लाइन की जाँच हो गई — दिक्कत मिल गई है, टीम ठीक कर रही है।<div class="vmini"><div class="vr"><span class="k">अगला अपडेट</span><span class="v">शाम 4 बजे तक</span></div></div><span class="vt">2:00 PM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why Recovery adds this</h5><p>A raised ticket shouldn't vanish into the backend. Recovery keeps the customer oriented — owner, progress, next-update ETA — until it's truly resolved.</p><p class="ref">Recovery OS · case in-progress · C4 clarity</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS NEW: verified restoration (Recovery + SQ) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">10b</span><span class="screen-name">Verified restoration + make-good</span><span class="badge new">New · Recovery</span><span class="recstate">verified · closed</span></div>
+        <div class="fixnote"><b>OS adds:</b> "resolved" only when telemetry confirms the net is back AND the customer confirms — not when an agent closes the ticket. Plus proportional make-good for the downtime.</div>
+        <div class="vphone"><div class="vflag">New</div>
+          <div class="vstatus"><span>04:30 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>फिर से चालू</b></div></div></div>
+            <div class="vbubble">हमने जाँच लिया — आपका नेट फिर सही स्पीड पर चल रहा है (94 Mbps)। क्या आपके यहाँ भी सही चल रहा है?<div class="vcta">हाँ, सही है</div><div class="vcta">नहीं, अब भी दिक्कत है</div><span class="vt">4:30 PM</span></div>
+            <div class="vbubble">नेट लगभग 6 घंटे बंद रहा — इसकी भरपाई में हमने आपके खाते में <b>1 दिन मुफ़्त नेट</b> जोड़ दिया है।<span class="vt">4:30 PM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why Recovery + SQ add this</h5><p>"Closed ≠ recovered." Close only on <b>telemetry-confirmed restoration + customer confirmation</b>, and make good the downtime proportionally (extension before coupon).</p><p class="ref">Recovery OS · INV-REC-01 · 3-of-4 · SQ verified · C3</p></div></div>
 
     </div>
   </div>
