@@ -325,8 +325,9 @@
   .chat-mini-map .route{position:absolute;left:18%;top:70%;width:62%;height:2px;background:repeating-linear-gradient(90deg,var(--brand) 0 7px,transparent 7px 13px)}
   .chat-mini-map .pa{position:absolute;left:14%;top:64%;color:var(--brand);font-size:22px}
   .chat-mini-map .pb{position:absolute;right:12%;top:26%;color:var(--positive);font-size:26px}
-  /* When embedded inside flows.html (?tab=...), hide the duplicate page header */
+  /* When embedded inside flows.html (?tab=...), hide the duplicate header + legend strip */
   body.embedded header.doc{display:none}
+  body.embedded > .panel-intro{display:none}
   body.embedded{padding-top:6px}
 </style>
 </head>
