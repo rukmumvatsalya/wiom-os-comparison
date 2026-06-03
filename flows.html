@@ -38,6 +38,7 @@
   .tab.active .cnt{background:var(--brand);color:#fff}
 
   .panel{display:none}
+  .embed-frame{width:100%;height:calc(100vh - 130px);min-height:760px;border:0;display:block;background:#1c1f26}
   .panel.active{display:block;animation:fade .2s ease}
   @keyframes fade{from{opacity:0}to{opacity:1}}
 
@@ -376,6 +377,9 @@
       <button class="tab" data-tab="cancel"><span class="material-icons">cancel</span>Cancellation<span class="cnt">resolution &gt; save desk</span></button>
       <button class="tab" data-tab="ticket"><span class="material-icons">confirmation_number</span>Service Tickets<span class="cnt">decision tree</span></button>
       <button class="tab" data-tab="manage"><span class="material-icons">settings</span>Manage / Settings<span class="cnt">real Figma</span></button>
+      <button class="tab" data-tab="renewal"><span class="material-icons">autorenew</span>Renewal flow<span class="cnt">19</span></button>
+      <button class="tab" data-tab="router"><span class="material-icons">router</span>Router recovery<span class="cnt">13</span></button>
+      <button class="tab" data-tab="status"><span class="material-icons">dvr</span>Home status<span class="cnt">9</span></button>
     </div>
   </header>
 
@@ -1404,6 +1408,11 @@
     </div>
   </div>
 
+  <!-- ===== Embedded flows (Renewal / Router recovery / Home status) ===== -->
+  <div class="panel" id="panel-renewal"><iframe class="embed-frame" data-src="renewal-router.html?tab=renewal" title="Renewal flow"></iframe></div>
+  <div class="panel" id="panel-router"><iframe class="embed-frame" data-src="renewal-router.html?tab=router" title="Router recovery"></iframe></div>
+  <div class="panel" id="panel-status"><iframe class="embed-frame" data-src="renewal-router.html?tab=status" title="Home status"></iframe></div>
+
 <script>
   const tabs = document.querySelectorAll('.tab');
   const panels = document.querySelectorAll('.panel');
@@ -1412,6 +1421,9 @@
     tabs.forEach(x=>x.classList.remove('active'));
     t.classList.add('active');
     panels.forEach(p=>p.classList.toggle('active', p.id === 'panel-'+id));
+    // lazy-load embedded iframes on first open
+    const panel = document.getElementById('panel-'+id);
+    if(panel){ const f = panel.querySelector('iframe[data-src]'); if(f){ f.src = f.dataset.src; f.removeAttribute('data-src'); } }
     window.scrollTo(0,0);
   }));
 </script>
