@@ -2200,6 +2200,72 @@
             <div class="vbubble">नेट लगभग 6 घंटे बंद रहा — इसकी भरपाई में हमने आपके खाते में <b>1 दिन मुफ़्त नेट</b> जोड़ दिया है।<span class="vt">4:30 PM</span></div></div>
           <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
         <div class="os-add"><h5><span class="material-icons">policy</span>Why Recovery + SQ add this</h5><p>"Closed ≠ recovered." Close only on <b>telemetry-confirmed restoration + customer confirmation</b>, and make good the downtime proportionally (extension before coupon).</p><p class="ref">Recovery OS · INV-REC-01 · 3-of-4 · SQ verified · C3</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- ============ TICKET RESOLVED FLOW (real Figma) ============ -->
+      <div class="phase"><div class="line"></div><div class="lbl">E · Ticket resolved (real Figma)</div><div class="line"></div></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">11</span><span class="screen-name">Resolved notice (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "समस्या का समाधान हो गया है" → CTAs: "अपने अनुभव को रेट करें" / "अभी भी दिक्कत आ रही है". Untouched.</div>
+        <div class="phone real"><img src="resolved-real/t1.png" alt="resolved notice"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">12</span><span class="screen-name">Still facing issue → reopen/new (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "अब कैसे आगे बढ़ना चाहते हैं?" → "पिछली शिकायत फिर से दर्ज करें" / "नई शिकायत दर्ज करें". Untouched.</div>
+        <div class="phone real"><img src="resolved-real/t3.png" alt="reopen or new"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">13</span><span class="screen-name">What's still wrong (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "हमें बताएं क्या दिक्कत आ रही है" → "समाधान नहीं हुआ है" / "समाधान का फीडबैक देना है". Untouched.</div>
+        <div class="phone real"><img src="resolved-real/t5.png" alt="whats still wrong"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">14</span><span class="screen-name">Reopened + escalated (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — same ticket reopened, "फिर से ध्यान से देख रहे हैं · सीनियर टीम", new ID #662387 + call. OS-aligned recurrence handling. Untouched.</div>
+        <div class="phone real"><img src="resolved-real/t6.png" alt="reopened escalated"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">15</span><span class="screen-name">Rate experience (stars)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — 1–5 stars + reasons (धीमी स्पीड / खराब सेवा / ज़्यादा समय / अन्य) + text → "रेटिंग सबमिट करें". Untouched.</div>
+        <div class="phone real"><img src="resolved-real/stars.png" alt="rate stars"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">16</span><span class="screen-name">Thanks for rating (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "अनुभव शेयर करने के लिए बहुत-बहुत धन्यवाद 🙏". Untouched.</div>
+        <div class="phone real"><img src="resolved-real/t9.png" alt="thanks rating"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen"><div class="screen-tag"><span class="screen-num">17</span><span class="screen-name">Compensation given (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Real screen — "व्योम की ओर से इनाम: ₹20 कूपन + 4 घंटे का नेट प्लान वैधता में जोड़ा गया". The flow already makes good the downtime. Untouched.</div>
+        <div class="phone real"><img src="resolved-real/t11.png" alt="compensation"/></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS DELTAS on resolved flow -->
+      <div class="phase"><div class="line"></div><div class="lbl">F · OS improvements (resolved)</div><div class="line"></div></div>
+
+      <!-- OS IMPROVE: verified resolution, not asked -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">17a</span><span class="screen-name">Verify before declaring resolved</span><span class="badge imp">Improved · Recovery</span><span class="recstate">verified</span></div>
+        <div class="fixnote"><b>OS improves the trigger:</b> today "समाधान हो गया है" is shown when the engineer/CSP marks it done. Recovery (INV-REC-01) requires <b>telemetry-confirmed</b> restoration + customer confirmation — not any actor closing the ticket. So lead with the measured proof, then ask.</div>
+        <div class="vphone"><div class="vflag">Improved</div>
+          <div class="vstatus"><span>04:30 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>जाँच पूरी — फिर चालू</b></div></div></div>
+            <div class="vbubble">हमने अपनी ओर से जाँच लिया है — आपका नेट अब सही स्पीड पर चल रहा है (मापी गई: 94 Mbps)। <b>तभी हम इसे हल मान रहे हैं।</b><div class="vmini"><div class="vr"><span class="k">टेलीमेट्री</span><span class="v">सामान्य ✓</span></div><div class="vr"><span class="k">पिछले 30 मिनट</span><span class="v">कोई रुकावट नहीं</span></div></div>क्या आपके यहाँ भी सही लग रहा है?<div class="vcta">हाँ, सही है</div><div class="vcta">नहीं, अब भी दिक्कत है</div><span class="vt">4:30 PM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>What Recovery improves</h5><p>"समाधान हो गया" must mean <b>verified working</b>, not "an agent closed the ticket". Lead with the measured restoration (telemetry) + sustained-clean window, then the customer confirms — the 3-of-4 rule.</p><p class="ref">Recovery OS · INV-REC-01 · 3-of-4 · SQ telemetry · C1</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS NEW: compensation is non-contingent on rating -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">17b</span><span class="screen-name">Make-good is unconditional</span><span class="badge new">New · Recovery/ARR</span></div>
+        <div class="fixnote"><b>OS fixes a subtle ordering issue:</b> today compensation appears <b>after</b> the customer rates — which makes the make-good feel earned by rating. The OS requires compensation to be <b>non-contingent</b> (owed for the downtime, regardless of whether they rate). Give it first, then optionally ask for a rating.</div>
+        <div class="vphone"><div class="vflag">New</div>
+          <div class="vstatus"><span>04:31 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>चालू है</b></div></div></div>
+            <div class="vbubble">परेशानी के लिए माफ़ी। बंद रहे समय की भरपाई हमने अभी आपके खाते में जोड़ दी है — <b>चाहे आप रेट करें या न करें।</b><div class="vmini"><div class="vr"><span class="k">जोड़ा गया</span><span class="v">4 घंटे का नेट</span></div><div class="vr"><span class="k">कूपन</span><span class="v">₹20 (अगले रिचार्ज पर)</span></div></div><span class="vt">4:31 PM</span></div>
+            <div class="vbubble">अगर एक मिनट हो — अपना अनुभव बता दें, इससे हम और बेहतर होंगे।<div class="vcta">अनुभव रेट करें</div><div class="vcta">अभी नहीं</div><span class="vt">4:31 PM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why this ordering matters</h5><p>The make-good is <b>owed</b> for the downtime — it must not look conditional on giving a rating. Give compensation <b>first &amp; unconditionally</b>, then invite (don't gate) feedback.</p><p class="ref">Recovery OS · C3 proportional restoration · ARR · non-contingent</p></div></div>
 
     </div>
   </div>
