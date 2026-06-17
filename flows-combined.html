@@ -1382,6 +1382,115 @@
       <div class="vbubble">आपको कुछ नहीं करना — यह अपने आप जुड़ गया है। आपके पैसे का पूरा नेट आपको मिलेगा।<span class="vt">10:15 AM</span></div></div>
     <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
   <div class="fixnote"><b>Why (v2):</b> The Payment Activation Watchdog catches a late activation (RECHARGE_CONFIRMED / INSTALL_COMPLETED with no POST_ACTIVATION_VERIFIED within SLA) and auto-credits the delayed days — Wiom owns its own delay, no asking. Continuity OS §5.8 (AMD-CON-19) · INV-B2I-24 · C4 (system-informs, clarity of state).</div></div>
+
+<div class="phase"><div class="line"></div><div class="lbl">v2 · More OS coverage</div><div class="line"></div></div>
+
+<!-- #1 : S3 Awaiting CSP Assignment — persistent "finding net-saathi" tracker (NOT a transient bubble) -->
+<div class="screen"><div class="screen-tag"><span class="screen-num">#1</span><span class="screen-name">सेटअप ट्रैकर — नेट साथी ढूँढ रहे हैं</span><span class="badge new">New</span><span class="os-tag">B2I · S3</span></div>
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+    <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><div class="alogo">&#8734;</div><div style="margin-left:9px"><div style="font-size:13.5px;font-weight:700;color:#161021">नेट सेटअप</div><div style="font-size:10px;color:#8a8594">रमेश का घर</div></div><div class="aact"><span class="material-icons">notifications_none</span></div></div>
+    <div class="abody" style="align-items:stretch;text-align:left">
+      <div class="sgauge run" style="width:130px;height:130px;margin:14px auto 4px"><div class="si" style="width:104px;height:104px"><span class="material-icons" style="font-size:34px;color:#D9008D">travel_explore</span><div class="srun" style="margin-top:4px">ढूँढ रहे हैं</div></div></div>
+      <div class="ah1" style="text-align:center;font-size:16px">हम आपके इलाक़े में नेट साथी ढूँढ रहे हैं</div>
+      <div class="asub" style="text-align:center">आपकी बुकिंग पक्की है। अब हम आपके पास का सही नेट साथी तय कर रहे हैं — जैसे ही तय होगा, हम आपको स्लॉट भेज देंगे।</div>
+      <div class="scard" style="margin-top:16px">
+        <div class="sr"><span class="k">अभी क्या चल रहा है</span><span class="v">नेट साथी की तलाश</span></div>
+        <div class="sr"><span class="k">अगला कदम</span><span class="v">आपको स्लॉट का सुझाव</span></div>
+        <div class="sr"><span class="k">अनुमानित समय</span><span class="v">आज शाम 6 बजे तक</span></div>
+      </div>
+      <div class="averify" style="margin-top:12px"><span class="material-icons" style="color:#6D17CE">schedule</span><p style="color:#46108a">आपको इंतज़ार में अकेला नहीं छोड़ेंगे — हर कदम पर आपको यहीं अपडेट मिलता रहेगा।</p></div>
+    </div>
+    <button class="abtn ghost">मदद चाहिए?</button>
+  </div>
+  <div class="fixnote"><b>Why (v2):</b> S3 (Awaiting CSP Assignment) is visible-to "Customer (finding partner)" per §5.5, but today happens silently server-side — the start of the "कब लगेगा" anxiety the OS exists to kill. C4 demands the customer always know the booking is alive and the next step. A persistent status surface (not a chat bubble) before any engineer is named. B2I OS · S3 · §5.5 · C4.</div></div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- #2 : S6 Escalation In Progress — honest "we're trying to reach you" across the channel ladder -->
+<div class="screen"><div class="screen-tag"><span class="screen-num">#2</span><span class="screen-name">हम आपसे संपर्क की कोशिश कर रहे हैं</span><span class="badge new">New</span><span class="os-tag">B2I · S6</span></div>
+  <div class="vphone"><div class="vflag">New</div>
+    <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+    <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">support_agent</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>आपका जवाब बाकी है</b></div></div></div>
+      <div class="vbubble">हमने आपको नेट सेटаप का स्लॉट भेजा था, पर अभी आपका जवाब नहीं मिला। हम आपसे संपर्क करने की कोशिश कर रहे हैं —
+        <div class="evid">
+          <div class="evid-item ok"><span class="material-icons">check_circle</span>WhatsApp भेजा गया</div>
+          <div class="evid-item ok"><span class="material-icons">check_circle</span>कॉल की कोशिश की</div>
+          <div class="evid-item wait"><span class="material-icons">schedule</span>नोटिफ़िकेशन भेजी जा रही है</div>
+        </div>
+        <span class="vt">10:15 AM</span></div>
+      <div class="vbubble">आपकी बुकिंग अभी भी पूरी तरह चालू है — आप अभी भी दिन पक्का कर सकते हैं या बदल सकते हैं।
+        <div class="vcta">हाँ, यही दिन पक्का करें</div>
+        <div class="vcta">दिन बदलें</div>
+        <span class="vt">10:15 AM</span></div></div>
+    <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+  <div class="fixnote"><b>Why (v2):</b> The app has zero post-booking timeouts — a silent customer sits in limbo forever. INV-B2I-07 (Every State Has a Clock) and the §7 channel ladder CP-B2I-27 (WhatsApp → IVR → Push) require honest, visible re-contact; silence must never be read as consent. This is the visible half of the escalation, with confirm/reschedule still open. B2I OS · S6 · CP-B2I-27 · INV-B2I-07/09.</div></div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- #3 : S7 Closure Proposed — explicit 3-action decision + honest "we'll refund, not penalise" -->
+<div class="screen"><div class="screen-tag"><span class="screen-num">#3</span><span class="screen-name">जवाब दें — वरना पूरा पैसा वापस</span><span class="badge new">New</span><span class="os-tag">B2I · S7</span></div>
+  <div class="vphone"><div class="vflag">New</div>
+    <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+    <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">help_outline</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>आपका जवाब ज़रूरी है</b></div></div></div>
+      <div class="vbubble">कई बार कोशिश के बाद भी आपका जवाब नहीं मिल पाया। हमें बस यह जानना है कि आगे क्या करना है। आप तीन में से एक चुन सकते हैं:
+        <div class="vcta">हाँ, सेटअप पक्का करें</div>
+        <div class="vcta">दिन बदलें</div>
+        <div class="vcta">बुकिंग रद्द करें</div>
+        <span class="vt">10:15 AM</span></div>
+      <div class="vbubble"><b>साफ़-साफ़ बात:</b> अगर 3 दिन में आपका जवाब नहीं मिला, तो हम यह बुकिंग बंद कर देंगे और आपका पूरा पैसा वापस कर देंगे। इसमें आप पर कोई जुर्माना नहीं — पैसा आपका है।
+        <div class="vmini"><div class="vr"><span class="k">जवाब का आख़िरी दिन</span><span class="v">30 दिसंबर</span></div><div class="vr"><span class="k">जवाब न मिलने पर</span><span class="v">बुकिंग बंद + पूरा रिफंड</span></div></div>
+        <span class="vt">10:15 AM</span></div></div>
+    <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+  <div class="fixnote"><b>Why (v2):</b> S7 is the constitutional replacement for auto-confirmation — silence must never become consent (INV-B2I-01). After escalation is exhausted, the customer gets explicit options and an honest "we will refund, not penalise" before any drop, within the final window CP-B2I-21 (3–7 days). The existing S13 only covers on-site technician failure, not unresponsive-customer closure. B2I OS · S7 · CP-B2I-21 · TRD-B2I-02.</div></div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- #4 : S9 Technician Assigned — en-route card with name + photo + masked call + live ETA -->
+<div class="screen"><div class="screen-tag"><span class="screen-num">#4</span><span class="screen-name">नेट साथी रास्ते में है</span><span class="badge new">New</span><span class="os-tag">B2I · S9</span></div>
+  <div class="vphone"><div class="vflag">New</div>
+    <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+    <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">directions_bike</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>नेट साथी रास्ते में</b></div></div></div>
+      <div class="vbubble">आज आपका नेट लग रहा है — हमारे नेट साथी <b>अमित</b> आपकी ओर निकल चुके हैं।
+        <div class="vtech"><div class="va" style="background:linear-gradient(135deg,#FFB2E4,#D9008D);color:#fff;font-weight:700;font-size:13px">अ</div><div><div class="vtn">अमित कुमार</div><div style="font-size:10.5px;color:#8a8594">व्योम नेट साथी</div></div><div class="vc"><span class="material-icons">call</span></div></div>
+        <div class="vmini"><div class="vr"><span class="k">पहुँचने में</span><span class="v">लगभग 25 मिनट</span></div><div class="vr"><span class="k">अनुमानित समय</span><span class="v">शाम 5:00 – 5:20</span></div></div>
+        <span class="vt">10:15 AM</span></div>
+      <div class="vbubble">घर पर <b>सुनीता जी</b> मौजूद रहेंगी — उन्हें भी यही जानकारी भेज दी गई है। नंबर छुपा कर सीधे कॉल कर सकते हैं।<span class="vt">10:15 AM</span></div></div>
+    <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+  <div class="fixnote"><b>Why (v2):</b> Today the chat shows only the engineer name — no ETA window, no en-route push. S9's key rule (§5.5) is install-day comms with ETA to the creating person AND the install-contact. Without the ETA / en-route surface the customer still doesn't know "when today" — the core C4 promise on install day. Masked-call protects both numbers. B2I OS · S9 · §5.5.</div></div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- #5 : S10 Install Attempt — structured, customer-visible outcome (success / governed failure) -->
+<div class="screen"><div class="screen-tag"><span class="screen-num">#5</span><span class="screen-name">सेटअप का नतीजा — पूरा / नहीं हो पाया</span><span class="badge new">New</span><span class="os-tag">B2I · S10</span></div>
+  <div class="vphone"><div class="vflag">New</div>
+    <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+    <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">assignment_turned_in</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप अभी पूरा नहीं हो पाया</b></div></div></div>
+      <div class="vbubble">अमित आज आपके घर पहुँचे, पर सेटаप पूरा नहीं हो पाया। हमने इसका सही कारण दर्ज किया है ताकि सच कहीं खो न जाए:
+        <div class="vmini"><div class="vr"><span class="k">क्या दर्ज हुआ</span><span class="v">तार/लाइन की दिक्कत</span></div><div class="vr"><span class="k">किसने दर्ज किया</span><span class="v">नेट साथी — अमित</span></div></div>
+        <span class="vt">10:15 AM</span></div>
+      <div class="vbubble">यह कारण आपको दिख रहा है, और अगर आपको लगता है कुछ और हुआ था तो आप हमें बता सकते हैं — हम दोबारा देखेंगे। आगे हम इसे ऐसे सुलझाएँगे:
+        <div class="vcta">नया दिन तय करें</div>
+        <div class="vcta">यह कारण सही नहीं — बताएँ</div>
+        <span class="vt">10:15 AM</span></div></div>
+    <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+  <div class="fixnote"><b>Why (v2):</b> Today the install attempt has no governed outcome surface and no silence clock. INV-B2I-03 (Mandatory Outcome Recording) requires every S10 attempt to end in a structured outcome — success or a governed reason (customer not available / technical infeasibility / wants reschedule) — and CP-B2I-23 sets the silence timeout. The customer-facing half makes the recorded outcome visible and contestable (§10 truth-divergence), and feeds the tri-bucket attribution. B2I OS · S10 · INV-B2I-03 · CP-B2I-23.</div></div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- #6 : S13 Dropped with Attribution — honest tri-bucket messaging, Wiom-side leads with "on us" -->
+<div class="screen"><div class="screen-tag"><span class="screen-num">#6</span><span class="screen-name">रिफंड — ये हमारी तरफ़ से था</span><span class="badge new">New</span><span class="os-tag">B2I · S13</span></div>
+  <div class="vphone"><div class="vflag">New</div>
+    <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+    <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">verified_user</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>बुकिंग बंद — पूरा रिफंड</b></div></div></div>
+      <div class="vbubble"><b>ये हमारी तरफ़ से था — आपकी कोई गलती नहीं।</b> हम तय समय में आपका नेट नहीं लगा पाए, इसलिए यह बुकिंग बंद कर रहे हैं और आपका पूरा पैसा वापस आ रहा है।
+        <div class="vmini"><div class="vr"><span class="k">कारण</span><span class="v">व्योम की ओर से देरी</span></div><div class="vr"><span class="k">रिफंड</span><span class="v">₹1,000 — पूरा</span></div><div class="vr"><span class="k">कब तक</span><span class="v">3–5 दिन में</span></div></div>
+        <span class="vt">10:15 AM</span></div>
+      <div class="vbubble">जब भी आप तैयार हों, हम फिर से आपका नेट लगाने के लिए हाज़िर हैं — आपका भरोसा हमारे लिए सबसे ज़रूरी है।
+        <div class="vcta">दोबारा सेटअप बुक करें</div>
+        <span class="vt">10:16 AM</span></div></div>
+    <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+  <div class="fixnote"><b>Why (v2):</b> The existing S13 hardcodes only the "our side" line. INV-B2I-04 (No Lazy Unknown Attribution) requires every drop to carry a signal-grounded tri-bucket (customer-truth / CSP-execution / system) and the message to reflect it: Wiom-side → "ये हमारी तरफ़ से था, पूरा रिफंड"; customer-side → neutral, no false self-blame. Attribution is what makes refunds fair — benefit of doubt to the customer (C2). B2I OS · S13 · INV-B2I-04 · C2.</div></div>
         </div>
   </div>
 <!-- login v1 -->
@@ -1632,6 +1741,48 @@
     <button class="abtn ghost">बैंक में लेना है</button>
   </div>
   <div class="os-add"><h5><span class="material-icons">policy</span>Why CM adds this</h5><p>On <code>REFUND_FAILED</code> with a NO_UPI reason, CM OS logs <code>NO_UPI_PENDING</code> and runs D-P06: auto-retry → ops escalation → <b>alternative payout (wallet credit)</b> → audited write-off. The wallet credit is Phase C — the customer keeps the value visibly; nothing is silently forfeited (INV-CM-25).</p><p class="ref">CM OS · AMD-CM-17 · D-P06 · §8.5 (Phase C) · INV-CM-25 · P9</p></div></div>
+
+<div class="phase"><div class="line"></div><div class="lbl">v2 · More OS coverage</div><div class="line"></div></div>
+
+<!-- #1 : Phone re-bind reassurance — durable identity survives the number change (CM-1) -->
+<div class="screen"><div class="screen-tag"><span class="screen-num">#1</span><span class="screen-name">नंबर बदला, पहचान वही</span><span class="badge new">New</span><span class="cmtag">CM · phone re-bind</span></div>
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+    <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><div class="alogo">&#8734;</div><div style="margin-left:9px"><div style="font-size:13.5px;font-weight:700;color:#161021">नंबर बदलें</div><div style="font-size:10px;color:#8a8594">रमेश का अकाउंट</div></div><div class="aact"><span class="material-icons">verified_user</span></div></div>
+    <div class="abody" style="align-items:stretch;text-align:left">
+
+      <!-- recognition hero -->
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin:10px 0 2px">
+        <div style="width:64px;height:64px;border-radius:50%;background:#E1FAED;display:flex;align-items:center;justify-content:center"><span class="material-icons" style="font-size:36px;color:#008043">how_to_reg</span></div>
+        <div class="ah1" style="margin-top:12px">आपने नंबर बदला, फिर भी हमने आपको पहचान लिया</div>
+        <div class="asub">आपका नेट, पता और हिसाब — सब वही हैं। नया नंबर सिर्फ़ आपके उसी अकाउंट से जुड़ गया है।</div>
+      </div>
+
+      <!-- what carried across the new number -->
+      <div class="scard" style="margin-top:16px">
+        <div class="sr"><span class="k">पुराना नंबर</span><span class="v" style="color:#A7A1B2">+91 98••• ••210</span></div>
+        <div class="sr"><span class="k">नया नंबर</span><span class="v">+91 90••• ••477</span></div>
+        <div class="sr" style="border-top:1px solid #f0eef4;margin-top:4px;padding-top:8px"><span class="k">आपका नेट</span><span class="v">Wiom Ramesh 1234</span></div>
+        <div class="sr"><span class="k">पता</span><span class="v">Rajiv Colony, Sec 40</span></div>
+        <div class="sr"><span class="k">आपका हिसाब</span><span class="v" style="color:#008043">वही — सुरक्षित</span></div>
+      </div>
+
+      <!-- HIGH-bar verification framed as protection, not friction -->
+      <div class="trust info" style="margin-top:14px">
+        <span class="material-icons">shield</span>
+        <p><b style="color:#46108a">हमने पूरी जाँच के बाद ही जोड़ा।</b> नंबर बदलने पर हम जान-बूझकर ज़्यादा पक्की जाँच करते हैं — ताकि आपका नेट और पैसा किसी और के हाथ न लगे। यह आपकी हिफ़ाज़त के लिए है।</p>
+      </div>
+
+      <!-- connection-anchored path (new phone + new SIM, recognised via home net-box) -->
+      <div class="averify" style="margin-top:12px;background:#F1E5FF">
+        <span class="material-icons" style="color:#6D17CE">router</span>
+        <p style="color:#46108a">नया फ़ोन और नई SIM दोनों बदल गए थे? कोई बात नहीं — आपके घर का नेट-बॉक्स वही है। बस इतना बताइए: <b style="color:#46108a">“मैं इसी पते के Wiom कनेक्शन का ग्राहक हूँ”</b> — और हम आपको उसी से पहचान लेंगे।</p>
+      </div>
+
+    </div>
+    <button class="abtn">होम पर जाएँ</button>
+  </div>
+  <div class="fixnote"><b>Why (v2):</b> the existing change-number screen is only the re-bind <i>guard</i> (PARTNER_ALREADY_EXIST block) — it proves a number isn't taken but never reassures the person that their durable identity, history and money survived the swap. <code>customer_id</code> is person-level and survives a phone change (CM-1); the re-bind itself demands HIGH-confidence verification, framed here as protection not friction (CM-2 · INV-CM-17). The connection-anchored path (§4.6) recovers the simultaneous new-phone-+-new-SIM case via the home नेट-बॉक्स. Emits <code>IDENTITY_RESOLVED · resolution_type=PHONE_REBIND</code>. <b>CM-1 · CM-2 · INV-CM-17 · §4.6.</b></div></div>
         </div>
   </div>
 <!-- cancel v1 -->
@@ -2066,6 +2217,128 @@
         <p style="margin-top:8px">It <b>NEVER</b> opens a case, authors RESOLVING, applies a T1–T8 tool, or contacts the customer (D6 — the customer must not know they're being watched). So it is structurally <b>not a save-desk</b>: no queue, no "AT_WATCH candidate" surface, no nudge. If real AT_RISK lands, the pre-staged case just opens faster.</p>
         <p class="ref">ARR OS · §4.5 · AMD-ARR-11 · INV-ARR-28 (not a trigger) · INV-ARR-29 (passive only)</p>
       </div>
+
+      <!-- ===================== ARR v2.0 — ROUND 2 COVERAGE ===================== -->
+      <!-- PHASE v2 : MORE OS COVERAGE (ARR v2.0) -->
+      <div class="phase"><div class="line"></div><div class="lbl">v2 · More OS coverage</div><div class="line"></div></div>
+
+      <!-- v2·3 NEW: T1 proactive resolution-first outreach — fires BEFORE cancel intent -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·3</span><span class="screen-name">असली दिक्कत ठीक करना (proactive outreach)</span><span class="badge new">New · ARR</span><span class="tool">ARR · T1 / proactive</span></div>
+        <div class="fixnote"><b>Why (v2):</b> ARR's whole doctrine is to act on the problem <b>before</b> the cancel decision — <b>D4</b> Proactive-Outreach-Required (<b>INV-ARR-22</b>, "governed proactive outreach is default, not optional"). This T1 message hits all four substantive checks (§4.4): event-referenced, customer-delivered, what Wiom is fixing, next concrete step. Never "please stay", never an offer; never says "at risk" (<b>D6 / INV-ARR-10</b>).</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>11:02 AM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:6px 0 2px"><span class="material-icons" style="font-size:44px;color:#6D17CE">handyman</span></div>
+            <div class="ah1" style="text-align:left">हमने देखा आपका नेट बार-बार रुक रहा है — चलिए असली दिक्कत ठीक करें</div>
+            <div class="asub" style="text-align:left">पिछले <b>7 दिनों</b> में आपका नेट <b>9 बार</b> रुका — यह सामान्य नहीं है, और इसकी जाँच हमें ख़ुद करनी चाहिए थी।</div>
+
+            <div class="scard" style="margin-top:14px;text-align:left">
+              <div class="sr"><span class="k">क्या बार-बार हो रहा है</span><span class="v">नेट बीच में रुकना</span></div>
+              <div class="sr"><span class="k">कितनी बार (7 दिन)</span><span class="v">9 बार</span></div>
+              <div style="height:1px;background:#E8E4F0;margin:6px 0"></div>
+              <div class="sr"><span class="k" style="font-weight:700;color:#161021">हम क्या ठीक कर रहे हैं</span><span class="v" style="color:#6D17CE">लाइन की जाँच</span></div>
+            </div>
+
+            <div class="averify"><span class="material-icons" style="color:#6D17CE">build_circle</span><p style="color:#46108a"><b>अगला कदम:</b> हमारी टीम आपके इलाक़े की लाइन की जाँच कर रही है। <b>2 दिन</b> में आपको ख़ुद अपडेट मिलेगा — आपको कहीं फ़ोन या फ़ॉलोअप करने की ज़रूरत नहीं।</p></div>
+
+            <div style="background:#F1E5FF;border-radius:10px;padding:9px 11px;margin-top:10px;display:flex;gap:7px;align-items:flex-start;text-align:left">
+              <span class="material-icons" style="font-size:15px;color:#6D17CE;flex:0 0 auto;margin-top:1px">info</span>
+              <p style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;line-height:1.45;color:#46108a">यह कोई ऑफ़र या छूट नहीं है — हम सिर्फ़ वह दिक्कत ठीक कर रहे हैं जो हमारी ओर से रही।</p>
+            </div>
+          </div>
+          <button class="abtn">ठीक है, जाँच शुरू करें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">और जानकारी देखें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">campaign</span>Why ARR fires this first (and what it must NOT be)</h5><p>The biggest gap was zero proactive surface — the app only reacted <b>after</b> a cancel/ticket flow opened. <b>D4</b> makes governed outreach the default. The message <b>names the specific recurring deterioration</b> (event-referenced, not generic), states what Wiom is fixing, and gives a concrete next step — the four-part T1 threshold. It <b>never</b> says "please stay", offers a discount, or labels the customer "at risk".</p><p class="ref">ARR OS · T1 · §4.4 · D4 · INV-ARR-22 · D6 / INV-ARR-10 · INV-ARR-01</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v2·4 NEW: customer-visible RESOLVING case state — honest "काम चालू है" -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·4</span><span class="screen-name">केस खुला है — अभी क्या हो रहा है (RESOLVING)</span><span class="badge new">New · ARR</span><span class="tool">ARR · RESOLVING</span></div>
+        <div class="fixnote"><b>Why (v2):</b> ARR is the sole author of <b>RESOLVING</b> and the spec requires it be a <b>visible, governed thing</b> — "the space between AT_RISK and EXITED has an owner." <b>D10</b>: RESOLVING is a coordination signal (governed work active), <b>not</b> a success assertion — so the copy says "काम चालू है", never "हल हो गया". <b>C1</b> no silent closes; visible as a case, <b>never</b> labelled "at risk" (<b>INV-ARR-10</b>).</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>09:48 AM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:6px 0 2px"><span class="material-icons" style="font-size:44px;color:#6D17CE">assignment</span></div>
+            <div class="ah1" style="text-align:left">हमने इसे ठीक करने के लिए एक केस खोला है</div>
+            <div class="asub" style="text-align:left">आपकी बार-बार आने वाली दिक्कत के लिए हमने एक केस खोला है ताकि यह कहीं खो न जाए। नीचे देखें अभी क्या हो रहा है।</div>
+
+            <div class="scard" style="margin-top:14px;text-align:left">
+              <div class="sr"><span class="k">केस नंबर</span><span class="v">#ARR-48217</span></div>
+              <div class="sr"><span class="k">किस बारे में</span><span class="v">नेट बार-बार रुकना</span></div>
+              <div class="sr"><span class="k">खुला</span><span class="v">2 दिन पहले</span></div>
+            </div>
+
+            <!-- honest progress: काम चालू है, NOT हल हो गया -->
+            <div class="evid" style="margin-top:12px">
+              <div class="evid-item ok"><span class="material-icons">check_circle</span>दिक्कत दर्ज की गई और जाँच के लिए भेजी गई</div>
+              <div class="evid-item ok"><span class="material-icons">check_circle</span>आपके इलाक़े की लाइन की जाँच शुरू</div>
+              <div class="evid-item wait"><span class="material-icons">radio_button_unchecked</span>कारण पक्का करना — <b>काम चालू है</b></div>
+              <div class="evid-item wait"><span class="material-icons">radio_button_unchecked</span>ठीक होने की पुष्टि — अभी बाकी</div>
+            </div>
+
+            <div class="averify" style="background:#F1E5FF"><span class="material-icons" style="color:#6D17CE">schedule</span><p style="color:#46108a"><b>अभी हल नहीं हुआ है — काम चालू है।</b> जैसे ही कारण पक्का होगा या ठीक होगा, हम आपको ख़ुद बताएँगे। यह केस बंद होने पर भी आपको साफ़ बताया जाएगा।</p></div>
+          </div>
+          <button class="abtn">केस की जानकारी रखें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">अपडेट कब मिलेगा?</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">visibility</span>Why RESOLVING must be visible (and honest)</h5><p>The app had <b>no case/state surface at all</b> — the customer could not see that a resolution case exists or its progress (<b>RESOLVING_ACTIVE → MONITORING → CLEARED/FAILED</b>). This makes the case visible and gives an honest, non-success-asserting status per <b>D10</b>. It honours <b>C1</b> "no silent closes" (closure will be told) and <b>INV-ARR-10</b> — shown as a case, never as "you're at risk".</p><p class="ref">ARR OS · §8.2 ARR_CASE_OPENED / RESOLVING_STATE_CHANGED · D10 · C1 · INV-ARR-10</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v2·5 NEW: explicit non-coercion stance at cancellation — no save-desk -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·5</span><span class="screen-name">कैंसिल आपका हक़ है (no save-desk)</span><span class="badge new">New · ARR</span><span class="tool">ARR · no save-desk</span></div>
+        <div class="fixnote"><b>Why (v2):</b> The spec names this "the highest corruption-risk OS" and the app's biggest fairness risk is a support path quietly becoming a save desk. <b>§5.3 + §3.3</b> No-Parallel-Save-Desks and the <b>D16</b> prohibited list forbid discounts / coupons / "stay & get X". This screen makes the non-coercion commitment visible at the exit decision itself, with cancel one tap away and equally weighted (<b>D1 / INV-ARR-01</b> — act on the problem, never the decision).</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>06:14 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:6px 0 2px"><span class="material-icons" style="font-size:44px;color:#352d42">handshake</span></div>
+            <div class="ah1" style="text-align:left">कैंसिल करना आपका हक़ है — हम रोकने की कोशिश नहीं करेंगे</div>
+            <div class="asub" style="text-align:left">आपकी दिक्कत हम वैसे भी ठीक करेंगे। पर रुकवाने के लिए हम कोई छूट, कूपन या "रुकिए तो ये मिलेगा" जैसा लालच <b>नहीं</b> देंगे — यह हमारा वादा है।</div>
+
+            <div class="scard" style="margin-top:14px;text-align:left">
+              <div class="sr" style="align-items:flex-start"><span class="k" style="display:flex;gap:6px;align-items:center"><span class="material-icons" style="font-size:15px;color:#008043">check</span>हम क्या करेंगे</span><span class="v" style="color:#008043;text-align:right;max-width:150px">दिक्कत ठीक करेंगे, चाहे आप रहें या जाएँ</span></div>
+              <div style="height:1px;background:#E8E4F0;margin:7px 0"></div>
+              <div class="sr" style="align-items:flex-start"><span class="k" style="display:flex;gap:6px;align-items:center"><span class="material-icons" style="font-size:15px;color:#D9008D">close</span>हम क्या नहीं करेंगे</span><span class="v" style="color:#D9008D;text-align:right;max-width:150px">छूट / कूपन / रोकने वाला ऑफ़र</span></div>
+            </div>
+
+            <div class="averify"><span class="material-icons">verified_user</span><p>आपका फ़ैसला आपका है। नीचे कैंसिल का रास्ता हमेशा खुला और बराबर है — हम उसे छिपाएँगे या मुश्किल नहीं बनाएँगे।</p></div>
+          </div>
+          <button class="abtn ghost" style="border:1.5px solid #E8E4F0;border-radius:24px;color:#352d42">कैंसिल करना जारी रखें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">पहले दिक्कत ठीक करवाएँ</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">gpp_good</span>Why the no-save-desk line is shown (and equally weighted)</h5><p>The earlier flow only said the price-clarify was "not a discount" — there was no explicit, customer-facing non-coercion commitment at the exit decision. Here both paths carry equal visual weight; cancel is one tap, never buried. <b>No</b> discount, coupon, loyalty, "stay & get X", or retention-team contact (D16 prohibited list). The object is the problem, never the stay/leave decision.</p><p class="ref">ARR OS · §5.3 · §3.3 No-Parallel-Save-Desks · D16 · D1 · INV-ARR-01</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v2·6 NEW: F4 closure-linked deterioration acknowledgment — dignified handoff -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·6</span><span class="screen-name">दिक्कत असली थी — आपका हक़ सुरक्षित है (F4)</span><span class="badge new">New · ARR</span><span class="tool">ARR · F4</span></div>
+        <div class="fixnote"><b>Why (v2):</b> The earlier closure bookend gives an honest refund but does <b>not</b> distinguish a deterioration-linked exit from an ordinary cancel. <b>F4 EXPLICIT_CLOSURE_DETERIORATION_LINKED</b> (§15.1 / §10): "customer declares exit during RESOLVING → F4 … obligations discharge regardless." This screen acknowledges the deterioration was real and unresolved, confirms refund/credit are unaffected, and hands off cleanly (<b>T7</b>) — exit-with-the-problem-owned is a fair outcome (<b>D1</b>). No win-back.</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>07:30 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:6px 0 2px"><span class="material-icons" style="font-size:44px;color:#352d42">sentiment_satisfied</span></div>
+            <div class="ah1" style="text-align:left">आप जा रहे हैं — और हम मानते हैं कि दिक्कत असली थी</div>
+            <div class="asub" style="text-align:left">आपका नेट बार-बार रुका और हम उसे आपके रहते पूरी तरह ठीक नहीं कर पाए। यह हमारी कमी थी, आपकी नहीं। इसके लिए माफ़ी।</div>
+
+            <div class="averify"><span class="material-icons">verified_user</span><p><b>आपके हक़ वैसे ही पूरे होंगे।</b> केस बंद होने या न होने से आपका रिफ़ंड और क्रेडिट पर कोई फ़र्क़ नहीं पड़ता — वे आपके ही हैं।</p></div>
+
+            <div class="scard" style="margin-top:12px;text-align:left">
+              <div class="sr"><span class="k">बचे दिनों का रिफ़ंड</span><span class="v" style="color:#008043">₹180</span></div>
+              <div class="sr"><span class="k">हक़ का क्रेडिट (पहले जुड़ा)</span><span class="v" style="color:#008043">₹100</span></div>
+              <div class="sr"><span class="k">केस</span><span class="v">#ARR-48217 · दर्ज</span></div>
+            </div>
+
+            <div style="background:#F1F0F4;border-radius:10px;padding:9px 11px;margin-top:10px;display:flex;gap:7px;align-items:flex-start;text-align:left">
+              <span class="material-icons" style="font-size:15px;color:#5C5570;flex:0 0 auto;margin-top:1px">waving_hand</span>
+              <p style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;line-height:1.45;color:#352d42">कभी ज़रूरत हो तो दरवाज़ा खुला है — पर हम "वापस आइए" के मैसेज से आपको परेशान नहीं करेंगे।</p>
+            </div>
+          </div>
+          <button class="abtn">रिफ़ंड और बंद करना पक्का करें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">रसीद डाउनलोड करें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">flag</span>Why F4 is acknowledged to the customer (and no win-back)</h5><p>An ordinary cancel and a Wiom-caused, deterioration-linked exit are <b>not</b> the same — the v2 distinction the app couldn't make. <b>F4</b> records the unresolved deterioration as the closure cause; obligations (refund + the already-added T5 credit) <b>discharge regardless</b> of the exit. The handoff to Closure OS is clean and dignified (<b>T7</b> confirm-and-handoff). <b>No</b> win-back, no "come back" messaging (D16).</p><p class="ref">ARR OS · F4 EXPLICIT_CLOSURE_DETERIORATION_LINKED · §15.1 · §10 · T7 · D1 · INV-ARR-01</p></div></div>
         </div>
   </div>
 <!-- ticket v1 -->
@@ -2564,6 +2837,134 @@
           <button class="abtn ghost">जाँच की स्थिति देखें</button>
         </div>
         <div class="os-add"><h5><span class="material-icons">policy</span>Why SQ adds this</h5><p>Layer 1 evaluates the plan-speed promise floor <b>before</b> baseline comparison — so a chronically under-served line can't be normalised as "Healthy" against its own corroded baseline (<b>INV-SQ-24</b>). Below-floor delivery is <b>always Wiom-side</b> (<b>INV-SQ-25</b>), so the copy owns it and opens an investigation feeding Recovery — never a recharge prompt.</p><p class="ref">SQ Driver OS v2.0 · Layer 1 plan_speed_below_promise · INV-SQ-24/25 · AMD-SQ-01 · 40% × plan, 4h · QUALITY_INVESTIGATION_COMPLETED → Recovery</p></div></div>
+
+      <!-- ============ v2 · MORE OS COVERAGE (SQ #2/#5/#6 + Recovery #2/#3/#4) ============ -->
+      <div class="phase"><div class="line"></div><div class="lbl">v2 · More OS coverage</div><div class="line"></div></div>
+
+      <!-- SQ#2 — Net-down DIAGNOSIS (not complaint-capture) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·3</span><span class="screen-name">नेट नहीं चल रहा — हमें दिक्कत दिख रही है</span><span class="badge new">New · SQ</span><span class="qstate">SQ · diagnosis</span></div>
+        <div class="fixnote"><b>Why (v2):</b> On "नेट नहीं चल रहा", read the live <b>QUALITY_STATE_CHANGED</b> (STATE + FAULT_DOMAIN + SCOPE + CONFIDENCE) at complaint time and <b>answer with the diagnosis</b> — not ping → self-fix → "ticket बन गया → इंजीनियर को कॉल करें". The OS exists to make net-down self-resolving by stating the truth.</div>
+        <div class="vphone"><div class="vflag">New</div>
+          <div class="vstatus"><span>07:02 PM</span><span class="r"><span class="material-icons">wifi_off</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat">
+            <div class="vbubble me">नेट नहीं चल रहा<span class="vt">7:01 PM</span></div>
+            <div class="vcard"><div class="vci"><span class="material-icons">troubleshoot</span></div><div><div class="l1">घर का नेट: रमेश · #634118</div><div class="l2"><b>हम आपकी लाइन जाँच रहे हैं…</b></div></div></div>
+            <div class="vbubble">हमने आपके कनेक्शन पर <b>दिक्कत देख ली है</b> — आपको कुछ बताने या भेजने की ज़रूरत नहीं।
+              <div class="vmini"><div class="vr"><span class="k">कारण</span><span class="v">लाइन में दिक्कत (हमारी ओर)</span></div><div class="vr"><span class="k">कहाँ तक</span><span class="v">सिर्फ़ आपका घर</span></div><div class="vr"><span class="k">कब से</span><span class="v">25 मिनट से</span></div></div>
+              यह <b>हमारी ओर से</b> है और हम इसे <b>अभी ठीक कर रहे हैं</b>। ठीक होते ही हम आपको यहीं बता देंगे।<span class="vt">7:02 PM</span></div>
+            <div class="vbubble"><div class="vcta">ठीक होने की स्थिति देखें</div></div>
+          </div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why SQ adds this</h5><p>The current flow (Report → decision tree → ping fail → 3-step self-fix → "ticket बन गया, इंजीनियर को कॉल करें") is pure complaint-capture-then-deflect-to-call. SQ already holds the truth: it consumes <b>QUALITY_STATE_CHANGED</b> at complaint time and the Issue Classification Layer routes quality issues to SQ truth. The app's only job is to <b>faithfully translate</b> that decomposed state — STATE=Unusable, the <b>FAULT_DOMAIN</b> (area / local_distribution / endpoint_equipment) and <b>SCOPE</b> — into an honest diagnosis, opening Recovery instead of pushing a call.</p><p class="ref">SQ Driver OS v2.0 · QUALITY_STATE_CHANGED (STATE+FAULT_DOMAIN+SCOPE+CONFIDENCE) · §6.3 Issue Classification Layer · C4 State Clarity · audit SQ #2</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- SQ#5 — Customer-side attribution, non-blaming self-help -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·4</span><span class="screen-name">आपके यहाँ छोटी-सी बात — सुधारने का तरीका</span><span class="badge new">New · SQ</span><span class="qstate">SQ · customer_environment</span></div>
+        <div class="fixnote"><b>Why (v2):</b> When <b>FAULT_DOMAIN = customer_environment / customer_behavior</b> (राउटर की जगह, डिवाइस संख्या), show <b>non-blaming</b> self-help — <b>clearly distinct</b> from Wiom-side "on us" framing. Owning Wiom-side <b>only</b> is asymmetric; attribution shown both ways is what makes C2 credible (<b>INV-SQ-04 Attribution-Not-Blame</b>).</div>
+        <div class="aphone"><div class="aflag" style="background:#0f3322;color:#8fe3b0">New</div>
+          <div class="astatus"><span>07:08 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">&#8734;</div><div class="aact"><span class="material-icons">help_outline</span><span class="material-icons">more_vert</span></div></div>
+          <div class="abody">
+            <div class="sgauge"><div class="si"><span class="snum">ठीक</span><span class="srun">लाइन सही है</span></div></div>
+            <div class="ah1">आपकी लाइन तो सही है — बस सिग्नल यहाँ कमज़ोर पड़ रहा है</div>
+            <div class="asub">हमने जाँचा: <b>हमारी ओर सब ठीक</b> है। आपके यहाँ राउटर की जगह से सिग्नल कमज़ोर मिल रहा है। यह आपकी ग़लती नहीं — बस एक छोटा-सा सुधार बेहतर कर सकता है।</div>
+            <div class="scard">
+              <div class="sr"><span class="k">लाइन (हमारी ओर)</span><span class="v"><span class="sok"><span class="material-icons">check</span>सही</span></span></div>
+              <div class="sr"><span class="k">आपके यहाँ सिग्नल</span><span class="v" style="color:#D9008D">कमज़ोर</span></div>
+            </div>
+            <div class="optrow"><span class="material-icons">wifi_tethering</span><div class="otext">राउटर को खुली जगह, थोड़ा ऊँचा रखें</div></div>
+            <div class="optrow" style="margin-top:8px"><span class="material-icons">router</span><div class="otext">दीवार/अलमारी के पीछे से हटाएँ</div></div>
+            <div class="averify"><span class="material-icons">verified_user</span><p>फिर भी ठीक न लगे तो <b>एक टैप</b> में हमें बताएँ — हम ख़ुद आकर देख लेंगे।</p></div>
+          </div>
+          <button class="abtn">समझ गया, आज़माता हूँ</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why SQ adds this</h5><p>The v2 flows only translate the <b>Wiom-side</b> half (plan-speed floor, broken-net unblocker). The customer-side half of the 9-domain model had no surface — so the app couldn't route a placement/device issue to honest self-help vs an outage. Per <b>INV-SQ-04 Attribution-Not-Blame</b>, attribution is "the most probable operational fault domain supported by evidence" — never blame. Copy stays non-accusatory and keeps a one-tap path back to Wiom-owned help (Continuity Education-first posture).</p><p class="ref">SQ Driver OS v2.0 · FAULT_DOMAIN customer_environment / customer_behavior · INV-SQ-04 Attribution-Not-Blame · C2 credibility (both-sided) · audit SQ #5</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- SQ#6 — RDNI: Recharge Done, No Internet — Wiom-owned, never a re-pay nudge -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·5</span><span class="screen-name">रिचार्ज हो गया पर नेट चालू नहीं हुआ — यह हमारी तरफ़ से है</span><span class="badge new">New · SQ</span><span class="qstate">SQ · RDNI</span></div>
+        <div class="fixnote"><b>Why (v2):</b> Paid-but-no-service (<b>RDNI</b>) detected: STATE=Unusable, <b>FAULT_DOMAIN=platform_system</b>, ATTRIBUTION_DETAIL=<b>service_not_resumed_after_payment</b>, high confidence (<b>FM-SQ-10</b>). Spec calls RDNI "the highest trust-damage preventable failure" — payment intent + zero service = a C2 violation by construction. <b>Never</b> a re-pay / nudge.</div>
+        <div class="vphone"><div class="vflag">New</div>
+          <div class="vstatus"><span>07:14 PM</span><span class="r"><span class="material-icons">wifi_off</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat">
+            <div class="vcard"><div class="vci"><span class="material-icons">payments</span></div><div><div class="l1">रिचार्ज सफल · ₹359 · 07:11 PM</div><div class="l2"><b>पर नेट अभी चालू नहीं हुआ</b></div></div></div>
+            <div class="vbubble">आपका <b>रिचार्ज हो गया</b> है, पर नेट अभी चालू नहीं हुआ — <b>यह हमारी तरफ़ से है</b>। आपने पैसे दे दिए हैं, सेवा चालू करना अब <b>हमारी ज़िम्मेदारी</b> है। हम इसे <b>तुरंत</b> ठीक कर रहे हैं।
+              <div class="evid">
+                <div class="evid-item ok"><span class="material-icons">check_circle</span>रिचार्ज मिल गया — ₹359</div>
+                <div class="evid-item ok"><span class="material-icons">check_circle</span>दिक्कत हमारे सिस्टम में पकड़ी गई</div>
+                <div class="evid-item ok"><span class="material-icons">check_circle</span>दोबारा पैसे देने की ज़रूरत नहीं</div>
+                <div class="evid-item wait"><span class="material-icons">schedule</span>चालू होते ही आपको बता देंगे</div>
+              </div>
+              <div class="vmini"><div class="vr"><span class="k">कारण</span><span class="v">सिस्टम (हमारी ओर)</span></div><div class="vr"><span class="k">अगला अपडेट</span><span class="v">15 मिनट में</span></div></div>
+              <span class="vt">7:14 PM</span></div>
+          </div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why SQ adds this</h5><p>RDNI surfaced only as a customer complaint before — no honest, Wiom-owned state. SQ owns detection (STATE=Unusable, FAULT_DOMAIN=platform_system, ATTRIBUTION_DETAIL=<b>service_not_resumed_after_payment</b>, high confidence); Recovery owns the customer-facing response. Because demonstrated payment intent + zero service is a C2 violation <b>by construction</b>, the screen must own it outright and <b>never</b> show a re-pay path — the only ask is patience while Wiom fixes its own provisioning.</p><p class="ref">SQ Driver OS v2.0 · §6.2 RDNI · FAULT_DOMAIN=platform_system · ATTRIBUTION_DETAIL=service_not_resumed_after_payment · FM-SQ-10 · C2 by construction · audit SQ #6</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- Rec#2 — Base downtime compensation (proportional, extension-FIRST) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·6</span><span class="screen-name">आपका नेट 3 दिन बंद रहा → 4 दिन मुफ़्त जोड़े</span><span class="badge new">New · Recovery</span><span class="recstate">Recovery · base comp</span></div>
+        <div class="fixnote"><b>Why (v2):</b> The base outage-credit formula had no proportional surface (only the SLA-breach ladder existed). <b>RECOVERY_COMPENSATION_DETERMINED</b> with proportionality_basis = duration × severity × DEPENDENT (§8.2, §19.3). <b>INV-REC-14 — Extensions Before Coupons</b>: extension is proportional by construction; coupon is clearly <b>secondary</b>, never primary.</div>
+        <div class="aphone"><div class="aflag" style="background:#102a3a;color:#9ad0ff">New</div>
+          <div class="astatus"><span>07:20 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">&#8734;</div><div class="aact"><span class="material-icons">help_outline</span><span class="material-icons">more_vert</span></div></div>
+          <div class="abody">
+            <div class="success-circle" style="background:#E1FAED;width:84px;height:84px;margin:14px auto 12px"><span class="material-icons" style="font-size:44px;color:#008043">more_time</span></div>
+            <div class="ah1">आपका नेट 3 दिन बंद रहा — इसकी भरपाई कर दी</div>
+            <div class="asub">यह देरी <b>हमारी ओर से</b> थी। जितने दिन नेट बंद रहा, उतने <b>+ थोड़े और दिन</b> आपके प्लान में <b>मुफ़्त</b> जोड़ दिए — माँगने की ज़रूरत नहीं पड़ी।</div>
+            <div class="scard">
+              <div class="sr"><span class="k">नेट बंद रहा</span><span class="v">3 दिन</span></div>
+              <div class="sr"><span class="k">मुफ़्त सेवा जोड़ी</span><span class="v" style="color:#008043">+4 दिन</span></div>
+              <div class="sr"><span class="k">नई वैधता</span><span class="v">22 जून → 26 जून</span></div>
+            </div>
+            <div class="averify"><span class="material-icons">check_circle</span><p>यह आपके <b>प्लान में सीधे</b> जुड़ गया है — आपको कुछ नहीं करना। यही सबसे सीधी भरपाई है।</p></div>
+            <div class="scard" style="background:#F1EDF7;box-shadow:none;margin-top:10px"><div class="sr"><span class="k" style="font-size:11.5px">चाहें तो इसके बदले ₹30 कूपन भी ले सकते हैं</span><span class="v"><span class="pill refund" style="background:#F1E5FF;color:#6D17CE">वैकल्पिक</span></span></div></div>
+          </div>
+          <button class="abtn">ठीक है, समझ गया</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why Recovery adds this</h5><p>The only auto-comp screen built (v2·1) is the SLA-breach ladder; the <b>base</b> outage credit — proportional to <b>duration × severity × DEPENDENT</b> — had no surface, and the existing real screen led with a ₹20 coupon, inverting policy. <b>INV-REC-14</b> makes the day-for-day <b>extension primary</b> (proportional by construction) and the coupon strictly secondary. This is the C2/C3 core: a multi-day outage owes a proportional, restorative make-good that arrives on its own.</p><p class="ref">Recovery OS v2.0 · RECOVERY_COMPENSATION_DETERMINED · proportionality_basis = duration × severity × dependent_weight (§8.2, §19.3) · INV-REC-14 Extensions Before Coupons · C3 proportional · audit Rec #2</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- Rec#3 — Restoration verification RECEIPT (3-of-4 + delivery-confirmed) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·7</span><span class="screen-name">हमने पक्का किया आपका नेट सच में फिर चल रहा है</span><span class="badge new">New · Recovery</span><span class="recstate">Recovery · verified closure</span></div>
+        <div class="fixnote"><b>Why (v2):</b> Closure read like "agent closed it." This surfaces the <b>3-of-4 evidence legs</b> (telemetry ✓ · कोई दोबारा दिक्कत नहीं ✓ · आपने पुष्टि की ✓ · संदेश पहुँचा ✓) as a verification receipt. <b>INV-REC-01</b> — ticket-closure ≠ recovery; <b>INV-REC-23 / 1D.5</b> — message must be <b>DELIVERED, not just sent</b> (non-waivable closure condition #2).</div>
+        <div class="aphone"><div class="aflag" style="background:#102a3a;color:#9ad0ff">New</div>
+          <div class="astatus"><span>07:26 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">&#8734;</div><div class="aact"><span class="material-icons">help_outline</span><span class="material-icons">more_vert</span></div></div>
+          <div class="abody">
+            <div class="success-circle"><span class="material-icons">verified</span></div>
+            <div class="ah1">हमने पक्का किया — आपका नेट सच में फिर चल रहा है</div>
+            <div class="asub">"हल हो गया" तभी कहते हैं जब हम <b>ख़ुद जाँच लें</b> — सिर्फ़ टिकट बंद करना काफ़ी नहीं।</div>
+            <div class="evid" style="width:100%;text-align:left;margin-top:16px">
+              <div class="evid-item ok"><span class="material-icons">check_circle</span>लाइन की जाँच में नेट सही मिला</div>
+              <div class="evid-item ok"><span class="material-icons">check_circle</span>30 मिनट तक दोबारा दिक्कत नहीं आई</div>
+              <div class="evid-item ok"><span class="material-icons">check_circle</span>आपने ख़ुद चलने की पुष्टि की</div>
+              <div class="evid-item ok"><span class="material-icons">check_circle</span>यह संदेश आप तक पहुँच गया</div>
+            </div>
+            <div class="averify"><span class="material-icons">task_alt</span><p><b>चारों जाँच पूरी — इसलिए "हल" का मतलब सच में हल है।</b> 15 मिनट में फिर रुके तो यहीं एक टैप में बताएँ।</p></div>
+          </div>
+          <button class="abtn ghost">पूरी जानकारी देखें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why Recovery adds this</h5><p>The prior screen took a telemetry reading and asked the customer, but never showed the <b>four evidence legs</b> as a closure receipt — and the v2 <b>delivery-confirmed gate</b> (the message must be DELIVERED, not just sent) had no customer-visible expression. Closed cases need a verification receipt so "हल" means <b>proven</b>, per the §5.3 3-of-4 rule and INV-REC-01 (closure ≠ recovery). The 4th leg here is the delivery-confirmed condition #2 made visible.</p><p class="ref">Recovery OS v2.0 · §5.3 3-of-4 evidence rule · INV-REC-01 closure≠recovery · INV-REC-23 / 1D.5 delivery-status closure condition #2 (DELIVERED required) · audit Rec #3</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- Rec#4 — Recurrence escalation (first-class, prior-case link) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·8</span><span class="screen-name">यह दिक्कत दोबारा आई है — सीनियर टीम को दे रहे हैं</span><span class="badge new">New · Recovery</span><span class="recstate">Recovery · recurrence</span></div>
+        <div class="fixnote"><b>Why (v2):</b> On same-root-cause recurrence in window: name it as <b>damage-compounding</b>, not a fresh incident — "यह दिक्कत दोबारा आई है, इसलिए ऊपर ले जा रहे हैं (सीनियर टीम), <b>नई शिकायत नहीं</b>" with heavier posture + <b>prior-case link</b>. <b>INV-REC-12</b> Failed Recovery Re-entry first-class; <b>FAILED_RECOVERY_REENTRY_DETECTED</b>.</div>
+        <div class="vphone"><div class="vflag">New</div>
+          <div class="vstatus"><span>07:33 PM</span><span class="r"><span class="material-icons">wifi_off</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat">
+            <div class="vcard"><div class="vci"><span class="material-icons">replay</span></div><div><div class="l1">वही दिक्कत · लाइन कमज़ोर</div><div class="l2"><b>दोबारा आई — पिछली बार से जुड़ी</b></div></div></div>
+            <div class="vbubble">यह दिक्कत आपके साथ <b>दोबारा हुई</b> है — हम इसे नई शिकायत नहीं मान रहे। यह एक ही समस्या है जो फिर लौटी, इसलिए हम इसे <b>सीनियर टीम</b> को दे रहे हैं ताकि इस बार <b>जड़ से</b> ठीक हो।
+              <div class="vmini"><div class="vr"><span class="k">पिछली शिकायत</span><span class="v">#634041 · 9 दिन पहले</span></div><div class="vr"><span class="k">अब</span><span class="v">सीनियर टीम के पास</span></div><div class="vr"><span class="k">देखने का समय</span><span class="v">2 घंटे के अंदर</span></div></div>
+              आपको <b>दोबारा कुछ बताने की ज़रूरत नहीं</b> — पूरी पिछली जानकारी साथ भेज दी है।
+              <div class="vcta">पिछली शिकायत देखें · #634041</div><span class="vt">7:33 PM</span></div>
+          </div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why Recovery adds this</h5><p>The prior reopen mentioned "सीनियर टीम" but read like a courtesy escalation — not a <b>first-class recurrence state</b>, and Recovery Debt compounding stayed invisible. <b>INV-REC-12</b> requires recurrence to be named as damage-compounding (a returning problem, not a fresh start) with an <b>escalated posture/SLA</b> and the <b>prior case linked</b>, so the customer never re-explains. <b>FAILED_RECOVERY_REENTRY_DETECTED</b> carries original_case_id + recovery_debt_current to the senior owner.</p><p class="ref">Recovery OS v2.0 · INV-REC-12 Failed Recovery Re-entry first-class · FAILED_RECOVERY_REENTRY_DETECTED (original_case_id, recovery_debt_current) · §5.2 recurrence ≠ fresh incident · audit Rec #4</p></div></div>
         </div>
   </div>
 <!-- manage v1 -->
@@ -2849,6 +3250,42 @@
         <p style="margin-top:5px"><b>FAILED</b> — debit attempt failed: Recovery-first if Wiom/gateway-side, education-first if customer-side (funds) — always state the real reason plainly.</p>
         <p class="ref">Continuity OS v2.0 · AMD-CON-18 autopay posture modifiers · gated on AUTOPAY_STATE_CONFIRMED (A12) · CP-CON-21</p>
       </div>
+
+<div class="phase"><div class="line"></div><div class="lbl">v2 · More OS coverage</div><div class="line"></div></div>
+
+<!-- v2·3 : PAYER-IS-EVENT — who paid is a per-transaction observation, never an authored role -->
+<div class="screen"><div class="screen-tag"><span class="screen-num">v2·3</span><span class="screen-name">यह रिचार्ज किसने भरा?</span><span class="badge new">New</span><span class="cmtag">CM · payer-is-event</span></div>
+  <div class="fixnote"><b>Why (v2):</b> today the app silently assumes <b>account-holder = payer</b> (tab-cm gap #5) — so when a family member, neighbour or one person funding several connections pays, there is no model for it, feeding both the recharge-confusion and payer-anomaly blind spots. CM v2.0 stores <b>who paid as an observed event with an observed actor</b> — never an authored "payer" identity role. So at recharge we simply <b>ask, and record</b>; on the connection we <b>note</b> a recent recharge came from someone else — we never assert a fixed payer.</div>
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · CM</div>
+    <div class="astatus"><span>04:41 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><span style="font-family:'Noto Sans Devanagari';font-weight:700;font-size:15px;margin-left:8px">रिचार्ज की पुष्टि</span><div class="aact"><span class="material-icons">translate</span></div></div>
+    <div class="abody" style="align-items:stretch;text-align:left">
+      <div class="ah1" style="text-align:left;font-size:15px">यह रिचार्ज किसने भरा?</div>
+      <div class="asub" style="text-align:left">सिर्फ़ रिकॉर्ड के लिए पूछ रहे हैं — पैसा तो चुने हुए नेट पर ही लगेगा। किसी और के नेट का रिचार्ज भरना बिलकुल ठीक है।</div>
+
+      <!-- मैं खुद : selected (observed actor = self) -->
+      <div class="optrow sel" style="margin-top:14px">
+        <span class="ord"></span>
+        <div class="otext"><b>मैं अपने ही नेट का रिचार्ज कर रहा/रही हूँ</b><div style="font-size:11.5px;color:#5C5570;margin-top:2px">Wiom Ramesh 1234 · घर</div></div>
+        <span class="material-icons">home</span>
+      </div>
+
+      <!-- किसी और का : the affordance for paying for another person's net -->
+      <div class="optrow" style="margin-top:10px">
+        <span class="ord"></span>
+        <div class="otext"><b>मैं किसी और के नेट का रिचार्ज कर रहा/रही हूँ</b><div style="font-size:11.5px;color:#5C5570;margin-top:2px">परिवार, पड़ोसी या किसी जानने वाले का नेट</div></div>
+        <span class="material-icons">volunteer_activism</span>
+      </div>
+
+      <div class="averify" style="margin-top:14px;background:#F1E5FF"><span class="material-icons" style="color:#6D17CE">info</span><p style="color:#46108a">हम सिर्फ़ इतना याद रखते हैं कि <b>इस बार</b> किसने भरा — यह कोई पक्का "भरने वाला" नहीं बनता। हर रिचार्ज अपने आप में अलग है।</p></div>
+
+      <!-- connection surface: calm note that a recent recharge came from a different person -->
+      <div class="averify" style="margin-top:10px;background:#FFE9A1"><span class="material-icons" style="color:#9a7a00">schedule</span><p style="color:#5c4a00">पिछली बार इस नेट का रिचार्ज <b>किसी और ने</b> भरा था (16 जून)। यह सिर्फ़ जानकारी है — आपके नेट पर इसका कोई असर नहीं।</p></div>
+    </div>
+    <button class="abtn">रिचार्ज पक्का करें</button>
+    <button class="abtn ghost" style="margin-top:0;height:38px">रहने दें</button>
+  </div>
+  <div class="os-add"><h5><span class="material-icons">policy</span>Why CM v2.0 adds this</h5><p>CM stores the payment as an <b>observed event with an observed actor</b> — it never authors a "payer" role on the person. The "मैं किसी और के नेट का रिचार्ज कर रहा/रही हूँ" affordance lets a family member, neighbour, or one-funds-many payer be recorded honestly; the connection surface only ever <b>notes</b> that a recent recharge came from a different person.</p><p>Continuity's <code style="color:#fff">PAYER_ANOMALY_DETECTED</code> is consumed by CM (§6.1) as payment observation under CM-3 — used to add this calm note, never to assert who "the payer" is.</p><p class="ref">CM OS v2.0 · CM-3 / INV-CM-15 (Payer-Is-Observed-Event-Not-Role) · consumes Continuity PAYER_ANOMALY_DETECTED (§6.1) · prohibits authoring a payer role (§ "Author a payer identity role")</p></div></div>
         </div>
   </div>
 <!-- migration v1 -->

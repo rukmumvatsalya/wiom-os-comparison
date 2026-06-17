@@ -796,6 +796,115 @@
           <p class="ref">Continuity OS v2.0 · §5.2/§5.3 Recovery-Hold · AMD-CON-03 · AMD-CON-16</p>
         </div>
       </div>
+
+
+      <div class="phase"><div class="line"></div><div class="lbl">v2 · More OS coverage</div><div class="line"></div></div>
+
+      <!-- r2·1 — Proactive customer-initiated "pause my net" ENTRY (Passive-only, INV-CON-02 / §17.4) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">r2·1</span><span class="screen-name">नेट कुछ दिन के लिए रोकें</span><span class="badge new">New · v2</span><span class="os-tag">Pause-as-product</span><span class="posture">Passive-only</span><span class="exstate">CUSTOMER_PAUSED · explicit</span></div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · v2</div>
+          <div class="astatus"><span>9:10</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo"><span class="material-icons">all_inclusive</span></div><div class="aact"><span class="material-icons">help_outline</span></div></div>
+          <div class="abody">
+            <div class="eyebrow" style="color:#D9008D"><span class="material-icons">pause_circle</span>आपके हाथ में</div>
+            <div class="ah1">नेट कुछ दिन के लिए रोकें</div>
+            <div class="asub">कहीं बाहर जा रहे हैं या कुछ दिन नेट की ज़रूरत नहीं? बेझिझक रोक दें — आपका कनेक्शन और बचा हुआ समय सुरक्षित रहेगा।</div>
+            <div class="scard" style="text-align:left">
+              <div class="sr"><span class="k">कब तक रोकना है</span><span class="v">आपकी मर्ज़ी · जब चाहें चालू</span></div>
+              <div class="sr"><span class="k">बचा हुआ प्लान</span><span class="v">सुरक्षित रहेगा</span></div>
+              <div class="sr"><span class="k">रिमाइंडर</span><span class="v">बंद कर देंगे</span></div>
+            </div>
+            <div class="averify" style="margin-top:14px"><span class="material-icons">lock</span><p>यह आपका लिया हुआ फ़ैसला है — हम इसे साफ़-साफ़ दर्ज करेंगे। हम खुद से कभी आपका नेट रुका हुआ नहीं मान लेंगे।</p></div>
+          </div>
+          <button class="abtn"><span class="material-icons">pause</span>हाँ, अभी रोकें</button>
+          <button class="abtn ghost">रहने दें</button>
+        </div>
+        <div class="fixnote"><b>Why (v2):</b> posture <b>Passive-only</b> needs a first-class entry. CUSTOMER_PAUSED must be an <b>explicit documented declaration, never inferred</b> (INV-CON-02). Pause-as-product is structurally required for category completion (§17.4). Renewal screen 19 shows only the silent RESULT; this surface <b>authors the declaration</b>.</div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- r2·1b — Pause confirmed (lands in silent Passive-only) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">r2·1b</span><span class="screen-name">नेट रोक दिया गया</span><span class="badge new">New · v2</span><span class="os-tag">Passive-only</span><span class="posture">Passive-only</span><span class="exstate">silent · one-tap restart</span></div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · v2</div>
+          <div class="astatus"><span>9:11</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo"><span class="material-icons">all_inclusive</span></div><div class="aact"><span class="material-icons">help_outline</span></div></div>
+          <div class="abody">
+            <div class="success-circle" style="background:#F1E5FF;margin-top:18px"><span class="material-icons" style="color:#6D17CE">pause_circle_filled</span></div>
+            <div class="ah1">हो गया — नेट रोक दिया गया</div>
+            <div class="asub">अब आपको हमारी तरफ़ से कोई रिमाइंडर नहीं आएगा। जब आप तैयार हों, एक टैप में चालू कर दें।</div>
+            <div class="scard" style="text-align:left">
+              <div class="sr"><span class="k">अब कोई रिमाइंडर नहीं</span><span class="v"><span class="sok"><span class="material-icons">notifications_off</span>बंद</span></span></div>
+              <div class="sr"><span class="k">कनेक्शन</span><span class="v"><span class="sok"><span class="material-icons">verified</span>सुरक्षित</span></span></div>
+              <div class="sr"><span class="k">चालू करना</span><span class="v"><span class="sok"><span class="material-icons">bolt</span>एक टैप में</span></span></div>
+            </div>
+          </div>
+          <button class="abtn"><span class="material-icons">play_arrow</span>नेट चालू करें</button>
+          <button class="abtn ghost">ठीक है</button>
+        </div>
+        <div class="fixnote"><b>Why (v2):</b> the confirm declares the three guarantees the spec promises — <b>अब कोई रिमाइंडर नहीं · कनेक्शन सुरक्षित · एक टैप में चालू</b> — then lands the customer in the existing silent Passive-only state (§5.2). No urgency, no "are you sure you'll lose…" framing (INV-CON-11).</div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- r2·2 — Non-coercive pre-expiry reminder (days-left + cadence cap, INV-CON-11) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">r2·2</span><span class="screen-name">कोई जल्दी नहीं वाला रिमाइंडर</span><span class="badge new">New · v2</span><span class="os-tag">Normal · Messaging discipline</span><span class="posture">disciplined reminder</span><span class="recstate">cadence-capped</span></div>
+        <div class="vphone"><div class="vflag">New · v2</div>
+          <div class="vstatus"><span>8:05</span><span class="r">5G<span class="material-icons">signal_cellular_alt</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo"><span class="material-icons">all_inclusive</span></div><div><div class="vname">घर का नेट · रमेश</div><div class="vsub">नेट चालू है</div></div><div class="vact"><span class="material-icons">notifications_active</span></div></div>
+          <div class="vchat" style="align-items:stretch">
+            <div class="vcard"><div class="vci"><span class="material-icons">event</span></div><div style="flex:1"><div class="l1">आपका प्लान</div><div class="l2"><b>22 जून</b> को ख़त्म होगा</div></div><span class="pill green">3 दिन बचे</span></div>
+            <div class="trust info" style="margin-top:2px"><span class="material-icons">spa</span><p>बस याद दिला रहे हैं — <b>आपका नेट 22 जून को ख़त्म होगा, कोई जल्दी नहीं।</b> जब सही लगे तब रिचार्ज कर लीजिए, लिंक हमेशा खुला है।</p></div>
+            <div class="vmini"><div class="vr"><span class="k">यह रिमाइंडर</span><span class="v">3 में से 1</span></div><div class="vr"><span class="k">आख़िरी 48 घंटे</span><span class="v">और तेज़ नहीं होगा</span></div><div class="vr"><span class="k">रिचार्ज लिंक</span><span class="v">हमेशा खुला</span></div></div>
+            <div class="vcard"><div class="vci" style="background:#E1FAED"><span class="material-icons" style="color:#008043">link</span></div><div style="flex:1"><div class="l1">जब आप तैयार हों</div><div class="l2">रिचार्ज करें · कोई दबाव नहीं</div></div></div>
+          </div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div>
+        </div>
+        <div class="fixnote"><b>Why (v2):</b> the only pre-expiry reminder today is an untouched CleverTap push with <b>no cadence cap and no anti-pressure guardrail</b> (audit #2). This draws the disciplined surface — days-left for clarity (C4), explicit <b>≤N nudge cap</b>, last-48h <b>not intensified</b>, no "last chance"/guilt/urgency (INV-CON-11 · Guardrail KRA #2 recharge-under-pressure).</div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- r2·3 — Reservation-window COUNTDOWN (X दिन तक सुरक्षित, T+0→T+15, §5.1) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">r2·3</span><span class="screen-name">रिचार्ज खत्म — फिर भी सुरक्षित</span><span class="badge new">New · v2</span><span class="os-tag">Reservation window</span><span class="posture">Reservation window</span><span class="exstate">T+4 of 15 · custody held</span></div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · v2</div>
+          <div class="astatus"><span>10:25</span><span class="r"><span class="material-icons">signal_cellular_off</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo"><span class="material-icons">all_inclusive</span></div><div class="aact"><span class="material-icons">help_outline</span></div></div>
+          <div class="abody">
+            <div class="sgauge run" style="background:conic-gradient(#6D17CE 0% 73%, #E6E3EC 73% 100%)"><div class="si"><div class="snum" style="color:#6D17CE">11</div><div class="sunit">दिन तक सुरक्षित</div></div></div>
+            <div class="ah1">रिचार्ज ख़त्म हुआ — रिश्ता नहीं</div>
+            <div class="asub">अभी नेट बंद है, पर आपका कनेक्शन हमारे पास <b>सुरक्षित रखा है</b>। रिचार्ज करते ही जहाँ छोड़ा था वहीं से तुरंत चालू।</div>
+            <div class="scard" style="text-align:left">
+              <div class="sr"><span class="k">आपका कनेक्शन</span><span class="v">सुरक्षित रखा है</span></div>
+              <div class="sr"><span class="k">सुरक्षित रहेगा</span><span class="v">अगले 11 दिन</span></div>
+              <div class="sr"><span class="k">चालू करना</span><span class="v">एक रिचार्ज में तुरंत</span></div>
+            </div>
+            <div class="averify" style="margin-top:14px;background:#F1E5FF"><span class="material-icons" style="color:#6D17CE">shield</span><p style="color:#46108a">कोई जल्दी नहीं। यह घड़ी सिर्फ़ इसलिए दिख रही है ताकि आपको पता रहे — आपका हक़ कब तक सुरक्षित है।</p></div>
+          </div>
+          <button class="abtn"><span class="material-icons">bolt</span>रिचार्ज कर के चालू करें</button>
+          <button class="abtn ghost">अभी नहीं</button>
+        </div>
+        <div class="fixnote"><b>Why (v2):</b> the reservation reframe (screen 14) says "relationship alive / instant restart" but shows <b>no horizon</b> — a customer can't tell a T+1 from a T+14. This adds the visible <b>X दिन तक सुरक्षित</b> countdown across phases (acceptance T+0–7 / pre-verification / verification window T+10–15) for state clarity (C4 · INV-CON-03 custody-anchored), still zero pressure.</div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- r2·4 — Late-response reversal (T+15→T+25, §5.6 / Closure LATE_RESPONSE_REVERSAL) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">r2·4</span><span class="screen-name">अभी भी वापस आ सकते हैं</span><span class="badge new">New · v2</span><span class="os-tag">Late-response reversal</span><span class="posture">Late-response reversal</span><span class="exstate">recall T+15→T+25</span></div>
+        <div class="vphone"><div class="vflag">New · v2</div>
+          <div class="vstatus"><span>7:40</span><span class="r">5G<span class="material-icons">signal_cellular_alt</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo"><span class="material-icons">all_inclusive</span></div><div><div class="vname">घर का नेट · रमेश</div><div class="vsub">वापस आने का रास्ता खुला है</div></div><div class="vact"><span class="material-icons">history</span></div></div>
+          <div class="vchat" style="align-items:stretch">
+            <div class="vcard"><div class="vci" style="background:#F1E5FF"><span class="material-icons" style="color:#6D17CE">replay</span></div><div style="flex:1"><div class="l1">अभी की स्थिति</div><div class="l2"><b>रिज़र्वेशन का समय पूरा हुआ</b> — पर रास्ता बंद नहीं</div></div></div>
+            <div class="trust info" style="margin-top:2px"><span class="material-icons">door_front</span><p><b>अभी भी वापस आ सकते हैं।</b> रिचार्ज करते ही आपका नेट उसी जगह से चालू हो जाएगा — <b>अगले 7 दिन</b> तक यह रास्ता आपके लिए खुला है।</p></div>
+            <div class="vmini"><div class="vr"><span class="k">वापसी का समय</span><span class="v">7 दिन बाक़ी</span></div><div class="vr"><span class="k">रिचार्ज करते ही</span><span class="v">नेट तुरंत चालू</span></div><div class="vr"><span class="k">पुरानी सेटिंग</span><span class="v">वैसी ही रहेगी</span></div></div>
+            <div class="vcard"><div class="vci" style="background:#E1FAED"><span class="material-icons" style="color:#008043">bolt</span></div><div style="flex:1"><div class="l1">एक रिचार्ज</div><div class="l2">और आप फिर से चालू — कुछ खोया नहीं</div></div></div>
+          </div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div>
+        </div>
+        <div class="fixnote"><b>Why (v2):</b> reversal exists only in the router-recovery panel framed as Closure ("रिचार्ज = पिकअप रद्द"), and panel-status flips to "सेवा बंद". There was <b>no continuity-side late-response state</b>. This frames T+15→T+25 as <b>still-reversible</b> with a recall-window countdown — recharge reverts to ACTIVE_ENTITLED (§5.6 · Closure LATE_RESPONSE_REVERSAL).</div>
+      </div>
 </div>
   </div>
     <div class="panel" id="panel-router">
@@ -1195,6 +1304,246 @@
     <p class="ref">Closure OS v2.0 · §5.4 code 10 (AMD-EXIT-11) · §5.10 pro-rata (AMD-EXIT-18) · trust signal NONE</p>
   </div>
 </div>
+
+<!-- ============================================================= -->
+<!-- v2 · MORE OS COVERAGE — CLOSURE OS v2.0 audit-gap screens.     -->
+<!-- Closure OS v2.0 (locked 2026-06-16): Exit → Closure framing.   -->
+<!-- 5 customer-visible additions filling audit gaps #1–#5:          -->
+<!--  #1 DISPUTED customer path · #2 NOT-RECOVERED honest closure    -->
+<!--  #3 closure-INITIATION (START) bookend · #4 dated refund SLA    -->
+<!--  #5 relationship-vs-custody two-track status.                   -->
+<!-- Full-screen .aphone mockups (non-chat). Self-contained, no JS.  -->
+<!-- ============================================================= -->
+
+<div class="phase"><div class="line"></div><div class="lbl">v2 · More OS coverage</div><div class="line"></div></div>
+
+<!-- ===================== v2·5 — gap #1 ===================== -->
+<div class="screen">
+  <div class="screen-tag">
+    <span class="screen-num">v2·5</span>
+    <span class="screen-name">वापसी की जाँच हो रही है (DISPUTED)</span>
+    <span class="badge new">New</span>
+    <span class="exstate">Closure · custody DISPUTED</span>
+  </div>
+  <div class="fixnote"><b>Why (v2):</b> <b>CUSTODY_DISPUTED</b> (§5.2) is a first-class custody state and a top-of-prompt verify item, but today it lives only in explainer fixnotes — the disputing customer never sees a screen. This is the screen: SD held (not collapsed into the refund tracker), the <b>7-day clock</b> (CP-CLOSURE-20), <b>"फ़ैसला आपके हक़ में डिफ़ॉल्ट"</b> (TRD-EXIT-02 pro-customer), and submit-your-own-evidence — so a contested pickup never silently becomes limbo.</div>
+
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+    <div class="astatus"><span>10:00</span><span class="r">5G<span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><div class="alogo"><span class="material-icons">all_inclusive</span></div><div class="aact"><span class="material-icons">help_outline</span><span class="material-icons">close</span></div></div>
+    <div class="abody" style="align-items:stretch;text-align:left">
+      <div style="width:78px;height:78px;border-radius:50%;background:#FFE9A1;display:flex;align-items:center;justify-content:center;margin:14px auto 4px"><span class="material-icons" style="font-size:40px;color:#9a7a00">gavel</span></div>
+      <div class="ah1" style="text-align:center">आपकी वापसी की जाँच हो रही है</div>
+      <div class="asub" style="text-align:center">पिकअप का पूरा सबूत अभी मिला नहीं, इसलिए हम मिलान कर रहे हैं। तब तक आपका ₹300 हमारे पास सुरक्षित रुका है — कहीं नहीं गया।</div>
+
+      <div class="card" style="width:100%;margin-top:18px;text-align:left">
+        <div class="row"><span class="lbl">घर का नेट</span><span class="val">रमेश</span></div>
+        <div class="row"><span class="lbl">सिक्योरिटी (रुकी हुई)</span><span class="val" style="color:#9a7a00">₹300 होल्ड</span></div>
+        <div class="divider"></div>
+        <div class="row"><span class="lbl">फ़ैसला कब तक</span><span class="val">7 दिन में</span></div>
+      </div>
+
+      <div class="trust warn" style="text-align:left;margin-top:12px"><span class="material-icons">balance</span><p>अगर सबूत साफ़ न हो पाए, तो <b>फ़ैसला आपके हक़ में</b> होगा — डिफ़ॉल्ट रूप से। आपका ₹300 आपका ही है।</p></div>
+
+      <div class="flabel" style="margin-top:16px">अपना सबूत भेजें (कोई एक काफ़ी है)</div>
+      <div class="evid" style="margin-top:9px">
+        <div class="evid-item wait"><span class="material-icons">photo_camera</span>नेट-बॉक्स लौटाते समय की फ़ोटो</div>
+        <div class="evid-item wait"><span class="material-icons">receipt_long</span>पिकअप की रसीद / पर्ची</div>
+        <div class="evid-item wait"><span class="material-icons">person</span>किसने लिया — नाम या नंबर</div>
+      </div>
+    </div>
+    <button class="abtn"><span class="material-icons">upload</span>अपना सबूत जोड़ें</button>
+    <button class="abtn ghost">जाँच का स्टेटस देखें</button>
+  </div>
+
+  <div class="os-add">
+    <h5><span class="material-icons">policy</span>Closure OS · CUSTODY_DISPUTED · bounded adjudication</h5>
+    <p>Incomplete pickup-proof (netbox-id mismatch / condition contested / no scan-OTP) routes to <b>CUSTODY_DISPUTED</b>, which <b>blocks CLOSURE_FINAL</b> and holds the deposit Stage — it is <b>not</b> collapsed into the refund tracker. Adjudicated within the <b>7-day</b> SLA on a governed evidence hierarchy; if irresolvable in SLA → DEVICE_NOT_RECOVERED (DISPUTE_UNRESOLVED). Default favours the customer when evidence is sparse.</p>
+    <p class="ref">Closure OS v2.0 · §5.2 / §10.2 · CP-CLOSURE-20 (7-day SLA) · TRD-EXIT-02 customer-default</p>
+  </div>
+</div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- ===================== v2·6 — gap #2 ===================== -->
+<div class="screen">
+  <div class="screen-tag">
+    <span class="screen-num">v2·6</span>
+    <span class="screen-name">नेट-बॉक्स वापस नहीं आया — साफ़ बात</span>
+    <span class="badge new">New</span>
+    <span class="exstate">Closure · NOT-RECOVERED</span>
+  </div>
+  <div class="fixnote"><b>Why (v2):</b> 38.5% silent unrecovered devices is the headline pain — yet the flows cover only the happy path and the wallet write-off. <b>DEVICE_NOT_RECOVERED</b> (§5.2) needs an honest, <b>non-accusatory CLOSURE_FINAL</b> (Doctrine #25): the outcome, what happens to SD/bond (held vs forfeited per reason), and that it <b>reopens if the device resurfaces</b> (EXHAUSTED) — never silent forfeiture, never "lost customer".</div>
+
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+    <div class="astatus"><span>10:00</span><span class="r">5G<span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><div class="alogo"><span class="material-icons">all_inclusive</span></div><div class="aact"><span class="material-icons">help_outline</span><span class="material-icons">close</span></div></div>
+    <div class="abody" style="align-items:stretch;text-align:left">
+      <div style="width:78px;height:78px;border-radius:50%;background:#F1E5FF;display:flex;align-items:center;justify-content:center;margin:14px auto 4px"><span class="material-icons" style="font-size:40px;color:#6D17CE">inventory_2</span></div>
+      <div class="ah1" style="text-align:center">नेट-बॉक्स अब तक वापस नहीं आ पाया</div>
+      <div class="asub" style="text-align:center">हमने कई बार कोशिश की, पर नेट-बॉक्स हम तक नहीं पहुँचा। इसलिए आपका कनेक्शन बंद कर रहे हैं। यह कोई इल्ज़ाम नहीं — बस आज की हालत बता रहे हैं।</div>
+
+      <div class="card" style="width:100%;margin-top:18px;text-align:left">
+        <div class="row"><span class="lbl">घर का नेट</span><span class="val">रमेश · बंद</span></div>
+        <div class="divider"></div>
+        <div class="row"><span class="lbl">सिक्योरिटी ₹300</span><span class="val" style="color:#9a7a00">अभी रुकी हुई</span></div>
+        <div class="row"><span class="lbl">नेट-बॉक्स लौटने पर</span><span class="val" style="color:#008043">₹300 वापस</span></div>
+      </div>
+
+      <div class="trust info" style="text-align:left;margin-top:12px"><span class="material-icons">restart_alt</span><p>नेट-बॉक्स बाद में मिल जाए तो हमें बताएँ — हम मामला <b>दोबारा खोल देंगे</b> और ₹300 लौटा देंगे। यह दरवाज़ा बंद नहीं हुआ।</p></div>
+
+      <div class="averify" style="margin-top:12px"><span class="material-icons">volunteer_activism</span><p>आपका पैसा चुपचाप ज़ब्त नहीं होगा। जो भी हुआ, यहीं साफ़-साफ़ दिखता रहेगा।</p></div>
+    </div>
+    <button class="abtn">नेट-बॉक्स अब मिल गया — बताएँ</button>
+    <button class="abtn ghost">मुझसे बात करें</button>
+  </div>
+
+  <div class="os-add">
+    <h5><span class="material-icons">policy</span>Closure OS · DEVICE_NOT_RECOVERED · honest closure</h5>
+    <p>Every non-return carries a structured <b>non_recovery_reason</b> (§5.5) that decides SD/bond treatment (held vs forfeited — forfeit ONLY after the D-007C filter passes). <b>EXHAUSTED</b> status keeps the case <b>reopenable</b> if the customer resurfaces; only governed <b>WRITTEN_OFF</b> books financial closure. Non-accusatory CLOSURE_FINAL is mandatory — silence is the failure mode the OS exists to prevent.</p>
+    <p class="ref">Closure OS v2.0 · §5.2 / §5.5 · Doctrine #25 / INV-EXIT-04 · INV-EXIT-06 · EXHAUSTED reopen</p>
+  </div>
+</div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- ===================== v2·7 — gap #3 ===================== -->
+<div class="screen">
+  <div class="screen-tag">
+    <span class="screen-num">v2·7</span>
+    <span class="screen-name">बंद करने की प्रक्रिया शुरू (START bookend)</span>
+    <span class="badge new">New</span>
+    <span class="exstate">Closure · INITIATION bookend</span>
+  </div>
+  <div class="fixnote"><b>Why (v2):</b> The OS mandates <b>TWO</b> bookends (Doctrine #25 / INV-EXIT-04); the flows deliver only the END one. The <b>START</b> bookend at CLOSURE_INITIATED is where SD-first dignity (INV-EXIT-15) and early refund disclosure (pro-rata at CLOSURE_INITIATED, INV-EXIT-25) live — explicit "प्रक्रिया शुरू हो गई", what's ending, the reason, <b>SD-first</b> "₹300 अब भी Wiom के पास", self-return-first, and the refund — all <i>before</i> any pickup.</div>
+
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+    <div class="astatus"><span>10:00</span><span class="r">5G<span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><div class="alogo"><span class="material-icons">all_inclusive</span></div><div class="aact"><span class="material-icons">help_outline</span><span class="material-icons">close</span></div></div>
+    <div class="abody" style="align-items:stretch;text-align:left">
+      <div style="width:78px;height:78px;border-radius:50%;background:#FFE5F6;display:flex;align-items:center;justify-content:center;margin:14px auto 4px"><span class="material-icons" style="font-size:40px;color:#D9008D">flag</span></div>
+      <div class="ah1" style="text-align:center">आपकी सेवा बंद करने की प्रक्रिया शुरू हो गई है</div>
+      <div class="asub" style="text-align:center">घर का नेट · रमेश। आपने बंद करने को कहा — हमने शुरू कर दिया। नीचे सब साफ़ लिखा है, ताकि कुछ छुपा न रहे।</div>
+
+      <!-- SD-first card leads the message -->
+      <div class="refund-opt sel" style="width:100%;margin-top:18px">
+        <div class="ri"><span class="material-icons">savings</span></div>
+        <div><div class="rt">₹300 अब भी Wiom के पास</div><div class="rs">हम आपका पैसा रोकना नहीं चाहते — नेट-बॉक्स वापस आते ही पूरा लौटा देंगे।</div></div>
+        <span class="ramt">₹300</span>
+      </div>
+
+      <div class="card" style="width:100%;margin-top:12px;text-align:left">
+        <div class="row"><span class="lbl">क्या बंद हो रहा है</span><span class="val">घर का नेट</span></div>
+        <div class="row"><span class="lbl">वजह</span><span class="val">आपने बंद करने को कहा</span></div>
+        <div class="divider"></div>
+        <div class="row"><span class="lbl">बचे दिनों का रिफ़ंड</span><span class="val" style="color:#008043">₹150</span></div>
+        <div class="row"><span class="lbl">सिक्योरिटी रिफ़ंड</span><span class="val" style="color:#008043">₹300</span></div>
+      </div>
+
+      <div class="trust" style="text-align:left;margin-top:12px"><span class="material-icons">home_work</span><p>नेट-बॉक्स आप खुद लौटाना चाहें तो सबसे आसान — कोई कटौती नहीं। चाहें तो हमारा बंदा आकर ले जाएगा।</p></div>
+    </div>
+    <button class="abtn">खुद लौटाने का तरीका देखें</button>
+    <button class="abtn ghost">रुकिए — बंद नहीं करना</button>
+  </div>
+
+  <div class="os-add">
+    <h5><span class="material-icons">policy</span>Closure OS · closure-initiation bookend (START)</h5>
+    <p>The No-Silent-Exit doctrine requires <b>two</b> bookends; this is the START one at <b>CLOSURE_INITIATED</b>, delivered multi-channel before any pickup. <b>SD-first framing</b> leads the message (INV-EXIT-15) and the pro-rata refund is declared <b>at CLOSURE_INITIATED</b>, not deferred to CLOSURE_FINAL (INV-EXIT-25). Self-return is offered first; assisted pickup is the fallback.</p>
+    <p class="ref">Closure OS v2.0 · Doctrine #25 / INV-EXIT-04 · Condition 3 / Output #5 · INV-EXIT-15 SD-first · INV-EXIT-25</p>
+  </div>
+</div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- ===================== v2·8 — gap #4 ===================== -->
+<div class="screen">
+  <div class="screen-tag">
+    <span class="screen-num">v2·8</span>
+    <span class="screen-name">₹300 — 22 जून तक (पक्की तारीख़)</span>
+    <span class="badge new">New</span>
+    <span class="exstate">Closure · committed refund SLA</span>
+  </div>
+  <div class="fixnote"><b>Why (v2):</b> The v2·1 lifecycle stepper shows the four stages and "3–5 दिन" but commits to <b>no date</b>. CP-CLOSURE-21 (target refund window) + CP-CLOSURE-05 (deposit-refund SLA) make a <b>dated promise</b> possible — the four stages are the tracker, the SLA is the promise. A concrete <b>"₹300 — 22 जून तक"</b> is what converts the tracker into accountable trust for the 524 stuck-refund cohort.</div>
+
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+    <div class="astatus"><span>10:00</span><span class="r">5G<span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><div class="alogo"><span class="material-icons">all_inclusive</span></div><div class="aact"><span class="material-icons">help_outline</span><span class="material-icons">close</span></div></div>
+    <div class="abody" style="align-items:stretch;text-align:left">
+      <div class="ah1" style="text-align:left">आपका रिफ़ंड पक्की तारीख़ के साथ</div>
+      <div class="asub" style="text-align:left">घर का नेट: रमेश · अब बस तारीख़ का इंतज़ार। कोई "3–5 दिन" नहीं — पूरी तारीख़।</div>
+
+      <!-- the dated commitment, hero -->
+      <div class="card" style="width:100%;margin-top:18px;text-align:center;border-color:#D9008D;box-shadow:0 0 0 1px #D9008D">
+        <div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12px;color:#5C5570">आपके खाते में आएगा</div>
+        <div style="font-family:'Noto Sans',sans-serif;font-size:34px;font-weight:700;color:#161021;line-height:1.1;margin-top:4px">₹300</div>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:#E1FAED;color:#008043;font-family:'Noto Sans Devanagari',sans-serif;font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;margin-top:10px"><span class="material-icons" style="font-size:16px">event_available</span>22 जून तक</div>
+      </div>
+
+      <div class="card" style="width:100%;margin-top:12px;text-align:left">
+        <div class="row"><span class="lbl">कहाँ आएगा</span><span class="val">UPI · ****8821</span></div>
+        <div class="row"><span class="lbl">अभी कहाँ है</span><span class="val">भेजने के लिए तैयार</span></div>
+        <div class="divider"></div>
+        <div class="row"><span class="lbl">देर हुई तो</span><span class="val" style="color:#008043">हम खुद बताएँगे</span></div>
+      </div>
+
+      <div class="averify" style="margin-top:14px"><span class="material-icons">event_available</span><p>22 जून तक पैसा न दिखे तो हमसे कहिए मत — हम खुद आपको SMS और WhatsApp पर बताएँगे।</p></div>
+    </div>
+    <button class="abtn">रिफ़ंड की पूरी टाइमलाइन देखें</button>
+  </div>
+
+  <div class="os-add">
+    <h5><span class="material-icons">policy</span>Closure OS · committed refund SLA (dated)</h5>
+    <p><b>CP-CLOSURE-21</b> (target refund window, standard non-bond cases) and <b>CP-CLOSURE-05</b> (deposit-refund auto-trigger SLA on DEVICE_RECOVERED) supply the date. The four-stage lifecycle (v2·1) is the <b>tracker</b>; the dated SLA is the <b>promise</b>. Surfacing an absolute date — not relative "3–5 दिन" — is what makes the refund accountable to the 524 stuck-refund cohort.</p>
+    <p class="ref">Closure OS v2.0 · CP-CLOSURE-21 (target window) · CP-CLOSURE-05 (deposit SLA) · §5.11 lifecycle</p>
+  </div>
+</div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- ===================== v2·9 — gap #5 ===================== -->
+<div class="screen">
+  <div class="screen-tag">
+    <span class="screen-num">v2·9</span>
+    <span class="screen-name">दो अलग पटरियाँ: कनेक्शन + पैसा/बॉक्स</span>
+    <span class="badge new">New</span>
+    <span class="exstate">Closure · two-track status</span>
+  </div>
+  <div class="fixnote"><b>Why (v2):</b> The four v2 screens each show one axis at a time; nothing surfaces the <b>separation itself</b>. INV-EXIT-02 (orthogonal state machines) + §10.1 (divergence-is-normal) say relationship and custody are independent — so a returned device with a pending refund, or a closing account with the device still home, must read as <b>two tracks not one collapsed state</b>. This is the customer-facing answer to the app's collapsed-CustomerStatus pain.</div>
+
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+    <div class="astatus"><span>10:00</span><span class="r">5G<span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><div class="alogo"><span class="material-icons">all_inclusive</span></div><div class="aact"><span class="material-icons">help_outline</span><span class="material-icons">close</span></div></div>
+    <div class="abody" style="align-items:stretch;text-align:left">
+      <div class="ah1" style="text-align:left">आपकी दो बातें — अलग-अलग</div>
+      <div class="asub" style="text-align:left">घर का नेट · रमेश। एक है आपका कनेक्शन, दूसरी है नेट-बॉक्स और पैसा। दोनों अपनी-अपनी पटरी पर चलते हैं — एक का दूसरे से मेल ज़रूरी नहीं।</div>
+
+      <!-- TRACK 1 — relationship -->
+      <div class="card" style="width:100%;margin-top:18px;text-align:left">
+        <div style="display:flex;align-items:center;gap:9px">
+          <div style="width:34px;height:34px;border-radius:9px;background:#FFE5F6;display:flex;align-items:center;justify-content:center;flex:0 0 auto"><span class="material-icons" style="font-size:19px;color:#D9008D">wifi</span></div>
+          <div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#8a8594">पटरी 1 · कनेक्शन</div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:14px;font-weight:700;color:#161021">बंद हो रहा है</div></div>
+          <span class="pill refund" style="font-family:'Noto Sans Devanagari',sans-serif;margin-left:auto">सुरक्षित</span>
+        </div>
+        <div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#5C5570;line-height:1.45;margin-top:9px">वापस आना चाहें तो खाता वही रहेगा — दोबारा सेटअप नहीं।</div>
+      </div>
+
+      <!-- TRACK 2 — custody / refund -->
+      <div class="card" style="width:100%;margin-top:12px;text-align:left">
+        <div style="display:flex;align-items:center;gap:9px">
+          <div style="width:34px;height:34px;border-radius:9px;background:#F1E5FF;display:flex;align-items:center;justify-content:center;flex:0 0 auto"><span class="material-icons" style="font-size:19px;color:#6D17CE">inventory_2</span></div>
+          <div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#8a8594">पटरी 2 · नेट-बॉक्स और पैसा</div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:14px;font-weight:700;color:#161021">लौटाना है · ₹300 रिज़र्व</div></div>
+        </div>
+        <div class="divider" style="margin:11px 0"></div>
+        <div class="row"><span class="lbl">नेट-बॉक्स</span><span class="val" style="color:#9a7a00">लौटाना बाक़ी</span></div>
+        <div class="row"><span class="lbl">सिक्योरिटी ₹300</span><span class="val" style="color:#008043">आपके लिए रिज़र्व</span></div>
+      </div>
+
+      <div class="trust info" style="text-align:left;margin-top:12px"><span class="material-icons">info</span><p>कनेक्शन बंद होने का मतलब पैसा अटकना नहीं। नेट-बॉक्स लौटा हो पर पैसा बाक़ी हो — यह भी सामान्य है। दोनों यहाँ अलग दिखते रहेंगे।</p></div>
+    </div>
+    <button class="abtn">नेट-बॉक्स लौटाएँ · ₹300 पाएँ</button>
+  </div>
+
+  <div class="os-add">
+    <h5><span class="material-icons">policy</span>Closure OS · relationship-vs-custody two-track</h5>
+    <p>Two <b>orthogonal state machines</b> (INV-EXIT-02): relationship-side (ACTIVE → CLOSURE_INITIATED → CLOSURE_FINAL) and custody-side (DEVICE_WITH_CUSTOMER → … → DEVICE_RECOVERED). <b>Divergence is operational reality, not conflict</b> (§10.1) — CLOSURE_INITIATED while RECOVERY_IN_PROGRESS is normal; CLOSURE_FINAL requires <b>both</b> machines terminal. Showing the two tracks side by side prevents the "I returned it but where's my money / service still shows on" collapse.</p>
+    <p class="ref">Closure OS v2.0 · INV-EXIT-02 orthogonal-state-machines · §10.1 divergence-is-normal</p>
+  </div>
+</div>
 </div>
   </div>
 
@@ -1507,6 +1856,162 @@
     <button class="abtn ghost">समझ गया</button>
   </div>
   <div class="fixnote"><b>Why (v2):</b> SQ v2.0 adds a <b>monitoring lifecycle</b> (Phase 1C): <code>REGISTERED → ACTIVE → SUSPENDED → RESUMED / HALTED</code>. On <code>CLOSURE_INITIATED</code> (or a recall window) the connection's monitoring moves to <b>SUSPENDED</b> and quality emissions are paused, so closure-window noise can't contaminate attribution truth (and the customer is never shown contradictory quality signals); <code>HALTED</code> is terminal. Per <b>SQ OS v2.0 · Phase 1C · INV-SQ-18 / 19 / 22</b>. ACTIVE monitoring only starts at <code>POST_ACTIVATION_VERIFIED</code> (D-011), not at install.</div>
+</div>
+
+<div class="phase"><div class="line"></div><div class="lbl">v2 · More OS coverage</div><div class="line"></div></div>
+
+<!-- ============================================================= -->
+<!-- v2·4 : Proactive area-outage banner (deflects ~1050 calls/day)  -->
+<!-- ============================================================= -->
+<div class="screen">
+  <div class="screen-tag">
+    <span class="screen-num">v2·4</span>
+    <span class="screen-name">इलाके में नेट की दिक्कत — हमें पता है</span>
+    <span class="badge new">New · v2</span>
+    <span class="qstate">SQ · cluster outage</span>
+  </div>
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · v2</div>
+    <div class="astatus"><span>9:05 AM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><div class="alogo">&#8734;</div><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+    <div class="abody" style="align-items:stretch;text-align:left">
+      <div style="margin:14px 0 2px;text-align:center"><span class="material-icons" style="font-size:46px;color:#D9008D">cell_tower</span></div>
+      <div class="ah1" style="text-align:center">आपके इलाके में नेट की दिक्कत है</div>
+      <div class="asub" style="text-align:center">हमें पता है — आपको शिकायत करने या कॉल करने की ज़रूरत नहीं। हमारी टीम इसे ठीक कर रही है।</div>
+
+      <div class="scard" style="margin-top:16px">
+        <div class="sr"><span class="k">इलाका</span><span class="v">शिवाजी नगर, सेक्टर 4</span></div>
+        <div class="sr"><span class="k">असर</span><span class="v" style="color:#9a7a00">~40 घर</span></div>
+        <div class="sr"><span class="k">कारण</span><span class="v">मेन लाइन — हमारी तरफ़</span></div>
+        <div class="sr" style="border-top:1px solid #E8E4F0;margin-top:4px;padding-top:8px"><span class="k" style="font-weight:700;color:#161021">अगला अपडेट</span><span class="v" style="color:#D9008D">11:00 बजे तक</span></div>
+      </div>
+
+      <div class="averify" style="margin-top:12px">
+        <span class="material-icons">campaign</span>
+        <p>ठीक होते ही हम आपको ख़ुद बता देंगे। इन दिनों का कोई पैसा आपसे नहीं कटेगा।</p>
+      </div>
+    </div>
+    <button class="abtn ghost">ठीक होने पर मुझे बताएँ</button>
+  </div>
+  <div class="fixnote"><b>Why (v2):</b> SQ v2.0 emits <b><code>CLUSTER_DEGRADATION_DETECTED</code></b> (zone-level, <code>dominant_fault_domain</code>, <code>SCOPE=area-wide</code>, Wiom-side) which Recovery consumes as a <b>proactive-recovery trigger</b>. Surfacing it <i>before</i> the customer reports is the single biggest lever against the <b>~1050 net-down calls/day</b> — today the only area-line message is a reactive ticket update shown <i>after</i> a complaint is logged, so the call is never deflected. Per <b>SQ OS v2.0</b> (cluster detection) + <b>Recovery OS v2.0</b> (proactive trigger). C4 clarity, no call-centre CTA.</div>
+</div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- ============================================================= -->
+<!-- v2·5 : Degraded — honest "slow" state                          -->
+<!-- ============================================================= -->
+<div class="screen">
+  <div class="screen-tag">
+    <span class="screen-num">v2·5</span>
+    <span class="screen-name">नेट धीमा चल रहा है</span>
+    <span class="badge new">New · v2</span>
+    <span class="qstate">SQ · Degraded</span>
+  </div>
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · v2</div>
+    <div class="astatus"><span>9:30 AM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><div class="alogo">&#8734;</div><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+    <div class="abody">
+      <div class="ah1">नेट धीमा चल रहा है</div>
+      <div class="asub">चालू तो है, पर सामान्य से धीमा। हम इसे देख रहे हैं — आपको कुछ करने की ज़रूरत नहीं।</div>
+
+      <div class="sgauge run" style="background:conic-gradient(#E2B203 0% 55%, #E6E3EC 55% 100%)">
+        <div class="si">
+          <div class="snum">5.5</div>
+          <div class="sunit">Mbps अभी</div>
+          <div class="srun">आम तौर पर: 10</div>
+        </div>
+      </div>
+
+      <div class="scard" style="text-align:left">
+        <div class="sr"><span class="k">अभी की हालत</span><span class="v" style="color:#9a7a00">धीमा (Degraded)</span></div>
+        <div class="sr"><span class="k">पूरी तरह बंद?</span><span class="v" style="color:#008043">नहीं — चल रहा है</span></div>
+        <div class="sr"><span class="k">हम क्या कर रहे हैं</span><span class="v">कारण देख रहे हैं</span></div>
+      </div>
+
+      <div class="averify" style="background:#FFE9A1;text-align:left">
+        <span class="material-icons" style="color:#9a7a00">visibility</span>
+        <p style="color:#5c4a00">यह "सब ठीक है" और "बिल्कुल नहीं चल रहा" — दोनों से अलग है। हम आपको सच बताते हैं, चाहे थोड़ी दिक्कत ही क्यों न हो।</p>
+      </div>
+    </div>
+    <button class="abtn ghost">और जानकारी</button>
+  </div>
+  <div class="fixnote"><b>Why (v2):</b> SQ v2.0 defines 5 states; <b><code>Degraded</code></b> (Layer 2 baseline-relative, <code>CP-SQ-25</code>; customer vocabulary "Slow") sits between Healthy and Unusable. The app today can't tell slow from fine (binary <code>NET_ACTIVE</code> = paid). Surfacing Degraded honestly is a <b>C3/C4</b> obligation and a retention lever — Degraded continues at 91.6% vs Unusable 82.8%. Per <b>SQ OS v2.0</b> (state taxonomy).</div>
+</div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- ============================================================= -->
+<!-- v2·6 : Intermittent — "working with interruptions"             -->
+<!-- ============================================================= -->
+<div class="screen">
+  <div class="screen-tag">
+    <span class="screen-num">v2·6</span>
+    <span class="screen-name">नेट बार-बार टूट रहा है</span>
+    <span class="badge new">New · v2</span>
+    <span class="qstate">SQ · Intermittent</span>
+  </div>
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · v2</div>
+    <div class="astatus"><span>9:42 AM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><div class="alogo">&#8734;</div><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+    <div class="abody" style="align-items:stretch;text-align:left">
+      <div style="margin:12px 0 2px;text-align:center"><span class="material-icons" style="font-size:46px;color:#E2B203">network_ping</span></div>
+      <div class="ah1" style="text-align:center">नेट बार-बार टूट रहा है</div>
+      <div class="asub" style="text-align:center">कभी चलता है, कभी रुक जाता है — हमने यह पकड़ लिया है और ठीक कर रहे हैं।</div>
+
+      <div class="scard" style="margin-top:16px">
+        <div class="sr"><span class="k">पिछले 3 घंटे में टूटा</span><span class="v" style="color:#9a7a00">14 बार</span></div>
+        <div class="sr"><span class="k">अभी की हालत</span><span class="v" style="color:#9a7a00">रुक-रुक कर (Intermittent)</span></div>
+        <div class="sr" style="border-top:1px solid #E8E4F0;margin-top:4px;padding-top:8px"><span class="k">हम क्या कर रहे हैं</span><span class="v" style="color:#6D17CE">कारण ढूँढ रहे हैं</span></div>
+      </div>
+
+      <div class="averify" style="margin-top:12px">
+        <span class="material-icons">vibration</span>
+        <p>रुक-रुक कर चलना भरोसा सबसे तेज़ी से तोड़ता है — इसलिए हम इसे शिकायत के इंतज़ार में नहीं छोड़ते, ख़ुद पकड़ते हैं।</p>
+      </div>
+    </div>
+    <button class="abtn ghost">अपडेट पाएँ</button>
+  </div>
+  <div class="fixnote"><b>Why (v2):</b> <b><code>Intermittent</code></b> (<code>CP-SQ-29</code> flip-count; severity precedence Intermittent &gt; Degraded) is an honest unstable-connection state. Today <code>FREQUENT_DISCONNECTION</code> exists only as a <i>ticket label</i>, not a measured/surfaced state — yet instability destroys trust faster than steady degradation (&gt;8h disconnection/cycle = −10.8pp R30). Per <b>SQ OS v2.0</b>. Honest surfacing satisfies C3/C4.</div>
+</div>
+<div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+<!-- ============================================================= -->
+<!-- v2·7 : Recovery-case tracker — survives closure                -->
+<!-- ============================================================= -->
+<div class="screen">
+  <div class="screen-tag">
+    <span class="screen-num">v2·7</span>
+    <span class="screen-name">अपनी शिकायत की स्थिति</span>
+    <span class="badge new">New · v2</span>
+    <span class="recstate">Recovery · case tracker</span>
+  </div>
+  <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New · v2</div>
+    <div class="astatus"><span>10:05 AM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+    <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+    <div class="abody" style="align-items:stretch;text-align:left">
+      <div class="ah1" style="text-align:center">अपनी शिकायत की स्थिति</div>
+      <div class="asub" style="text-align:center">केस #REC-2287 · नेट बार-बार टूटना</div>
+
+      <div class="evid" style="margin-top:16px;background:#fff;border:1px solid #E8E4F0">
+        <div class="evid-item ok"><span class="material-icons">check_circle</span>दर्ज — आपकी दिक्कत रिकॉर्ड हुई · 9:42 AM</div>
+        <div class="evid-item ok"><span class="material-icons">check_circle</span>जाँच — हमने कारण पकड़ा (लाइन ढीली)</div>
+        <div class="evid-item ok" style="color:#6D17CE"><span class="material-icons" style="color:#6D17CE">radio_button_checked</span>ठीक कर रहे हैं — सुनील आपके इलाके में हैं</div>
+        <div class="evid-item wait"><span class="material-icons">radio_button_unchecked</span>पुष्टि — चलने के बाद हम जाँचेंगे</div>
+        <div class="evid-item wait"><span class="material-icons">radio_button_unchecked</span>हल — आपको बताकर बंद करेंगे</div>
+      </div>
+
+      <div class="scard" style="margin-top:12px">
+        <div class="sr"><span class="k">देख रहे हैं</span><span class="v">सुनील (फ़ील्ड टीम)</span></div>
+        <div class="sr"><span class="k">अगला अपडेट</span><span class="v" style="color:#D9008D">12:30 बजे तक</span></div>
+        <div class="sr"><span class="k">इन दिनों का पैसा</span><span class="v" style="color:#008043">रुका हुआ — कटेगा नहीं</span></div>
+      </div>
+
+      <div class="averify" style="margin-top:12px">
+        <span class="material-icons">history</span>
+        <p>हल होने के बाद भी यह केस यहीं रहेगा — बंद टिकट कहीं ग़ायब नहीं होते। आप कभी भी इसकी पूरी कहानी देख सकते हैं।</p>
+      </div>
+    </div>
+    <button class="abtn ghost">पूरी कहानी देखें</button>
+  </div>
+  <div class="fixnote"><b>Why (v2):</b> Recovery OS v2.0 makes the case a <b>canonical state-of-record</b> with a navigable lifecycle <code>triggered → acknowledged → in_progress → verification_pending → complete → closed</code> (§5.2, Output #1, <b>INV-REC-09</b>, C4) that <b>stays reachable after closure</b>. This is the central fix for "closed tickets vanish; ~1050 calls/day chase status" — today only a single in-progress bubble exists, not a progression that survives closure.</div>
 </div>
 </div>
   </div>
