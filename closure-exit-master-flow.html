@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Closure / Exit · one connected flow (start → end)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#FAF9FC; --bg-subtle:#F1EDF7; --bg-muted:#E8E4F0; --bg-card:#FFFFFF;
+    --text:#161021; --text-subtle:#5C5570; --text-disabled:#A7A1B2;
+    --brand:#D9008D; --brand-hover:#C00080; --brand-subtle:#FFE5F6; --brand-bold:#443152;
+    --on-brand:#FFFFFF; --selected-bg:#FFE5F6; --selected-stroke:#D9008D;
+    --stroke:#E8E4F0; --stroke-strong:#D7D3E0;
+    --positive:#008043; --positive-subtle:#E1FAED;
+    --warning:#E2B203; --warning-subtle:#FFE9A1; --on-warning:#372902;
+    --info:#6D17CE; --info-subtle:#F1E5FF;
+    --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:24px; --r-full:9999px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans Devanagari','Noto Sans',sans-serif;background:#1c1f26;color:#e7e9ee;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+
+  header.doc{padding:36px 32px 0;max-width:1520px;margin:0 auto}
+  .doc-eyebrow{font-family:'Noto Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#D9008D}
+  header.doc h1{font-family:'Noto Sans',sans-serif;font-size:28px;font-weight:700;margin:8px 0 6px;color:#fff}
+  header.doc p.lead{font-family:'Noto Sans',sans-serif;font-size:14px;color:#9aa0ab;max-width:980px;line-height:1.6}
+  header.doc .grounded{font-family:'Noto Sans',sans-serif;font-size:11.5px;color:#7fd1ff;background:#16313f;display:inline-block;padding:4px 11px;border-radius:6px;margin-top:12px}
+  header.doc .alt{font-family:'Noto Sans',sans-serif;font-size:11.5px;color:#c3c8d1;margin-top:10px}
+  header.doc .alt a{color:#ff9ec8;font-weight:700}
+
+  .jump{display:flex;gap:7px;flex-wrap:wrap;margin-top:20px}
+  .jump a{font-family:'Noto Sans',sans-serif;font-size:12px;font-weight:700;color:#c3c8d1;background:#262a32;border:1px solid #343a47;border-radius:999px;padding:7px 13px;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;text-decoration:none}
+  .jump a:hover{background:#2f333c;color:#fff}
+  .jump a .pn{font-size:10px;font-weight:800;background:#5a1140;color:#ffb3dd;border-radius:50%;width:19px;height:19px;display:flex;align-items:center;justify-content:center}
+  .jump a.b4b .pn{background:#0c5a3a;color:#fff}
+
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin:18px 0 0;font-family:'Noto Sans',sans-serif;font-size:12.5px}
+  .legend span{display:inline-flex;align-items:center;gap:7px;color:#c3c8d1}
+  .badge{font-family:'Noto Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:.04em;padding:3px 9px;border-radius:var(--r-full);text-transform:uppercase}
+  .badge.add{background:#D9008D;color:#fff}
+  .badge.mod{background:#E2B203;color:#372902}
+  .badge.keep{background:#3a3f4a;color:#c3c8d1}
+  .badge.cont{background:#008043;color:#fff}
+
+  .mdelta{margin:18px 32px 0;max-width:1456px;background:#1b222b;border:1px solid #2d3a44;border-radius:12px;padding:16px 18px;font-family:'Noto Sans',sans-serif}
+  .mdelta .dt{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7fd1ff;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .mdelta .dt .material-icons{font-size:16px}
+  .mdelta .mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px 22px}
+  .mdelta ul{margin:0;padding-left:2px;list-style:none;display:flex;flex-direction:column;gap:6px}
+  .mdelta li{font-size:12px;color:#c3c8d1;line-height:1.4;display:flex;gap:8px;align-items:flex-start}
+  .mdelta li b{color:#fff}
+  .dchip{flex:0 0 auto;font-size:9px;font-weight:800;letter-spacing:.03em;padding:2px 7px;border-radius:5px;text-transform:uppercase;margin-top:1px;min-width:62px;text-align:center}
+  .dchip.add{background:#D9008D;color:#fff}.dchip.mod{background:#E2B203;color:#372902}.dchip.keep{background:#3a3f4a;color:#c3c8d1}
+
+  /* phase bands */
+  #flow{margin-top:20px}
+  .phaseband{padding:0 0 6px}
+  .phaseband.alt{background:#191d24}
+  .phasehead{padding:18px 32px 10px;display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;max-width:1520px;margin:0 auto}
+  .phasehead .pnum{font-family:'Noto Sans',sans-serif;font-size:19px;font-weight:800;color:#fff;background:#D9008D;border-radius:12px;min-width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .phaseband.cont .phasehead .pnum{background:#008043}
+  .phasehead .ph-t{font-family:'Noto Sans',sans-serif;font-size:17px;font-weight:700;color:#fff}
+  .phasehead .ph-s{font-family:'Noto Sans',sans-serif;font-size:12px;color:#9aa0ab;margin-top:3px;max-width:820px;line-height:1.5}
+  .phasehead .ph-s b{color:#e7e9ee}
+  .phasehead .ph-codes{font-family:'Noto Sans',monospace;font-size:10.5px;color:#c9b0ff;background:#241a3a;padding:4px 10px;border-radius:6px;margin-left:auto;flex:0 0 auto;align-self:center}
+
+  .pdown{display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px 0 2px}
+  .pdown .material-icons{font-size:26px;color:#5a5f6b}
+  .pdown .pl{font-family:'Noto Sans',sans-serif;font-size:11px;font-weight:700;color:#9aa0ab;background:#222631;border:1px solid #343a47;border-radius:999px;padding:4px 13px}
+
+  .rail{display:flex;gap:6px;overflow-x:auto;padding:8px 32px 30px;align-items:flex-start}
+  .rail::-webkit-scrollbar{height:10px}
+  .rail::-webkit-scrollbar-thumb{background:#3a3f4a;border-radius:10px}
+  .rail::-webkit-scrollbar-track{background:#262a32}
+
+  /* branch lane vertical label inside a rail */
+  .blane{flex:0 0 auto;align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:50px;padding-top:30px}
+  .blane .ln{flex:1;width:2px;background:#5a2748}
+  .blane .lbl{writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Noto Sans',sans-serif;font-size:11px;font-weight:800;letter-spacing:.06em;white-space:nowrap;color:#ff9ec8}
+  .blane.b .lbl{color:#8fe3b0}.blane.b .ln{background:#16463a}
+  .blane.c .lbl{color:#ffd27f}.blane.c .ln{background:#4a3a10}
+  .blane.d .lbl{color:#9ad0ff}.blane.d .ln{background:#1a3a4a}
+
+  .farrow{flex:0 0 auto;align-self:center;color:#5a5f6b;display:flex;flex-direction:column;align-items:center;gap:3px;width:34px;padding-top:30px}
+  .farrow .material-icons{font-size:26px}
+  .farrow .fl{font-family:'Noto Sans',sans-serif;font-size:8.5px;font-weight:700;color:#5a5f6b;text-align:center;line-height:1.2}
+
+  .screen{flex:0 0 auto;display:flex;flex-direction:column;gap:9px;width:300px;padding:0 8px}
+  .screen-tag{display:flex;align-items:center;gap:7px;font-family:'Noto Sans',sans-serif;flex-wrap:wrap}
+  .screen-num{width:23px;height:23px;border-radius:var(--r-full);background:#2f333c;color:#c3c8d1;font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .screen.s-add .screen-num{background:#5a1140;color:#ffb3dd}
+  .screen.s-mod .screen-num{background:#4a3a10;color:#ffd27f}
+  .screen-name{font-size:13px;font-weight:600;color:#fff}
+  .state-tag{font-family:'Noto Sans',sans-serif;font-size:9.5px;font-weight:700;color:#c9b0ff;background:#241a3a;padding:2px 7px;border-radius:5px}
+  .coderef{font-family:'Noto Sans',monospace;font-size:10px;color:#9aa0ab;background:#222631;border:1px solid #343a47;border-radius:7px;padding:5px 9px;display:flex;align-items:center;gap:6px;line-height:1.3}
+  .coderef .material-icons{font-size:13px;flex:0 0 auto}
+  .coderef.add{color:#ff9ec8;border-color:#5a2748;background:#2a1620}
+  .coderef.mod{color:#ffd27f;border-color:#4a3a10;background:#26210f}
+  .coderef.keep{color:#9fd0a8;border-color:#244a30;background:#15251a}
+  .coderef b{font-weight:700}
+
+  /* terminal / loop markers */
+  .term{flex:0 0 auto;align-self:center;width:170px;border-radius:16px;padding:16px 15px;font-family:'Noto Sans',sans-serif;text-align:center;margin-top:30px}
+  .term .material-icons{font-size:30px}
+  .term .tt{font-size:13px;font-weight:800;margin-top:6px}
+  .term .ts{font-size:11px;line-height:1.45;margin-top:5px}
+  .term.final{background:#2a1620;border:1px solid #5a2d3e}.term.final .material-icons,.term.final .tt{color:#ff9ec8}.term.final .ts{color:#d6a9bc}
+  .term.cont{background:#15251a;border:1px solid #244a30}.term.cont .material-icons,.term.cont .tt{color:#8fe3b0}.term.cont .ts{color:#a9d6b6}
+  .term.loop{background:#222631;border:1px solid #343a47}.term.loop .material-icons,.term.loop .tt{color:#9ad0ff}.term.loop .ts{color:#aeb4bf}
+
+  .note-card{flex:0 0 auto;width:280px;align-self:center;background:#222631;border:1px solid #343a47;border-radius:16px;padding:16px;font-family:'Noto Sans',sans-serif;margin-top:30px}
+  .note-card h4{font-size:13.5px;font-weight:700;color:#9ad0ff;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .note-card p{font-size:12px;line-height:1.55;color:#c3c8d1;margin-bottom:7px}
+  .note-card p b{color:#fff}
+
+  /* ===== Wiom phone ===== */
+  .aphone{width:300px;height:612px;background:#F7F7F9;border:9px solid #11131a;border-radius:30px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 14px 40px rgba(0,0,0,.4)}
+  .aphone.add{border-color:#7a1257}.aphone.mod{border-color:#6b5410}.aphone.cont{border-color:#0c5a3a}
+  .astatus{height:26px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-family:'Noto Sans',sans-serif;font-size:10.5px;font-weight:600;color:#161021;flex:0 0 auto}
+  .astatus .r .material-icons{font-size:12px;vertical-align:middle;margin-left:2px}
+  .atop{display:flex;align-items:center;padding:8px 12px;flex:0 0 auto;gap:9px}
+  .alogo{width:30px;height:30px;border-radius:8px;background:#D9008D;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex:0 0 auto}
+  .atop .aback{color:#352d42;display:flex;align-items:center}.atop .aback .material-icons{font-size:21px}
+  .atop .atitle{font-family:'Noto Sans Devanagari',sans-serif;font-size:13.5px;font-weight:700;color:#161021}
+  .atop .aact{margin-left:auto;display:flex;gap:12px;color:#352d42}
+  .atop .aact .material-icons{font-size:18px}
+  .abody{flex:1;overflow-y:auto;padding:8px 18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .abody.lft{align-items:stretch;text-align:left}
+  .abody::-webkit-scrollbar{width:0}
+  .ah1{font-family:'Noto Sans Devanagari',sans-serif;font-size:16.5px;font-weight:700;color:#161021;line-height:1.35;margin-top:6px}
+  .ah1.sm{font-size:14.5px}
+  .asub{font-family:'Noto Sans Devanagari',sans-serif;font-size:12px;color:#5C5570;line-height:1.5;margin-top:8px}
+  .abtn{flex:0 0 auto;margin:10px 0 4px;width:100%;height:45px;border:none;outline:none;border-radius:23px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari',sans-serif;font-size:13.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;box-shadow:0 4px 12px rgba(217,0,141,.22)}
+  .abtn .material-icons{font-size:18px}
+  .abtn.ghost{background:transparent;color:#D9008D;box-shadow:none;font-weight:600}
+  .abtn.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D;box-shadow:none}
+  .abtn.gray{background:#EDEAF2;color:#5C5570;box-shadow:none}
+  .afoot{flex:0 0 auto;width:100%;padding:0 2px}
+  .ahero{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:12px auto 2px}
+  .ahero .material-icons{font-size:36px}
+  .ahero.brand{background:#FFE5F6}.ahero.brand .material-icons{color:#D9008D}
+  .ahero.ok{background:#E1FAED}.ahero.ok .material-icons{color:#008043}
+  .ahero.warn{background:#FFF3CF}.ahero.warn .material-icons{color:#9a7a00}
+  .ahero.info{background:#F1E5FF}.ahero.info .material-icons{color:#6D17CE}
+  .ahero.gray{background:#EAE7F0}.ahero.gray .material-icons{color:#5C5570}
+  .optrow{display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid #E8E4F0;border-radius:14px;padding:12px 13px;font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;color:#161021;line-height:1.4;cursor:pointer;width:100%;margin-top:9px;text-align:left}
+  .optrow .ord{width:19px;height:19px;border-radius:50%;border:2px solid #D7D3E0;flex:0 0 auto}
+  .optrow.sel{border-color:#D9008D;background:#FFF0F8}
+  .optrow.sel .ord{border-color:#D9008D;background:radial-gradient(#D9008D 0 5px,#fff 6px)}
+  .optrow .otext{flex:1}.optrow .otext small{display:block;font-size:10.5px;color:#5C5570;margin-top:2px}
+  .scard{width:100%;background:#fff;border-radius:12px;padding:11px 13px;margin-top:13px;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:left}
+  .scard .stitle{font-size:11.5px;font-weight:700;color:#161021;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .scard .stitle .material-icons{font-size:15px;color:#D9008D}
+  .scard .sr{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;gap:10px}
+  .scard .sr .k{color:#5C5570}.scard .sr .v{font-weight:700;color:#161021;text-align:right}
+  .scard .sr .v.pos{color:#008043}.scard .sr .v.neg{color:#5C5570}
+  .scard .sdiv{border-top:1px dashed #E2DEEA;margin:6px 0}
+  .scard .sr.total .k,.scard .sr.total .v{font-weight:800;font-size:13px}
+  .sok{display:inline-flex;align-items:center;gap:5px;background:#E1FAED;color:#008043;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+  .sok .material-icons{font-size:13px}
+  .pill-info{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;background:#F1E5FF;color:#6D17CE}
+  .pill-warn{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;background:#FFF3CF;color:#9a7a00}
+  .averify{display:flex;align-items:flex-start;gap:8px;border-radius:10px;padding:9px 11px;margin-top:11px;text-align:left;width:100%}
+  .averify .material-icons{font-size:15px;flex:0 0 auto;margin-top:1px}
+  .averify p{font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;line-height:1.5}
+  .averify.ok{background:#E1FAED}.averify.ok .material-icons{color:#008043}.averify.ok p{color:#0a5c33}
+  .averify.info{background:#F1E5FF}.averify.info .material-icons{color:#6D17CE}.averify.info p{color:#4a1a8f}
+  .averify.warn{background:#FFF3CF}.averify.warn .material-icons{color:#9a7a00}.averify.warn p{color:#5c4a00}
+  .averify.gray{background:#EFEDF3}.averify.gray .material-icons{color:#5C5570}.averify.gray p{color:#3f394b}
+  .refund-opt{display:flex;align-items:flex-start;gap:11px;padding:11px;background:#fff;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);margin-top:10px;width:100%;text-align:left}
+  .refund-opt.sel{border-color:var(--brand);background:var(--selected-bg);box-shadow:0 0 0 1px var(--brand)}
+  .refund-opt .ri{width:36px;height:36px;border-radius:var(--r-md);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .refund-opt.sel .ri{background:#fff}
+  .refund-opt .ri .material-icons{font-size:19px;color:var(--brand-bold)}
+  .refund-opt .rt{font-size:13px;font-weight:700;color:var(--text)}
+  .refund-opt .rs{font-size:10.5px;color:var(--text-subtle);margin-top:2px;line-height:1.4}
+  .refund-opt .ramt{font-size:14.5px;font-weight:800;color:var(--positive);margin-left:auto;flex:0 0 auto;text-align:right}
+  .refund-opt .ramt small{display:block;font-size:9px;font-weight:600;color:#A7A1B2}
+  .track{width:100%;margin-top:13px;text-align:left}
+  .tstep{display:flex;gap:11px;position:relative}
+  .tstep .tline{position:absolute;left:13px;top:26px;bottom:-6px;width:2px;background:#E2DEEA}
+  .tstep:last-child .tline{display:none}
+  .tdot{width:27px;height:27px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#E2DEEA;color:#fff;z-index:1}
+  .tdot .material-icons{font-size:16px}
+  .tstep.done .tdot{background:#008043}.tstep.done .tline{background:#008043}
+  .tstep.cur .tdot{background:#D9008D;box-shadow:0 0 0 4px #FFE5F6}
+  .tstep.wait .tdot{background:#E2DEEA;color:#A7A1B2}
+  .tbody{padding-bottom:15px;flex:1}
+  .tbody .tt{font-size:12.5px;font-weight:700;color:#161021}
+  .tstep.wait .tbody .tt{color:#A7A1B2}
+  .tbody .td{font-size:11px;color:#5C5570;line-height:1.45;margin-top:2px}
+  .tbody .tmeta{font-size:10px;font-weight:700;margin-top:4px}
+  .tstep.done .tmeta{color:#008043}.tstep.cur .tmeta{color:#D9008D}.tstep.wait .tmeta{color:#A7A1B2}
+  .evid{margin-top:11px;background:#fff;border:1px solid var(--stroke);border-radius:var(--r-md);padding:10px 11px;width:100%;text-align:left}
+  .evid-item{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text);padding:5px 0}
+  .evid-item .material-icons{font-size:16px}
+  .evid-item.ok .material-icons{color:var(--positive)}
+  .evid-item.wait{color:var(--text-subtle)}.evid-item.wait .material-icons{color:var(--text-disabled)}
+  .conn{display:flex;align-items:center;gap:11px;padding:11px;background:#fff;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);margin-top:10px;width:100%;text-align:left}
+  .conn-icon{width:36px;height:36px;border-radius:var(--r-md);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .conn-icon .material-icons{font-size:19px;color:var(--brand-bold)}
+  .conn-name{font-size:13px;font-weight:700;color:var(--text)}
+  .conn-sub{font-size:10.5px;color:var(--text-subtle);margin-top:2px}
+  .sgauge{width:120px;height:120px;border-radius:50%;margin:12px auto 4px;display:flex;align-items:center;justify-content:center}
+  .sgauge .si{width:96px;height:96px;border-radius:50%;background:#F7F7F9;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .sgauge .sunit{font-family:'Noto Sans Devanagari',sans-serif;font-size:10px;color:#5C5570;margin-top:3px}
+  .chatwrap{width:100%;display:flex;flex-direction:column;gap:9px;margin-top:8px}
+  .bub{max-width:90%;padding:10px 12px;border-radius:15px;font-size:12px;line-height:1.5;font-family:'Noto Sans Devanagari',sans-serif}
+  .bub.bot{align-self:flex-start;background:#fff;border:1px solid #E8E4F0;border-bottom-left-radius:5px;color:#161021}
+  .bub.me{align-self:flex-end;background:#D9008D;color:#fff;border-bottom-right-radius:5px}
+  .bub .bt{font-weight:700;font-size:12px;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+  .bub .bt .material-icons{font-size:15px;color:#D9008D}
+  .bub .chan{font-size:9px;font-weight:700;letter-spacing:.04em;color:#6D17CE;background:#F1E5FF;padding:1px 6px;border-radius:5px;text-transform:uppercase;margin-left:6px}
+  .bub .time{font-size:9px;color:rgba(0,0,0,.3);margin-top:5px;display:block}
+  .bub.me .time{color:rgba(255,255,255,.6)}
+  @media(max-width:560px){header.doc h1{font-size:22px}}
+</style>
+</head>
+<body>
+  <header class="doc">
+    <div class="doc-eyebrow">Wiom Customer App · Closure / Exit — one connected journey</div>
+    <h1>The complete Closure &amp; Exit flow — start → end</h1>
+    <p class="lead">The whole closure journey as <b>one connected flow</b>, not separate scenarios. Read it top-to-bottom through 7 phases; within each phase the lanes are the branches (why a closure starts, the reversal escape, the custody outcomes, the Wiom-side CSP fork). Arrows are transitions; loops and terminals are marked. Every screen is tagged <b>Keep / Modify / Add new</b> with its live Kotlin file — so this doubles as the build map.</p>
+    <div class="grounded">Grounded: Closure OS v2.0 (16 Jun) · ESR v2.3 · SPR v2.11 §6 · live app = wiom-tech/customer-app-kotlin</div>
+    <div class="alt">Per-scenario version (each flow on its own tab): <a href="closure-exit-flows.html">closure-exit-flows.html</a></div>
+    <div class="jump">
+      <a href="#p0"><span class="pn">0</span>सेवा चालू</a>
+      <a href="#p1"><span class="pn">1</span>Closure शुरू</a>
+      <a href="#p2"><span class="pn">2</span>वापसी (Reversal)</a>
+      <a href="#p3"><span class="pn">3</span>Closure Initiated</a>
+      <a href="#p4"><span class="pn">4</span>डिवाइस वापसी</a>
+      <a href="#p5"><span class="pn">5</span>रिफंड</a>
+      <a href="#p6"><span class="pn">6</span>Closure Final</a>
+      <a href="#p1" class="b4b"><span class="pn">4B</span>CSP migration (lane C)</a>
+    </div>
+    <div class="legend">
+      <span><span class="badge keep">Keep</span> reuse live screen</span>
+      <span><span class="badge mod">Modify</span> change live screen</span>
+      <span><span class="badge add">Add new</span> build it</span>
+      <span><span class="badge cont">Continuity</span> no closure</span>
+    </div>
+    <div class="mdelta">
+      <div class="dt"><span class="material-icons">construction</span>What to build — whole journey at a glance</div>
+      <div class="mg">
+        <ul>
+          <li><span class="dchip keep">Keep</span><span>GRACE renew · device self/pickup base · UPI capture</span></li>
+          <li><span class="dchip mod">Modify</span><span><b>CancelBookingReasonScreen.kt</b> — refund-aware reasons</span></li>
+          <li><span class="dchip mod">Modify</span><span><b>CancelBookingConfirmDialog</b> — pro-rata, not "no refund"</span></li>
+          <li><span class="dchip mod">Modify</span><span><b>RouterRecoveryScreen.kt</b> — ₹ reserved + tiers</span></li>
+          <li><span class="dchip mod">Modify</span><span><b>PaymentHistoryScreen.kt</b> — stop hiding refunds</span></li>
+        </ul>
+        <ul>
+          <li><span class="dchip add">Add</span><span>SD-first recall · both bookend comms (SMS/WhatsApp)</span></li>
+          <li><span class="dchip add">Add</span><span>Zone reversal + <b>REVERSAL_REQUESTED</b> on same SI (RenewalModels.kt)</span></li>
+          <li><span class="dchip add">Add</span><span>4-stage refund tracker + bond write-off (Phase A–D)</span></li>
+          <li><span class="dchip add">Add</span><span>Custody dispute · non-recovery (D-007C) · life-event</span></li>
+          <li><span class="dchip add">Add</span><span>CSP-migration continuity (CONNECTION_CHANGED) + forced/declined</span></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <div id="flow">
+  <!-- ===== PHASE 0 ===== -->
+  <div class="phaseband" id="p0">
+    <div class="phasehead"><div class="pnum">0</div><div><div class="ph-t">सेवा चालू — कहीं से भी closure शुरू हो सकता है</div><div class="ph-s">हर closure की शुरुआत यहीं से: ग्राहक का प्लान चल रहा है (<b>ACTIVE_ENTITLED</b>). Continuity OS इसे author करता है; Closure OS की कोई भूमिका तब तक नहीं जब तक कोई trigger न आए।</div><div class="ph-codes">C0 · ACTIVE_ENTITLED</div></div></div>
+    <div class="rail">
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">0</span><span class="screen-name">नेट चालू (home)</span> <span class="badge keep">Keep</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div><div class="aact"><span class="material-icons">notifications_none</span><span class="material-icons">person_outline</span></div></div>
+          <div class="abody">
+            <div class="sgauge" style="background:conic-gradient(#008043 0% 64%,#E6E3EC 64% 100%)"><div class="si"><span style="font-size:25px;font-weight:800;color:#161021">19</span><span class="sunit">दिन बचे</span></div></div>
+            <div class="ah1 sm">आपका नेट चालू है</div>
+            <div class="scard"><div class="sr"><span class="k">प्लान</span><span class="v">₹500 · 30 दिन</span></div><div class="sr"><span class="k">स्थिति</span><span class="v pos">चालू</span></div><div class="sr"><span class="k">सिक्योरिटी डिपॉज़िट</span><span class="v">₹300 (refundable)</span></div></div>
+          </div>
+          <div class="afoot"><button class="abtn sec">प्लान देखें</button></div>
+        </div>
+        <div class="coderef keep"><span class="material-icons">check</span><b>Keep</b> · ManageScreen.kt (ACTIVE)</div>
+      </div>
+    </div>
+    <div class="pdown"><span class="material-icons">south</span><span class="pl">एक trigger आता है → closure शुरू</span></div>
+  </div>
+
+  <!-- ===== PHASE 1 ===== -->
+  <div class="phaseband alt" id="p1">
+    <div class="phasehead"><div class="pnum">1</div><div><div class="ph-t">Closure कैसे शुरू होता है — entry lanes</div><div class="ph-s">10 में से 9 कारण एक ही जगह मिलते हैं: <b>CLOSURE_INITIATED</b>. नीचे हर lane एक entry है। <b>Lane C (4B)</b> अलग है — ज़्यादातर बार वह closure नहीं, <b>continuity</b> है (कनेक्शन जारी)। fraud / system-termination तुरंत closure करते हैं, कोई reversal नहीं।</div><div class="ph-codes">C0/C1 → C2 · 10 reason codes</div></div></div>
+    <div class="rail">
+
+      <!-- Lane A: non-reaffirmation -->
+      <div class="blane a"><div class="ln"></div><div class="lbl">A · रिचार्ज नहीं हुआ</div><div class="ln"></div></div>
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">A1</span><span class="screen-name">प्लान खत्म — रिचार्ज</span> <span class="badge keep">Keep</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>
+          <div class="abody">
+            <div class="ahero gray"><span class="material-icons">wifi_off</span></div>
+            <div class="ah1 sm">आपका प्लान खत्म हो गया</div>
+            <div class="asub">नेट चालू रखने के लिए रिचार्ज करें।</div>
+            <div class="scard"><div class="sr"><span class="k">स्थिति</span><span class="v" style="color:#9a7a00">GRACE</span></div></div>
+          </div>
+          <div class="afoot"><button class="abtn">रिचार्ज करें</button></div>
+        </div>
+        <div class="coderef keep"><span class="material-icons">check</span><b>Keep</b> · GRACE (ManageScreen.kt)</div>
+      </div>
+      <div class="farrow"><span class="material-icons">chevron_right</span><span class="fl">T+15</span></div>
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">A2</span><span class="screen-name">SD-first recall</span> <span class="badge add">Add new</span> <span class="state-tag">C1 · RESERVATION_EXPIRED</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>
+          <div class="abody">
+            <div class="ahero brand"><span class="material-icons">savings</span></div>
+            <div class="ah1 sm">आपका ₹300 डिपॉज़िट<br>अभी भी सुरक्षित है</div>
+            <div class="asub">आपकी जगह 15 दिन रिज़र्व है। जब चाहें रिचार्ज करें — कुछ नहीं बदलेगा।</div>
+            <div class="averify info"><span class="material-icons">lock</span><p>सिर्फ़ जानकारी, कोई दबाव नहीं (INV-EXIT-15) · SMS + WhatsApp।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">रिचार्ज करके वापस आएं</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · recall comm (Zone 1)</div>
+      </div>
+
+      <!-- Lane B: explicit -->
+      <div class="blane"><div class="ln"></div><div class="lbl">B · ख़ुद बंद करना</div><div class="ln"></div></div>
+      <div class="screen s-mod">
+        <div class="screen-tag"><span class="screen-num">B1</span><span class="screen-name">बंद करने का कारण</span> <span class="badge mod">Modify</span></div>
+        <div class="aphone mod">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">कनेक्शन बंद करें</div></div>
+          <div class="abody lft">
+            <div class="ah1 sm">बंद करने का कारण?</div>
+            <div class="optrow sel"><div class="ord"></div><div class="otext">मुझे अब नेट नहीं चाहिए</div></div>
+            <div class="optrow"><div class="ord"></div><div class="otext">कहीं और शिफ्ट हो रहा/रही हूँ<small>→ नए पते पर ऑफ़र</small></div></div>
+            <div class="optrow"><div class="ord"></div><div class="otext">क्वालिटी अच्छी नहीं</div></div>
+            <div class="averify info"><span class="material-icons">price_check</span><p>कारण से पैसा कम नहीं होता (INV-EXIT-11)।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">आगे बढ़ें</button></div>
+        </div>
+        <div class="coderef mod"><span class="material-icons">edit</span><b>Modify</b> · CancelBookingReasonScreen.kt</div>
+      </div>
+      <div class="farrow"><span class="material-icons">chevron_right</span></div>
+      <div class="screen s-mod">
+        <div class="screen-tag"><span class="screen-num">B2</span><span class="screen-name">पहले बताएं — कितना वापस</span> <span class="badge mod">Modify</span> <span class="state-tag">REFUND_TRIGGERED(PRO_RATA)</span></div>
+        <div class="aphone mod">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">आपका पैसा वापस</div></div>
+          <div class="abody lft">
+            <div class="ah1 sm" style="text-align:center">बंद करने से पहले — यह मिलेगा</div>
+            <div class="scard"><div class="stitle"><span class="material-icons">calculate</span>बचे दिनों का (pro-rata)</div><div class="sr"><span class="k">बचे दिन</span><span class="v">18 / 30</span></div><div class="sdiv"></div><div class="sr total"><span class="k">अभी वापस</span><span class="v pos">₹300</span></div></div>
+            <div class="scard"><div class="sr"><span class="k">डिवाइस लौटाने पर</span><span class="v pos">+ ₹300</span></div><div class="sr total"><span class="k">कुल</span><span class="v pos">₹600</span></div></div>
+            <div class="averify ok"><span class="material-icons">bolt</span><p>pro-rata <b>अभी</b> ट्रिगर — अंत का इंतज़ार नहीं (INV-EXIT-25)।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">कन्फर्म करें</button><button class="abtn ghost">रहने दें</button></div>
+        </div>
+        <div class="coderef mod"><span class="material-icons">edit</span><b>Modify</b> · replaces CancelBookingConfirmDialog</div>
+      </div>
+
+      <!-- Lane C: 4B CSP migration -->
+      <div class="blane c"><div class="ln"></div><div class="lbl">C · Wiom CSP migration (4B)</div><div class="ln"></div></div>
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">C1</span><span class="screen-name">पार्टनर बदल रहा है</span> <span class="badge add">Add new</span> <span class="state-tag">N1 · Advance Notice</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>
+          <div class="abody">
+            <div class="ahero info"><span class="material-icons">sync_alt</span></div>
+            <div class="ah1 sm">आपका नेट पार्टनर बदल रहा है</div>
+            <div class="asub">आपको कुछ नहीं करना। प्लान, स्पीड, जगह — सब वैसा ही।</div>
+            <div class="averify info"><span class="material-icons">shield</span><p>यह exit नहीं — कनेक्शन जारी। आपकी कोई गलती नहीं (D#9)।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn gray" disabled>कुछ नहीं करना</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · 4B advance notification</div>
+      </div>
+      <div class="farrow"><span class="material-icons">chevron_right</span><span class="fl">alt CSP?</span></div>
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">C2</span><span class="screen-name">कनेक्शन जारी</span> <span class="badge cont">Continuity</span> <span class="state-tag">N3 · CONNECTION_CHANGED</span></div>
+        <div class="aphone cont">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>
+          <div class="abody">
+            <div class="ahero ok"><span class="material-icons">wifi</span></div>
+            <div class="ah1 sm">आपका नेट पहले जैसा चालू</div>
+            <div class="asub">पार्टनर बदला, पर आपके लिए कुछ नहीं बदला — कोई रुकावट नहीं।</div>
+            <div class="averify ok"><span class="material-icons">verified</span><p>वही service instance · कोई closure, पिकअप या रिफंड नहीं। (gap हो तो प्लान रुकता है, फिर यही — AMD-CON-16)</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">ठीक है</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · continuity — must NOT hit closure</div>
+      </div>
+      <div class="term cont"><span class="material-icons">all_inclusive</span><div class="tt">यहीं ख़त्म — कोई closure नहीं</div><div class="ts">सफल migration = continuity. सिर्फ़ "no alternative CSP" या "ग्राहक मना करे" तब closure (पूरा C2 refund) — वह नीचे मुख्य flow में मिलता है।</div></div>
+
+      <!-- Lane D: life-event -->
+      <div class="blane d"><div class="ln"></div><div class="lbl">D · Life-event</div><div class="ln"></div></div>
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">D1</span><span class="screen-name">गरिमापूर्ण संदेश</span> <span class="badge add">Add new</span> <span class="state-tag">external-life-event</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>
+          <div class="abody">
+            <div class="ahero info"><span class="material-icons">volunteer_activism</span></div>
+            <div class="ah1 sm">हम आपके साथ हैं</div>
+            <div class="asub">आपको कुछ नहीं करना — कनेक्शन शांति से बंद, बचा पैसा परिवार को।</div>
+            <div class="averify gray"><span class="material-icons">notifications_off</span><p>कोई win-back नहीं — dignified silence। पूरा refund, trust NONE।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn sec">परिवार की मदद</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · suppress marketing; full refund</div>
+      </div>
+
+      <!-- Lane E: B2I -->
+      <div class="blane"><div class="ln"></div><div class="lbl">E · B2I (सेटअप नहीं हुआ)</div><div class="ln"></div></div>
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">E1</span><span class="screen-name">सेटअप नहीं हुआ — पूरा रिफंड</span> <span class="badge add">Add new</span> <span class="state-tag">C9 · CLOSURE_HANDOFF</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>
+          <div class="abody">
+            <div class="ahero info"><span class="material-icons">sentiment_satisfied</span></div>
+            <div class="ah1 sm">माफ़ी — तय समय में<br>सेटअप नहीं कर पाए</div>
+            <div class="asub">पूरी बुकिंग राशि वापस। घर पर कोई डिवाइस नहीं था, इसलिए कुछ लौटाना नहीं।</div>
+            <div class="averify ok"><span class="material-icons">fast_forward</span><p>कोई custody नहीं → सीधे CLOSURE_FINAL (fast-track)।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">₹100 रिफंड पाएं</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · B2I fast-track (no custody) → §6</div>
+      </div>
+
+      <div class="note-card">
+        <h4><span class="material-icons">gpp_maybe</span>+ system-initiated</h4>
+        <p><b>fraud-security</b> / <b>system-termination</b> तुरंत CLOSURE_INITIATED करते हैं — <b>कोई reversal नहीं</b>, refund forfeited (fraud), comms सिर्फ़ informational।</p>
+        <p>बाकी सब lanes (A/B/C-forced/D) नीचे एक ही जगह मिलते हैं ↓</p>
+      </div>
+
+    </div>
+    <div class="pdown"><span class="material-icons">south</span><span class="pl">9 reasons converge — पर पहले: वापस आने का मौका</span></div>
+  </div>
+
+  <!-- ===== PHASE 2 ===== -->
+  <div class="phaseband" id="p2">
+    <div class="phasehead"><div class="pnum">2</div><div><div class="ph-t">वापस आने का मौका — Reversal (escape hatch)</div><div class="ph-s">closure commit होने से पहले और पिकअप तक, ग्राहक बिना किसी शुल्क वापस आ सकता है — <b>उसी account पर</b>. <b>Zone 1</b> (रिज़र्व विंडो) तुरंत · <b>Zone 2</b> (dispatch के बाद) RECALL_CANCELLED · <b>Zone 3</b> (पिकअप के बाद) नया सेटअप। यह loop वापस "सेवा चालू" पर जाता है।</div><div class="ph-codes">C1↔C0 · C4 · RECALL_CANCELLED</div></div></div>
+    <div class="rail">
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">2a</span><span class="screen-name">Zone 1 — तुरंत वापसी</span> <span class="badge add">Add new</span> <span class="state-tag">C1 → C0</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>
+          <div class="abody">
+            <div class="ahero ok"><span class="material-icons">wifi</span></div>
+            <div class="ah1 sm">आप वापस आ गए! नेट चालू</div>
+            <div class="asub">रिचार्ज हो गया — वही प्लान, वही डिवाइस, वही जगह।</div>
+            <div class="scard"><div class="sr"><span class="k">शुल्क</span><span class="v pos">₹0</span></div></div>
+            <div class="averify ok"><span class="material-icons">history</span><p>वापस आने वाले 95.3% यहीं — event तक नहीं चाहिए।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">नेट इस्तेमाल करें</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · Zone 1 (recharge reverts)</div>
+      </div>
+      <div class="farrow"><span class="material-icons">chevron_right</span><span class="fl">Zone 2<br>dispatched</span></div>
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">2b</span><span class="screen-name">Zone 2 — welcome back</span> <span class="badge add">Add new</span> <span class="state-tag">C4 · RECALL_CANCELLED</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>
+          <div class="abody">
+            <div class="ahero ok"><span class="material-icons">celebration</span></div>
+            <div class="ah1 sm">वापसी पर स्वागत है!</div>
+            <div class="asub">कुछ नहीं बदला — वही प्लान। पिकअप रोक दिया गया, जगह सुरक्षित।</div>
+            <div class="averify ok"><span class="material-icons">verified</span><p>वही <b>service instance</b> (D-P09) · ₹0 शुल्क · कोई posture penalty नहीं (INV-EXIT-14)।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">ठीक है</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · REVERSAL_REQUESTED + RECALL_CANCELLED, same SI</div>
+      </div>
+      <div class="farrow"><span class="material-icons">chevron_right</span><span class="fl">Zone 3<br>picked up</span></div>
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">2c</span><span class="screen-name">Zone 3 — नया सेटअप</span> <span class="badge add">Add new</span> <span class="state-tag">REVERSAL_REJECTED → B2I</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">वापस आएं</div></div>
+          <div class="abody">
+            <div class="ahero gray"><span class="material-icons">inventory_2</span></div>
+            <div class="ah1 sm">डिवाइस वापस ले लिया गया है</div>
+            <div class="asub">पुराना कनेक्शन वापस नहीं हो सकता — पर नया सेटअप आसान है, जानकारी सेव है।</div>
+            <div class="averify info"><span class="material-icons">autorenew</span><p>नया <b>SI</b> (D-012) — पुराना closure वापस नहीं होता।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">नया नेट सेटअप शुरू करें</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · Zone 3 → B2I re-entry</div>
+      </div>
+      <div class="term loop"><span class="material-icons">replay</span><div class="tt">↻ वापस "सेवा चालू" पर</div><div class="ts">Zone 1/2 reversal ग्राहक को Phase 0 (ACTIVE_ENTITLED) पर लौटा देता है — पूरी history बरकरार।</div></div>
+    </div>
+    <div class="pdown"><span class="material-icons">south</span><span class="pl">वापस नहीं आए → closure commit होता है</span></div>
+  </div>
+
+  <!-- ===== PHASE 3 ===== -->
+  <div class="phaseband alt" id="p3">
+    <div class="phasehead"><div class="pnum">3</div><div><div class="ph-t">CLOSURE_INITIATED — closure commit (पहला bookend)</div><div class="ph-s">Closure OS यहाँ CLOSURE_INITIATED author करता है, mandatory कारण के साथ (10-code taxonomy)। <b>पहला bookend comm</b> जाता है (SMS/WhatsApp, कभी app-only नहीं)। pro-rata यहीं fire होता है। Zone 2 reversal अब भी खुला है।</div><div class="ph-codes">C2 · CLOSURE_INITIATED (ESR 24)</div></div></div>
+    <div class="rail">
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">कनेक्शन बंद किया जा रहा है</span> <span class="badge add">Add new</span> <span class="state-tag">C2 · 1st bookend</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>
+          <div class="abody">
+            <div class="chatwrap">
+              <div class="bub bot"><div class="bt"><span class="material-icons">info</span>कनेक्शन बंद किया जा रहा है<span class="chan">SMS + WhatsApp</span></div>आपका <b>₹300 डिपॉज़िट</b> डिवाइस लौटाने पर पूरा वापस मिलेगा। बचे दिनों का ₹300 भेजा जा रहा है।<span class="time">पहला bookend · 10:00</span></div>
+              <div class="bub bot">गलती से हुआ? अभी भी वापस आ सकते हैं।</div>
+            </div>
+            <div class="averify warn"><span class="material-icons">verified_user</span><p>structured कारण दर्ज (INV-EXIT-05)। reversible अभी भी (Zone 2)।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn sec">वापस आएं</button><button class="abtn ghost">डिवाइस लौटाने का तरीका</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · CLOSURE_INITIATED + bookend (INV-EXIT-04)</div>
+      </div>
+    </div>
+    <div class="pdown"><span class="material-icons">south</span><span class="pl">custody-side शुरू — डिवाइस की वापसी</span></div>
+  </div>
+
+  <!-- ===== PHASE 4 ===== -->
+  <div class="phaseband" id="p4">
+    <div class="phasehead"><div class="pnum">4</div><div><div class="ph-t">डिवाइस की वापसी — custody (समानांतर machine)</div><div class="ph-s">relationship बंद हो रहा है, पर डिवाइस अलग machine है। मुख्य रास्ता: डिवाइस लौटाओ → recovered। दो किनारे: <b>dispute</b> (पिकअप-रिकॉर्ड में फ़र्क) और <b>non-recovery</b> (डिवाइस नहीं मिला)। ₹300 पूरे दौरान <b>रिज़र्व</b> रहता है।</div><div class="ph-codes">C3 · RECOVERY_IN_PROGRESS</div></div></div>
+    <div class="rail">
+
+      <div class="screen s-mod">
+        <div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">डिवाइस लौटाएं — self vs pickup</span> <span class="badge mod">Modify</span> <span class="state-tag">C3</span></div>
+        <div class="aphone mod">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">डिवाइस लौटाएं</div></div>
+          <div class="abody lft">
+            <div class="ah1 sm" style="text-align:center">डिवाइस लौटाकर ₹300 पाएं</div>
+            <div class="refund-opt sel"><div class="ri"><span class="material-icons">directions_walk</span></div><div><div class="rt">खुद पार्टनर को दें</div><div class="rs">पता + Map लिंक</div></div><div class="ramt">₹300<small>पूरा</small></div></div>
+            <div class="refund-opt"><div class="ri"><span class="material-icons">local_shipping</span></div><div><div class="rt">टीम पिकअप करेगी</div><div class="rs">3–4 दिन</div></div><div class="ramt">₹250<small>−₹50</small></div></div>
+            <div class="averify ok"><span class="material-icons">shield</span><p>₹300 अभी <b>रिज़र्व</b> (Stage 2) — 524 अटकी केस का हल।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">खुद लौटाना चुनें</button></div>
+        </div>
+        <div class="coderef mod"><span class="material-icons">edit</span><b>Modify</b> · RouterRecoveryScreen.kt</div>
+      </div>
+
+      <!-- dispute lane -->
+      <div class="blane c"><div class="ln"></div><div class="lbl">किनारा · custody dispute (27%)</div><div class="ln"></div></div>
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">4d</span><span class="screen-name">डिवाइस की पुष्टि कर रहे हैं</span> <span class="badge add">Add new</span> <span class="state-tag">C6 · CUSTODY_DISPUTED</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">रिफंड की स्थिति</div></div>
+          <div class="abody">
+            <div class="ahero info"><span class="material-icons">fact_check</span></div>
+            <div class="ah1 sm">डिवाइस की स्थिति की<br>पुष्टि कर रहे हैं</div>
+            <div class="asub">पिकअप और रिकॉर्ड में फ़र्क है। 7 दिन में सुलझेगा — आपको कुछ नहीं करना।</div>
+            <div class="averify ok"><span class="material-icons">favorite</span><p>शक में फ़ैसला <b>आपके पक्ष में</b> (Doctrine #11)। ₹300 सुरक्षित।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn ghost">सवाल पूछें</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · CUSTODY_DISPUTED · 7-day SLA</div>
+      </div>
+      <div class="farrow"><span class="material-icons">merge</span><span class="fl">resolved →<br>recovered</span></div>
+
+      <!-- non-recovery lane -->
+      <div class="blane"><div class="ln"></div><div class="lbl">किनारा · non-recovery</div><div class="ln"></div></div>
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">4n</span><span class="screen-name">"पहले refund दिखाओ" — D-007C</span> <span class="badge add">Add new</span> <span class="state-tag">C7 · D-007C filter</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>
+          <div class="abody">
+            <div class="chatwrap">
+              <div class="bub me">पहले मेरा ₹300 दिखाओ, फिर डिवाइस दूँगा</div>
+              <div class="bub bot"><div class="bt"><span class="material-icons">verified_user</span>बिल्कुल — पहले हम देंगे</div>₹300 आपके नाम <b>रिज़र्व</b> है। यह हक़ है, शर्त नहीं।<span class="time">अभी</span></div>
+            </div>
+            <div class="averify ok"><span class="material-icons">handshake</span><p>शर्त ≠ refusal (INV-EXIT-28)। कभी "refuser" मार्क नहीं।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">मेरा रिज़र्व ₹300 देखें</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · D-007C filter + bond held 60d</div>
+      </div>
+
+    </div>
+    <div class="pdown"><span class="material-icons">south</span><span class="pl">डिवाइस तय (या लिखा-पढ़ी) → रिफंड</span></div>
+  </div>
+
+  <!-- ===== PHASE 5 ===== -->
+  <div class="phaseband alt" id="p5">
+    <div class="phasehead"><div class="pnum">5</div><div><div class="ph-t">रिफंड — 4 चरण, हर चरण दिखता है</div><div class="ph-s">Eligible → <b>Provisioned</b> (पिकअप से पहले ₹ रिज़र्व — 524 अटकी केस का हल) → Finalized → Executed. UPI fail हो तो audited <b>Bond Write-Off (Phase A–D)</b> — पैसा कभी चुपचाप गायब नहीं। closure सिर्फ़ <b>Stage 3</b> पर gate करता है।</div><div class="ph-codes">REFUND_* · CP-CLOSURE-05</div></div></div>
+    <div class="rail">
+      <div class="screen s-mod">
+        <div class="screen-tag"><span class="screen-num">5a</span><span class="screen-name">पेमेंट हिस्ट्री</span> <span class="badge mod">Modify</span></div>
+        <div class="aphone mod">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">पेमेंट हिस्ट्री</div></div>
+          <div class="abody lft">
+            <div class="scard" style="margin-top:8px;border:1.5px solid #D9008D"><div class="sr"><span class="k">रिफंड — डिपॉज़िट</span><span class="v"><span class="pill-info"><span class="material-icons">sync</span>भेजा जा रहा</span></span></div><div class="sr"><span class="k">₹300</span><span class="v" style="color:#D9008D">स्थिति देखें ›</span></div></div>
+            <div class="scard"><div class="sr"><span class="k">नेट रिचार्ज</span><span class="v"><span class="sok"><span class="material-icons">check_circle</span>सफल</span></span></div><div class="sr"><span class="k">₹500</span><span class="v neg">12 जून</span></div></div>
+            <div class="averify warn"><span class="material-icons">visibility</span><p>आज refund छुप जाते हैं — अब entry tracker खोलती है।</p></div>
+          </div>
+        </div>
+        <div class="coderef mod"><span class="material-icons">edit</span><b>Modify</b> · PaymentHistoryScreen.kt (un-filter)</div>
+      </div>
+      <div class="farrow"><span class="material-icons">chevron_right</span></div>
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">5b</span><span class="screen-name">रिफंड tracker</span> <span class="badge add">Add new</span> <span class="state-tag">PROVISIONED → EXECUTED</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">रिफंड की स्थिति</div></div>
+          <div class="abody lft">
+            <div style="text-align:center"><span class="sok"><span class="material-icons">check_circle</span>डिवाइस मिल गया</span></div>
+            <div class="track">
+              <div class="tstep done"><div class="tline"></div><div class="tdot"><span class="material-icons">check</span></div><div class="tbody"><div class="tt">रिफंड योग्य</div><div class="tmeta">पूरा</div></div></div>
+              <div class="tstep done"><div class="tline"></div><div class="tdot"><span class="material-icons">check</span></div><div class="tbody"><div class="tt">रिज़र्व</div><div class="td">पिकअप से पहले ₹300 रोका गया।</div><div class="tmeta">पूरा</div></div></div>
+              <div class="tstep cur"><div class="tline"></div><div class="tdot"><span class="material-icons">sync</span></div><div class="tbody"><div class="tt">भेजा जा रहा है</div><div class="td">₹300 आपके खाते में।</div><div class="tmeta">7 दिन में</div></div></div>
+              <div class="tstep wait"><div class="tdot"><span class="material-icons">payments</span></div><div class="tbody"><div class="tt">खाते में आ गया</div><div class="tmeta">बाकी</div></div></div>
+            </div>
+          </div>
+          <div class="afoot"><button class="abtn sec">UPI ID जोड़ें / बदलें</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · 4-stage tracker (refund_lifecycle_stage)</div>
+      </div>
+      <div class="farrow"><span class="material-icons">chevron_right</span><span class="fl">UPI<br>fails</span></div>
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">5c</span><span class="screen-name">UPI fail → write-off</span> <span class="badge add">Add new</span> <span class="state-tag">Bond Write-Off A–D</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">रिफंड की स्थिति</div></div>
+          <div class="abody lft">
+            <div style="text-align:center"><span class="pill-warn"><span class="material-icons">error_outline</span>भेजने में दिक्कत</span></div>
+            <div class="ah1 sm" style="margin-top:10px">आपका ₹300 सुरक्षित है</div>
+            <div class="track">
+              <div class="tstep cur"><div class="tline"></div><div class="tdot"><span class="material-icons">sync</span></div><div class="tbody"><div class="tt">दोबारा कोशिश</div><div class="tmeta">Phase A · 7d</div></div></div>
+              <div class="tstep wait"><div class="tline"></div><div class="tdot"><span class="material-icons">call</span></div><div class="tbody"><div class="tt">टीम संपर्क करेगी</div><div class="tmeta">Phase B ×3</div></div></div>
+              <div class="tstep wait"><div class="tline"></div><div class="tdot"><span class="material-icons">account_balance_wallet</span></div><div class="tbody"><div class="tt">वॉलेट क्रेडिट</div><div class="tmeta">Phase C</div></div></div>
+              <div class="tstep wait"><div class="tdot"><span class="material-icons">gavel</span></div><div class="tbody"><div class="tt">दर्ज write-off</div><div class="td">re-entry पर फिर सक्रिय।</div><div class="tmeta">Phase D · 60d</div></div></div>
+            </div>
+            <div class="averify ok"><span class="material-icons">savings</span><p>पैसा कभी चुपचाप गायब नहीं (INV-EXIT-29)।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">सही UPI ID डालें</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · REFUND_FAILED → Write-Off (reuse UpiScreen)</div>
+      </div>
+    </div>
+    <div class="pdown"><span class="material-icons">south</span><span class="pl">Stage 3 हो गया → पाँचों शर्तें पूरी</span></div>
+  </div>
+
+  <!-- ===== PHASE 6 ===== -->
+  <div class="phaseband" id="p6">
+    <div class="phasehead"><div class="pnum">6</div><div><div class="ph-t">CLOSURE_FINAL — समाप्त (दूसरा bookend)</div><div class="ph-s">पाँचों शर्तें पूरी (custody · refund Stage 3 · दोनों bookend · trust signal · obligations)। <b>दूसरा bookend comm</b> जाता है। यह <b>एक service instance</b> बंद करता है, व्यक्ति को नहीं — पहचान, memory, obligations CM OS में बने रहते हैं। फिर: post-exit silence।</div><div class="ph-codes">C8 / N7 · CLOSURE_FINAL (ESR 24b)</div></div></div>
+    <div class="rail">
+      <div class="screen s-add">
+        <div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">सब पूरा — Closure रसीद</span> <span class="badge add">Add new</span> <span class="state-tag">C8 · 2nd bookend</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>
+          <div class="abody">
+            <div class="ahero ok"><span class="material-icons">task_alt</span></div>
+            <div class="ah1 sm">सब पूरा हो गया</div>
+            <div class="asub">कनेक्शन बंद और ₹300 खाते में। जब भी दोबारा नेट चाहिए, हम यहीं हैं।</div>
+            <div class="scard"><div class="stitle"><span class="material-icons">receipt_long</span>Closure रसीद</div><div class="sr"><span class="k">डिवाइस</span><span class="v pos">लौटा दिया</span></div><div class="sr total"><span class="k">वापस मिला</span><span class="v pos">₹300</span></div></div>
+            <div class="averify gray"><span class="material-icons">notifications_off</span><p>अब कोई marketing नहीं — सिर्फ़ ज़रूरी जानकारी (Doctrine #24)।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn ghost">रसीद डाउनलोड करें</button></div>
+        </div>
+        <div class="coderef add"><span class="material-icons">add_circle</span><b>Add</b> · 2nd bookend + closure receipt (ReceiptType)</div>
+      </div>
+
+      <div class="note-card">
+        <h4><span class="material-icons">tune</span>एक ही final, कई रिकॉर्ड</h4>
+        <p><b>Life-event / CSP forced/declined:</b> वही CLOSURE_FINAL, पर <b>पूरा C2 refund</b> (₹600: बचा balance + deposit), trust <b>NONE</b>।</p>
+        <p><b>Non-recovery:</b> custody_outcome = DEVICE_NOT_RECOVERED, audited write-off — पर पैसा सुरक्षित।</p>
+      </div>
+
+      <div class="term final"><span class="material-icons">flag</span><div class="tt">Terminal — एक SI बंद</div><div class="ts">व्यक्ति नहीं — customer_id, memory, obligations CM OS में रहते हैं।</div></div>
+      <div class="farrow"><span class="material-icons">chevron_right</span></div>
+      <div class="term loop"><span class="material-icons">restart_alt</span><div class="tt">दोबारा नेट?</div><div class="ts">नया SI via B2I (D-012) — closure का reversal नहीं, नई शुरुआत। written-off क्रेडिट फिर सक्रिय।</div></div>
+    </div>
+  </div>
+
+
+
+  </div>
+
+</body>
+</html>
