@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Closure / Exit · working prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{--brand:#D9008D;--brand-bold:#443152;--text:#161021;--text-subtle:#5C5570;--text-disabled:#A7A1B2;--stroke:#E8E4F0;--stroke-strong:#D7D3E0;--bg-subtle:#F1EDF7;--positive:#008043;--selected-bg:#FFE5F6;--r-md:12px;--r-full:9999px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans Devanagari','Noto Sans',sans-serif;background:radial-gradient(1200px 600px at 50% -10%,#262a36,#1c1f26 60%);color:#e7e9ee;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .top{max-width:980px;margin:0 auto;padding:26px 24px 6px;text-align:center}
+  .eyebrow{font-family:'Noto Sans';font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#D9008D}
+  h1{font-family:'Noto Sans';font-size:22px;font-weight:700;color:#fff;margin:6px 0 4px}
+  .sub{font-family:'Noto Sans';font-size:12.5px;color:#9aa0ab;line-height:1.55;max-width:620px;margin:0 auto}
+  .sub a{color:#ff9ec8;font-weight:700}
+
+  .stage{display:flex;flex-direction:column;align-items:center;gap:14px;padding:18px 16px 60px}
+  .crumb{display:flex;align-items:center;gap:9px;font-family:'Noto Sans';font-size:12px;color:#c3c8d1;background:#222631;border:1px solid #343a47;border-radius:999px;padding:6px 14px;min-height:32px}
+  .crumb .step{font-weight:800;color:#ffb3dd;background:#5a1140;border-radius:6px;padding:1px 7px;font-size:10px}
+  .crumb .xt{font-size:9px;font-weight:800;letter-spacing:.04em;padding:2px 7px;border-radius:5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:3px}
+  .crumb .xt .material-icons{font-size:11px}
+  .crumb .xt.chat{background:#241a3a;color:#bda7ff}.crumb .xt.scr{background:#16313f;color:#7fd1ff}
+
+  /* phone */
+  .aphone{width:332px;height:680px;background:#F7F7F9;border:10px solid #11131a;border-radius:36px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .astatus{height:28px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-family:'Noto Sans';font-size:11px;font-weight:600;color:#161021;flex:0 0 auto}
+  .astatus .r .material-icons{font-size:12px;vertical-align:middle;margin-left:2px}
+  .atop{display:flex;align-items:center;padding:9px 13px;flex:0 0 auto;gap:9px}
+  .alogo{width:31px;height:31px;border-radius:8px;background:#D9008D;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex:0 0 auto}
+  .aback{color:#352d42;display:flex;align-items:center;cursor:pointer}.aback .material-icons{font-size:22px}
+  .atitle{font-family:'Noto Sans Devanagari';font-size:14px;font-weight:700;color:#161021}
+  .aact{margin-left:auto;display:flex;gap:13px;color:#352d42}.aact .material-icons{font-size:19px}
+  .abody{flex:1;overflow-y:auto;padding:10px 20px 18px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .abody.lft{align-items:stretch;text-align:left}
+  .abody::-webkit-scrollbar{width:0}
+  .ah1{font-family:'Noto Sans Devanagari';font-size:18px;font-weight:700;color:#161021;line-height:1.35;margin-top:8px}
+  .ah1.sm{font-size:15.5px}
+  .asub{font-family:'Noto Sans Devanagari';font-size:12.5px;color:#5C5570;line-height:1.5;margin-top:9px}
+  .afoot{flex:0 0 auto;width:100%;padding:8px 16px 14px;display:flex;flex-direction:column;gap:8px}
+  .abtn{width:100%;height:48px;border:none;border-radius:24px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;box-shadow:0 4px 12px rgba(217,0,141,.22)}
+  .abtn .material-icons{font-size:18px}
+  .abtn.ghost{background:transparent;color:#D9008D;box-shadow:none;font-weight:600}
+  .abtn.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D;box-shadow:none}
+  .abtn.gray{background:#EDEAF2;color:#5C5570;box-shadow:none}
+  .abtn:active{transform:scale(.98)}
+  .ahero{width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:16px auto 2px}
+  .ahero .material-icons{font-size:40px}
+  .ahero.brand{background:#FFE5F6}.ahero.brand .material-icons{color:#D9008D}
+  .ahero.ok{background:#E1FAED}.ahero.ok .material-icons{color:#008043}
+  .ahero.gray{background:#EAE7F0}.ahero.gray .material-icons{color:#5C5570}
+  .ahero.info{background:#F1E5FF}.ahero.info .material-icons{color:#6D17CE}
+  .optrow{display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid #E8E4F0;border-radius:14px;padding:14px 14px;font-family:'Noto Sans Devanagari';font-size:13.5px;color:#161021;line-height:1.4;cursor:pointer;width:100%;margin-top:10px;text-align:left}
+  .optrow .ord{width:20px;height:20px;border-radius:50%;border:2px solid #D7D3E0;flex:0 0 auto}
+  .optrow.sel{border-color:#D9008D;background:#FFF0F8}
+  .optrow.sel .ord{border-color:#D9008D;background:radial-gradient(#D9008D 0 5px,#fff 6px)}
+  .optrow .otext{flex:1}.optrow .otext small{display:block;font-size:11px;color:#5C5570;margin-top:2px}
+  .optrow .material-icons{font-size:22px;color:#A7A1B2;flex:0 0 auto}
+  .menu-card{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #E8E4F0;border-radius:14px;padding:14px;width:100%;margin-top:10px;text-align:left;cursor:pointer}
+  .menu-card:active{background:#FFF0F8}
+  .menu-card .mi{width:40px;height:40px;border-radius:11px;background:#FFE5F6;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .menu-card .mi .material-icons{font-size:21px;color:#D9008D}
+  .menu-card .mt{font-size:13.5px;font-weight:700;color:#161021}
+  .menu-card .ms{font-size:11px;color:#5C5570;margin-top:2px}
+  .menu-card .material-icons.go{margin-left:auto;color:#C9C3D6}
+  .scard{width:100%;background:#fff;border-radius:12px;padding:13px 15px;margin-top:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:left}
+  .scard .stitle{font-size:12px;font-weight:700;color:#161021;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .scard .stitle .material-icons{font-size:16px;color:#D9008D}
+  .scard .sr{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;gap:10px}
+  .scard .sr .k{color:#5C5570}.scard .sr .v{font-weight:700;color:#161021;text-align:right}
+  .scard .sr .v.pos{color:#008043}.scard .sr .v.neg{color:#5C5570}
+  .scard .sdiv{border-top:1px dashed #E2DEEA;margin:6px 0}
+  .scard .sr.total .k,.scard .sr.total .v{font-weight:800;font-size:13.5px}
+  .scard.tap{cursor:pointer;border:1.5px solid #D9008D}.scard.tap:active{background:#FFF8FC}
+  .sok{display:inline-flex;align-items:center;gap:5px;background:#E1FAED;color:#008043;font-size:11.5px;font-weight:700;padding:3px 11px;border-radius:20px}.sok .material-icons{font-size:14px}
+  .pill-info{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:#F1E5FF;color:#6D17CE}
+  .pill-warn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:#FFF3CF;color:#9a7a00}
+  .averify{display:flex;align-items:flex-start;gap:8px;border-radius:10px;padding:10px 12px;margin-top:12px;text-align:left;width:100%}
+  .averify .material-icons{font-size:16px;flex:0 0 auto;margin-top:1px}
+  .averify p{font-family:'Noto Sans Devanagari';font-size:11.5px;line-height:1.5}
+  .averify.ok{background:#E1FAED}.averify.ok .material-icons{color:#008043}.averify.ok p{color:#0a5c33}
+  .averify.info{background:#F1E5FF}.averify.info .material-icons{color:#6D17CE}.averify.info p{color:#4a1a8f}
+  .averify.gray{background:#EFEDF3}.averify.gray .material-icons{color:#5C5570}.averify.gray p{color:#3f394b}
+  .refund-opt{display:flex;align-items:flex-start;gap:11px;padding:13px;background:#fff;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);margin-top:11px;width:100%;text-align:left;cursor:pointer}
+  .refund-opt.sel{border-color:var(--brand);background:var(--selected-bg);box-shadow:0 0 0 1px var(--brand)}
+  .refund-opt .ri{width:38px;height:38px;border-radius:var(--r-md);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .refund-opt.sel .ri{background:#fff}
+  .refund-opt .ri .material-icons{font-size:20px;color:var(--brand-bold)}
+  .refund-opt .rt{font-size:13.5px;font-weight:700;color:var(--text)}
+  .refund-opt .rs{font-size:11px;color:var(--text-subtle);margin-top:2px;line-height:1.4}
+  .refund-opt .ramt{font-size:15px;font-weight:800;color:var(--positive);margin-left:auto;flex:0 0 auto;text-align:right}
+  .refund-opt .ramt small{display:block;font-size:9px;font-weight:600;color:#A7A1B2}
+  .sgauge{width:138px;height:138px;border-radius:50%;margin:16px auto 4px;display:flex;align-items:center;justify-content:center}
+  .sgauge .si{width:110px;height:110px;border-radius:50%;background:#F7F7F9;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .sgauge .snum{font-family:'Noto Sans';font-size:30px;font-weight:800;color:#161021;line-height:1}
+  .sgauge .sunit{font-family:'Noto Sans Devanagari';font-size:11px;color:#5C5570;margin-top:3px}
+  .track{width:100%;margin-top:14px;text-align:left}
+  .tstep{display:flex;gap:12px;position:relative}
+  .tstep .tline{position:absolute;left:14px;top:28px;bottom:-6px;width:2px;background:#E2DEEA}
+  .tstep:last-child .tline{display:none}
+  .tdot{width:29px;height:29px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#E2DEEA;color:#fff;z-index:1}
+  .tdot .material-icons{font-size:17px}
+  .tstep.done .tdot{background:#008043}.tstep.done .tline{background:#008043}
+  .tstep.cur .tdot{background:#D9008D;box-shadow:0 0 0 4px #FFE5F6}
+  .tstep.wait .tdot{background:#E2DEEA;color:#A7A1B2}
+  .tbody{padding-bottom:17px;flex:1}.tbody .tt{font-size:13px;font-weight:700;color:#161021}
+  .tstep.wait .tbody .tt{color:#A7A1B2}
+  .tbody .td{font-size:11.5px;color:#5C5570;line-height:1.45;margin-top:2px}
+  .tbody .tmeta{font-size:10.5px;font-weight:700;margin-top:4px}
+  .tstep.done .tmeta{color:#008043}.tstep.cur .tmeta{color:#D9008D}.tstep.wait .tmeta{color:#A7A1B2}
+
+  /* chat */
+  .chat-head{display:flex;align-items:center;gap:9px;padding:8px 13px;background:#fff;border-bottom:1px solid #E8E4F0;flex:0 0 auto}
+  .chat-head .ca{width:31px;height:31px;border-radius:8px;background:#D9008D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
+  .chat-head .cn{font-size:13.5px;font-weight:700;color:#161021}
+  .chat-head .cs{font-size:10px;color:#008043;font-weight:600;display:flex;align-items:center;gap:4px}
+  .chat-head .cs::before{content:"";width:6px;height:6px;border-radius:50%;background:#008043;display:inline-block}
+  .chat-head .aback{margin-right:1px}
+  .chat-pin{flex:0 0 auto;display:flex;align-items:flex-start;gap:8px;padding:9px 13px;background:#FFF8FC;border-bottom:1px solid #F2DDED}
+  .chat-pin .material-icons{font-size:15px;color:#D9008D;flex:0 0 auto;margin-top:1px}
+  .chat-pin .csk{font-size:9px;color:#9a6a86;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+  .chat-pin .csv{font-size:12px;font-weight:700;color:#161021;line-height:1.35}
+  .chat-body{flex:1;overflow-y:auto;padding:14px 13px;display:flex;flex-direction:column;gap:11px;background:#F1EDF7}
+  .chat-body::-webkit-scrollbar{width:0}
+  .bubble{max-width:90%;padding:11px 13px;border-radius:16px;font-size:12.5px;line-height:1.5;font-family:'Noto Sans Devanagari'}
+  .bubble.bot{align-self:flex-start;background:#fff;border:1px solid #E8E4F0;border-bottom-left-radius:5px;color:#161021}
+  .bubble.me{align-self:flex-end;background:#D9008D;color:#fff;border-bottom-right-radius:5px}
+  .bubble .b-title{font-weight:700;font-size:13px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .bubble .b-title .material-icons{font-size:17px;color:#D9008D}
+  .bubble .chan{font-size:8px;font-weight:800;letter-spacing:.04em;color:#6D17CE;background:#F1E5FF;padding:1px 5px;border-radius:4px;text-transform:uppercase;margin-left:auto}
+  .bubble .time{font-size:9px;color:rgba(0,0,0,.3);margin-top:5px;display:block}
+  .bubble.me .time{color:rgba(255,255,255,.6)}
+  .msg-card{background:#F7F7F9;border-radius:10px;padding:10px 12px;margin-top:9px}
+  .msg-card .mr{display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;gap:8px}
+  .msg-card .mr .k{color:#5C5570}.msg-card .mr .v{font-weight:700;color:#161021}.msg-card .mr .v.pos{color:#008043}
+  .chat-cta{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:9px;min-height:40px;padding:9px 12px;border-radius:12px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:13px;font-weight:600;border:none;text-align:center;line-height:1.3;cursor:pointer}
+  .chat-cta.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D}
+  .chat-cta:active{transform:scale(.98)}
+  .chat-cta .material-icons{font-size:16px}
+  .chat-input{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:10px 13px;background:#fff;border-top:1px solid #E8E4F0}
+  .chat-input .box{flex:1;height:40px;border:1.5px solid #D7D3E0;border-radius:9999px;background:#FAF9FC;padding:0 15px;display:flex;align-items:center;font-size:12.5px;color:#A7A1B2}
+  .chat-input .send{width:40px;height:40px;border-radius:50%;background:#D9008D;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .chat-input .send .material-icons{color:#fff;font-size:19px}
+
+  /* controls */
+  .controls{display:flex;align-items:center;gap:10px}
+  .ctl{display:inline-flex;align-items:center;gap:6px;font-family:'Noto Sans';font-size:12.5px;font-weight:700;color:#c3c8d1;background:#262a32;border:1px solid #343a47;border-radius:999px;padding:9px 16px;cursor:pointer}
+  .ctl:hover{background:#2f333c;color:#fff}.ctl:disabled{opacity:.4;cursor:default}
+  .ctl .material-icons{font-size:17px}
+  .ctl.brand{background:#5a1140;border-color:#7a1257;color:#ffb3dd}
+  .hint{font-family:'Noto Sans';font-size:11.5px;color:#7a8090;text-align:center;max-width:420px}
+  .hint b{color:#c3c8d1}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="eyebrow">Wiom · Closure / Exit — working prototype</div>
+    <h1>Closure / Exit — tap through the whole flow</h1>
+    <p class="sub">A clickable walk-through of the combined journey. Pick a scenario, then tap the buttons to move through every screen — chat comms and Design-System screens, with the real branches. Static build-map versions: <a href="closure-exit-master-flow.html">connected flow</a> · <a href="closure-exit-flows.html">per-scenario</a></p>
+  </div>
+  <div class="stage">
+    <div class="crumb" id="crumb"></div>
+    <div class="aphone" id="phone"></div>
+    <div class="controls">
+      <button class="ctl" id="backBtn"><span class="material-icons">arrow_back</span>वापस</button>
+      <button class="ctl brand" id="homeBtn"><span class="material-icons">apps</span>सभी scenario</button>
+      <button class="ctl" id="restartBtn"><span class="material-icons">restart_alt</span>फिर से</button>
+    </div>
+    <div class="hint">💡 <b>menu</b> से कोई भी scenario शुरू करें · हर स्क्रीन के बटन दबाकर आगे बढ़ें · <b>वापस</b>/<b>फिर से</b> से navigate करें</div>
+  </div>
+
+<script>
+const STATUS=`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>`;
+const STATUSOFF=`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>`;
+const CHATIN=`<div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>`;
+function chatHead(){return `<div class="chat-head"><span class="aback" data-back="1"><span class="material-icons">arrow_back</span></span><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>`;}
+function pin(t){return `<div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">${t}</div></div></div>`;}
+function chat(pinTxt,body){return STATUS+chatHead()+pin(pinTxt)+`<div class="chat-body">${body}</div>`+CHATIN;}
+function topbar(title,logo){return `<div class="atop">`+(logo?`<div class="alogo">W</div><div class="atitle">Wiom</div>`:`<span class="aback" data-back="1"><span class="material-icons">arrow_back</span></span><div class="atitle">${title}</div>`)+`</div>`;}
+function scr(top,body,foot,off){return (off?STATUSOFF:STATUS)+top+`<div class="abody lft">${body}</div>`+(foot?`<div class="afoot">${foot}</div>`:'');}
+
+/* ============ NODES ============ */
+const TITLE={}, KIND={};
+const N={};
+function def(id,title,kind,html){N[id]=html;TITLE[id]=title;KIND[id]=kind;}
+
+/* --- launch menu --- */
+def('menu','Scenario चुनें','scr',
+  STATUS+`<div class="atop"><div class="alogo">W</div><div class="atitle">Wiom · Closure डेमो</div></div>`+
+  `<div class="abody lft">
+    <div class="ah1 sm" style="text-align:center">किस हालत से शुरू करें?</div>
+    <div class="asub" style="text-align:center;margin-bottom:4px">कोई भी चुनें और बटन दबाकर पूरी journey चलाएं।</div>
+    <div class="menu-card" data-go="home"><div class="mi"><span class="material-icons">home</span></div><div><div class="mt">नेट चालू है (शुरुआत)</div><div class="ms">ACTIVE — यहाँ से सब शुरू</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="expired"><div class="mi"><span class="material-icons">hourglass_bottom</span></div><div><div class="mt">प्लान खत्म हो गया</div><div class="ms">रिचार्ज नहीं हुआ (non-reaffirmation)</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="cancelReason"><div class="mi"><span class="material-icons">cancel</span></div><div><div class="mt">मुझे कनेक्शन बंद करना है</div><div class="ms">explicit + pro-rata</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="cspNotice"><div class="mi"><span class="material-icons">swap_horiz</span></div><div><div class="mt">नेट पार्टनर बदल रहा है</div><div class="ms">CSP migration (4B)</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="b2iFail"><div class="mi"><span class="material-icons">build_circle</span></div><div><div class="mt">सेटअप नहीं हुआ</div><div class="ms">B2I pre-install closure</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="lifeEvent"><div class="mi"><span class="material-icons">volunteer_activism</span></div><div><div class="mt">Life-event closure</div><div class="ms">dignified, full refund</div></div><span class="material-icons go">chevron_right</span></div>
+  </div>`);
+
+/* --- home / active --- */
+def('home','नेट चालू (home)','scr',
+  scr(`<div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div><div class="aact"><span class="material-icons">notifications_none</span><span class="material-icons">person_outline</span></div></div>`,
+  `<div style="text-align:center"><div class="sgauge" style="background:conic-gradient(#008043 0% 64%,#E6E3EC 64% 100%)"><div class="si"><span class="snum">19</span><span class="sunit">दिन बचे</span></div></div>
+   <div class="ah1 sm">आपका नेट चालू है</div></div>
+   <div class="scard"><div class="sr"><span class="k">प्लान</span><span class="v">₹500 · 30 दिन</span></div><div class="sr"><span class="k">स्थिति</span><span class="v pos">चालू</span></div><div class="sr"><span class="k">सिक्योरिटी डिपॉज़िट</span><span class="v">₹300 (refundable)</span></div></div>`,
+  `<button class="abtn sec" data-go="paymentHistory">पेमेंट हिस्ट्री</button><button class="abtn ghost" data-go="cancelReason">कनेक्शन बंद करें</button>`));
+
+/* --- A: non-reaffirmation --- */
+def('expired','प्लान खत्म','scr',
+  scr(topbar('',true),
+  `<div style="text-align:center"><div class="ahero gray"><span class="material-icons">wifi_off</span></div><div class="ah1 sm">आपका प्लान खत्म हो गया</div><div class="asub">नेट चालू रखने के लिए रिचार्ज करें।</div></div>
+   <div class="scard"><div class="sr"><span class="k">स्थिति</span><span class="v" style="color:#9a7a00">GRACE</span></div></div>`,
+  `<button class="abtn" data-go="reactivated">रिचार्ज करें</button><button class="abtn gray" data-go="recall">⏩ 15 दिन ऐसे ही रहने दें</button>`,true));
+
+def('recall','SD-first recall (chat)','chat',
+  chat('₹300 डिपॉज़िट सुरक्षित · जगह 10 दिन रिज़र्व',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">savings</span>आपका डिपॉज़िट सुरक्षित है<span class="chan">SMS+WA</span></div>प्लान खत्म हो गया, पर आपका <b>₹300 डिपॉज़िट</b> सुरक्षित है और आपकी जगह 15 दिन रिज़र्व है।<span class="time">10:00</span></div>
+   <div class="bubble bot">जब चाहें रिचार्ज करके वापस आ सकते हैं — कुछ नहीं बदलेगा।
+     <div class="chat-cta" data-go="reactivated"><span class="material-icons">replay</span>रिचार्ज करके वापस आना है</div>
+     <div class="chat-cta sec" data-go="initiated">⏩ अभी नहीं (और 10 दिन बीते)</div>
+   </div>`));
+
+def('initiated','CLOSURE_INITIATED (chat)','chat',
+  chat('कनेक्शन बंद हो रहा है · ₹300 डिपॉज़िट सुरक्षित',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">info</span>कनेक्शन बंद किया जा रहा है<span class="chan">SMS+WA</span></div>चूंकि रिचार्ज नहीं हुआ, हम कनेक्शन बंद कर रहे हैं। आपका <b>₹300 डिपॉज़िट</b> डिवाइस लौटाने पर पूरा वापस मिलेगा।<span class="time">पहला bookend · 10:00</span></div>
+   <div class="bubble bot">गलती से हुआ? डिवाइस उठने से पहले वापस आ सकते हैं।
+     <div class="chat-cta sec" data-go="revRequest">मुझे वापस आना है</div>
+     <div class="chat-cta" data-go="deviceReturn">डिवाइस कैसे लौटाऊँ?</div>
+   </div>`));
+
+/* --- B: explicit --- */
+def('cancelReason','कारण चुनें (screen)','scr',
+  scr(topbar('कनेक्शन बंद करें'),
+  `<div class="ah1 sm">बंद करने का कारण?</div><div class="asub">ताकि हम सही तरीके से आपका पैसा लौटा सकें।</div>
+   <div class="optrow sel" data-sel="1"><div class="ord"></div><div class="otext">मुझे अब नेट नहीं चाहिए</div></div>
+   <div class="optrow" data-sel="1"><div class="ord"></div><div class="otext">कहीं और शिफ्ट हो रहा/रही हूँ<small>→ नए पते पर दोबारा नेट का ऑफ़र</small></div></div>
+   <div class="optrow" data-sel="1"><div class="ord"></div><div class="otext">नेट की क्वालिटी अच्छी नहीं</div></div>
+   <div class="averify info"><span class="material-icons">price_check</span><p>कारण से पैसा कम नहीं होता — सिर्फ़ सही व्यवहार चुना जाता है (INV-EXIT-11)।</p></div>`,
+  `<button class="abtn" data-go="proRata">आगे बढ़ें</button>`));
+
+def('proRata','कितना वापस (screen)','scr',
+  scr(topbar('आपका पैसा वापस'),
+  `<div class="ah1 sm" style="text-align:center">बंद करने से पहले — यह वापस मिलेगा</div>
+   <div class="scard"><div class="stitle"><span class="material-icons">calculate</span>बचे दिनों का पैसा (pro-rata)</div><div class="sr"><span class="k">प्लान</span><span class="v">₹500 · 30 दिन</span></div><div class="sr"><span class="k">इस्तेमाल किए</span><span class="v">12 दिन</span></div><div class="sr"><span class="k">बचे दिन</span><span class="v">18 दिन</span></div><div class="sdiv"></div><div class="sr total"><span class="k">अभी वापस</span><span class="v pos">₹300</span></div></div>
+   <div class="scard"><div class="sr"><span class="k">डिवाइस लौटाने पर डिपॉज़िट</span><span class="v pos">+ ₹300</span></div><div class="sr total"><span class="k">कुल वापस</span><span class="v pos">₹600</span></div></div>
+   <div class="averify ok"><span class="material-icons">bolt</span><p>बचे दिनों का ₹300 <b>अभी</b> ट्रिगर होता है — closure खत्म होने का इंतज़ार नहीं (INV-EXIT-25)।</p></div>`,
+  `<button class="abtn" data-go="confirmed">कन्फर्म करें और बंद करें</button><button class="abtn ghost" data-go="home">रहने दें</button>`));
+
+def('confirmed','कन्फर्म (chat)','chat',
+  chat('बंद हो रहा है · ₹300 pro-rata भेजा जा रहा',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">check_circle</span>कन्फर्म हो गया<span class="chan">SMS+WA</span></div>बचे दिनों का ₹300 भेजा जा रहा है। डिवाइस लौटाने पर ₹300 डिपॉज़िट और मिलेगा।
+     <div class="msg-card"><div class="mr"><span class="k">अभी भेजा जा रहा</span><span class="v pos">₹300 (pro-rata)</span></div><div class="mr"><span class="k">डिवाइस लौटाने पर</span><span class="v pos">₹300</span></div></div><span class="time">अभी</span></div>
+   <div class="bubble bot">मन बदले? डिवाइस उठने से पहले बिना शुल्क वापस आ सकते हैं।
+     <div class="chat-cta" data-go="deviceReturn">डिवाइस लौटाने का तरीका</div>
+     <div class="chat-cta sec" data-go="revRequest">वापस आना है</div>
+   </div>`));
+
+/* --- shared: device return --- */
+def('deviceReturn','डिवाइस लौटाएं (screen)','scr',
+  scr(topbar('डिवाइस लौटाएं'),
+  `<div class="ah1 sm" style="text-align:center">डिवाइस लौटाकर ₹300 पाएं</div><div class="asub" style="text-align:center">खुद लौटाने पर पूरा ₹300 — सबसे ज़्यादा। पिकअप पर ₹50 कम।</div>
+   <div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">directions_walk</span></div><div><div class="rt">खुद नज़दीकी पार्टनर को दें</div><div class="rs">पता + Google Map लिंक</div></div><div class="ramt">₹300<small>पूरा</small></div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">local_shipping</span></div><div><div class="rt">हमारी टीम पिकअप करेगी</div><div class="rs">3–4 दिन में</div></div><div class="ramt">₹250<small>−₹50</small></div></div>
+   <div class="averify ok"><span class="material-icons">shield</span><p>₹300 अभी <b>रिज़र्व</b> है — डिवाइस कन्फर्म होते ही मिलेगा (Stage 2)।</p></div>
+   <div class="scard tap" data-go="dispute"><div class="sr"><span class="k" style="color:#161021;font-weight:700">मैंने दे दिया पर पैसा नहीं आया?</span><span class="v" style="color:#D9008D">›</span></div></div>
+   <div class="scard tap" data-go="d007c"><div class="sr"><span class="k" style="color:#161021;font-weight:700">अभी डिवाइस नहीं दे सकता</span><span class="v" style="color:#D9008D">›</span></div></div>`,
+  `<button class="abtn" data-go="tracker">खुद लौटाना चुनें</button>`));
+
+def('dispute','Custody dispute (chat)','chat',
+  chat('डिवाइस की जाँच जारी · ₹300 सुरक्षित',
+  `<div class="bubble me">मैंने तो डिवाइस दे दिया, फिर भी पैसा नहीं आया?</div>
+   <div class="bubble bot"><div class="b-title"><span class="material-icons">fact_check</span>हम पुष्टि कर रहे हैं</div>पिकअप और हमारे रिकॉर्ड में थोड़ा फ़र्क है। हम <b>7 दिन</b> में सुलझा देंगे — आपको कुछ नहीं करना। शक की स्थिति में फ़ैसला <b>आपके पक्ष में</b>।<span class="time">अभी</span></div>
+   <div class="bubble bot">आपका ₹300 तब तक सुरक्षित और रिज़र्व है।
+     <div class="chat-cta sec" data-go="tracker">⏩ 7 दिन बाद — सुलझ गया</div>
+   </div>`));
+
+def('d007c','"पहले refund" — D-007C (chat)','chat',
+  chat('₹300 आपके नाम रिज़र्व · डिवाइस का इंतज़ार',
+  `<div class="bubble me">पहले मेरा ₹300 दिखाओ, फिर डिवाइस दूँगा</div>
+   <div class="bubble bot"><div class="b-title"><span class="material-icons">verified_user</span>बिल्कुल — पहले हम देंगे</div>आपका ₹300 आपके नाम <b>रिज़र्व</b> है। यह आपका हक़ है, शर्त नहीं। डिवाइस लौटाते ही पैसा खाते में।<span class="time">अभी</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="tracker">मेरा रिज़र्व ₹300 दिखाओ</div></div>`));
+
+def('tracker','रिफंड tracker (screen)','scr',
+  scr(topbar('रिफंड की स्थिति'),
+  `<div style="text-align:center"><span class="sok"><span class="material-icons">check_circle</span>डिवाइस मिल गया</span></div>
+   <div class="track">
+     <div class="tstep done"><div class="tline"></div><div class="tdot"><span class="material-icons">check</span></div><div class="tbody"><div class="tt">रिफंड योग्य</div><div class="tmeta">पूरा हुआ</div></div></div>
+     <div class="tstep done"><div class="tline"></div><div class="tdot"><span class="material-icons">check</span></div><div class="tbody"><div class="tt">रिज़र्व</div><div class="td">पिकअप से पहले ₹300 रोका गया।</div><div class="tmeta">पूरा हुआ</div></div></div>
+     <div class="tstep cur"><div class="tline"></div><div class="tdot"><span class="material-icons">sync</span></div><div class="tbody"><div class="tt">भेजा जा रहा है</div><div class="td">₹300 आपके खाते में।</div><div class="tmeta">7 दिन में</div></div></div>
+     <div class="tstep wait"><div class="tdot"><span class="material-icons">payments</span></div><div class="tbody"><div class="tt">खाते में आ गया</div><div class="tmeta">बाकी</div></div></div>
+   </div>`,
+  `<button class="abtn" data-go="final">⏩ ₹300 खाते में आ गया</button><button class="abtn ghost" data-go="writeoff">UPI fail होने पर?</button>`));
+
+def('writeoff','UPI fail → write-off (chat)','chat',
+  chat('₹300 सुरक्षित · भेजने की कोशिश जारी',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">savings</span>आपका ₹300 सुरक्षित है<span class="chan">SMS+WA</span></div>UPI पर पैसा नहीं पहुँच पाया। हम 7 दिन तक दोबारा कोशिश करेंगे, फिर ज़रूरत हो तो कॉल करेंगे। पैसा कहीं नहीं जाएगा।<span class="time">अभी</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="tracker">सही UPI ID देनी है</div></div>`));
+
+def('final','Closure final (chat)','chat',
+  chat('कनेक्शन बंद · ₹300 खाते में आ गया',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">task_alt</span>सब पूरा हो गया<span class="chan">SMS+WA</span></div>आपका कनेक्शन बंद हो गया और ₹300 आपके खाते में आ गया। जब भी दोबारा नेट चाहिए, हम यहीं हैं।
+     <div class="msg-card"><div class="mr"><span class="k">डिवाइस</span><span class="v pos">लौटा दिया</span></div><div class="mr"><span class="k">वापस मिला</span><span class="v pos">₹300</span></div></div><span class="time">दूसरा bookend</span></div>
+   <div class="bubble bot">अब कोई marketing संदेश नहीं — सिर्फ़ ज़रूरी जानकारी।
+     <div class="chat-cta sec" data-go="menu">रसीद डाउनलोड करें</div>
+   </div>`));
+
+/* --- reversal --- */
+def('revRequest','वापस आएं (chat)','chat',
+  chat('पिकअप रोका जा सकता है · ₹0 शुल्क',
+  `<div class="bubble me">मुझे वापस आना है, अभी कैंसिल मत करो</div>
+   <div class="bubble bot"><div class="b-title"><span class="material-icons">celebration</span>वापसी पर स्वागत है!</div>डिवाइस अभी उठाया नहीं गया, इसलिए सब पहले जैसा। पिकअप रोक दिया गया, आपकी जगह सुरक्षित।<span class="time">अभी</span></div>
+   <div class="bubble bot">वही account, ₹0 शुल्क, कोई नुक़सान नहीं।
+     <div class="chat-cta sec" data-go="reactivated">ठीक है, धन्यवाद</div>
+     <div class="chat-cta" data-go="zone3">(अगर डिवाइस उठ चुका हो?)</div>
+   </div>`));
+
+def('zone3','Zone 3 — देर हो गई (chat)','chat',
+  chat('डिवाइस वापस लिया जा चुका है',
+  `<div class="bubble me">मुझे वापस आना है</div>
+   <div class="bubble bot"><div class="b-title"><span class="material-icons">inventory_2</span>डिवाइस वापस ले लिया गया है</div>इसलिए पुराना कनेक्शन वापस नहीं हो सकता — पर नया नेट सेटअप आसान है, आपकी जानकारी सेव है।<span class="time">अभी</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="menu">नया सेटअप शुरू करना है</div></div>`));
+
+def('reactivated','वापस आ गए','scr',
+  scr(topbar('',true),
+  `<div style="text-align:center"><div class="ahero ok"><span class="material-icons">wifi</span></div><div class="ah1">आप वापस आ गए!<br>नेट फिर से चालू</div><div class="asub">रिचार्ज हो गया — कुछ नहीं बदला। वही प्लान, वही डिवाइस, वही जगह।</div></div>
+   <div class="scard"><div class="sr"><span class="k">शुल्क</span><span class="v pos">₹0 — कोई extra नहीं</span></div></div>
+   <div class="averify ok"><span class="material-icons">history</span><p>वही <b>service instance</b> — कोई नया कनेक्शन नहीं, पूरी history बरकरार।</p></div>`,
+  `<button class="abtn" data-go="home">नेट इस्तेमाल करें</button>`));
+
+/* --- CSP migration (4B) --- */
+def('cspNotice','पार्टनर बदल रहा है (chat)','chat',
+  chat('कनेक्शन चालू · पार्टनर बदल रहा है',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">sync_alt</span>पार्टनर बदल रहा है<span class="chan">SMS+WA</span></div>आपका नेट पार्टनर बदल रहा है। <b>आपको कुछ नहीं करना</b> — प्लान, स्पीड और जगह सब वैसा ही रहेगा।<span class="time">11:20</span></div>
+   <div class="bubble bot">कोई रुकावट नहीं आएगी। यह सेवा बंद होना नहीं है।
+     <div class="chat-cta sec" data-go="cspChanged">ठीक है, समझ गया</div>
+     <div class="chat-cta" data-go="cspOffer">(अगर कोई पार्टनर उपलब्ध न हो?)</div>
+   </div>`));
+
+def('cspChanged','कनेक्शन जारी — continuity','chat',
+  chat('कनेक्शन चालू (नया पार्टनर) · प्लान वही',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">check_circle</span>हो गया<span class="chan">WhatsApp</span></div>आपका नेट पहले जैसा चालू है। पार्टनर बदल गया, पर आपके लिए कुछ नहीं बदला — वही प्लान, वही स्पीड, कोई रुकावट नहीं।<span class="time">अगले दिन</span></div>
+   <div class="bubble bot">कोई पैसा नहीं कटा, डिवाइस वापस नहीं करना। <b>यह closure नहीं है।</b>
+     <div class="chat-cta sec" data-go="menu">बढ़िया!</div>
+   </div>`));
+
+def('cspOffer','दोबारा कनेक्ट ऑफ़र (screen)','scr',
+  scr(topbar('नया कनेक्शन?'),
+  `<div class="ah1 sm" style="text-align:center">क्या आप नया कनेक्शन चाहेंगे?</div><div class="asub" style="text-align:center">आपका मौजूदा पार्टनर सेवा बंद कर रहा है।</div>
+   <div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">router</span></div><div><div class="rt">नया पार्टनर जोड़ें</div><div class="rs">उसी पते पर, वही प्लान</div></div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">no_accounts</span></div><div><div class="rt">नहीं, मुझे बंद करना है</div><div class="rs">पूरा पैसा वापस</div></div></div>
+   <div class="averify info"><span class="material-icons">handshake</span><p>दोबारा कनेक्ट का ऑफ़र पहले (INV-EXIT-26)। मना करना भी ठीक — पैसा फिर भी पूरा वापस।</p></div>`,
+  `<button class="abtn" data-go="cspChanged">नया पार्टनर जोड़ें</button><button class="abtn ghost" data-go="forcedRefund">नहीं, बंद करें — पूरा रिफंड</button>`));
+
+def('forcedRefund','पूरा रिफंड — service-unavailability (chat)','chat',
+  chat('कनेक्शन बंद · पूरा ₹600 वापस',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">sentiment_satisfied</span>माफ़ी — हम यहाँ नेट नहीं दे पाएंगे<span class="chan">SMS+WA</span></div>यह हमारी ओर से है, आपकी कोई गलती नहीं। आपका पूरा पैसा वापस किया जा रहा है।
+     <div class="msg-card"><div class="mr"><span class="k">बचे दिनों का</span><span class="v pos">₹300</span></div><div class="mr"><span class="k">डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="mr"><span class="k">कुल (पूरा C2)</span><span class="v pos">₹600</span></div></div><span class="time">trust signal: NONE</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="final">पूरा रिफंड की स्थिति देखें</div></div>`));
+
+/* --- B2I --- */
+def('b2iFail','सेटअप नहीं हुआ (chat)','chat',
+  chat('बुकिंग रद्द · ₹100 रिफंड हो रहा है',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">sentiment_satisfied</span>माफ़ी — देर हमारी ओर से<span class="chan">SMS+WA</span></div>हम तय समय में नेट सेटअप नहीं कर पाए, इसलिए आपकी पूरी बुकिंग राशि <b>₹100</b> वापस की जा रही है। घर पर कोई डिवाइस नहीं था, इसलिए कुछ लौटाना नहीं।<span class="time">अभी</span></div>
+   <div class="bubble bot">जब तैयार हों, दोबारा सेटअप आसान है।
+     <div class="chat-cta" data-go="tracker">रिफंड कहाँ आएगा देखें</div>
+     <div class="chat-cta sec" data-go="menu">दोबारा कोशिश करनी है</div>
+   </div>`));
+
+/* --- life-event --- */
+def('lifeEvent','Life-event (chat)','chat',
+  chat('कनेक्शन बंद किया जा रहा है · बचा पैसा वापस',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">volunteer_activism</span>हम आपके साथ हैं</div>हमें सूचित किया गया है। आपको कुछ नहीं करना — हम कनेक्शन शांति से बंद कर देंगे और बचा हुआ पूरा पैसा परिवार को लौटा देंगे।<span class="time">—</span></div>
+   <div class="bubble bot">आगे कोई संदेश नहीं भेजेंगे।
+     <div class="chat-cta sec" data-go="forcedRefund">बचा पैसा कैसे मिलेगा?</div>
+   </div>`));
+
+/* --- payment history --- */
+def('paymentHistory','पेमेंट हिस्ट्री (screen)','scr',
+  scr(topbar('पेमेंट हिस्ट्री'),
+  `<div class="scard tap" data-go="tracker"><div class="sr"><span class="k" style="font-weight:700;color:#161021">रिफंड — सिक्योरिटी डिपॉज़िट</span><span class="v"><span class="pill-info"><span class="material-icons">sync</span>भेजा जा रहा</span></span></div><div class="sr"><span class="k">₹300</span><span class="v" style="color:#D9008D">स्थिति देखें ›</span></div></div>
+   <div class="scard"><div class="sr"><span class="k">नेट रिचार्ज</span><span class="v"><span class="sok"><span class="material-icons">check_circle</span>सफल</span></span></div><div class="sr"><span class="k">₹500</span><span class="v neg">12 जून 2026</span></div></div>
+   <div class="averify info"><span class="material-icons">visibility</span><p>refund अब छुपते नहीं — entry दबाकर tracker खोलें।</p></div>`,
+  `<button class="abtn ghost" data-go="home">वापस होम</button>`));
+
+/* ============ ROUTER ============ */
+const phone=document.getElementById('phone'), crumb=document.getElementById('crumb');
+const backBtn=document.getElementById('backBtn'), homeBtn=document.getElementById('homeBtn'), restartBtn=document.getElementById('restartBtn');
+let cur=null, hist=[];
+function paint(){
+  phone.innerHTML=N[cur]||('<div style="padding:40px;color:#900">missing: '+cur+'</div>');
+  phone.scrollTop=0;const cb=phone.querySelector('.chat-body, .abody');if(cb)cb.scrollTop=0;
+  const k=KIND[cur]==='chat'?'<span class="xt chat"><span class="material-icons">chat</span>Chat</span>':'<span class="xt scr"><span class="material-icons">smartphone</span>Screen</span>';
+  crumb.innerHTML=(cur==='menu'?'':`<span class="step">${(hist.length)}</span>`)+`<span>${TITLE[cur]||cur}</span>`+(cur==='menu'?'':k);
+  backBtn.disabled=hist.length===0;
+}
+function go(id){if(id===cur)return;if(cur!==null)hist.push(cur);cur=id;paint();}
+function back(){if(hist.length){cur=hist.pop();paint();}}
+phone.addEventListener('click',e=>{
+  const sel=e.target.closest('[data-sel]');
+  if(sel&&sel.parentElement){[...sel.parentElement.children].forEach(s=>{if(s.dataset&&s.dataset.sel)s.classList.remove('sel');});sel.classList.add('sel');}
+  const b=e.target.closest('[data-back]');if(b){back();return;}
+  const g=e.target.closest('[data-go]');if(g){go(g.dataset.go);}
+});
+backBtn.onclick=back;
+restartBtn.onclick=()=>{hist=[];cur=null;go('menu');};
+homeBtn.onclick=()=>{hist=[];cur=null;go('menu');};
+go('menu');
+</script>
+</body>
+</html>
