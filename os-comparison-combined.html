@@ -2883,17 +2883,38 @@ NEW CLOSURE OS     relationship: ACTIVE → RESERVATION_EXPIRED → <b style="co
         </div>
       </div>
 
+      <div class="callout warn">
+        <span class="material-icons">visibility_off</span>
+        <div>
+          <div class="callout-title">The bigger gap: the full Closure journey was never visualised</div>
+          <p>
+            The v2 prototype only ever showed <em>booking cancellation</em> (pre-install, ₹100). The actual <strong>Closure OS exit journey</strong>
+            — an active customer leaving, returning the net box, getting the ₹300 deposit back — was specced in v1.2–v2.0 but never drawn. v3 closes
+            that: a complete 8-screen <strong>Exit &amp; Refund</strong> journey now reflects the whole customer-facing Closure model, not just the one
+            net-new v3.0 rule. The screens map directly to the doctrines:
+          </p>
+          <ul class="clean" style="margin-top:8px">
+            <li><strong>Two mandatory bookends</strong> (<code>INV-EXIT-04</code> · Doctrine #25 No-Silent-Exit) — a closure-initiation screen and a closure-conclusion screen; an exit is never silent.</li>
+            <li><strong>Self-return-first + SD-first recall</strong> (<code>INV-EXIT-12/15</code> · #13/#17) — the recall opens with "your ₹300 deposit is safe", self-return offered first at no cost, never a retention pitch.</li>
+            <li><strong>Refund told at the start</strong> — pro-rata auto-triggers at <code>CLOSURE_INITIATED</code> (<code>REFUND_TRIGGERED(PRO_RATA)</code>, CP-CLOSURE-25), so the customer sees what's coming back up-front, not at the end.</li>
+            <li><strong>Relocation re-connect path</strong> (reason code 10 · <code>INV-EXIT-23/26</code>) — moving ≠ leaving; re-connect offer open 12 months (CP-CLOSURE-24), trust signal forced NONE so it never counts against them.</li>
+            <li><strong>Dispute auto-resolution</strong> — the genuinely net-new v3.0 item (above).</li>
+            <li><strong>Reversal, deposit-refund tracker, write-off fallback, post-exit obligation-only</strong> (#18 · §5.11 · §5.12 · #24).</li>
+          </ul>
+        </div>
+      </div>
+
       <div class="callout key">
         <span class="material-icons">vpn_key</span>
         <div>
-          <div class="callout-title">The one screen to design for v3</div>
-          <p>A <strong>dispute auto-resolution surface</strong> — "वापसी का रिकॉर्ड मेल नहीं खा रहा — हम 7 दिन में नतीजा देंगे", with the explicit promise that no "box not returned" mark is applied while the case is open and the deposit stays safe. It's prototyped in <span class="src">flows-combined.html</span> → <strong>Cancellation → v3 · Exit &amp; Refund</strong> (screen v3·3), alongside the now-visible reversal, refund-lifecycle tracker, and write-off fallback.</p>
+          <div class="callout-title">Net-new in v3.0 vs. now-visualised from v2.0</div>
+          <p>Only the <strong>dispute auto-resolution</strong> is genuinely new in the 22-Jun lock. Everything else in the 8-screen journey is the v1.2–v2.0 Closure model finally drawn. Prototyped in <span class="src">flows-combined.html</span> → <strong>Cancellation → v3 · Exit &amp; Refund</strong> (screens v3·1–v3·8).</p>
         </div>
       </div>
 
       <div class="divider"></div>
       <p class="footnote">
-        OS: <span class="src">OS Tech HTMLs/Closure_OS_v3_0_Standalone_Spec.html</span> (v3.0 boundary cleanup), baseline <span class="src">os-specs/wiom-cust-closure-os-v2.0-locked-20260616.md</span>; registries <span class="src">registries/wiom-infra-cust-esr-v2.4-locked-20260622.md</span> (payload trim) / SPR v2.5 (CP-CLOSURE-* unchanged).
+        OS: <span class="src">OS Tech HTMLs/Closure_OS_v3_0_Standalone_Spec.html</span> (v3.0; 26 doctrines, dual-axis state machine, §5.11–5.13 protocols), baseline <span class="src">os-specs/wiom-cust-closure-os-v2.0-locked-20260616.md</span>; registries <span class="src">registries/wiom-infra-cust-esr-v2.4-locked-20260622.md</span> / SPR v2.9 (CP-CLOSURE-* canonical IDs).
       </p>
     </section>
 

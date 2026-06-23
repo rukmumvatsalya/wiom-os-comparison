@@ -2344,7 +2344,7 @@
         </div>
   </div>
 <div class="panel" id="panel-cancel-v3">
-    <div class="panel-intro"><p><b>v3 (22 Jun · Closure OS v3.0):</b> the same cancellation flow as v2, with a new <b>Exit &amp; Refund</b> stage at the end — a reversible exit, a visible deposit-refund tracker, deterministic box-return dispute resolution, and a no-silent-absorption refund fallback. The <b>cancellation</b> flow itself, reviewed against the OS. Structure follows the prototype faithfully: the cancel request happens in <b>chat</b>, but reason-selection and each reason's <b>follow-up are full-page screens</b> (back-arrow top bar, heading, option cards, bottom button). Governed by <b>At-Risk Resolution OS</b> (act on the problem, not the decision) and <b>Exit OS</b> (dignified, no-penalty exit). Scroll sideways →</p></div>
+    <div class="panel-intro"><p><b>v3 (22 Jun · Closure OS v3.0):</b> the v2 cancellation flow plus a complete <b>Exit &amp; Refund</b> journey reflecting the full Closure OS customer model — both mandatory bookends, self-return-first &amp; SD-first recall, refund-told-at-the-start (pro-rata auto), a visible deposit-refund tracker, the relocation re-connect path, deterministic box-return dispute resolution (the net-new v3.0 item), a no-silent-absorption refund fallback, and obligation-only post-exit contact. The <b>cancellation</b> flow itself, reviewed against the OS. Structure follows the prototype faithfully: the cancel request happens in <b>chat</b>, but reason-selection and each reason's <b>follow-up are full-page screens</b> (back-arrow top bar, heading, option cards, bottom button). Governed by <b>At-Risk Resolution OS</b> (act on the problem, not the decision) and <b>Exit OS</b> (dignified, no-penalty exit). Scroll sideways →</p></div>
     <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Source note:</b> "Current" screens are faithful <b>reconstructions</b> of the existing HTML prototype (sauravg666.github.io/cancellation-retention-flow), not exported Figma. Structure (chat vs full-page) now matches the prototype.</p></div>
     <div class="method-note"><span class="material-icons">policy</span><p><b>OS verdict:</b> reason-capture → <b>offer-a-fix</b> per reason (change address / reschedule / clarify) is OS-aligned and kept. Two coercive parts are redesigned: the entry <b>deflection framing</b> ("so you don't need to cancel"), and the final <b>₹100-refund-denial deterrent gate</b> → non-accusatory close with attribution-aware good-faith refund.</p></div>
     <div class="rail">
@@ -2702,13 +2702,63 @@
         <div class="os-add"><h5><span class="material-icons">flag</span>Why F4 is acknowledged to the customer (and no win-back)</h5><p>An ordinary cancel and a Wiom-caused, deterioration-linked exit are <b>not</b> the same — the v2 distinction the app couldn't make. <b>F4</b> records the unresolved deterioration as the closure cause; obligations (refund + the already-added T5 credit) <b>discharge regardless</b> of the exit. The handoff to Closure OS is clean and dignified (<b>T7</b> confirm-and-handoff). <b>No</b> win-back, no "come back" messaging (D16).</p><p class="ref">ARR OS · F4 EXPLICIT_CLOSURE_DETERIORATION_LINKED · §15.1 · §10 · T7 · D1 · INV-ARR-01</p></div></div>
 
       <!-- ============================================================= -->
-      <!-- PHASE v3 : EXIT & REFUND  (Closure OS v3.0 · 22 Jun)          -->
+      <!-- PHASE v3 : EXIT & REFUND — full Closure journey (Closure OS v3.0 · 22 Jun) -->
       <!-- ============================================================= -->
-      <div class="phase"><div class="line"></div><div class="lbl">v3 · Exit &amp; Refund (Closure OS v3.0 · 22 Jun)</div><div class="line"></div></div>
+      <div class="phase"><div class="line"></div><div class="lbl">v3 · Exit &amp; Refund — full Closure journey (Closure OS v3.0 · 22 Jun)</div><div class="line"></div></div>
 
-      <!-- v3·1 : Zero-friction reversal -->
+      <!-- v3·1 : Closure-initiation bookend — SD-first, self-return-first -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">v3·1</span><span class="screen-name">मन बदल गया? वापस जुड़ें — कोई शुल्क नहीं</span><span class="badge new">New · v3</span><span class="exstate">Exit · reversal</span></div>
+        <div class="screen-tag"><span class="screen-num">v3·1</span><span class="screen-name">नेट बंद करना शुरू — पहले आपकी जमा राशि की बात</span><span class="badge new">New · v3</span><span class="exstate">Exit · bookend 1/2</span></div>
+        <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:12px 0 2px;text-align:center"><span class="material-icons" style="font-size:44px;color:#6D17CE">logout</span></div>
+            <div class="ah1" style="text-align:center">नेट बंद करने की प्रक्रिया शुरू</div>
+            <div class="trust info" style="margin-top:14px">
+              <span class="material-icons">savings</span>
+              <p><b>आपकी ₹300 जमा राशि अभी भी Wiom के पास सुरक्षित है</b> — यह आपको पूरी वापस मिलेगी। सबसे पहले यही, कोई "रुक जाइए" वाली बात नहीं।</p>
+            </div>
+            <div class="asub" style="text-align:left;margin-top:12px">नेट बॉक्स कैसे लौटाना है, आप खुद चुनिए:</div>
+            <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+              <div class="scard" style="margin:0;padding:11px 12px;display:flex;align-items:center;gap:10px;border:1.5px solid #6D17CE"><span class="material-icons" style="font-size:19px;color:#6D17CE">inventory_2</span><div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#161021">खुद नज़दीकी पॉइंट पर जमा करें</div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#008043">कोई शुल्क नहीं · सबसे आसान</div></div></div>
+              <div class="scard" style="margin:0;padding:11px 12px;display:flex;align-items:center;gap:10px"><span class="material-icons" style="font-size:19px;color:#5C5570">local_shipping</span><span style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#161021">घर से पिकअप बुलाएँ</span></div>
+            </div>
+          </div>
+          <button class="abtn">आगे बढ़ें</button>
+        </div>
+        <div class="fixnote"><b>Why (v3):</b> Closure OS guarantees <b>two bookend comms</b> — this is bookend 1 (closure-initiation). The recall must be <b>SD-first &amp; non-persuasive</b>: it opens with "your ₹300 deposit is safe", never a retention pitch, and <b>self-return is offered first</b> (no-cost) before any pickup. Multi-channel, never app-only. Closure OS · INV-EXIT-04 / 12 / 15 · Doctrine #13 / #17 / #25 · #14.</div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v3·2 : Refund told at the start — pro-rata auto at CLOSURE_INITIATED -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">v3·2</span><span class="screen-name">कितना पैसा वापस आएगा — शुरू में ही पता</span><span class="badge new">New · v3</span><span class="exstate">Exit · pro-rata auto</span></div>
+        <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:center;margin-top:8px">आपका पूरा हिसाब — साफ़-साफ़</div>
+            <div class="asub" style="text-align:center">बंद करने के <b>शुरू में ही</b> हमने आपके बचे दिनों का पैसा अपने-आप जोड़ दिया — आखिर में नहीं।</div>
+            <div class="scard" style="margin-top:16px">
+              <div class="sr"><span class="k">बचे 12 दिन का रिफ़ंड <span style="font-weight:500;color:#5C5570">(अभी)</span></span><span class="v" style="color:#008043">₹168</span></div>
+              <div class="sr"><span class="k">जमा राशि <span style="font-weight:500;color:#5C5570">(बॉक्स लौटाने पर)</span></span><span class="v" style="color:#008043">₹300</span></div>
+              <div class="sr" style="border-top:1px solid #E8E4F0;margin-top:4px;padding-top:8px"><span class="k" style="font-weight:700;color:#161021">कुल आपके नाम</span><span class="v">₹468</span></div>
+            </div>
+            <div class="averify" style="margin-top:12px">
+              <span class="material-icons">bolt</span>
+              <p>बचे दिनों का रिफ़ंड किसी से माँगना नहीं पड़ता — यह बंद करते ही अपने-आप शुरू हो जाता है।</p>
+            </div>
+          </div>
+          <button class="abtn">ठीक है, आगे</button>
+        </div>
+        <div class="fixnote"><b>Why (v3):</b> for <code>explicit-choice</code> / <code>customer-relocation</code> exits, <b>pro-rata refund auto-triggers at <code>CLOSURE_INITIATED</code></b> (not at the end) — the customer learns what's coming back at the <em>start</em> of closure. Closure OS · <code>REFUND_TRIGGERED(PRO_RATA)</code> · <code>auto_triggered=true</code> · CP-CLOSURE-25 (7-day threshold) · INV-EXIT-25.</div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v3·3 : Zero-friction reversal -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">v3·3</span><span class="screen-name">मन बदल गया? वापस जुड़ें — कोई शुल्क नहीं</span><span class="badge new">New · v3</span><span class="exstate">Exit · reversal</span></div>
         <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
           <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
           <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
@@ -2724,40 +2774,35 @@
           <button class="abtn">हाँ, वापस जुड़ना है</button>
           <button class="abtn ghost">नहीं, बंद ही करना है</button>
         </div>
-        <div class="fixnote"><b>Why (v3):</b> Closure OS v3.0 makes an exit reversible while the box is still with the customer — <b>REVERSAL_REQUESTED (A14) → RECALL_CANCELLED</b> reverts <code>CLOSURE_INITIATED → ACTIVE_ENTITLED</code> at <b>zero fee</b> (Wiom absorbs the CSP recall cost). Re-joining must never cost more than leaving. Closure OS · §5.13 · AMD-EXIT-22 · INV-EXIT-14 (Zone 2, pre-pickup).</div>
+        <div class="fixnote"><b>Why (v3):</b> exit is reversible while the box is still with the customer — <b>REVERSAL_REQUESTED → RECALL_CANCELLED</b> reverts custody to <code>DEVICE_WITH_CUSTOMER</code> and relationship to <code>ACTIVE_ENTITLED</code> at <b>zero fee, zero posture penalty</b>. Late response during reversibility is frictionless. Closure OS · §5.13 · Doctrine #18 · INV-EXIT-14.</div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- v3·2 : Deposit-refund lifecycle tracker (PROVISIONED highlighted) -->
+      <!-- v3·4 : Deposit-refund lifecycle tracker (PROVISIONED highlighted) -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">v3·2</span><span class="screen-name">जमा राशि वापसी — कहाँ तक पहुँची</span><span class="badge new">New · v3</span><span class="exstate">Exit · refund lifecycle</span></div>
+        <div class="screen-tag"><span class="screen-num">v3·4</span><span class="screen-name">जमा राशि वापसी — कहाँ तक पहुँची</span><span class="badge new">New · v3</span><span class="exstate">Exit · refund lifecycle</span></div>
         <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
           <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
           <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
           <div class="abody" style="align-items:stretch;text-align:left">
             <div class="ah1" style="text-align:center;margin-top:8px">आपकी ₹300 जमा राशि सुरक्षित है</div>
             <div class="asub" style="text-align:center">नेट बॉक्स लौटाने से <b>पहले ही</b> हमने आपकी जमा राशि अलग रख दी है — बॉक्स मिलते ही सीधे आपके खाते में।</div>
-
             <div class="scard" style="margin-top:16px;padding:14px 13px;text-align:left">
-              <!-- step 1 done -->
               <div style="display:flex;gap:10px;align-items:flex-start">
                 <span class="material-icons" style="font-size:19px;color:#008043;flex:0 0 auto">check_circle</span>
                 <div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#161021">वापसी के योग्य</div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#5C5570">₹300 आपके नाम तय हुई</div></div>
               </div>
               <div style="width:2px;height:14px;background:#008043;margin:2px 0 2px 8px"></div>
-              <!-- step 2 current -->
               <div style="display:flex;gap:10px;align-items:flex-start;background:#F3EDFB;border-radius:9px;padding:8px;margin:0 -6px">
                 <span class="material-icons" style="font-size:19px;color:#6D17CE;flex:0 0 auto">radio_button_checked</span>
                 <div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#6D17CE">सुरक्षित रख दी गई <span style="font-weight:500">· अभी</span></div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#5C5570">₹300 अलग रखी — बॉक्स लौटाने का इंतज़ार</div></div>
               </div>
               <div style="width:2px;height:14px;background:#D8CEEA;margin:2px 0 2px 8px"></div>
-              <!-- step 3 pending -->
               <div style="display:flex;gap:10px;align-items:flex-start">
                 <span class="material-icons" style="font-size:19px;color:#BBB3C9;flex:0 0 auto">radio_button_unchecked</span>
                 <div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#9A92AB">बॉक्स मिलने पर पक्की</div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#9A92AB">पार्टनर बॉक्स ले जाएगा, रसीद मिलेगी</div></div>
               </div>
               <div style="width:2px;height:14px;background:#D8CEEA;margin:2px 0 2px 8px"></div>
-              <!-- step 4 pending -->
               <div style="display:flex;gap:10px;align-items:flex-start">
                 <span class="material-icons" style="font-size:19px;color:#BBB3C9;flex:0 0 auto">radio_button_unchecked</span>
                 <div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#9A92AB">खाते में पहुँची</div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#9A92AB">2–3 दिन में आपके खाते में</div></div>
@@ -2766,13 +2811,35 @@
           </div>
           <button class="abtn">नेट बॉक्स लौटाने का समय चुनें</button>
         </div>
-        <div class="fixnote"><b>Why (v3):</b> Closure OS v3.0 makes deposit refund a <b>visible four-stage commitment</b> — <code>ELIGIBLE → PROVISIONED → FINALIZED → EXECUTED</code>. The <b>PROVISIONED</b> stage is the key fairness moment: Wiom <b>reserves</b> the जमा राशि before pickup, so the customer never returns the box on blind faith. Closure OS · §5.11 · REFUND_TRIGGERED · CUSTODY_STATE_CHANGED.refund_lifecycle_stage · INV-EXIT-27 · AMD-EXIT-19.</div>
+        <div class="fixnote"><b>Why (v3):</b> deposit refund is a <b>visible four-stage commitment</b> — <code>ELIGIBLE → PROVISIONED → FINALIZED → EXECUTED</code>. <b>PROVISIONED</b> reserves the money <em>before</em> pickup so the customer never returns the box on blind faith (the deliberate break for the 524 stuck "I won't return until I see my refund" cases). Closure OS · §5.11 · CUSTODY_STATE_CHANGED.refund_lifecycle_stage · CP-CLOSURE-05/21 · INV-EXIT-27.</div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- v3·3 : Custody-dispute auto-resolution (genuinely new in v3.0) -->
+      <!-- v3·5 : customer-relocation — re-connect at new address -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">v3·3</span><span class="screen-name">बॉक्स वापसी का मामला — साफ़ नतीजा, अटका नहीं</span><span class="badge new">New · v3</span><span class="exstate">Exit · dispute</span></div>
+        <div class="screen-tag"><span class="screen-num">v3·5</span><span class="screen-name">घर बदल रहे हैं? वहीं नेट फिर चालू करें</span><span class="badge new">New · v3</span><span class="exstate">Exit · relocation</span></div>
+        <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:12px 0 2px;text-align:center"><span class="material-icons" style="font-size:46px;color:#6D17CE">moving</span></div>
+            <div class="ah1" style="text-align:center">घर बदलना = Wiom छोड़ना नहीं</div>
+            <div class="asub" style="text-align:center">आप नए पते पर वही नेट फिर से चालू करवा सकते हैं — पुराना हिसाब और जमा राशि साथ चलेगी।</div>
+            <div class="trust info" style="margin-top:16px">
+              <span class="material-icons">sentiment_satisfied</span>
+              <p>यह <b>"छोड़ना" नहीं गिना जाएगा</b> — आपका रिकॉर्ड बिलकुल साफ़ रहेगा। बचे दिनों का रिफ़ंड अभी मिल जाएगा, और नए पते पर सेटअप का न्योता <b>12 महीने तक</b> खुला रहेगा।</p>
+            </div>
+          </div>
+          <button class="abtn">नए पते पर नेट चालू करें</button>
+          <button class="abtn ghost">अभी सिर्फ़ बंद करें</button>
+        </div>
+        <div class="fixnote"><b>Why (v3):</b> <code>customer-relocation</code> (reason code 10) is a distinct exit — a <b>re-connection offer is required</b> (INV-EXIT-26), the trust signal is forced to <b>NONE</b> so the customer is never counted as a churn/refuser (INV-EXIT-23), pro-rata refund applies, and the re-connect offer stays open per CP-CLOSURE-24 (12 months). Closure OS · reason-code 10 · INV-EXIT-23 / 26.</div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v3·6 : Custody-dispute auto-resolution (genuinely new in v3.0) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">v3·6</span><span class="screen-name">बॉक्स वापसी का मामला — साफ़ नतीजा, अटका नहीं</span><span class="badge new">New · v3</span><span class="exstate">Exit · dispute</span></div>
         <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
           <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
           <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
@@ -2780,12 +2847,10 @@
             <div style="margin:14px 0 2px;text-align:center"><span class="material-icons" style="font-size:46px;color:#6D17CE">gavel</span></div>
             <div class="ah1" style="text-align:center">वापसी का रिकॉर्ड मेल नहीं खा रहा</div>
             <div class="asub" style="text-align:center">आपने बॉक्स लौटाया, पर हमारे रिकॉर्ड में कुछ अंतर है। हम <b>7 दिन में</b> जाँचकर साफ़ नतीजा देंगे।</div>
-
             <div class="trust info" style="margin-top:16px">
               <span class="material-icons">shield</span>
-              <p>इस दौरान आप पर <b>"बॉक्स नहीं लौटाया"</b> का ठप्पा नहीं लगेगा। मामला खुला रहेगा, अनिश्चित नहीं — और नतीजा आने पर आपको बताया जाएगा।</p>
+              <p>इस दौरान आप पर <b>"बॉक्स नहीं लौटाया"</b> का ठप्पा नहीं लगेगा। शक की हालत में फ़ैसला हमेशा <b>आपके हक़ में (रिफ़ंड की तरफ़)</b> झुकता है — मामला खुला रहेगा, अनिश्चित नहीं।</p>
             </div>
-
             <div class="scard" style="margin-top:12px">
               <div class="sr"><span class="k">मामला</span><span class="v">#EXIT-7741 · जाँच में</span></div>
               <div class="sr"><span class="k">नतीजा कब तक</span><span class="v">7 दिन के अंदर</span></div>
@@ -2795,13 +2860,13 @@
           <button class="abtn">वापसी का सबूत जोड़ें</button>
           <button class="abtn ghost">ठीक है, इंतज़ार करूँगा</button>
         </div>
-        <div class="os-add"><h5><span class="material-icons">flag</span>What v3.0 changed: no more "disputed" limbo</h5><p>Earlier a box-return dispute could leave the case stuck in an open-ended <b>CUSTODY_DISPUTED</b> state that blocked closure indefinitely. v3.0 <b>removes that state</b>: if the dispute isn't resolved inside the adjudication window, the system forces a definite outcome with confidence set to <b>AMBIGUOUS</b> — the customer is <b>never branded a refuser</b>, and the deposit stays protected.</p><p class="ref">Closure OS v3.0 · Doctrine #11 · INV-EXIT-01 · CP-CLOSURE-20 (7-day adjudication) · custody_state → DEVICE_NOT_RECOVERED only on real evidence</p></div>
+        <div class="os-add"><h5><span class="material-icons">flag</span>What v3.0 changed: no more "disputed" limbo</h5><p>Earlier a box-return dispute could leave the case stuck in an open-ended <code>CUSTODY_DISPUTED</code> state that blocked closure indefinitely. v3.0 <b>removes that as an OS-governed open outcome</b>: if it isn't resolved inside the adjudication window, the system forces <code>DISPUTE_UNRESOLVED → DEVICE_NOT_RECOVERED</code> at <b>confidence = AMBIGUOUS</b> — the customer is <b>never branded a refuser</b> (HIGH is reserved for confirmed refusal), and the bond defaults <em>toward</em> refund.</p><p class="ref">Closure OS v3.0 · Doctrine #11 (Custody-Dispute-Adjudicated) · CP-CLOSURE-20 (7-day) · trust_signal_confidence AMBIGUOUS · custody enum rolled up 5→2 OS-terminal</p></div>
       </div>
       <div class="arrow"><span class="material-icons">chevron_right</span></div>
 
-      <!-- v3·4 : Refund couldn't reach → alternative payout, never silently absorbed -->
+      <!-- v3·7 : Refund couldn't reach → alternative payout, never silently absorbed -->
       <div class="screen">
-        <div class="screen-tag"><span class="screen-num">v3·4</span><span class="screen-name">रिफ़ंड अभी भेज नहीं पाए — दूसरा तरीका चुनें</span><span class="badge new">New · v3</span><span class="exstate">Exit · write-off</span></div>
+        <div class="screen-tag"><span class="screen-num">v3·7</span><span class="screen-name">रिफ़ंड अभी भेज नहीं पाए — दूसरा तरीका चुनें</span><span class="badge new">New · v3</span><span class="exstate">Exit · write-off</span></div>
         <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
           <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
           <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
@@ -2809,12 +2874,10 @@
             <div style="margin:14px 0 2px;text-align:center"><span class="material-icons" style="font-size:46px;color:#9a7a00">error_outline</span></div>
             <div class="ah1" style="text-align:center">₹300 आपके खाते तक नहीं पहुँच पाई</div>
             <div class="asub" style="text-align:center">हमने भेजने की कोशिश की, पर UPI नंबर पर पैसा नहीं गया। यह रकम आपकी ही है — दूसरा तरीका चुनिए।</div>
-
             <div class="trust warn" style="margin-top:16px">
               <span class="material-icons">savings</span>
               <p>यह पैसा कहीं नहीं जाता — अगर आप बाद में दोबारा जुड़ते हैं, तो भी यह ₹300 आपके नाम बनी रहती है।</p>
             </div>
-
             <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
               <div class="scard" style="margin:0;padding:11px 12px;display:flex;align-items:center;gap:10px"><span class="material-icons" style="font-size:19px;color:#6D17CE">account_balance</span><span style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#161021">UPI नंबर सही करके दोबारा भेजें</span></div>
               <div class="scard" style="margin:0;padding:11px 12px;display:flex;align-items:center;gap:10px"><span class="material-icons" style="font-size:19px;color:#6D17CE">account_balance_wallet</span><span style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#161021">Wiom वॉलेट में जमा कर लें</span></div>
@@ -2822,7 +2885,33 @@
           </div>
           <button class="abtn">तरीका चुनें</button>
         </div>
-        <div class="fixnote"><b>Why (v3):</b> a refund that can't be paid (e.g. <code>NO_UPI</code>) is <b>never silently absorbed</b>. Closure OS v3.0 retries, contacts the customer, offers an alternative payout, and if still unpaid the obligation is <b>written off but revives</b> on <code>CUSTOMER_REENTRY_INITIATED (A8)</code>. Closure OS · §5.12 · REFUND_WRITTEN_OFF · AMD-EXIT-21 · INV-EXIT-29 · 60-day bond-hold longstop.</div>
+        <div class="fixnote"><b>Why (v3):</b> a refund that can't be paid (e.g. <code>NO_UPI</code>) is <b>never silently absorbed</b>. The Bond Write-Off Protocol runs Phases A–D — UPI retry → ops outreach → wallet credit → governed write-off at a 60-day long-stop (<code>CP-CLOSURE-BOND-HOLD-LONGSTOP</code>), and the obligation <b>revives</b> on re-entry. Closure OS · §5.12 · <code>REFUND_WRITTEN_OFF</code> · Doctrine #15 / #26.</div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v3·8 : Closure-conclusion bookend — done, obligation-only, no marketing -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">v3·8</span><span class="screen-name">नेट बंद हो गया — सब साफ़, दरवाज़ा खुला</span><span class="badge new">New · v3</span><span class="exstate">Exit · bookend 2/2</span></div>
+        <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">&#8734;</div><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:14px 0 2px;text-align:center"><span class="material-icons" style="font-size:46px;color:#008043">task_alt</span></div>
+            <div class="ah1" style="text-align:center">आपका नेट बंद हो गया</div>
+            <div class="asub" style="text-align:center">सब कुछ साफ़-साफ़ पूरा हुआ। नीचे आपका आख़िरी हिसाब है।</div>
+            <div class="scard" style="margin-top:14px">
+              <div class="sr"><span class="k">नेट बॉक्स</span><span class="v" style="color:#008043">लौटा दिया गया</span></div>
+              <div class="sr"><span class="k">रिफ़ंड ₹468</span><span class="v" style="color:#008043">भेज दिया गया</span></div>
+              <div class="sr"><span class="k">केस</span><span class="v">#EXIT-7741 · बंद</span></div>
+            </div>
+            <div class="averify" style="margin-top:12px">
+              <span class="material-icons">notifications_off</span>
+              <p>अब हम आपको <b>सिर्फ़ ज़रूरी बात</b> (जैसे रिफ़ंड) के लिए संपर्क करेंगे — कोई मार्केटिंग या "वापस आइए" मैसेज नहीं। कभी लौटना चाहें तो आपका पुराना हिसाब और नाम सुरक्षित हैं।</p>
+            </div>
+          </div>
+          <button class="abtn">रसीद डाउनलोड करें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">flag</span>The second bookend — closing without going silent</h5><p>Closure OS forbids a <b>silent exit</b>: the second mandatory bookend (closure-conclusion) confirms the exit happened, states the final refund, and sets expectations. After <code>CLOSURE_FINAL</code>, contact becomes <b>obligation-only</b> — marketing addressability is removed, so no win-back spam. Memory + carried obligations persist at <code>customer_id</code>, so re-entry is <b>recognised, not surveilled</b>.</p><p class="ref">Closure OS · INV-EXIT-04 (bookend 2/2) · Doctrine #25 No-Silent-Exit · #24 Post-Exit-Obligation-Only · #26 Obligations-Carried · #22 Re-entry-Recognition</p></div>
       </div>
         </div>
   </div>
