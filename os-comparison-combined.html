@@ -2,7 +2,7 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wiom Customer OS — Old vs New Analysis (v1 + v2)</title>
+<title>Wiom Customer OS — Analysis (v1 · v2 · v3)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -183,6 +183,7 @@
     <div class="ver-switch">
       <button class="ver-btn" data-ver="v1"><span class="vt">v1</span><span class="vd">29 May · Old</span></button>
       <button class="ver-btn active" data-ver="v2"><span class="vt">v2</span><span class="vd">17 Jun · New</span></button>
+      <button class="ver-btn" data-ver="v3"><span class="vt">v3</span><span class="vd">22 Jun · Latest</span></button>
     </div>
 
     <div class="nav-label">Operating Systems</div>
@@ -2731,6 +2732,171 @@ NEW CLOSURE OS     relationship: ACTIVE → RESERVATION_EXPIRED → <b style="co
         OS: <span class="src">os-specs/wiom-cust-closure-os-v2.0-locked-20260616.md</span> (renamed from exit-os v1.0.1), ESR v2.3 / SPR v2.5 (CLOSURE_INITIATED, CLOSURE_FINAL, CUSTODY_STATE_CHANGED + refund_lifecycle_stage, DEVICE_NON_RETURN_SIGNAL, REFUND_TRIGGERED, RECALL_CANCELLED, NETBOX_RETURNED_TO_POOL / NETBOX_LOST; CP-CLOSURE-05…26).
       </p>
     </section>
+    <!-- ===================== v3 PANELS (22 Jun OS updates) ===================== -->
+
+    <!-- B2I v3 (v4.0 -> v5.0) -->
+    <section class="tab-panel" id="tab-b2i-v3">
+      <div class="page-eyebrow">OS #1 · Booking-to-Install &nbsp;<span style="opacity:.7">· v3 delta</span></div>
+      <h1 class="page-title">B2I OS v5.0 — what changed since v2</h1>
+      <div class="page-meta">App: <code>customer-app-kotlin</code> &nbsp;·&nbsp; Spec: <span class="src">wiom-cust-b2i-os-v5.0-locked-20260622</span> &nbsp;·&nbsp; Updated 2026-06-23</div>
+      <p class="page-lead">
+        v5.0 is a <strong>boundary-test cleanup, not a feature release</strong>. The 16-state machine was re-examined against the OS
+        boundary test; states that are really <em>execution-layer coordination</em> were demoted out of the OS, and S0 was reinstated as a
+        genuine customer-action state. <strong>No invariant, parameter, event, communication, or customer-facing screen changed.</strong>
+        Everything in the v2 analysis (built on v4.0) still stands.
+      </p>
+
+      <div class="stats">
+        <div class="stat amber"><div class="num">0</div><div class="lbl">New customer-facing screens in v5.0</div></div>
+        <div class="stat"><div class="num">8</div><div class="lbl">States demoted to the execution layer</div></div>
+        <div class="stat"><div class="num">8</div><div class="lbl">OS states retained (S0,1,5,8,10,13,14,15)</div></div>
+        <div class="stat"><div class="num">=</div><div class="lbl">INV-B2I-* &amp; CP-B2I-* sets identical to v4.0</div></div>
+      </div>
+
+      <div class="callout warn">
+        <span class="material-icons">history</span>
+        <div>
+          <div class="callout-title">What changed in the OS since v2 (v4.0 → v5.0)</div>
+          <p>
+            <strong>(1) State de-naming.</strong> <code>S2 / S3 / S4 / S6 / S7 / S9 / S11 / S12</code> are no longer named OS states — they move
+            to the <strong>execution layer</strong>, governed by invariants (<code>INV-B2I-01/02/16</code>) and timeouts (<code>CP-B2I-19/20/24/27</code>)
+            instead of by their own state. The <em>customer moments</em> are unchanged: awaiting-CSP-assignment, the escalation ladder, install-day
+            ETA / en-route, and the reroute notice all still fire — they are simply driven by clocks + invariants, not a named state.
+          </p>
+          <p style="margin-top:10px">
+            <strong>(2) S0 reinstated &amp; reframed.</strong> S0 first failed the boundary test, then was reinstated (Adit, 22 Jun) as "customer truth — the customer has paid and holds a real, action-required state." Scope widened from "paid but SSID/address not submitted" to "<em>required booking details not yet submitted</em>"; <strong>no CSP assignment is possible until S0 → S1</strong>, and S0 is explicitly excluded from the reschedule right (no slot exists yet).
+          </p>
+          <p style="margin-top:10px">
+            <strong>(3) All governing principles unchanged.</strong> Events (§8), invariants (§12, <code>INV-B2I-*</code>), doctrines (§2), and every
+            <code>CP-B2I-*</code> parameter are <strong>identical to v4.0</strong> — diffed ID-by-ID. The watchdog SLA, the 16→ governed comms, and the
+            tri-bucket attribution are all carried over verbatim.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout key">
+        <span class="material-icons">vpn_key</span>
+        <div>
+          <div class="callout-title">What this means for the app</div>
+          <p>There is <strong>nothing new to build off v5.0</strong>. The v2 tab's core mismatch, state-by-state map, and gap list still apply — the cleanup tightens the spec's internal classification of states, but the customer experience is byte-identical. Read the <strong>v2 B2I tab</strong> for the live gap analysis.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="footnote">
+        OS: <span class="src">os-specs/wiom-cust-b2i-os-v5.0-locked-20260622.md</span> (changelog §top + §5.1 rule 5 + §5.7 execution-layer block), diffed against <span class="src">wiom-cust-b2i-os-v4.0-locked-20260615.md</span>; registries ESR v2.4 / SPR v2.5 / Routing v2.3 (unchanged for B2I).
+      </p>
+    </section>
+
+    <!-- Recovery v3 (v2.0 -> v3.0) -->
+    <section class="tab-panel" id="tab-recovery-v3">
+      <div class="page-eyebrow">OS #7 · Recovery &nbsp;<span style="opacity:.7">· v3 delta</span></div>
+      <h1 class="page-title">Recovery OS v3.0 — what changed since v2</h1>
+      <div class="page-meta">App: <code>customer-app-kotlin</code> &nbsp;·&nbsp; Spec: <span class="src">wiom-cust-recovery-os-v3.0-locked-20260622</span> &nbsp;·&nbsp; Updated 2026-06-23</div>
+      <p class="page-lead">
+        Like B2I v5.0, Recovery v3.0 is a <strong>boundary-test cleanup</strong>. Every change is on the architecture / implementation layer —
+        <strong>no case state, event, rule, SLA, comms obligation, verified-restoration logic, or reopen rule that the customer experiences has changed.</strong>
+        The full v2 analysis stands unchanged.
+      </p>
+
+      <div class="stats">
+        <div class="stat amber"><div class="num">0</div><div class="lbl">Customer-facing changes in v3.0</div></div>
+        <div class="stat"><div class="num">3→2</div><div class="lbl">Workflow-state labels collapsed (internal)</div></div>
+        <div class="stat"><div class="num">6</div><div class="lbl">Schema fields removed (impl-layer)</div></div>
+        <div class="stat"><div class="num">13</div><div class="lbl">Internal tracking codes removed</div></div>
+      </div>
+
+      <div class="callout warn">
+        <span class="material-icons">history</span>
+        <div>
+          <div class="callout-title">What changed in the OS since v2 (v2.0 → v3.0)</div>
+          <p>
+            <strong>(1) Workflow-state enum collapsed.</strong> <code>technically_restored / customer_informed / compensation_completed</code> →
+            <code>verification_pending / complete</code> (§4.2 reconciled to §5). These labels were <em>never</em> surfaced to customers, and v2.0's own
+            §5.2 transition table already used the new names — this just aligns §4.2.
+          </p>
+          <p style="margin-top:10px">
+            <strong>(2) Removed 6 schema fields</strong> (<code>trigger_type, trigger_source, experiential_verification, owner_id, recovery_debt_increment, compensation_status</code>) and
+            <strong>13 internal tracking codes</strong> (<code>ack_sent, ack_delivered, restoration_confirmed_delivered, closure_confirmed</code>… + experiential codes <code>not_received / non_contradictory / contradictory / unresolved</code>) → all reclassified as "see implementation spec." Plus 22 reference/wording fixes (FM-REC-04/05/15/18).
+          </p>
+          <p style="margin-top:10px">
+            <strong>Unchanged:</strong> case states &amp; transitions (§5.2 byte-identical), closure logic (3-of-4 evidence rule, 2-of-3 transfer-suspension variant, delivery-status rule), hold states &amp; plan-expiry deadlock protection, escalation timeouts <code>CP-REC-20/21/22</code>, Failed-Recovery Re-entry, and the <strong>"closed ≠ recovered" verified-restoration doctrine</strong>. Governing invariants <code>INV-REC-04/11/18/19/23</code> untouched.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout key">
+        <span class="material-icons">vpn_key</span>
+        <div>
+          <div class="callout-title">What this means for the app</div>
+          <p>No screen or flow changes. The <strong>v2 Recovery tab</strong> remains the live gap analysis. ESR v2.4 (22 Jun) trims the optional <code>RECOVERY_CASE_STATE_CHANGED</code> payload — non-breaking, architecture-layer only.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="footnote">
+        OS: <span class="src">os-specs/wiom-cust-recovery-os-v3.0-locked-20260622.md</span>, diffed against <span class="src">wiom-cust-recovery-os-v2.0-locked-20260615.md</span>; registries ESR v2.4 (payload trim) / SPR v2.5 (CP-REC-* unchanged).
+      </p>
+    </section>
+
+    <!-- Closure v3 (v2.0 -> v3.0) -->
+    <section class="tab-panel" id="tab-closure-v3">
+      <div class="page-eyebrow">OS #8 · Closure / Refund &nbsp;<span style="opacity:.7">· v3 delta</span></div>
+      <h1 class="page-title">Closure OS v3.0 — what changed since v2</h1>
+      <div class="page-meta">App: <code>customer-app-kotlin</code> &nbsp;·&nbsp; Spec: <span class="src">Closure_OS_v3_0_Standalone_Spec</span> (22 Jun) &nbsp;·&nbsp; Updated 2026-06-23</div>
+      <p class="page-lead">
+        Closure v3.0 is mostly boundary-test state-machine hygiene — but it lands <strong>one genuinely customer-facing change</strong>:
+        box-return disputes now resolve <strong>deterministically</strong> instead of sitting in open-ended limbo. This is the single new
+        screen designed for v3 (see the Cancellation flow's <em>Exit &amp; Refund</em> phase in the prototype).
+      </p>
+
+      <div class="stats">
+        <div class="stat green"><div class="num">1</div><div class="lbl">New customer-facing fix (dispute auto-resolution)</div></div>
+        <div class="stat red"><div class="num">−1</div><div class="lbl"><code>CUSTODY_DISPUTED</code> removed as open state</div></div>
+        <div class="stat"><div class="num">7d</div><div class="lbl">Adjudication window (CP-CLOSURE-20)</div></div>
+        <div class="stat"><div class="num">AMBIG</div><div class="lbl">Confidence on forced disposition ≠ refusal</div></div>
+      </div>
+
+      <div class="callout warn">
+        <span class="material-icons">history</span>
+        <div>
+          <div class="callout-title">What changed in the OS since v2 (v2.0 → v3.0)</div>
+          <p>
+            <strong>(1) Dispute auto-resolution — the customer-facing one.</strong> <code>CUSTODY_DISPUTED</code> is <strong>removed</strong> as an
+            OS-governed open outcome. A return/pickup dispute can no longer block <code>CLOSURE_FINAL</code> indefinitely: if it isn't resolved inside
+            <code>CP-CLOSURE-20</code> (7-day adjudication), the system forces <code>non_recovery_reason = DISPUTE_UNRESOLVED → custody_state = DEVICE_NOT_RECOVERED</code>
+            with <strong>confidence = AMBIGUOUS</strong> (not HIGH / refusal). The customer is <strong>never branded a refuser</strong>, the case reaches a
+            definite outcome, and the deposit stays protected. <em>(Doctrine #11 · INV-EXIT-01.)</em>
+          </p>
+          <p style="margin-top:10px">
+            <strong>(2) State-machine hygiene (internal).</strong> <code>DEVICE_WITH_CUSTOMER</code> and <code>RECOVERY_IN_PROGRESS</code> removed from the
+            OS state machine (the ESR event enum still carries all 5 custody values — tracking-layer only, not customer-visible).
+          </p>
+          <p style="margin-top:10px">
+            <strong>(3) ESR v2.4 (22 Jun).</strong> <code>RECOVERY_CASE_STATE_CHANGED</code> optional payload trimmed (<code>trigger_type/source, owner_id, compensation_status, recovery_debt_increment</code>) — non-breaking; no new customer-visible events.
+          </p>
+          <p style="margin-top:10px">
+            <strong>Unchanged &amp; already in v2:</strong> the four-stage refund lifecycle (<code>ELIGIBLE→PROVISIONED→FINALIZED→EXECUTED</code>), Path-2
+            reversibility (<code>REVERSAL_REQUESTED</code>, zero fee), the bond write-off Phases A–D, the 10-code reason taxonomy, the two orthogonal
+            state machines, and all 26 doctrines.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout key">
+        <span class="material-icons">vpn_key</span>
+        <div>
+          <div class="callout-title">The one screen to design for v3</div>
+          <p>A <strong>dispute auto-resolution surface</strong> — "वापसी का रिकॉर्ड मेल नहीं खा रहा — हम 7 दिन में नतीजा देंगे", with the explicit promise that no "box not returned" mark is applied while the case is open and the deposit stays safe. It's prototyped in <span class="src">flows-combined.html</span> → <strong>Cancellation → v3 · Exit &amp; Refund</strong> (screen v3·3), alongside the now-visible reversal, refund-lifecycle tracker, and write-off fallback.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="footnote">
+        OS: <span class="src">OS Tech HTMLs/Closure_OS_v3_0_Standalone_Spec.html</span> (v3.0 boundary cleanup), baseline <span class="src">os-specs/wiom-cust-closure-os-v2.0-locked-20260616.md</span>; registries <span class="src">registries/wiom-infra-cust-esr-v2.4-locked-20260622.md</span> (payload trim) / SPR v2.5 (CP-CLOSURE-* unchanged).
+      </p>
+    </section>
+
     <!-- ===================== TAB: LEGEND ===================== -->
     <section class="tab-panel" id="tab-legend">
       <div class="page-eyebrow">Reference</div>
@@ -2812,7 +2978,9 @@ NEW CLOSURE OS     relationship: ACTIVE → RESERVATION_EXPIRED → <b style="co
 
     // slot 8 label + brand sub reflect the active version (Exit in v1, Closure in v2)
     if(slot8) slot8.textContent = (curVer === 'v1') ? 'Exit / Refund' : 'Closure / Refund';
-    if(brandSub) brandSub.textContent = (curVer === 'v1') ? 'v1 · Old analysis (29 May)' : 'v2 · New analysis (17 Jun)';
+    if(brandSub) brandSub.textContent = (curVer === 'v1') ? 'v1 · Old analysis (29 May)'
+      : (curVer === 'v2') ? 'v2 · New analysis (17 Jun)'
+      : 'v3 · Latest analysis (22 Jun)';
 
     const main = document.querySelector('.main');
     if(main) main.scrollTo(0,0);
