@@ -199,6 +199,13 @@ def('menu','Scenario चुनें','scr',
     <div class="menu-card" data-go="cspNotice"><div class="mi"><span class="material-icons">swap_horiz</span></div><div><div class="mt">नेट पार्टनर बदल रहा है</div><div class="ms">CSP migration (4B)</div></div><span class="material-icons go">chevron_right</span></div>
     <div class="menu-card" data-go="b2iFail"><div class="mi"><span class="material-icons">build_circle</span></div><div><div class="mt">सेटअप नहीं हुआ</div><div class="ms">B2I pre-install closure</div></div><span class="material-icons go">chevron_right</span></div>
     <div class="menu-card" data-go="lifeEvent"><div class="mi"><span class="material-icons">volunteer_activism</span></div><div><div class="mt">Life-event closure</div><div class="ms">dignified, full refund</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="relocation"><div class="mi"><span class="material-icons">moving</span></div><div><div class="mt">मैं शिफ्ट हो रहा/रही हूँ</div><div class="ms">customer-relocation · re-connect offer</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="reallocation"><div class="mi"><span class="material-icons">inventory_2</span></div><div><div class="mt">Wiom को डिवाइस वापस चाहिए</div><div class="ms">asset-reallocation · full refund</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="deterioration"><div class="mi"><span class="material-icons">sentiment_dissatisfied</span></div><div><div class="mt">दिक़्क़त ठीक नहीं हुई</div><div class="ms">deterioration-unresolved (ARR)</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="transfer"><div class="mi"><span class="material-icons">swap_horiz</span></div><div><div class="mt">कनेक्शन ट्रांसफर</div><div class="ms">service-transfer · device continues</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="enforce"><div class="mi"><span class="material-icons">gpp_maybe</span></div><div><div class="mt">Fraud / security (system)</div><div class="ms">no reversal · forfeited</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="systerm"><div class="mi"><span class="material-icons">policy</span></div><div><div class="mt">System / regulatory (system)</div><div class="ms">system-termination · refund per policy</div></div><span class="material-icons go">chevron_right</span></div>
+    <div class="menu-card" data-go="neverActivated"><div class="mi"><span class="material-icons">help_outline</span></div><div><div class="mt">सेटअप से पहले रद्द (boundary)</div><div class="ms">NEVER_ACTIVATED — not a closure</div></div><span class="material-icons go">chevron_right</span></div>
   </div>`);
 
 /* --- home / active --- */
@@ -267,7 +274,8 @@ def('deviceReturn','डिवाइस लौटाएं (screen)','scr',
    <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">local_shipping</span></div><div><div class="rt">हमारी टीम पिकअप करेगी</div><div class="rs">3–4 दिन में</div></div><div class="ramt">₹250<small>−₹50</small></div></div>
    <div class="averify ok"><span class="material-icons">shield</span><p>₹300 अभी <b>रिज़र्व</b> है — डिवाइस कन्फर्म होते ही मिलेगा (Stage 2)।</p></div>
    <div class="scard tap" data-go="dispute"><div class="sr"><span class="k" style="color:#161021;font-weight:700">मैंने दे दिया पर पैसा नहीं आया?</span><span class="v" style="color:#D9008D">›</span></div></div>
-   <div class="scard tap" data-go="d007c"><div class="sr"><span class="k" style="color:#161021;font-weight:700">अभी डिवाइस नहीं दे सकता</span><span class="v" style="color:#D9008D">›</span></div></div>`,
+   <div class="scard tap" data-go="d007c"><div class="sr"><span class="k" style="color:#161021;font-weight:700">अभी डिवाइस नहीं दे सकता</span><span class="v" style="color:#D9008D">›</span></div></div>
+   <div class="scard tap" data-go="notRecovered"><div class="sr"><span class="k" style="color:#161021;font-weight:700">डिवाइस गुम / नहीं मिल रहा</span><span class="v" style="color:#D9008D">›</span></div></div>`,
   `<button class="abtn" data-go="tracker">खुद लौटाना चुनें</button>`));
 
 def('dispute','Custody dispute (chat)','chat',
@@ -337,7 +345,8 @@ def('cspNotice','पार्टनर बदल रहा है (chat)','chat'
   `<div class="bubble bot"><div class="b-title"><span class="material-icons">sync_alt</span>पार्टनर बदल रहा है<span class="chan">SMS+WA</span></div>आपका नेट पार्टनर बदल रहा है। <b>आपको कुछ नहीं करना</b> — प्लान, स्पीड और जगह सब वैसा ही रहेगा।<span class="time">11:20</span></div>
    <div class="bubble bot">कोई रुकावट नहीं आएगी। यह सेवा बंद होना नहीं है।
      <div class="chat-cta sec" data-go="cspChanged">ठीक है, समझ गया</div>
-     <div class="chat-cta" data-go="cspOffer">(अगर कोई पार्टनर उपलब्ध न हो?)</div>
+     <div class="chat-cta sec" data-go="gap">(नया पार्टनर देर से तैयार हो?)</div>
+     <div class="chat-cta" data-go="cspOffer">(कोई पार्टनर उपलब्ध न हो?)</div>
    </div>`));
 
 def('cspChanged','कनेक्शन जारी — continuity','chat',
@@ -375,7 +384,7 @@ def('lifeEvent','Life-event (chat)','chat',
   chat('कनेक्शन बंद किया जा रहा है · बचा पैसा वापस',
   `<div class="bubble bot"><div class="b-title"><span class="material-icons">volunteer_activism</span>हम आपके साथ हैं</div>हमें सूचित किया गया है। आपको कुछ नहीं करना — हम कनेक्शन शांति से बंद कर देंगे और बचा हुआ पूरा पैसा परिवार को लौटा देंगे।<span class="time">—</span></div>
    <div class="bubble bot">आगे कोई संदेश नहीं भेजेंगे।
-     <div class="chat-cta sec" data-go="forcedRefund">बचा पैसा कैसे मिलेगा?</div>
+     <div class="chat-cta sec" data-go="lifeFinal">बचा पैसा कैसे मिलेगा?</div>
    </div>`));
 
 /* --- payment history --- */
@@ -385,6 +394,95 @@ def('paymentHistory','पेमेंट हिस्ट्री (screen)','scr
    <div class="scard"><div class="sr"><span class="k">नेट रिचार्ज</span><span class="v"><span class="sok"><span class="material-icons">check_circle</span>सफल</span></span></div><div class="sr"><span class="k">₹500</span><span class="v neg">12 जून 2026</span></div></div>
    <div class="averify info"><span class="material-icons">visibility</span><p>refund अब छुपते नहीं — entry दबाकर tracker खोलें।</p></div>`,
   `<button class="abtn ghost" data-go="home">वापस होम</button>`));
+
+/* --- fraud / security (enforcement) --- */
+def('enforce','Fraud / security closure (chat)','chat',
+  chat('कनेक्शन बंद · सुरक्षा कारण',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">gpp_maybe</span>कनेक्शन बंद किया गया<span class="chan">SMS+WA</span></div>सुरक्षा/नीति कारणों से आपका कनेक्शन बंद किया जा रहा है। यह संदेश सिर्फ़ जानकारी के लिए है।<span class="time">अभी</span></div>
+   <div class="bubble bot">इस मामले में कनेक्शन वापस चालू नहीं किया जा सकता, और जमा राशि लौटाई नहीं जाएगी।</div>
+   <div class="bubble bot">सवाल हों तो सहायता टीम से संपर्क करें।
+     <div class="chat-cta sec" data-go="menu">सहायता से बात करें</div>
+   </div>`));
+
+/* --- system-termination --- */
+def('systerm','System / regulatory closure (chat)','chat',
+  chat('कनेक्शन बंद · प्लेटफ़ॉर्म कारण',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">policy</span>कनेक्शन बंद किया जा रहा है<span class="chan">SMS+WA</span></div>प्लेटफ़ॉर्म/नियामक कारणों से यह कनेक्शन बंद किया जा रहा है। यह संदेश जानकारी के लिए है — आपकी कोई गलती नहीं।<span class="time">अभी</span></div>
+   <div class="bubble bot">आपका लागू रिफंड नीति अनुसार पूरा दिया जाएगा, और डिपॉज़िट डिवाइस लौटाने पर वापस।
+     <div class="chat-cta" data-go="deviceReturn">डिवाइस लौटाने का तरीका</div>
+   </div>`));
+
+/* --- wiom-asset-reallocation --- */
+def('reallocation','Asset reallocation (chat)','chat',
+  chat('डिवाइस वापसी का अनुरोध · पूरा रिफंड',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">inventory_2</span>हमें यह डिवाइस वापस चाहिए<span class="chan">SMS+WA</span></div>हमें यह नेटबॉक्स वापस लेना है। आपको <b>अग्रिम सूचना</b> दी जा रही है और आपका <b>पूरा डिपॉज़िट ₹300</b> वापस मिलेगा।<span class="time">अभी</span></div>
+   <div class="bubble bot">आपकी कोई गलती नहीं — सुविधा के समय में डिवाइस लौटा दें।
+     <div class="chat-cta" data-go="deviceReturn">डिवाइस लौटाने का तरीका</div>
+   </div>`));
+
+/* --- deterioration-unresolved (ARR FAILED) --- */
+def('deterioration','Quality unresolved → closing (chat)','chat',
+  chat('दिक़्क़त ठीक नहीं हुई · पूरा हिसाब साफ़ होगा',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">sentiment_dissatisfied</span>हम इसे ठीक नहीं कर पाए<span class="chan">SMS+WA</span></div>बार-बार कोशिश के बाद भी नेट की दिक़्क़त ठीक नहीं हो पाई। यह हमारी ओर से रही, इसलिए हम कनेक्शन बंद कर रहे हैं और पूरा हिसाब साफ़ करेंगे।<span class="time">अभी</span></div>
+   <div class="bubble bot">बचा हुआ पैसा + डिपॉज़िट पूरा वापस — कोई late charge नहीं।
+     <div class="chat-cta" data-go="deviceReturn">डिवाइस लौटाने का तरीका</div>
+   </div>`));
+
+/* --- customer-relocation: re-connect at new address --- */
+def('relocation','शिफ्टिंग — नए पते पर नेट? (screen)','scr',
+  scr(topbar('आप शिफ्ट हो रहे हैं'),
+  `<div class="ah1 sm" style="text-align:center">नए पते पर नेट चाहिए?</div><div class="asub" style="text-align:center">हम उसी प्लान पर नए पते पर नेट लगा सकते हैं।</div>
+   <div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">moving</span></div><div><div class="rt">हाँ, नए पते पर लगवाएं</div><div class="rs">वही प्लान — कोई रुकावट नहीं</div></div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">close</span></div><div><div class="rt">नहीं, बंद करना है</div><div class="rs">बचे दिनों का + पूरा ₹300 डिपॉज़िट</div></div></div>
+   <div class="averify info"><span class="material-icons">handshake</span><p>दोबारा कनेक्ट का ऑफ़र पहले (INV-EXIT-26)। शिफ्टिंग पर कोई दाग नहीं (trust NONE), पूरा डिपॉज़िट वापस।</p></div>`,
+  `<button class="abtn" data-go="menu">नए पते पर लगवाएं</button><button class="abtn ghost" data-go="proRata">नहीं, बंद करना है</button>`));
+
+/* --- service-transfer (Transfer Mode) --- */
+def('transfer','Service transfer (chat)','chat',
+  chat('कनेक्शन ट्रांसफर हो गया · डिवाइस वहीं चालू',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">swap_horiz</span>ट्रांसफर पूरा हुआ<span class="chan">SMS+WA</span></div>आपका कनेक्शन सफलतापूर्वक नए account पर ट्रांसफर हो गया। <b>डिवाइस वहीं चलता रहेगा</b> — कोई पिकअप नहीं, कोई रुकावट नहीं।<span class="time">अभी</span></div>
+   <div class="bubble bot">यह "सेवा बंद" होना नहीं है — सिर्फ़ एक ट्रांसफर पुष्टि।
+     <div class="chat-cta sec" data-go="menu">ठीक है</div>
+   </div>`));
+
+/* --- 4B service gap --- */
+def('gap','Service gap — plan frozen (chat)','chat',
+  chat('नेट थोड़ी देर बंद · प्लान रुका हुआ',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">sync</span>हम आपका नेट फिर चालू कर रहे हैं<span class="chan">SMS+WA</span></div>आपका पार्टनर बदल रहा है। इस बीच आपका प्लान <b>रुका हुआ</b> है — एक भी दिन नहीं कटेगा।<span class="time">अभी</span></div>
+   <div class="bubble bot">यह Wiom की ओर से है, इससे कनेक्शन बंद नहीं होगा (AMD-CON-16)।
+     <div class="chat-cta sec" data-go="cspChanged">⏩ नया पार्टनर तैयार — नेट चालू</div>
+   </div>`));
+
+/* --- device not recovered: bond held + written off --- */
+def('notRecovered','डिवाइस नहीं मिला — पैसा सुरक्षित (chat)','chat',
+  chat('डिवाइस का इंतज़ार · 60 दिन · ₹300 सुरक्षित',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">schedule</span>डिवाइस अभी नहीं मिला</div>कोई जल्दबाज़ी नहीं — हम <b>60 दिन</b> तक इंतज़ार करेंगे और आपका हिसाब सुरक्षित रखेंगे। अब भी लौटाएं तो पूरा ₹300।<span class="time">अभी</span></div>
+   <div class="bubble bot">कोई आरोप नहीं — सिर्फ़ एक record (Doctrine #7)।
+     <div class="chat-cta" data-go="finalNR">⏩ 60 दिन बाद — closure</div>
+   </div>`));
+
+def('finalNR','Closure recorded — written off (chat)','chat',
+  chat('कनेक्शन बंद · हिसाब दर्ज (audited)',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">inventory</span>कनेक्शन बंद हो गया<span class="chan">SMS+WA</span></div>डिवाइस वापस नहीं आ पाया, पर हिसाब साफ़ है। पैसा चुपचाप गायब नहीं हुआ — Phase A–C के बाद audited write-off।
+     <div class="msg-card"><div class="mr"><span class="k">डिवाइस</span><span class="v">वापस नहीं मिला</span></div><div class="mr"><span class="k">दोबारा नेट पर</span><span class="v pos">क्रेडिट फिर सक्रिय</span></div></div><span class="time">AMD-CM-18</span></div>
+   <div class="bubble bot"><div class="chat-cta sec" data-go="menu">रसीद डाउनलोड करें</div></div>`));
+
+/* --- life-event final (full refund to family) --- */
+def('lifeFinal','Life-event — पूरा रिफंड परिवार को (chat)','chat',
+  chat('कनेक्शन बंद · ₹600 परिवार को',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">family_restroom</span>पूरा हिसाब साफ़</div>बचा हुआ पूरा पैसा और डिपॉज़िट परिवार (next-of-kin) को लौटाया जा रहा है।
+     <div class="msg-card"><div class="mr"><span class="k">बचे दिनों का</span><span class="v pos">₹300</span></div><div class="mr"><span class="k">डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="mr"><span class="k">कुल</span><span class="v pos">₹600</span></div></div><span class="time">trust: NONE</span></div>
+   <div class="bubble bot">डिवाइस वापसी zero-friction — कोई दबाव नहीं।
+     <div class="chat-cta sec" data-go="menu">परिवार का खाता जोड़ें</div>
+   </div>`));
+
+/* --- never activated (boundary, NOT a closure) --- */
+def('neverActivated','Never activated (boundary)','scr',
+  scr(topbar('बुकिंग'),
+  `<div style="text-align:center"><div class="ahero gray"><span class="material-icons">help_outline</span></div><div class="ah1 sm">यह closure नहीं है</div></div>
+   <div class="averify gray"><span class="material-icons">info</span><p>नेट सेटअप होने से <b>पहले</b> बुकिंग रद्द हुई (WORK_ORDER_CANCELLED)। चूंकि कोई सेवा शुरू ही नहीं हुई, यहाँ closure नहीं चलता — कोई डिवाइस वापसी नहीं, कोई closure record नहीं (AMD-CLOSURE-06)।</p></div>
+   <div class="scard"><div class="sr"><span class="k">स्थिति</span><span class="v">NEVER_ACTIVATED</span></div><div class="sr"><span class="k">रिफंड</span><span class="v">सिर्फ़ अगर booking-fee obligation हो</span></div></div>`,
+  `<button class="abtn ghost" data-go="menu">समझ गया</button>`));
 
 /* ============ ROUTER ============ */
 const phone=document.getElementById('phone'), crumb=document.getElementById('crumb');
