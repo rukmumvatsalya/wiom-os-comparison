@@ -371,19 +371,21 @@
   .verbtn:hover{color:#e7e9ee}
   .verbtn.active.v1{background:#3a3f4a;color:#fff}
   .verbtn.active.v2{background:#D9008D;color:#fff}
+  .verbtn.active.v3{background:#6D17CE;color:#fff}
   .verbtn .vsub{font-weight:500;opacity:.8;font-size:11px;margin-left:2px}
 </style>
 </head>
 <body>
   <header class="doc">
     <div class="doc-eyebrow">Wiom Customer App · Flow Redesign (HTML Prototype)</div>
-    <h1>Wiom Customer Flows — Old (v1) vs New (v2)</h1>
+    <h1>Wiom Customer Flows — v1 · v2 · v3 (latest OS)</h1>
     <p class="lead">The customer journey redesigned against the Customer OS. Each OS defines states, transparency and fairness — never chat vs screens — so the app's existing paradigm is kept: transactional steps stay screen-based, status &amp; nudges stay in chat (as today). The highlighted items are the OS-driven fixes delivered within that paradigm.</p>
         <div class="verbar">
       <span class="verbar-lbl">Showing</span>
       <div class="verswitch">
         <button class="verbtn v1" data-ver="v1">Old <span class="vsub">· v1 · 29 May</span></button>
         <button class="verbtn v2 active" data-ver="v2">New <span class="vsub">· v2 · 17 Jun</span></button>
+        <button class="verbtn v3" data-ver="v3">Latest <span class="vsub">· v3 · 22 Jun</span></button>
       </div>
       <span class="verbar-lbl" id="verhint">New = redesigned against the re-locked v2 OS</span>
     </div>
@@ -2341,6 +2343,490 @@
         <div class="os-add"><h5><span class="material-icons">flag</span>Why F4 is acknowledged to the customer (and no win-back)</h5><p>An ordinary cancel and a Wiom-caused, deterioration-linked exit are <b>not</b> the same — the v2 distinction the app couldn't make. <b>F4</b> records the unresolved deterioration as the closure cause; obligations (refund + the already-added T5 credit) <b>discharge regardless</b> of the exit. The handoff to Closure OS is clean and dignified (<b>T7</b> confirm-and-handoff). <b>No</b> win-back, no "come back" messaging (D16).</p><p class="ref">ARR OS · F4 EXPLICIT_CLOSURE_DETERIORATION_LINKED · §15.1 · §10 · T7 · D1 · INV-ARR-01</p></div></div>
         </div>
   </div>
+<div class="panel" id="panel-cancel-v3">
+    <div class="panel-intro"><p><b>v3 (22 Jun · Closure OS v3.0):</b> the same cancellation flow as v2, with a new <b>Exit &amp; Refund</b> stage at the end — a reversible exit, a visible deposit-refund tracker, deterministic box-return dispute resolution, and a no-silent-absorption refund fallback. The <b>cancellation</b> flow itself, reviewed against the OS. Structure follows the prototype faithfully: the cancel request happens in <b>chat</b>, but reason-selection and each reason's <b>follow-up are full-page screens</b> (back-arrow top bar, heading, option cards, bottom button). Governed by <b>At-Risk Resolution OS</b> (act on the problem, not the decision) and <b>Exit OS</b> (dignified, no-penalty exit). Scroll sideways →</p></div>
+    <div class="fab-warn"><span class="material-icons">warning_amber</span><p><b>Source note:</b> "Current" screens are faithful <b>reconstructions</b> of the existing HTML prototype (sauravg666.github.io/cancellation-retention-flow), not exported Figma. Structure (chat vs full-page) now matches the prototype.</p></div>
+    <div class="method-note"><span class="material-icons">policy</span><p><b>OS verdict:</b> reason-capture → <b>offer-a-fix</b> per reason (change address / reschedule / clarify) is OS-aligned and kept. Two coercive parts are redesigned: the entry <b>deflection framing</b> ("so you don't need to cancel"), and the final <b>₹100-refund-denial deterrent gate</b> → non-accusatory close with attribution-aware good-faith refund.</p></div>
+    <div class="rail">
+
+      <!-- PHASE A : CANCEL INTENT (chat) -->
+      <div class="phase"><div class="line"></div><div class="lbl">A · Cancel intent (chat)</div><div class="line"></div></div>
+
+      <!-- 1. CURRENT: cancel request + deflection (chat) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">1</span><span class="screen-name">Cancel request → deflection (chat)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — in chat, user asks to cancel; bot deflects: "if you have a problem we can fix it so cancellation isn't necessary" → "अपनी समस्या बताएं".</div>
+        <div class="vphone">
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
+            <div class="vbubble me">मुझे नेट की बुकिंग कैंसिल करनी है<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">व्योम से संपर्क करने के लिए धन्यवाद! अगर आपको बुकिंग में कोई दिक्कत आ रही है तो हम उसे ठीक कर सकते हैं ताकि कैंसिल करने की ज़रूरत न पड़े।<div class="vcta">अपनी समस्या बताएं</div><span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS IMPROVE: honest acknowledgment (chat) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">1a</span><span class="screen-name">Honest acknowledgment (chat)</span><span class="badge imp">Improved · ARR</span></div>
+        <div class="fixnote"><b>OS replaces the deflection:</b> acknowledge plainly, offer to fix the problem AND give a direct cancel path — no "so you don't need to cancel" framing.</div>
+        <div class="vphone"><div class="vflag">Improved</div>
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>सेटअप बाकी है</b></div></div></div>
+            <div class="vbubble me">मुझे नेट की बुकिंग कैंसिल करनी है<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">ठीक है, हम कैंसिल कर सकते हैं। बस एक बात — अगर कोई दिक्कत है तो शायद हम उसे ठीक कर पाएँ। बताएँगे क्या हुआ?<div class="vcta">क्या दिक्कत है, बताएँ</div><div class="vcta">सीधे कैंसिल करें</div><span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>What ARR improves</h5><p>Offer to fix the <b>problem</b>, but give a <b>direct cancel</b> path too. No deflection that acts on the decision.</p><p class="ref">ARR OS · D1 · INV-ARR-01</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE B : REASON (full page) -->
+      <div class="phase"><div class="line"></div><div class="lbl">B · Reason (full page)</div><div class="line"></div></div>
+
+      <!-- 2. CURRENT: reason selection — FULL PAGE -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">2</span><span class="screen-name">Reason selection (full page)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — <b>full-page screen</b>: "क्या समस्या आ रही है" with 7 option cards. Not chat. Kept.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:left">क्या समस्या आ रही है?</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+              <div class="optrow sel"><span class="ord"></span><span class="otext">मुझे आगे की प्रक्रिया समझ नहीं आ रही</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">कीमत ज़्यादा लग रही है</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">गलत पते पर बुक कर दिया</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">मैं इस समय उपलब्ध नहीं हूँ</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">नेट लगने में देरी हो रही है</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">अभी जरूरत नहीं है</span></div>
+              <div class="optrow"><span class="ord"></span><span class="otext">कोई अन्य कारण</span></div>
+            </div>
+          </div>
+          <button class="abtn">आगे बढ़ें</button>
+        </div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE C : PER-REASON FOLLOW-UPS (full page) -->
+      <div class="phase"><div class="line"></div><div class="lbl">C · Per-reason follow-ups (full page)</div><div class="line"></div></div>
+
+      <!-- 3. CURRENT: process-unclear follow-up -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">3</span><span class="screen-name">Process unclear → help</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — full-page follow-up for "प्रक्रिया समझ नहीं आ रही": explains next steps / offers help, with cancel as secondary. Kept.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody">
+            <div style="margin:14px 0 4px"><span class="material-icons" style="font-size:48px;color:#D9008D">help_outline</span></div>
+            <div class="ah1">आगे की प्रक्रिया आसान है</div>
+            <div class="asub">बस पता कन्फर्म करना है, फिर इंजीनियर आकर नेट लगा देगा। हम हर कदम पर आपके साथ हैं। चाहें तो हमसे बात भी कर सकते हैं।</div>
+          </div>
+          <button class="abtn">आगे बढ़ें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">बुकिंग कैंसिल करें</button>
+        </div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 4. CURRENT: wrong-address follow-up -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">4</span><span class="screen-name">Wrong address → change</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — full-page follow-up: "पता बदल सकते हैं" with "पता बदलें" primary, "बुकिंग कैंसिल करें" secondary. OS-aligned (fix the problem). Kept.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody">
+            <div style="margin:14px 0 4px"><span class="material-icons" style="font-size:48px;color:#D9008D">edit_location_alt</span></div>
+            <div class="ah1">पता आसानी से बदला जा सकता है</div>
+            <div class="asub">गलत पते पर बुक हो गया? कोई बात नहीं — कैंसिल करने की ज़रूरत नहीं, बस सही पता डाल दें।</div>
+          </div>
+          <button class="abtn">पता बदलें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">बुकिंग कैंसिल करें</button>
+        </div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 5. CURRENT: not-available / delayed / dont-need -> reschedule follow-up -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">5</span><span class="screen-name">Not available / delayed → reschedule</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — full-page follow-up for timing reasons: "नया दिन / समय चुन सकते हैं" with reschedule primary, cancel secondary. OS-aligned. Kept.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody">
+            <div style="margin:14px 0 4px"><span class="material-icons" style="font-size:48px;color:#D9008D">event_available</span></div>
+            <div class="ah1">अपने हिसाब से समय चुनें</div>
+            <div class="asub">अभी समय नहीं है या देरी हो रही है? आप जब चाहें, उस दिन/समय का सेटअप चुन सकते हैं — कैंसिल करने की ज़रूरत नहीं।</div>
+          </div>
+          <button class="abtn">नया दिन/समय चुनें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">बुकिंग कैंसिल करें</button>
+        </div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS NEW: price-confusion follow-up (clarify, not discount) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">5a</span><span class="screen-name">Price high → clarify</span><span class="badge new">New · ARR</span></div>
+        <div class="fixnote"><b>OS adds</b> a full-page follow-up for "कीमत ज़्यादा": resolve the <b>confusion</b> (refundable deposit + PayG). Explicitly <b>not</b> a discount / save-offer (ARR bans segmented save-pricing).</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:left">कीमत को साफ़ कर दें</div>
+            <div class="asub" style="text-align:left">₹300 जमा राशि है — नेट बॉक्स लौटाने पर पूरी वापस। आगे आप सिर्फ़ इस्तेमाल के दिनों का रिचार्ज करते हैं, चाहें तो 1 दिन का भी।</div>
+            <div class="scard" style="margin-top:14px;text-align:left"><div class="sr"><span class="k">जमा राशि (रिफ़ंडेबल)</span><span class="v">₹300</span></div><div class="sr"><span class="k">रिचार्ज</span><span class="v">₹25/दिन से</span></div></div>
+          </div>
+          <button class="abtn">समझ गया, जारी रखें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">फिर भी कैंसिल करें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why ARR adds this (and what it must NOT be)</h5><p>Resolve the <b>misunderstanding</b> with honest facts. Never a discount, coupon, or "stay &amp; get X" — ARR bans segmented save-pricing. Cancel stays one tap away.</p><p class="ref">ARR OS · resolve the problem · D16 No-Parallel-Save-Desks</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- 6. CURRENT: other reason free text -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">6</span><span class="screen-name">Other reason (full page)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — full-page: "बुकिंग कैंसिल करने का कारण नीचे लिखें", text input (min 50 chars), cancel / go back. Kept.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:left">कैंसिल करने का कारण लिखें</div>
+            <div class="asub" style="text-align:left">ताकि हम सुधार कर सकें।</div>
+            <div style="background:#fff;border:1px solid #e6e3ec;border-radius:12px;padding:12px;margin-top:12px;height:110px;font-size:12px;color:#a8a2b4;text-align:left">यहाँ लिखें…</div>
+            <div style="font-size:10.5px;color:#8a8594;margin-top:6px">कम से कम 50 अक्षर ज़रूरी हैं</div>
+          </div>
+          <button class="abtn">बुकिंग कैंसिल करें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">वापस जाएं</button>
+        </div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- PHASE D : EXIT (full page) -->
+      <div class="phase"><div class="line"></div><div class="lbl">D · Exit</div><div class="line"></div></div>
+
+      <!-- 7. CURRENT: refund-denial gate (full page) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">7</span><span class="screen-name">Refund-denial gate (full page)</span><span class="badge kept">Current</span></div>
+        <div class="fixnote">Reconstructed — full-page final gate: "कैंसिल करने पर ₹100 वापस नहीं मिलेगा। फिर भी कैंसिल करना चाहते हैं?" The coercive part the OS flags.</div>
+        <div class="aphone">
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody">
+            <div style="margin:14px 0 4px"><span class="material-icons" style="font-size:48px;color:#E2B203">warning</span></div>
+            <div class="ah1">बुकिंग कैंसिल करने पर ₹100 वापस नहीं मिलेगा</div>
+            <div class="asub">क्या आप फिर भी कैंसिल करना चाहते हैं?</div>
+          </div>
+          <button class="abtn">हाँ, कैंसिल करें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">नहीं, बुकिंग जारी रखें</button>
+        </div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS IMPROVE: honest exit + correct refund (full page) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">7a</span><span class="screen-name">Honest exit + correct refund</span><span class="badge imp">Improved · Exit</span></div>
+        <div class="fixnote"><b>OS replaces the deterrent gate:</b> state refund facts non-accusatorily and apply attribution-aware good-faith refund — if the cause was Wiom's (delay/confusion), the ₹100 returns too.</div>
+        <div class="aphone"><div class="aflag">Improved</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:left">आपकी बुकिंग कैंसिल कर रहे हैं</div>
+            <div class="asub" style="text-align:left">आपकी पसंद का पूरा सम्मान है। आपका रिफ़ंड इस तरह होगा:</div>
+            <div class="scard" style="margin-top:12px;text-align:left"><div class="sr"><span class="k">जमा राशि</span><span class="v">₹300 वापस</span></div><div class="sr"><span class="k">बुकिंग फ़ीस</span><span class="v">₹100 वापस*</span></div></div>
+            <div style="font-size:10px;color:#8a8594;margin-top:6px;text-align:left">*देरी या हमारी ओर से दिक्कत होने पर ₹100 भी पूरा वापस।</div>
+          </div>
+          <button class="abtn">कैंसिल कन्फर्म करें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">रहने दें, जारी रखूँ</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>What Exit OS changes</h5><p>No threat-framing. State refund facts <b>non-accusatorily</b>; apply <b>attribution-aware good-faith refund</b> — Wiom-caused → fee returns too.</p><p class="ref">Exit OS · #25 Non-Accusatory · #15 Bond-Refund · C2</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- OS NEW: confirmed exit bookend (chat) -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">8</span><span class="screen-name">Cancelled — confirmed (chat)</span><span class="badge new">New · Exit</span></div>
+        <div class="fixnote"><b>OS adds the closure bookend</b> back in chat: no-silent-exit — confirm cancellation + refund + timeline, door left open. No win-back spam.</div>
+        <div class="vphone"><div class="vflag">New</div>
+          <div class="vstatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="vtop"><div class="vlogo">&#8734;</div><div><div class="vname">व्योम</div><div class="vsub">ऑनलाइन</div></div><div class="vact"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>
+          <div class="vchat"><div class="vcard"><div class="vci"><span class="material-icons">insights</span></div><div><div class="l1">घर का नेट: रमेश</div><div class="l2">स्थिति: <b>बुकिंग कैंसिल</b></div></div></div>
+            <div class="vbubble">आपकी बुकिंग कैंसिल हो गई है। ₹400 आपके UPI पर 2–3 दिन में वापस आ जाएँगे।<span class="vt">10:15 AM</span></div>
+            <div class="vbubble">आपके साथ बातचीत अच्छी रही। जब भी दोबारा नेट चाहिए हो, आपकी जानकारी सुरक्षित है — आसानी से वापस आ सकते हैं।<div class="vcta">रिफ़ंड की स्थिति देखें</div><span class="vt">10:15 AM</span></div></div>
+          <div class="vinput"><div class="vb">यहाँ पूछें....</div><div class="vs"><span class="material-icons">send</span></div></div></div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why Exit adds this</h5><p>Exit must never be silent. Clear closure + refund confirmation + open door (memory preserved) — and no win-back spam.</p><p class="ref">Exit OS · #25 No-Silent-Exit · #22 Re-entry-Recognition · #24 Post-Exit-Obligation-Only</p></div></div>
+
+          <!-- ===================== ARR v2.0 ADDITIONS ===================== -->
+      <!-- PHASE v2 : RESTORATIVE & PRE-STAGE (ARR v2.0) -->
+      <div class="phase"><div class="line"></div><div class="lbl">v2 · Restorative &amp; pre-stage (ARR v2.0)</div><div class="line"></div></div>
+
+      <!-- v2·1 NEW: T5 restorative credit — now operational -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·1</span><span class="screen-name">आपका हक़ का क्रेडिट (restorative credit)</span><span class="badge new">New · ARR</span><span class="tool">ARR · T5</span></div>
+        <div class="fixnote"><b>Why (v2):</b> ARR v2.0 locks the T5 rate card (<b>AMD-ARR-15</b>): if नेट was verifiably <b>unusable</b> for N days (binary test — throughput ≤ threshold, sustained), a restorative credit = <b>daily_rate × harm_days</b> is added. Credit only (D-018A), and <b>non-contingent on staying</b> (INV-ARR-21).</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:6px 0 2px"><span class="material-icons" style="font-size:44px;color:#008043">volunteer_activism</span></div>
+            <div class="ah1" style="text-align:left">आपका हक़ का क्रेडिट जोड़ रहे हैं</div>
+            <div class="asub" style="text-align:left">आपका नेट <b>4 दिन</b> सही से चला ही नहीं — यह हमारी ओर से कमी रही। उन दिनों का पैसा हम क्रेडिट के रूप में लौटा रहे हैं।</div>
+
+            <div class="scard" style="margin-top:14px;text-align:left">
+              <div class="sr"><span class="k">जिन दिनों नेट नहीं चला</span><span class="v">4 दिन</span></div>
+              <div class="sr"><span class="k">प्रति दिन दर</span><span class="v">₹25/दिन</span></div>
+              <div style="height:1px;background:#E8E4F0;margin:6px 0"></div>
+              <div class="sr"><span class="k" style="font-weight:700;color:#161021">क्रेडिट</span><span class="v" style="color:#008043;font-size:14px">₹100</span></div>
+            </div>
+
+            <div class="averify"><span class="material-icons">verified_user</span><p><b>यह क्रेडिट रुकने की शर्त पर नहीं है।</b> आपके खाते में जुड़ चुका है — चाहे आप रहें या जाएँ, यह आपका ही है।</p></div>
+
+            <div style="background:#F1E5FF;border-radius:10px;padding:9px 11px;margin-top:10px;display:flex;gap:7px;align-items:flex-start;text-align:left">
+              <span class="material-icons" style="font-size:15px;color:#6D17CE;flex:0 0 auto;margin-top:1px">favorite_border</span>
+              <p style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;line-height:1.45;color:#46108a">फिर भी जाना चाहें तो ठीक है — क्रेडिट तब भी आपके पास रहेगा।</p>
+            </div>
+          </div>
+          <button class="abtn">ठीक है</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">फिर भी कैंसिल करें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">policy</span>Why ARR adds this (and what it must NOT be)</h5><p>T5 is <b>now operational</b> — v1.0 left the rate card a launch blocker; v2.0 locks it. Binary <b>unusability</b> test (not degradation — that's Recovery), <b>daily_rate × harm_days</b>, capped pro-rata, <b>credit only</b>. Not a discount, not a save-offer, not "stay &amp; get X". Same evidence → same payout whether they stay or exit.</p><p class="ref">ARR OS · T5 · AMD-ARR-15 · D-P05 · INV-ARR-21</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v2·2 NEW (os-add only): AT_WATCH passive monitoring — NOT a save desk -->
+      <div class="os-add" style="margin-top:0;border-color:#3a2d5a">
+        <h5><span class="material-icons">visibility</span>AT_WATCH · passive pre-stage (not a save-desk)</h5>
+        <p>Upstream of any case, ARR v2.0 adds <b>AT_WATCH</b> (<b>AMD-ARR-11</b>): on RS OS's watch signal it quietly <b>pre-stages</b> intake — logs the signal, readies the D26 template, monitors. That's all.</p>
+        <p style="margin-top:8px">It <b>NEVER</b> opens a case, authors RESOLVING, applies a T1–T8 tool, or contacts the customer (D6 — the customer must not know they're being watched). So it is structurally <b>not a save-desk</b>: no queue, no "AT_WATCH candidate" surface, no nudge. If real AT_RISK lands, the pre-staged case just opens faster.</p>
+        <p class="ref">ARR OS · §4.5 · AMD-ARR-11 · INV-ARR-28 (not a trigger) · INV-ARR-29 (passive only)</p>
+      </div>
+
+      <!-- ===================== ARR v2.0 — ROUND 2 COVERAGE ===================== -->
+      <!-- PHASE v2 : MORE OS COVERAGE (ARR v2.0) -->
+      <div class="phase"><div class="line"></div><div class="lbl">v2 · More OS coverage</div><div class="line"></div></div>
+
+      <!-- v2·3 NEW: T1 proactive resolution-first outreach — fires BEFORE cancel intent -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·3</span><span class="screen-name">असली दिक्कत ठीक करना (proactive outreach)</span><span class="badge new">New · ARR</span><span class="tool">ARR · T1 / proactive</span></div>
+        <div class="fixnote"><b>Why (v2):</b> ARR's whole doctrine is to act on the problem <b>before</b> the cancel decision — <b>D4</b> Proactive-Outreach-Required (<b>INV-ARR-22</b>, "governed proactive outreach is default, not optional"). This T1 message hits all four substantive checks (§4.4): event-referenced, customer-delivered, what Wiom is fixing, next concrete step. Never "please stay", never an offer; never says "at risk" (<b>D6 / INV-ARR-10</b>).</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>11:02 AM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:6px 0 2px"><span class="material-icons" style="font-size:44px;color:#6D17CE">handyman</span></div>
+            <div class="ah1" style="text-align:left">हमने देखा आपका नेट बार-बार रुक रहा है — चलिए असली दिक्कत ठीक करें</div>
+            <div class="asub" style="text-align:left">पिछले <b>7 दिनों</b> में आपका नेट <b>9 बार</b> रुका — यह सामान्य नहीं है, और इसकी जाँच हमें ख़ुद करनी चाहिए थी।</div>
+
+            <div class="scard" style="margin-top:14px;text-align:left">
+              <div class="sr"><span class="k">क्या बार-बार हो रहा है</span><span class="v">नेट बीच में रुकना</span></div>
+              <div class="sr"><span class="k">कितनी बार (7 दिन)</span><span class="v">9 बार</span></div>
+              <div style="height:1px;background:#E8E4F0;margin:6px 0"></div>
+              <div class="sr"><span class="k" style="font-weight:700;color:#161021">हम क्या ठीक कर रहे हैं</span><span class="v" style="color:#6D17CE">लाइन की जाँच</span></div>
+            </div>
+
+            <div class="averify"><span class="material-icons" style="color:#6D17CE">build_circle</span><p style="color:#46108a"><b>अगला कदम:</b> हमारी टीम आपके इलाक़े की लाइन की जाँच कर रही है। <b>2 दिन</b> में आपको ख़ुद अपडेट मिलेगा — आपको कहीं फ़ोन या फ़ॉलोअप करने की ज़रूरत नहीं।</p></div>
+
+            <div style="background:#F1E5FF;border-radius:10px;padding:9px 11px;margin-top:10px;display:flex;gap:7px;align-items:flex-start;text-align:left">
+              <span class="material-icons" style="font-size:15px;color:#6D17CE;flex:0 0 auto;margin-top:1px">info</span>
+              <p style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;line-height:1.45;color:#46108a">यह कोई ऑफ़र या छूट नहीं है — हम सिर्फ़ वह दिक्कत ठीक कर रहे हैं जो हमारी ओर से रही।</p>
+            </div>
+          </div>
+          <button class="abtn">ठीक है, जाँच शुरू करें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">और जानकारी देखें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">campaign</span>Why ARR fires this first (and what it must NOT be)</h5><p>The biggest gap was zero proactive surface — the app only reacted <b>after</b> a cancel/ticket flow opened. <b>D4</b> makes governed outreach the default. The message <b>names the specific recurring deterioration</b> (event-referenced, not generic), states what Wiom is fixing, and gives a concrete next step — the four-part T1 threshold. It <b>never</b> says "please stay", offers a discount, or labels the customer "at risk".</p><p class="ref">ARR OS · T1 · §4.4 · D4 · INV-ARR-22 · D6 / INV-ARR-10 · INV-ARR-01</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v2·4 NEW: customer-visible RESOLVING case state — honest "काम चालू है" -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·4</span><span class="screen-name">केस खुला है — अभी क्या हो रहा है (RESOLVING)</span><span class="badge new">New · ARR</span><span class="tool">ARR · RESOLVING</span></div>
+        <div class="fixnote"><b>Why (v2):</b> ARR is the sole author of <b>RESOLVING</b> and the spec requires it be a <b>visible, governed thing</b> — "the space between AT_RISK and EXITED has an owner." <b>D10</b>: RESOLVING is a coordination signal (governed work active), <b>not</b> a success assertion — so the copy says "काम चालू है", never "हल हो गया". <b>C1</b> no silent closes; visible as a case, <b>never</b> labelled "at risk" (<b>INV-ARR-10</b>).</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>09:48 AM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:6px 0 2px"><span class="material-icons" style="font-size:44px;color:#6D17CE">assignment</span></div>
+            <div class="ah1" style="text-align:left">हमने इसे ठीक करने के लिए एक केस खोला है</div>
+            <div class="asub" style="text-align:left">आपकी बार-बार आने वाली दिक्कत के लिए हमने एक केस खोला है ताकि यह कहीं खो न जाए। नीचे देखें अभी क्या हो रहा है।</div>
+
+            <div class="scard" style="margin-top:14px;text-align:left">
+              <div class="sr"><span class="k">केस नंबर</span><span class="v">#ARR-48217</span></div>
+              <div class="sr"><span class="k">किस बारे में</span><span class="v">नेट बार-बार रुकना</span></div>
+              <div class="sr"><span class="k">खुला</span><span class="v">2 दिन पहले</span></div>
+            </div>
+
+            <!-- honest progress: काम चालू है, NOT हल हो गया -->
+            <div class="evid" style="margin-top:12px">
+              <div class="evid-item ok"><span class="material-icons">check_circle</span>दिक्कत दर्ज की गई और जाँच के लिए भेजी गई</div>
+              <div class="evid-item ok"><span class="material-icons">check_circle</span>आपके इलाक़े की लाइन की जाँच शुरू</div>
+              <div class="evid-item wait"><span class="material-icons">radio_button_unchecked</span>कारण पक्का करना — <b>काम चालू है</b></div>
+              <div class="evid-item wait"><span class="material-icons">radio_button_unchecked</span>ठीक होने की पुष्टि — अभी बाकी</div>
+            </div>
+
+            <div class="averify" style="background:#F1E5FF"><span class="material-icons" style="color:#6D17CE">schedule</span><p style="color:#46108a"><b>अभी हल नहीं हुआ है — काम चालू है।</b> जैसे ही कारण पक्का होगा या ठीक होगा, हम आपको ख़ुद बताएँगे। यह केस बंद होने पर भी आपको साफ़ बताया जाएगा।</p></div>
+          </div>
+          <button class="abtn">केस की जानकारी रखें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">अपडेट कब मिलेगा?</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">visibility</span>Why RESOLVING must be visible (and honest)</h5><p>The app had <b>no case/state surface at all</b> — the customer could not see that a resolution case exists or its progress (<b>RESOLVING_ACTIVE → MONITORING → CLEARED/FAILED</b>). This makes the case visible and gives an honest, non-success-asserting status per <b>D10</b>. It honours <b>C1</b> "no silent closes" (closure will be told) and <b>INV-ARR-10</b> — shown as a case, never as "you're at risk".</p><p class="ref">ARR OS · §8.2 ARR_CASE_OPENED / RESOLVING_STATE_CHANGED · D10 · C1 · INV-ARR-10</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v2·5 NEW: explicit non-coercion stance at cancellation — no save-desk -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·5</span><span class="screen-name">कैंसिल आपका हक़ है (no save-desk)</span><span class="badge new">New · ARR</span><span class="tool">ARR · no save-desk</span></div>
+        <div class="fixnote"><b>Why (v2):</b> The spec names this "the highest corruption-risk OS" and the app's biggest fairness risk is a support path quietly becoming a save desk. <b>§5.3 + §3.3</b> No-Parallel-Save-Desks and the <b>D16</b> prohibited list forbid discounts / coupons / "stay & get X". This screen makes the non-coercion commitment visible at the exit decision itself, with cancel one tap away and equally weighted (<b>D1 / INV-ARR-01</b> — act on the problem, never the decision).</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>06:14 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:6px 0 2px"><span class="material-icons" style="font-size:44px;color:#352d42">handshake</span></div>
+            <div class="ah1" style="text-align:left">कैंसिल करना आपका हक़ है — हम रोकने की कोशिश नहीं करेंगे</div>
+            <div class="asub" style="text-align:left">आपकी दिक्कत हम वैसे भी ठीक करेंगे। पर रुकवाने के लिए हम कोई छूट, कूपन या "रुकिए तो ये मिलेगा" जैसा लालच <b>नहीं</b> देंगे — यह हमारा वादा है।</div>
+
+            <div class="scard" style="margin-top:14px;text-align:left">
+              <div class="sr" style="align-items:flex-start"><span class="k" style="display:flex;gap:6px;align-items:center"><span class="material-icons" style="font-size:15px;color:#008043">check</span>हम क्या करेंगे</span><span class="v" style="color:#008043;text-align:right;max-width:150px">दिक्कत ठीक करेंगे, चाहे आप रहें या जाएँ</span></div>
+              <div style="height:1px;background:#E8E4F0;margin:7px 0"></div>
+              <div class="sr" style="align-items:flex-start"><span class="k" style="display:flex;gap:6px;align-items:center"><span class="material-icons" style="font-size:15px;color:#D9008D">close</span>हम क्या नहीं करेंगे</span><span class="v" style="color:#D9008D;text-align:right;max-width:150px">छूट / कूपन / रोकने वाला ऑफ़र</span></div>
+            </div>
+
+            <div class="averify"><span class="material-icons">verified_user</span><p>आपका फ़ैसला आपका है। नीचे कैंसिल का रास्ता हमेशा खुला और बराबर है — हम उसे छिपाएँगे या मुश्किल नहीं बनाएँगे।</p></div>
+          </div>
+          <button class="abtn ghost" style="border:1.5px solid #E8E4F0;border-radius:24px;color:#352d42">कैंसिल करना जारी रखें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">पहले दिक्कत ठीक करवाएँ</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">gpp_good</span>Why the no-save-desk line is shown (and equally weighted)</h5><p>The earlier flow only said the price-clarify was "not a discount" — there was no explicit, customer-facing non-coercion commitment at the exit decision. Here both paths carry equal visual weight; cancel is one tap, never buried. <b>No</b> discount, coupon, loyalty, "stay & get X", or retention-team contact (D16 prohibited list). The object is the problem, never the stay/leave decision.</p><p class="ref">ARR OS · §5.3 · §3.3 No-Parallel-Save-Desks · D16 · D1 · INV-ARR-01</p></div></div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v2·6 NEW: F4 closure-linked deterioration acknowledgment — dignified handoff -->
+      <div class="screen"><div class="screen-tag"><span class="screen-num">v2·6</span><span class="screen-name">दिक्कत असली थी — आपका हक़ सुरक्षित है (F4)</span><span class="badge new">New · ARR</span><span class="tool">ARR · F4</span></div>
+        <div class="fixnote"><b>Why (v2):</b> The earlier closure bookend gives an honest refund but does <b>not</b> distinguish a deterioration-linked exit from an ordinary cancel. <b>F4 EXPLICIT_CLOSURE_DETERIORATION_LINKED</b> (§15.1 / §10): "customer declares exit during RESOLVING → F4 … obligations discharge regardless." This screen acknowledges the deterioration was real and unresolved, confirms refund/credit are unaffected, and hands off cleanly (<b>T7</b>) — exit-with-the-problem-owned is a fair outcome (<b>D1</b>). No win-back.</div>
+        <div class="aphone"><div class="aflag" style="background:#D9008D;color:#fff">New</div>
+          <div class="astatus"><span>07:30 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:6px 0 2px"><span class="material-icons" style="font-size:44px;color:#352d42">sentiment_satisfied</span></div>
+            <div class="ah1" style="text-align:left">आप जा रहे हैं — और हम मानते हैं कि दिक्कत असली थी</div>
+            <div class="asub" style="text-align:left">आपका नेट बार-बार रुका और हम उसे आपके रहते पूरी तरह ठीक नहीं कर पाए। यह हमारी कमी थी, आपकी नहीं। इसके लिए माफ़ी।</div>
+
+            <div class="averify"><span class="material-icons">verified_user</span><p><b>आपके हक़ वैसे ही पूरे होंगे।</b> केस बंद होने या न होने से आपका रिफ़ंड और क्रेडिट पर कोई फ़र्क़ नहीं पड़ता — वे आपके ही हैं।</p></div>
+
+            <div class="scard" style="margin-top:12px;text-align:left">
+              <div class="sr"><span class="k">बचे दिनों का रिफ़ंड</span><span class="v" style="color:#008043">₹180</span></div>
+              <div class="sr"><span class="k">हक़ का क्रेडिट (पहले जुड़ा)</span><span class="v" style="color:#008043">₹100</span></div>
+              <div class="sr"><span class="k">केस</span><span class="v">#ARR-48217 · दर्ज</span></div>
+            </div>
+
+            <div style="background:#F1F0F4;border-radius:10px;padding:9px 11px;margin-top:10px;display:flex;gap:7px;align-items:flex-start;text-align:left">
+              <span class="material-icons" style="font-size:15px;color:#5C5570;flex:0 0 auto;margin-top:1px">waving_hand</span>
+              <p style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;line-height:1.45;color:#352d42">कभी ज़रूरत हो तो दरवाज़ा खुला है — पर हम "वापस आइए" के मैसेज से आपको परेशान नहीं करेंगे।</p>
+            </div>
+          </div>
+          <button class="abtn">रिफ़ंड और बंद करना पक्का करें</button>
+          <button class="abtn ghost" style="margin-top:0;height:38px">रसीद डाउनलोड करें</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">flag</span>Why F4 is acknowledged to the customer (and no win-back)</h5><p>An ordinary cancel and a Wiom-caused, deterioration-linked exit are <b>not</b> the same — the v2 distinction the app couldn't make. <b>F4</b> records the unresolved deterioration as the closure cause; obligations (refund + the already-added T5 credit) <b>discharge regardless</b> of the exit. The handoff to Closure OS is clean and dignified (<b>T7</b> confirm-and-handoff). <b>No</b> win-back, no "come back" messaging (D16).</p><p class="ref">ARR OS · F4 EXPLICIT_CLOSURE_DETERIORATION_LINKED · §15.1 · §10 · T7 · D1 · INV-ARR-01</p></div></div>
+
+      <!-- ============================================================= -->
+      <!-- PHASE v3 : EXIT & REFUND  (Closure OS v3.0 · 22 Jun)          -->
+      <!-- ============================================================= -->
+      <div class="phase"><div class="line"></div><div class="lbl">v3 · Exit &amp; Refund (Closure OS v3.0 · 22 Jun)</div><div class="line"></div></div>
+
+      <!-- v3·1 : Zero-friction reversal -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">v3·1</span><span class="screen-name">मन बदल गया? वापस जुड़ें — कोई शुल्क नहीं</span><span class="badge new">New · v3</span><span class="exstate">Exit · reversal</span></div>
+        <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:14px 0 2px;text-align:center"><span class="material-icons" style="font-size:46px;color:#6D17CE">undo</span></div>
+            <div class="ah1" style="text-align:center">मन बदल गया? कोई बात नहीं</div>
+            <div class="asub" style="text-align:center">नेट बॉक्स अभी आपके पास है — आप अभी भी रुक सकते हैं। वापस जुड़ने पर कोई शुल्क नहीं, कोई रोक-टोक नहीं।</div>
+            <div class="trust info" style="margin-top:16px">
+              <span class="material-icons">verified_user</span>
+              <p>बॉक्स लेने वाली रिक्वेस्ट अभी रोकी जा सकती है। आपका नेट वहीं से चालू रहेगा जहाँ छूटा था — दोबारा सेटअप की ज़रूरत नहीं।</p>
+            </div>
+          </div>
+          <button class="abtn">हाँ, वापस जुड़ना है</button>
+          <button class="abtn ghost">नहीं, बंद ही करना है</button>
+        </div>
+        <div class="fixnote"><b>Why (v3):</b> Closure OS v3.0 makes an exit reversible while the box is still with the customer — <b>REVERSAL_REQUESTED (A14) → RECALL_CANCELLED</b> reverts <code>CLOSURE_INITIATED → ACTIVE_ENTITLED</code> at <b>zero fee</b> (Wiom absorbs the CSP recall cost). Re-joining must never cost more than leaving. Closure OS · §5.13 · AMD-EXIT-22 · INV-EXIT-14 (Zone 2, pre-pickup).</div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v3·2 : Deposit-refund lifecycle tracker (PROVISIONED highlighted) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">v3·2</span><span class="screen-name">जमा राशि वापसी — कहाँ तक पहुँची</span><span class="badge new">New · v3</span><span class="exstate">Exit · refund lifecycle</span></div>
+        <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div class="ah1" style="text-align:center;margin-top:8px">आपकी ₹300 जमा राशि सुरक्षित है</div>
+            <div class="asub" style="text-align:center">नेट बॉक्स लौटाने से <b>पहले ही</b> हमने आपकी जमा राशि अलग रख दी है — बॉक्स मिलते ही सीधे आपके खाते में।</div>
+
+            <div class="scard" style="margin-top:16px;padding:14px 13px;text-align:left">
+              <!-- step 1 done -->
+              <div style="display:flex;gap:10px;align-items:flex-start">
+                <span class="material-icons" style="font-size:19px;color:#008043;flex:0 0 auto">check_circle</span>
+                <div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#161021">वापसी के योग्य</div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#5C5570">₹300 आपके नाम तय हुई</div></div>
+              </div>
+              <div style="width:2px;height:14px;background:#008043;margin:2px 0 2px 8px"></div>
+              <!-- step 2 current -->
+              <div style="display:flex;gap:10px;align-items:flex-start;background:#F3EDFB;border-radius:9px;padding:8px;margin:0 -6px">
+                <span class="material-icons" style="font-size:19px;color:#6D17CE;flex:0 0 auto">radio_button_checked</span>
+                <div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#6D17CE">सुरक्षित रख दी गई <span style="font-weight:500">· अभी</span></div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#5C5570">₹300 अलग रखी — बॉक्स लौटाने का इंतज़ार</div></div>
+              </div>
+              <div style="width:2px;height:14px;background:#D8CEEA;margin:2px 0 2px 8px"></div>
+              <!-- step 3 pending -->
+              <div style="display:flex;gap:10px;align-items:flex-start">
+                <span class="material-icons" style="font-size:19px;color:#BBB3C9;flex:0 0 auto">radio_button_unchecked</span>
+                <div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#9A92AB">बॉक्स मिलने पर पक्की</div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#9A92AB">पार्टनर बॉक्स ले जाएगा, रसीद मिलेगी</div></div>
+              </div>
+              <div style="width:2px;height:14px;background:#D8CEEA;margin:2px 0 2px 8px"></div>
+              <!-- step 4 pending -->
+              <div style="display:flex;gap:10px;align-items:flex-start">
+                <span class="material-icons" style="font-size:19px;color:#BBB3C9;flex:0 0 auto">radio_button_unchecked</span>
+                <div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#9A92AB">खाते में पहुँची</div><div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:#9A92AB">2–3 दिन में आपके खाते में</div></div>
+              </div>
+            </div>
+          </div>
+          <button class="abtn">नेट बॉक्स लौटाने का समय चुनें</button>
+        </div>
+        <div class="fixnote"><b>Why (v3):</b> Closure OS v3.0 makes deposit refund a <b>visible four-stage commitment</b> — <code>ELIGIBLE → PROVISIONED → FINALIZED → EXECUTED</code>. The <b>PROVISIONED</b> stage is the key fairness moment: Wiom <b>reserves</b> the जमा राशि before pickup, so the customer never returns the box on blind faith. Closure OS · §5.11 · REFUND_TRIGGERED · CUSTODY_STATE_CHANGED.refund_lifecycle_stage · INV-EXIT-27 · AMD-EXIT-19.</div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v3·3 : Custody-dispute auto-resolution (genuinely new in v3.0) -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">v3·3</span><span class="screen-name">बॉक्स वापसी का मामला — साफ़ नतीजा, अटका नहीं</span><span class="badge new">New · v3</span><span class="exstate">Exit · dispute</span></div>
+        <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:14px 0 2px;text-align:center"><span class="material-icons" style="font-size:46px;color:#6D17CE">gavel</span></div>
+            <div class="ah1" style="text-align:center">वापसी का रिकॉर्ड मेल नहीं खा रहा</div>
+            <div class="asub" style="text-align:center">आपने बॉक्स लौटाया, पर हमारे रिकॉर्ड में कुछ अंतर है। हम <b>7 दिन में</b> जाँचकर साफ़ नतीजा देंगे।</div>
+
+            <div class="trust info" style="margin-top:16px">
+              <span class="material-icons">shield</span>
+              <p>इस दौरान आप पर <b>"बॉक्स नहीं लौटाया"</b> का ठप्पा नहीं लगेगा। मामला खुला रहेगा, अनिश्चित नहीं — और नतीजा आने पर आपको बताया जाएगा।</p>
+            </div>
+
+            <div class="scard" style="margin-top:12px">
+              <div class="sr"><span class="k">मामला</span><span class="v">#EXIT-7741 · जाँच में</span></div>
+              <div class="sr"><span class="k">नतीजा कब तक</span><span class="v">7 दिन के अंदर</span></div>
+              <div class="sr"><span class="k">आपकी जमा राशि</span><span class="v" style="color:#008043">सुरक्षित</span></div>
+            </div>
+          </div>
+          <button class="abtn">वापसी का सबूत जोड़ें</button>
+          <button class="abtn ghost">ठीक है, इंतज़ार करूँगा</button>
+        </div>
+        <div class="os-add"><h5><span class="material-icons">flag</span>What v3.0 changed: no more "disputed" limbo</h5><p>Earlier a box-return dispute could leave the case stuck in an open-ended <b>CUSTODY_DISPUTED</b> state that blocked closure indefinitely. v3.0 <b>removes that state</b>: if the dispute isn't resolved inside the adjudication window, the system forces a definite outcome with confidence set to <b>AMBIGUOUS</b> — the customer is <b>never branded a refuser</b>, and the deposit stays protected.</p><p class="ref">Closure OS v3.0 · Doctrine #11 · INV-EXIT-01 · CP-CLOSURE-20 (7-day adjudication) · custody_state → DEVICE_NOT_RECOVERED only on real evidence</p></div>
+      </div>
+      <div class="arrow"><span class="material-icons">chevron_right</span></div>
+
+      <!-- v3·4 : Refund couldn't reach → alternative payout, never silently absorbed -->
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">v3·4</span><span class="screen-name">रिफ़ंड अभी भेज नहीं पाए — दूसरा तरीका चुनें</span><span class="badge new">New · v3</span><span class="exstate">Exit · write-off</span></div>
+        <div class="aphone"><div class="aflag" style="background:#6D17CE;color:#fff">New · v3</div>
+          <div class="astatus"><span>04:35 PM</span><span class="r"><span class="material-icons">wifi</span><span class="material-icons">network_cell</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="material-icons" style="color:#352d42">arrow_back</span><div class="aact"><span class="material-icons">headset_mic</span><span class="material-icons">translate</span></div></div>
+          <div class="abody" style="align-items:stretch;text-align:left">
+            <div style="margin:14px 0 2px;text-align:center"><span class="material-icons" style="font-size:46px;color:#9a7a00">error_outline</span></div>
+            <div class="ah1" style="text-align:center">₹300 आपके खाते तक नहीं पहुँच पाई</div>
+            <div class="asub" style="text-align:center">हमने भेजने की कोशिश की, पर UPI नंबर पर पैसा नहीं गया। यह रकम आपकी ही है — दूसरा तरीका चुनिए।</div>
+
+            <div class="trust warn" style="margin-top:16px">
+              <span class="material-icons">savings</span>
+              <p>यह पैसा कहीं नहीं जाता — अगर आप बाद में दोबारा जुड़ते हैं, तो भी यह ₹300 आपके नाम बनी रहती है।</p>
+            </div>
+
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+              <div class="scard" style="margin:0;padding:11px 12px;display:flex;align-items:center;gap:10px"><span class="material-icons" style="font-size:19px;color:#6D17CE">account_balance</span><span style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#161021">UPI नंबर सही करके दोबारा भेजें</span></div>
+              <div class="scard" style="margin:0;padding:11px 12px;display:flex;align-items:center;gap:10px"><span class="material-icons" style="font-size:19px;color:#6D17CE">account_balance_wallet</span><span style="font-family:'Noto Sans Devanagari',sans-serif;font-size:12.5px;font-weight:700;color:#161021">Wiom वॉलेट में जमा कर लें</span></div>
+            </div>
+          </div>
+          <button class="abtn">तरीका चुनें</button>
+        </div>
+        <div class="fixnote"><b>Why (v3):</b> a refund that can't be paid (e.g. <code>NO_UPI</code>) is <b>never silently absorbed</b>. Closure OS v3.0 retries, contacts the customer, offers an alternative payout, and if still unpaid the obligation is <b>written off but revives</b> on <code>CUSTOMER_REENTRY_INITIATED (A8)</code>. Closure OS · §5.12 · REFUND_WRITTEN_OFF · AMD-EXIT-21 · INV-EXIT-29 · 60-day bond-hold longstop.</div>
+      </div>
+        </div>
+  </div>
+
 <!-- ticket v1 -->
 <div class="panel" id="panel-ticket-v1">
     <div class="panel-intro"><p>The <b>service-ticket / complaint-intake</b> flow, reviewed against the OS. It's a <b>chat</b> experience driven by a backend <b>decision tree</b> (gates A–D) that produces several state-based outcomes — recharge-prompt, already-open, reopen, self-resolved, or ticket-created. Governed by <b>SQ Driver OS</b> (the ping/netbox telemetry checks) and <b>Recovery OS</b> (ticket lifecycle, "closed ≠ recovered", verified restoration). Scroll sideways →</p></div>
@@ -3707,6 +4193,11 @@
     [].forEach.call(document.querySelectorAll('.panel'), function(p){ p.classList.remove('active'); });
     var id = 'panel-' + curFlow + '-' + curVer;
     var panel = document.getElementById(id);
+    // v3 only re-designs the Closure-governed flow (Cancellation). The 22-Jun
+    // B2I v5.0 & Recovery v3.0 specs are boundary-test cleanups with no
+    // customer-facing change, so every other flow falls back to its v2 design.
+    var fellBack = false;
+    if(!panel && curVer === 'v3'){ panel = document.getElementById('panel-' + curFlow + '-v2'); fellBack = true; }
     if(panel){
       panel.classList.add('active');
       var f = panel.querySelector('iframe[data-src]');
@@ -3714,9 +4205,13 @@
     }
     tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.tab === curFlow); });
     verbtns.forEach(function(b){ b.classList.toggle('active', b.dataset.ver === curVer); });
-    if(hint) hint.textContent = (curVer === 'v1')
-      ? 'Old = the original redesign against the v1 OS'
-      : 'New = redesigned against the re-locked v2 OS';
+    if(hint){
+      if(curVer === 'v1') hint.textContent = 'Old = the original redesign against the v1 OS';
+      else if(curVer === 'v2') hint.textContent = 'New = redesigned against the re-locked v2 OS';
+      else hint.textContent = fellBack
+        ? 'v3 (22 Jun): no customer-facing change here — B2I v5.0 / Recovery v3.0 are internal cleanups. The new screens are in the Cancellation flow.'
+        : 'v3 = new Closure OS v3.0 Exit & Refund screens (22 Jun)';
+    }
     window.scrollTo(0,0);
   }
   tabs.forEach(function(t){ t.addEventListener('click', function(){ curFlow = t.dataset.tab; show(); }); });
