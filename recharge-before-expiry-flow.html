@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Closure Case 1 · Non-Reaffirmation (Passive Lapse)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{--brand:#D9008D;--brand-bold:#443152;--text:#161021;--text-subtle:#5C5570;--text-disabled:#A7A1B2;--stroke:#E8E4F0;--stroke-strong:#D7D3E0;--bg-subtle:#F1EDF7;--positive:#008043;--selected-bg:#FFE5F6;--r-md:12px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans Devanagari','Noto Sans',sans-serif;background:#1c1f26;color:#e7e9ee;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+  header.doc{padding:34px 32px 0;max-width:1520px;margin:0 auto}
+  .eyebrow{font-family:'Noto Sans';font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#D9008D}
+  h1{font-family:'Noto Sans';font-size:26px;font-weight:700;color:#fff;margin:7px 0 5px}
+  .lead{font-family:'Noto Sans';font-size:13.5px;color:#9aa0ab;line-height:1.6;max-width:1000px}
+  .lead b{color:#e7e9ee}
+  .grounded{font-family:'Noto Sans';font-size:11.5px;color:#7fd1ff;background:#16313f;display:inline-block;padding:4px 11px;border-radius:6px;margin-top:12px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0 0;font-family:'Noto Sans';font-size:12px}
+  .legend span{display:inline-flex;align-items:center;gap:6px;color:#c3c8d1}
+  .xtag{font-size:9px;font-weight:800;letter-spacing:.04em;padding:2px 7px;border-radius:5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:3px}
+  .xtag .material-icons{font-size:11px}
+  .xtag.chat{background:#241a3a;color:#bda7ff}.xtag.scr{background:#16313f;color:#7fd1ff}
+  .gr{font-family:'Noto Sans';font-size:9px;font-weight:700;letter-spacing:.02em;padding:2px 6px;border-radius:4px;background:#2a2f3a;color:#aeb4bf}
+  .gr.b5{background:#3a2e10;color:#ffd27f}.gr.br{background:#152a1c;color:#8fe3b0}.gr.inv{background:#241a3a;color:#bda7ff}
+
+  .guard{margin:14px 32px 0;max-width:1456px;background:#15251a;border:1px solid #244a30;border-radius:12px;padding:14px 18px;font-family:'Noto Sans'}
+  .guard .gt{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#8fe3b0;margin-bottom:9px;display:flex;align-items:center;gap:6px}
+  .guard .gt .material-icons{font-size:16px}
+  .guard ul{margin:0;padding-left:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:7px 22px}
+  .guard li{font-size:12px;color:#c3c8d1;line-height:1.4;display:flex;gap:7px}
+  .guard li b{color:#fff}.guard li .k{flex:0 0 auto;color:#8fe3b0;font-weight:800;font-size:10.5px;min-width:52px}
+
+  #flow{margin-top:18px}
+  .phaseband{padding:0 0 6px}
+  .phaseband.alt{background:#191d24}
+  .phasehead{padding:18px 32px 8px;display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;max-width:1520px;margin:0 auto}
+  .phasehead .pnum{font-family:'Noto Sans';font-size:18px;font-weight:800;color:#fff;background:#D9008D;border-radius:11px;min-width:42px;height:42px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .phasehead .ph-t{font-family:'Noto Sans';font-size:16.5px;font-weight:700;color:#fff}
+  .phasehead .ph-s{font-family:'Noto Sans';font-size:12px;color:#9aa0ab;margin-top:3px;max-width:880px;line-height:1.5}
+  .phasehead .ph-s b{color:#e7e9ee}
+  .phasehead .ph-codes{font-family:'Noto Sans',monospace;font-size:10.5px;color:#c9b0ff;background:#241a3a;padding:4px 10px;border-radius:6px;margin-left:auto;flex:0 0 auto;align-self:center}
+  .pdown{display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px 0 2px}
+  .pdown .material-icons{font-size:26px;color:#5a5f6b}
+  .pdown .pl{font-family:'Noto Sans';font-size:11px;font-weight:700;color:#9aa0ab;background:#222631;border:1px solid #343a47;border-radius:999px;padding:4px 13px}
+  .rail{display:flex;gap:6px;overflow-x:auto;padding:8px 32px 28px;align-items:flex-start}
+  .rail::-webkit-scrollbar{height:10px}.rail::-webkit-scrollbar-thumb{background:#3a3f4a;border-radius:10px}.rail::-webkit-scrollbar-track{background:#262a32}
+  .blane{flex:0 0 auto;align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:48px;padding-top:30px}
+  .blane .ln{flex:1;width:2px;background:#3a3f4a}
+  .blane .lbl{writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Noto Sans';font-size:10.5px;font-weight:800;letter-spacing:.05em;white-space:nowrap;color:#9aa0ab}
+  .blane.ok .lbl{color:#8fe3b0}.blane.ok .ln{background:#16463a}
+  .farrow{flex:0 0 auto;align-self:center;color:#5a5f6b;display:flex;flex-direction:column;align-items:center;gap:3px;width:32px;padding-top:30px}
+  .farrow .material-icons{font-size:25px}
+  .farrow .fl{font-size:8.5px;font-weight:700;color:#5a5f6b;text-align:center;line-height:1.2;font-family:'Noto Sans'}
+
+  .screen{flex:0 0 auto;display:flex;flex-direction:column;gap:8px;width:300px;padding:0 8px}
+  .screen-tag{display:flex;align-items:center;gap:7px;font-family:'Noto Sans';flex-wrap:wrap}
+  .screen-num{font-size:10px;font-weight:800;color:#ffb3dd;background:#5a1140;border-radius:5px;padding:2px 7px;flex:0 0 auto}
+  .screen-name{font-size:13px;font-weight:600;color:#fff}
+  .grbar{display:flex;flex-wrap:wrap;gap:4px;padding:0 1px}
+
+  /* phone */
+  .aphone{width:300px;height:604px;background:#F7F7F9;border:9px solid #11131a;border-radius:30px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 14px 40px rgba(0,0,0,.4)}
+  .astatus{height:26px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-family:'Noto Sans';font-size:10.5px;font-weight:600;color:#161021;flex:0 0 auto}
+  .astatus .r .material-icons{font-size:12px;vertical-align:middle;margin-left:2px}
+  .atop{display:flex;align-items:center;padding:8px 12px;flex:0 0 auto;gap:9px}
+  .alogo{width:30px;height:30px;border-radius:8px;background:#D9008D;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex:0 0 auto}
+  .aback{color:#352d42;display:flex;align-items:center}.aback .material-icons{font-size:21px}
+  .atitle{font-family:'Noto Sans Devanagari';font-size:13.5px;font-weight:700;color:#161021}
+  .aact{margin-left:auto;display:flex;gap:12px;color:#352d42}.aact .material-icons{font-size:18px}
+  .abody{flex:1;overflow-y:auto;padding:8px 18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .abody.lft{align-items:stretch;text-align:left}
+  .abody::-webkit-scrollbar{width:0}
+  .ah1{font-family:'Noto Sans Devanagari';font-size:16.5px;font-weight:700;color:#161021;line-height:1.35;margin-top:6px}
+  .ah1.sm{font-size:14.5px}
+  .asub{font-family:'Noto Sans Devanagari';font-size:12px;color:#5C5570;line-height:1.5;margin-top:8px}
+  .afoot{flex:0 0 auto;width:100%;padding:8px 14px 12px;display:flex;flex-direction:column;gap:7px}
+  .abtn{width:100%;height:46px;border:none;border-radius:23px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:13.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 12px rgba(217,0,141,.22)}
+  .abtn .material-icons{font-size:18px}
+  .abtn.ghost{background:transparent;color:#D9008D;box-shadow:none;font-weight:600}
+  .abtn.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D;box-shadow:none}
+  .abtn.gray{background:#EDEAF2;color:#5C5570;box-shadow:none}
+  .ahero{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:14px auto 2px}
+  .ahero .material-icons{font-size:38px}
+  .ahero.brand{background:#FFE5F6}.ahero.brand .material-icons{color:#D9008D}
+  .ahero.ok{background:#E1FAED}.ahero.ok .material-icons{color:#008043}
+  .ahero.gray{background:#EAE7F0}.ahero.gray .material-icons{color:#5C5570}
+  .ahero.info{background:#F1E5FF}.ahero.info .material-icons{color:#6D17CE}
+  .deposit-banner{width:100%;background:linear-gradient(135deg,#FFF0F8,#FFE5F6);border:1px solid #FAC8E6;border-radius:14px;padding:13px 14px;margin-top:6px;display:flex;gap:11px;align-items:center;text-align:left}
+  .deposit-banner .di{width:40px;height:40px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .deposit-banner .di .material-icons{color:#D9008D;font-size:22px}
+  .deposit-banner .dt{font-size:13px;font-weight:800;color:#161021}
+  .deposit-banner .ds{font-size:11px;color:#5C5570;margin-top:2px;line-height:1.4}
+  .scard{width:100%;background:#fff;border-radius:12px;padding:12px 14px;margin-top:12px;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:left}
+  .scard .stitle{font-size:11.5px;font-weight:700;color:#161021;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .scard .stitle .material-icons{font-size:15px;color:#D9008D}
+  .scard .sr{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;gap:10px}
+  .scard .sr .k{color:#5C5570}.scard .sr .v{font-weight:700;color:#161021;text-align:right}
+  .scard .sr .v.pos{color:#008043}
+  .scard .sdiv{border-top:1px dashed #E2DEEA;margin:6px 0}
+  .scard.tap{border:1.5px solid #D9008D}
+  .averify{display:flex;align-items:flex-start;gap:8px;border-radius:10px;padding:10px 12px;margin-top:11px;text-align:left;width:100%}
+  .averify .material-icons{font-size:15px;flex:0 0 auto;margin-top:1px}
+  .averify p{font-family:'Noto Sans Devanagari';font-size:11px;line-height:1.5}
+  .averify.ok{background:#E1FAED}.averify.ok .material-icons{color:#008043}.averify.ok p{color:#0a5c33}
+  .averify.info{background:#F1E5FF}.averify.info .material-icons{color:#6D17CE}.averify.info p{color:#4a1a8f}
+  .averify.gray{background:#EFEDF3}.averify.gray .material-icons{color:#5C5570}.averify.gray p{color:#3f394b}
+  .refund-opt{display:flex;align-items:flex-start;gap:11px;padding:12px;background:#fff;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);margin-top:10px;width:100%;text-align:left}
+  .refund-opt.sel{border-color:var(--brand);background:var(--selected-bg);box-shadow:0 0 0 1px var(--brand)}
+  .refund-opt .ri{width:36px;height:36px;border-radius:var(--r-md);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .refund-opt.sel .ri{background:#fff}
+  .refund-opt .ri .material-icons{font-size:19px;color:var(--brand-bold)}
+  .refund-opt .rt{font-size:13px;font-weight:700;color:var(--text)}
+  .refund-opt .rs{font-size:10.5px;color:var(--text-subtle);margin-top:2px;line-height:1.4}
+  .refund-opt .badge1{font-size:8.5px;font-weight:800;color:#008043;background:#E1FAED;padding:1px 6px;border-radius:4px;margin-top:4px;display:inline-block;text-transform:uppercase;letter-spacing:.03em}
+  .refund-opt .ramt{font-size:15px;font-weight:800;color:var(--positive);margin-left:auto;flex:0 0 auto;text-align:right}
+  .refund-opt .ramt small{display:block;font-size:9px;font-weight:600;color:#A7A1B2}
+  .track{width:100%;margin-top:12px;text-align:left}
+  .tstep{display:flex;gap:11px;position:relative}
+  .tstep .tline{position:absolute;left:13px;top:26px;bottom:-6px;width:2px;background:#E2DEEA}
+  .tstep:last-child .tline{display:none}
+  .tdot{width:27px;height:27px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#E2DEEA;color:#fff;z-index:1}
+  .tdot .material-icons{font-size:16px}
+  .tstep.done .tdot{background:#008043}.tstep.done .tline{background:#008043}
+  .tstep.cur .tdot{background:#D9008D;box-shadow:0 0 0 4px #FFE5F6}
+  .tstep.wait .tdot{background:#E2DEEA;color:#A7A1B2}
+  .tbody{padding-bottom:14px;flex:1}.tbody .tt{font-size:12.5px;font-weight:700;color:#161021}
+  .tstep.wait .tbody .tt{color:#A7A1B2}
+  .tbody .td{font-size:11px;color:#5C5570;line-height:1.4;margin-top:2px}
+  .tbody .tmeta{font-size:10px;font-weight:700;margin-top:3px}
+  .tstep.done .tmeta{color:#008043}.tstep.cur .tmeta{color:#D9008D}.tstep.wait .tmeta{color:#A7A1B2}
+  .field{width:100%;margin-top:12px;text-align:left}
+  .field label{font-size:11.5px;font-weight:700;color:#161021;display:block;margin-bottom:5px}
+  .field .inp{height:46px;border:1.5px solid #D7D3E0;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 13px;font-size:13px;color:#161021}
+  .field .inp.ok{border-color:#008043}
+  .field .inp .vok{font-size:10.5px;font-weight:800;color:#008043;display:flex;align-items:center;gap:3px}
+  .field .inp .vok .material-icons{font-size:14px}
+  .field .hint{font-size:10.5px;color:#5C5570;margin-top:5px}
+  .ta{height:60px;border:1.5px solid #D7D3E0;border-radius:11px;background:#fff;padding:9px 12px;font-size:12px;color:#A7A1B2;width:100%;margin-top:5px}
+
+  /* chat */
+  .chan-head{display:flex;gap:6px;padding:7px 12px;background:#fff;border-bottom:1px solid #E8E4F0;flex:0 0 auto;align-items:center}
+  .chan-head .ci{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:800;color:#6D17CE;background:#F1E5FF;padding:2px 7px;border-radius:5px;text-transform:uppercase}
+  .chan-head .ci .material-icons{font-size:11px}
+  .chat-head{display:flex;align-items:center;gap:9px;padding:7px 12px;background:#fff;border-bottom:1px solid #E8E4F0;flex:0 0 auto}
+  .chat-head .ca{width:30px;height:30px;border-radius:8px;background:#D9008D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
+  .chat-head .cn{font-size:13px;font-weight:700;color:#161021}
+  .chat-head .cs{font-size:10px;color:#008043;font-weight:600;display:flex;align-items:center;gap:4px}
+  .chat-head .cs::before{content:"";width:6px;height:6px;border-radius:50%;background:#008043;display:inline-block}
+  .chat-pin{flex:0 0 auto;display:flex;align-items:flex-start;gap:8px;padding:8px 12px;background:#FFF8FC;border-bottom:1px solid #F2DDED}
+  .chat-pin .material-icons{font-size:15px;color:#D9008D;flex:0 0 auto;margin-top:1px}
+  .chat-pin .csk{font-size:9px;color:#9a6a86;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+  .chat-pin .csv{font-size:11.5px;font-weight:700;color:#161021;line-height:1.35}
+  .chat-body{flex:1;overflow-y:auto;padding:13px 12px;display:flex;flex-direction:column;gap:10px;background:#F1EDF7}
+  .chat-body::-webkit-scrollbar{width:0}
+  .bubble{max-width:92%;padding:11px 13px;border-radius:15px;font-size:12.5px;line-height:1.5;font-family:'Noto Sans Devanagari'}
+  .bubble.bot{align-self:flex-start;background:#fff;border:1px solid #E8E4F0;border-bottom-left-radius:5px;color:#161021}
+  .bubble.me{align-self:flex-end;background:#D9008D;color:#fff;border-bottom-right-radius:5px}
+  .bubble .b-title{font-weight:700;font-size:12.5px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .bubble .b-title .material-icons{font-size:16px;color:#D9008D}
+  .bubble .chan{font-size:8px;font-weight:800;letter-spacing:.04em;color:#6D17CE;background:#F1E5FF;padding:1px 5px;border-radius:4px;text-transform:uppercase;margin-left:auto}
+  .bubble .time{font-size:9px;color:rgba(0,0,0,.3);margin-top:5px;display:block}
+  .msg-card{background:#F7F7F9;border-radius:10px;padding:9px 11px;margin-top:8px}
+  .msg-card .mr{display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;gap:8px}
+  .msg-card .mr .k{color:#5C5570}.msg-card .mr .v{font-weight:700;color:#161021}.msg-card .mr .v.pos{color:#008043}
+  .chat-cta{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:9px;min-height:40px;padding:9px 12px;border-radius:12px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:12.5px;font-weight:700;text-align:center;line-height:1.3}
+  .chat-cta.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D}
+  .chat-cta .material-icons{font-size:16px}
+  .chat-input{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:9px 12px;background:#fff;border-top:1px solid #E8E4F0}
+  .chat-input .box{flex:1;height:38px;border:1.5px solid #D7D3E0;border-radius:9999px;background:#FAF9FC;padding:0 14px;display:flex;align-items:center;font-size:12px;color:#A7A1B2}
+  .chat-input .send{width:38px;height:38px;border-radius:50%;background:#D9008D;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .chat-input .send .material-icons{color:#fff;font-size:18px}
+  @media(max-width:560px){h1{font-size:21px}}
+</style>
+</head>
+<body>
+  <header class="doc">
+    <div class="eyebrow">Wiom · Recharge / Activation — Case 2 of 2</div>
+    <h1>Recharge Before Expiry → Queued Entitlement</h1>
+    <p class="lead">The customer flow designed <b>screen-by-screen from the B5 system sequence diagram</b>, checked against the OS guardrails (Continuity OS · CM OS · CAEO/B2I · Closure OS). The plan is <b>still active (FUNDED)</b> when the customer recharges — so the new plan is <b>queued, not blended</b>. Both plans stay visible; at natural expiry (R0) the queued plan <b>auto-activates at expiry + 1 second</b> with <b>no CAEO, no gap, and no "activating" wait</b> (the internet was never off). If the customer exits while a plan is queued, the unused queued plan is <b>fully refunded</b>. Status/comms run in the <b>in-app agent (chat)</b>; transactional steps are <b>Design-System screens</b>.</p>
+    <div class="grounded">Grounded: F1 (recharge-before-expiry) PRD (B5 sequence, B6 UI) · Continuity OS v2.0 §4.5 (AMD-CON-17, D-005, INV-CON-22) · CM OS §7.1 · Closure OS (AMD-EXIT-18) · C4</div>
+    <div class="legend">
+      <span><span class="xtag chat"><span class="material-icons">chat</span>Chat</span> multi-channel comm (SMS+WA+app)</span>
+      <span><span class="xtag scr"><span class="material-icons">smartphone</span>Screen</span> DS screen (transactional)</span>
+      <span><span class="gr b5">B5 #</span> sequence step</span>
+      <span><span class="gr br">BR/A8</span> business-rule guardrail</span>
+      <span><span class="gr inv">INV</span> invariant</span>
+    </div>
+    <div class="guard">
+      <div class="gt"><span class="material-icons">verified_user</span>Guardrails this flow must honour (from the OS)</div>
+      <ul>
+        <li><span class="k">BR-01 / INV-CON-22 / D-005</span><span><b>Queue, never blend</b> — the current plan's end date, rate, plan_id stay untouched; the new plan is queued.</span></li>
+        <li><span class="k">BR-02 / BR-03</span><span>Queued plan <b>auto-activates at R0</b>; new start = <b>current expiry + 1 second</b> — no gap, no overlap, no manual step.</span></li>
+        <li><span class="k">A8 / ASM-02</span><span><b>No CAEO, no A13, no "Activating…" spinner</b> at R0 — internet was never off; activation is instant.</span></li>
+        <li><span class="k">A8 (dual-plan)</span><span><b>Both plans on one screen</b>, with an <b>exact start datetime</b> for the next plan (not "in X days").</span></li>
+        <li><span class="k">A8 / INV-02</span><span><b>Never show "recharge now"</b> while a plan is queued; the R-2 notice <b>confirms the queue</b>, never prompts.</span></li>
+        <li><span class="k">BR-04 / INV-01</span><span>Queue capacity = 1 — a second recharge while queued goes to <b>ops review</b>, never auto-double-queued.</span></li>
+        <li><span class="k">BR-05 / INV-03</span><span>A different plan_id → CM OS records an <b>explicit plan-preference</b> observable (money-backed, HIGH).</span></li>
+        <li><span class="k">BR-06 / REL-04</span><span>Exit while queued → <b>full refund of the queued plan</b> (never activated); current plan refunded separately.</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <div id="flow">
+  <!-- ===== PHASE 1 ===== -->
+  <div class="phaseband" id="p1">
+    <div class="phasehead"><div class="pnum">1</div><div><div class="ph-t">Recharge while active → new plan QUEUED (not blended)</div><div class="ph-s">B5 #1–7: the plan is still <b>FUNDED</b> (days remaining) when the customer recharges. <code>RECHARGE_CONFIRMED (prior=FUNDED)</code> → Continuity OS creates a <b>QUEUED_ENTITLEMENT (PENDING)</b> — the current plan is untouched (D-005). CM OS records the plan choice (preference if upgraded). The app shows <b>both plans on one screen</b>.</div><div class="ph-codes">FUNDED → QUEUED_ENTITLEMENT</div></div></div>
+    <div class="rail">
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">S1</span><span class="screen-name">Recharge (plan still active)</span> <span class="xtag scr"><span class="material-icons">smartphone</span>Screen</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">प्लान चुनें</div></div>
+          <div class="abody lft">
+            <div class="averify ok"><span class="material-icons">check_circle</span><p>आपका प्लान अभी चालू है — 15 दिन बाकी (28 जून तक)। अभी रिचार्ज करें तो नया प्लान कतार में लग जाएगा।</p></div>
+            <div class="refund-opt sel"><div class="ri"><span class="material-icons">wifi</span></div><div><div class="rt">₹500 · 30 दिन</div><div class="rs">वही प्लान फिर से</div></div><div class="ramt">₹500</div></div>
+            <div class="refund-opt"><div class="ri"><span class="material-icons">upgrade</span></div><div><div class="rt">₹800 · 30 दिन (तेज़)</div><div class="rs">अपग्रेड — पसंद दर्ज होगी</div></div><div class="ramt">₹800</div></div>
+          </div>
+          <div class="afoot"><button class="abtn">आगे — चेकआउट</button></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #1</span><span class="gr inv">prior=FUNDED</span><span class="gr">Continuity OS</span></div>
+      </div>
+
+      <div class="farrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">S2</span><span class="screen-name">Checkout — pay</span> <span class="xtag scr"><span class="material-icons">smartphone</span>Screen</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">चेकआउट</div></div>
+          <div class="abody lft">
+            <div class="scard"><div class="stitle"><span class="material-icons">receipt_long</span>आपका अगला प्लान</div><div class="sr"><span class="k">₹500 · 30 दिन</span><span class="v">₹500</span></div><div class="sr"><span class="k">कब शुरू</span><span class="v">मौजूदा प्लान खत्म होने पर</span></div><div class="sdiv"></div><div class="sr total"><span class="k">कुल</span><span class="v">₹500</span></div></div>
+            <div class="refund-opt sel"><div class="ri"><span class="material-icons">account_balance_wallet</span></div><div><div class="rt">UPI</div></div></div>
+            <div class="averify info"><span class="material-icons">info</span><p>यह राशि आपके मौजूदा प्लान को नहीं बढ़ाती — नया प्लान अलग से कतार में लगेगा (queue-not-blend · D-005)।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">₹500 का भुगतान करें</button></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #1-2</span><span class="gr br">BR-01 no blend</span><span class="gr">Payment OS</span></div>
+      </div>
+
+      <div class="farrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">C1</span><span class="screen-name">Queued — confirmation</span> <span class="xtag chat"><span class="material-icons">chat</span>Chat</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-head"><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>
+          <div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">मौजूदा प्लान चालू · अगला प्लान कतार में</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot"><div class="b-title"><span class="material-icons">playlist_add_check</span>रिचार्ज हो गया — अगला प्लान कतार में<span class="chan">in-app</span></div>आपका मौजूदा प्लान चलता रहेगा। नया प्लान मौजूदा प्लान खत्म होते ही अपने-आप शुरू हो जाएगा — आपको कुछ नहीं करना।<span class="time">QUEUED_ENTITLEMENT</span></div>
+            <div class="bubble bot"><div class="chat-cta" data-go="#">दोनों प्लान देखें</div></div>
+          </div>
+          <div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #2-7</span><span class="gr">CM OS preference fact</span><span class="gr">In-App Agent</span></div>
+      </div>
+
+      <div class="farrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">S3</span><span class="screen-name">Dual-plan state ★ (one screen)</span> <span class="xtag scr"><span class="material-icons">smartphone</span>Screen</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">मेरे प्लान</div></div>
+          <div class="abody lft">
+            <div class="scard" style="border-left:4px solid #008043"><div class="stitle"><span class="material-icons" style="color:#008043">wifi</span>अभी चालू</div><div class="sr"><span class="k">₹500 · 30 दिन</span><span class="v pos">चालू</span></div><div class="sr"><span class="k">कब तक</span><span class="v">28 जून, रात 11:59</span></div></div>
+            <div class="scard" style="border-left:4px solid #6D17CE"><div class="stitle"><span class="material-icons" style="color:#6D17CE">schedule</span>अगला — कतार में</div><div class="sr"><span class="k">₹500 · 30 दिन</span><span class="v" style="color:#6D17CE">कतार में</span></div><div class="sr"><span class="k">कब शुरू</span><span class="v">29 जून, 12:00 AM</span></div></div>
+            <div class="averify ok"><span class="material-icons">all_inclusive</span><p>आपका नेट लगातार चलता रहेगा — कोई रुकावट नहीं, आपको कुछ नहीं करना। अगला प्लान ठीक मौजूदा के खत्म होते ही (expiry + 1 सेकंड)।</p></div>
+          </div>
+          <div class="afoot"></div>
+        </div>
+        <div class="grbar"><span class="gr">★ new screen</span><span class="gr br">A8 dual-plan + datetime</span><span class="gr br">no "recharge now" CTA</span></div>
+      </div>
+
+    </div>
+    <div class="pdown"><span class="material-icons">south</span><span class="pl">मौजूदा प्लान natural expiry (R0) तक चलता है</span></div>
+  </div>
+
+  <!-- ===== PHASE 2 ===== -->
+  <div class="phaseband alt" id="p2">
+    <div class="phasehead"><div class="pnum">2</div><div><div class="ph-t">R0 → queued plan auto-activates (no gap, no wait)</div><div class="ph-s">B5 #8–10: at R-2 the customer gets a <b>queue-aware</b> notice (confirms, never prompts — INV-02). At R0 the current plan expires and the queued plan <b>auto-activates</b>: new start = expiry + 1s. <b>No CAEO, no A13, no spinner</b> — the internet was never off. Continuity OS emits <code>CONTINUITY_STATE_CHANGED (ACTIVATED)</code>.</div><div class="ph-codes">R0 · QUEUED → ACTIVE (expiry+1s)</div></div></div>
+    <div class="rail">
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">C2</span><span class="screen-name">R-2 notice — queue-aware</span> <span class="xtag chat"><span class="material-icons">chat</span>Chat</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-head"><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>
+          <div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">प्लान 2 दिन में खत्म · अगला कतार में</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot"><div class="b-title"><span class="material-icons">event_available</span>सब तैयार है — कुछ नहीं करना<span class="chan">in-app + push</span></div>आपका मौजूदा प्लान 2 दिन में (28 जून) खत्म होगा। आपका <b>अगला प्लान पहले से कतार में</b> है और अपने-आप चालू हो जाएगा।<span class="time">R-2 · queue-aware</span></div>
+          </div>
+          <div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+        <div class="grbar"><span class="gr b5">R-2</span><span class="gr br">BR-07 / INV-02 confirm not prompt</span></div>
+      </div>
+
+      <div class="farrow"><span class="material-icons">chevron_right</span><span class="fl">R0 reached</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">C3</span><span class="screen-name">New plan active (no interruption)</span> <span class="xtag chat"><span class="material-icons">chat</span>Chat</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-head"><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>
+          <div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">नया प्लान चालू · नेट कभी बंद नहीं हुआ</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot"><div class="b-title"><span class="material-icons">check_circle</span>आपका नया प्लान शुरू हो गया ✓<span class="chan">in-app + push</span></div>आपका अगला प्लान अपने-आप चालू हो गया — नेट एक पल के लिए भी बंद नहीं हुआ। नया प्लान 29 जून से 30 दिन।<span class="time">CONTINUITY_STATE_CHANGED · ACTIVATED</span></div>
+          </div>
+          <div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #8-10</span><span class="gr br">A8 no spinner</span><span class="gr inv">ASM-02 no CAEO</span></div>
+      </div>
+
+      <div class="farrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">S4</span><span class="screen-name">New plan active — confirmation</span> <span class="xtag scr"><span class="material-icons">smartphone</span>Screen</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><div class="alogo">W</div><div class="atitle">मेरे प्लान</div></div>
+          <div class="abody">
+            <div class="ahero ok"><span class="material-icons">wifi</span></div>
+            <div class="ah1 sm">नया प्लान चालू है ✓</div>
+            <div class="asub">नेट बिना रुके चलता रहा।</div>
+            <div class="scard" style="text-align:left"><div class="sr"><span class="k">प्लान</span><span class="v">₹500 · 30 दिन</span></div><div class="sr"><span class="k">शुरू</span><span class="v">29 जून, 12:00 AM</span></div><div class="sr"><span class="k">खत्म</span><span class="v pos">28 जुलाई</span></div></div>
+            <div class="averify ok"><span class="material-icons">timelapse</span><span></span><p>नया प्लान ठीक पिछले के खत्म होते ही शुरू (expiry + 1s) — न एक सेकंड कम, न ओवरलैप (D-005)।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">ठीक है</button></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #10</span><span class="gr br">BR-02/03 start=expiry+1s</span></div>
+      </div>
+
+    </div>
+    <div class="pdown"><span class="material-icons">south_east</span><span class="pl">वैकल्पिक: ग्राहक कतार लगाने के बाद exit करे</span></div>
+  </div>
+
+  <!-- ===== PHASE 3 (ALT) ===== -->
+  <div class="phaseband" id="p3">
+    <div class="phasehead"><div class="pnum">3</div><div><div class="ph-t">Branch — exit after queuing → full refund of queued plan</div><div class="ph-s">B5 #11–15 (ALT): the customer initiates closure while the queued plan is still PENDING. Closure OS checks the queued entitlement → <code>REFUND_TRIGGERED (scope=QUEUED_ENTITLEMENT)</code>, <b>full refund</b> — it was never activated, so it's the customer's money, not Wiom's revenue (BR-06). The current plan's refund (if any) is computed separately (pro-rata, AMD-EXIT-18).</div><div class="ph-codes">CLOSURE_INITIATED · REFUND(QUEUED)</div></div></div>
+    <div class="rail">
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">S5</span><span class="screen-name">Exit while queued — full refund</span> <span class="xtag chat"><span class="material-icons">chat</span>Chat</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-head"><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>
+          <div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">बाहर निकल रहे हैं · कतार वाला प्लान वापस</div></div></div>
+          <div class="chat-body">
+            <div class="bubble me">मुझे कनेक्शन बंद करना है</div>
+            <div class="bubble bot"><div class="b-title"><span class="material-icons">payments</span>आपका कतार वाला प्लान पूरा वापस<span class="chan">in-app</span></div>आपने जो अगला प्लान कतार में रखा था वह कभी चालू नहीं हुआ — इसलिए उसका <b>पूरा ₹500</b> आपको वापस कर रहे हैं।
+              <div class="msg-card"><div class="mr"><span class="k">कतार वाला प्लान</span><span class="v pos">₹500 — पूरा वापस</span></div><div class="mr"><span class="k">मौजूदा प्लान</span><span class="v">अलग से (pro-rata)</span></div></div><span class="time">REFUND_TRIGGERED · scope=QUEUED</span></div>
+            <div class="bubble bot">रिफंड हो गया ✓</div>
+          </div>
+          <div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #11-15</span><span class="gr br">BR-06 full refund (never activated)</span><span class="gr">Closure OS · REL-04</span></div>
+      </div>
+
+      <div class="blane ok"><div class="ln" style="background:#5a2748"></div><div class="lbl" style="color:#ff9ec8">edge · 2nd recharge while queued</div><div class="ln" style="background:#5a2748"></div></div>
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">E·q</span><span class="screen-name">Already queued — ops review</span> <span class="xtag chat"><span class="material-icons">chat</span>Chat</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-head"><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>
+          <div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">पहले से एक प्लान कतार में है</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot"><div class="b-title"><span class="material-icons">help_outline</span>आपका एक प्लान पहले से कतार में है</div>हमें दूसरा रिचार्ज मिला। चूंकि एक प्लान पहले से कतार में है, हम इसे जोड़ने से पहले पुष्टि कर रहे हैं — गलती से दो बार न लग जाए।<span class="time">queue cap = 1 · ops review</span></div>
+          </div>
+          <div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+        <div class="grbar"><span class="gr br">BR-04 / INV-01 cap=1</span><span class="gr">no auto-double-queue</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+
+</body>
+</html>

@@ -36,7 +36,7 @@
     <div class="brand">Wiom <span>Recharge / Activation</span></div>
     <div class="tabs" id="tabs">
       <button class="tab active" data-case="1"><span class="n">1</span><span class="material-icons">bolt</span>Recharge → LIVE activation</button>
-      <button class="tab soon" disabled><span class="n">2</span><span class="material-icons">lock_clock</span>Case 2 (next)</button>
+      <button class="tab" data-case="2"><span class="n">2</span><span class="material-icons">playlist_add_check</span>Recharge before expiry (queued)</button>
     </div>
     <div class="modewrap">
       <div class="seg" id="seg">
@@ -50,7 +50,8 @@
   </div>
 <script>
   const FILES={
-    '1':{proto:'recharge-live-activation-prototype.html',design:'recharge-live-activation-flow.html'}
+    '1':{proto:'recharge-live-activation-prototype.html',design:'recharge-live-activation-flow.html'},
+    '2':{proto:'recharge-before-expiry-prototype.html',  design:'recharge-before-expiry-flow.html'}
   };
   let curCase='1', curMode='proto';
   const frame=document.getElementById('frame');
