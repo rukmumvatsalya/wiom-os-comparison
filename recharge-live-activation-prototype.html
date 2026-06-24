@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Case 1 Non-Reaffirmation · working prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{--brand:#D9008D;--brand-bold:#443152;--text:#161021;--text-subtle:#5C5570;--text-disabled:#A7A1B2;--stroke:#E8E4F0;--stroke-strong:#D7D3E0;--bg-subtle:#F1EDF7;--positive:#008043;--selected-bg:#FFE5F6;--r-md:12px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans Devanagari','Noto Sans',sans-serif;background:radial-gradient(1100px 560px at 50% -10%,#262a36,#1c1f26 60%);color:#e7e9ee;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .top{max-width:980px;margin:0 auto;padding:26px 24px 6px;text-align:center}
+  .eyebrow{font-family:'Noto Sans';font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#D9008D}
+  h1{font-family:'Noto Sans';font-size:22px;font-weight:700;color:#fff;margin:6px 0 4px}
+  .sub{font-family:'Noto Sans';font-size:12.5px;color:#9aa0ab;line-height:1.55;max-width:660px;margin:0 auto}
+  .sub a{color:#ff9ec8;font-weight:700}
+  .stage{display:flex;flex-direction:column;align-items:center;gap:14px;padding:18px 16px 60px}
+  .crumb{display:flex;align-items:center;gap:9px;font-family:'Noto Sans';font-size:12px;color:#c3c8d1;background:#222631;border:1px solid #343a47;border-radius:999px;padding:6px 14px;min-height:34px;flex-wrap:wrap;justify-content:center;max-width:520px}
+  .crumb .b5{font-weight:800;color:#ffd27f;background:#3a2e10;border-radius:6px;padding:1px 8px;font-size:10px}
+  .crumb .xt{font-size:9px;font-weight:800;letter-spacing:.04em;padding:2px 7px;border-radius:5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:3px}
+  .crumb .xt .material-icons{font-size:11px}
+  .crumb .xt.chat{background:#241a3a;color:#bda7ff}.crumb .xt.scr{background:#16313f;color:#7fd1ff}
+  .crumb .gr{font-size:9px;font-weight:700;color:#8fe3b0;background:#152a1c;border-radius:4px;padding:2px 6px}
+
+  .aphone{width:332px;height:684px;background:#F7F7F9;border:10px solid #11131a;border-radius:36px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .astatus{height:28px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-family:'Noto Sans';font-size:11px;font-weight:600;color:#161021;flex:0 0 auto}
+  .astatus .r .material-icons{font-size:12px;vertical-align:middle;margin-left:2px}
+  .atop{display:flex;align-items:center;padding:9px 13px;flex:0 0 auto;gap:9px}
+  .alogo{width:31px;height:31px;border-radius:8px;background:#D9008D;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex:0 0 auto}
+  .aback{color:#352d42;display:flex;align-items:center;cursor:pointer}.aback .material-icons{font-size:22px}
+  .atitle{font-family:'Noto Sans Devanagari';font-size:14px;font-weight:700;color:#161021}
+  .aact{margin-left:auto;display:flex;gap:13px;color:#352d42}.aact .material-icons{font-size:19px}
+  .abody{flex:1;overflow-y:auto;padding:10px 20px 18px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .abody.lft{align-items:stretch;text-align:left}
+  .abody::-webkit-scrollbar{width:0}
+  .ah1{font-family:'Noto Sans Devanagari';font-size:18px;font-weight:700;color:#161021;line-height:1.35;margin-top:8px}
+  .ah1.sm{font-size:15.5px}
+  .asub{font-family:'Noto Sans Devanagari';font-size:12.5px;color:#5C5570;line-height:1.5;margin-top:9px}
+  .afoot{flex:0 0 auto;width:100%;padding:8px 16px 14px;display:flex;flex-direction:column;gap:8px}
+  .abtn{width:100%;height:48px;border:none;border-radius:24px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;box-shadow:0 4px 12px rgba(217,0,141,.22)}
+  .abtn .material-icons{font-size:18px}
+  .abtn.ghost{background:transparent;color:#D9008D;box-shadow:none;font-weight:600}
+  .abtn.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D;box-shadow:none}
+  .abtn.gray{background:#EDEAF2;color:#5C5570;box-shadow:none}
+  .abtn:active{transform:scale(.98)}
+  .ahero{width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:16px auto 2px}
+  .ahero .material-icons{font-size:40px}
+  .ahero.brand{background:#FFE5F6}.ahero.brand .material-icons{color:#D9008D}
+  .ahero.ok{background:#E1FAED}.ahero.ok .material-icons{color:#008043}
+  .ahero.gray{background:#EAE7F0}.ahero.gray .material-icons{color:#5C5570}
+  .ahero.info{background:#F1E5FF}.ahero.info .material-icons{color:#6D17CE}
+  .deposit-banner{width:100%;background:linear-gradient(135deg,#FFF0F8,#FFE5F6);border:1px solid #FAC8E6;border-radius:14px;padding:14px;margin-top:6px;display:flex;gap:11px;align-items:center;text-align:left}
+  .deposit-banner .di{width:42px;height:42px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .deposit-banner .di .material-icons{color:#D9008D;font-size:23px}
+  .deposit-banner .dt{font-size:13.5px;font-weight:800;color:#161021}
+  .deposit-banner .ds{font-size:11px;color:#5C5570;margin-top:2px;line-height:1.4}
+  .scard{width:100%;background:#fff;border-radius:12px;padding:13px 15px;margin-top:13px;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:left}
+  .scard .stitle{font-size:12px;font-weight:700;color:#161021;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .scard .stitle .material-icons{font-size:16px;color:#D9008D}
+  .scard .sr{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;gap:10px}
+  .scard .sr .k{color:#5C5570}.scard .sr .v{font-weight:700;color:#161021;text-align:right}
+  .scard .sr .v.pos{color:#008043}
+  .scard.tap{cursor:pointer;border:1.5px solid #D9008D}.scard.tap:active{background:#FFF8FC}
+  .averify{display:flex;align-items:flex-start;gap:8px;border-radius:10px;padding:10px 12px;margin-top:12px;text-align:left;width:100%}
+  .averify .material-icons{font-size:16px;flex:0 0 auto;margin-top:1px}
+  .averify p{font-family:'Noto Sans Devanagari';font-size:11.5px;line-height:1.5}
+  .averify.ok{background:#E1FAED}.averify.ok .material-icons{color:#008043}.averify.ok p{color:#0a5c33}
+  .averify.info{background:#F1E5FF}.averify.info .material-icons{color:#6D17CE}.averify.info p{color:#4a1a8f}
+  .averify.gray{background:#EFEDF3}.averify.gray .material-icons{color:#5C5570}.averify.gray p{color:#3f394b}
+  .refund-opt{display:flex;align-items:flex-start;gap:11px;padding:13px;background:#fff;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);margin-top:11px;width:100%;text-align:left;cursor:pointer}
+  .refund-opt.sel{border-color:var(--brand);background:var(--selected-bg);box-shadow:0 0 0 1px var(--brand)}
+  .refund-opt .ri{width:38px;height:38px;border-radius:var(--r-md);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .refund-opt.sel .ri{background:#fff}
+  .refund-opt .ri .material-icons{font-size:20px;color:var(--brand-bold)}
+  .refund-opt .rt{font-size:13.5px;font-weight:700;color:var(--text)}
+  .refund-opt .rs{font-size:11px;color:var(--text-subtle);margin-top:2px;line-height:1.4}
+  .refund-opt .badge1{font-size:8.5px;font-weight:800;color:#008043;background:#E1FAED;padding:1px 6px;border-radius:4px;margin-top:4px;display:inline-block;text-transform:uppercase;letter-spacing:.03em}
+  .refund-opt .ramt{font-size:15px;font-weight:800;color:var(--positive);margin-left:auto;flex:0 0 auto;text-align:right}
+  .refund-opt .ramt small{display:block;font-size:9px;font-weight:600;color:#A7A1B2}
+  .track{width:100%;margin-top:13px;text-align:left}
+  .tstep{display:flex;gap:12px;position:relative}
+  .tstep .tline{position:absolute;left:14px;top:28px;bottom:-6px;width:2px;background:#E2DEEA}
+  .tstep:last-child .tline{display:none}
+  .tdot{width:29px;height:29px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#E2DEEA;color:#fff;z-index:1}
+  .tdot .material-icons{font-size:17px}
+  .tstep.done .tdot{background:#008043}.tstep.done .tline{background:#008043}
+  .tstep.cur .tdot{background:#D9008D;box-shadow:0 0 0 4px #FFE5F6}
+  .tstep.wait .tdot{background:#E2DEEA;color:#A7A1B2}
+  .tbody{padding-bottom:16px;flex:1}.tbody .tt{font-size:13px;font-weight:700;color:#161021}
+  .tstep.wait .tbody .tt{color:#A7A1B2}
+  .tbody .td{font-size:11.5px;color:#5C5570;line-height:1.4;margin-top:2px}
+  .tbody .tmeta{font-size:10.5px;font-weight:700;margin-top:3px}
+  .tstep.done .tmeta{color:#008043}.tstep.cur .tmeta{color:#D9008D}.tstep.wait .tmeta{color:#A7A1B2}
+  .field{width:100%;margin-top:13px;text-align:left}
+  .field label{font-size:12px;font-weight:700;color:#161021;display:block;margin-bottom:5px}
+  .field .inp{height:48px;border:1.5px solid #D7D3E0;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:13px;color:#161021}
+  .field .inp.ok{border-color:#008043}
+  .field .inp .vok{font-size:10.5px;font-weight:800;color:#008043;display:flex;align-items:center;gap:3px}
+  .field .inp .vok .material-icons{font-size:14px}
+  .field .hint{font-size:10.5px;color:#5C5570;margin-top:5px}
+  .ta{min-height:60px;border:1.5px solid #D7D3E0;border-radius:11px;background:#fff;padding:10px 13px;font-size:12.5px;color:#A7A1B2;width:100%;margin-top:5px}
+
+  .chat-head{display:flex;align-items:center;gap:9px;padding:8px 13px;background:#fff;border-bottom:1px solid #E8E4F0;flex:0 0 auto}
+  .chat-head .ca{width:31px;height:31px;border-radius:8px;background:#D9008D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
+  .chat-head .cn{font-size:13.5px;font-weight:700;color:#161021}
+  .chat-head .cs{font-size:10px;color:#008043;font-weight:600;display:flex;align-items:center;gap:4px}
+  .chat-head .cs::before{content:"";width:6px;height:6px;border-radius:50%;background:#008043;display:inline-block}
+  .chat-pin{flex:0 0 auto;display:flex;align-items:flex-start;gap:8px;padding:9px 13px;background:#FFF8FC;border-bottom:1px solid #F2DDED}
+  .chat-pin .material-icons{font-size:15px;color:#D9008D;flex:0 0 auto;margin-top:1px}
+  .chat-pin .csk{font-size:9px;color:#9a6a86;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+  .chat-pin .csv{font-size:12px;font-weight:700;color:#161021;line-height:1.35}
+  .chat-body{flex:1;overflow-y:auto;padding:14px 13px;display:flex;flex-direction:column;gap:11px;background:#F1EDF7}
+  .chat-body::-webkit-scrollbar{width:0}
+  .bubble{max-width:92%;padding:11px 13px;border-radius:16px;font-size:12.5px;line-height:1.5;font-family:'Noto Sans Devanagari'}
+  .bubble.bot{align-self:flex-start;background:#fff;border:1px solid #E8E4F0;border-bottom-left-radius:5px;color:#161021}
+  .bubble.me{align-self:flex-end;background:#D9008D;color:#fff;border-bottom-right-radius:5px}
+  .bubble .b-title{font-weight:700;font-size:13px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .bubble .b-title .material-icons{font-size:17px;color:#D9008D}
+  .bubble .chan{font-size:8px;font-weight:800;letter-spacing:.04em;color:#6D17CE;background:#F1E5FF;padding:1px 5px;border-radius:4px;text-transform:uppercase;margin-left:auto}
+  .bubble .time{font-size:9px;color:rgba(0,0,0,.3);margin-top:5px;display:block}
+  .msg-card{background:#F7F7F9;border-radius:10px;padding:10px 12px;margin-top:9px}
+  .msg-card .mr{display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;gap:8px}
+  .msg-card .mr .k{color:#5C5570}.msg-card .mr .v{font-weight:700;color:#161021}.msg-card .mr .v.pos{color:#008043}
+  .chat-cta{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:9px;min-height:40px;padding:9px 12px;border-radius:12px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:13px;font-weight:700;text-align:center;line-height:1.3;cursor:pointer}
+  .chat-cta.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D}
+  .chat-cta:active{transform:scale(.98)}
+  .chat-cta .material-icons{font-size:16px}
+  .chat-input{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:10px 13px;background:#fff;border-top:1px solid #E8E4F0}
+  .chat-input .box{flex:1;height:40px;border:1.5px solid #D7D3E0;border-radius:9999px;background:#FAF9FC;padding:0 15px;display:flex;align-items:center;font-size:12.5px;color:#A7A1B2}
+  .chat-input .send{width:40px;height:40px;border-radius:50%;background:#D9008D;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .chat-input .send .material-icons{color:#fff;font-size:19px}
+
+  .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .ctl{display:inline-flex;align-items:center;gap:6px;font-family:'Noto Sans';font-size:12.5px;font-weight:700;color:#c3c8d1;background:#262a32;border:1px solid #343a47;border-radius:999px;padding:9px 16px;cursor:pointer}
+  .ctl:hover{background:#2f333c;color:#fff}.ctl:disabled{opacity:.4;cursor:default}
+  .ctl .material-icons{font-size:17px}
+  .ctl.brand{background:#5a1140;border-color:#7a1257;color:#ffb3dd}
+  .hint{font-family:'Noto Sans';font-size:11.5px;color:#7a8090;text-align:center;max-width:440px}
+  .hint b{color:#c3c8d1}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="eyebrow">Wiom · Recharge Case 1 of 2 — working prototype</div>
+    <h1>Recharge → LIVE Activation — tap through the flow</h1>
+    <p class="sub">A clickable walk-through of the recharge-after-expiry → live-activation flow, built from the B5 sequence. Tap the buttons to move through every screen; the chip above the phone shows the B5 step, surface type, and the guardrail. Static design: <a href="recharge-live-activation-flow.html">recharge-live-activation-flow.html</a></p>
+  </div>
+  <div class="stage">
+    <div class="crumb" id="crumb"></div>
+    <div class="aphone" id="phone"></div>
+    <div class="controls">
+      <button class="ctl" id="backBtn"><span class="material-icons">arrow_back</span>वापस</button>
+      <button class="ctl brand" id="restartBtn"><span class="material-icons">restart_alt</span>शुरू से</button>
+    </div>
+    <div class="hint">💡 शुरुआत: <b>captive portal (plan expired)</b>. branches: activating→active, watchdog "please wait", payment-status-unknown, duplicate-payment।</div>
+  </div>
+
+<script>
+const STAT=`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>`;
+const STATON=`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>`;
+const CIN=`<div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>`;
+function cHead(){return `<div class="chat-head"><span class="aback" data-back="1"><span class="material-icons">arrow_back</span></span><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>`;}
+function pin(t){return `<div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">${t}</div></div></div>`;}
+function chat(p,b,on){return (on?STATON:STAT)+cHead()+pin(p)+`<div class="chat-body">${b}</div>`+CIN;}
+function topb(title,logo){return `<div class="atop">`+(logo?`<div class="alogo">W</div><div class="atitle">Wiom</div>`:`<span class="aback" data-back="1"><span class="material-icons">arrow_back</span></span><div class="atitle">${title}</div>`)+`</div>`;}
+function scr(top,body,foot,on){return (on?STATON:STAT)+top+`<div class="abody lft">${body}</div>`+(foot?`<div class="afoot">${foot}</div>`:'');}
+
+const N={},T={},K={},B5={};
+function def(id,title,kind,b5,html){N[id]=html;T[id]=title;K[id]=kind;B5[id]=b5;}
+/* ===== PHASE 1 — plan expired → recharge → pay ===== */
+def('captivePortal','Captive portal — plan expired','screen','#1-3 · BR-04',
+  scr(`<div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div><div class="aact"><span class="material-icons">notifications_none</span><span class="material-icons">person_outline</span></div></div>`,
+  `<div style="text-align:center"><div class="ahero gray"><span class="material-icons">wifi_off</span></div><div class="ah1">आपका प्लान खत्म हो गया</div><div class="asub">नेट फिर चालू करने के लिए रिचार्ज करें।</div></div>
+   <div class="averify info"><span class="material-icons">info</span><p>बस तथ्य — कोई countdown, "जल्दी करें" या दबाव नहीं (C4 · BR-04)।</p></div>`,
+  `<button class="abtn" data-go="planSelect">रिचार्ज करें</button>`));
+
+def('planSelect','Plan selection','screen','#6 · INV-CON-08',
+  scr(topb('प्लान चुनें'),
+  `<div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">wifi</span></div><div><div class="rt">₹500 · 30 दिन</div><div class="rs">अनलिमिटेड · सबसे लोकप्रिय</div></div><div class="ramt">₹500</div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">wifi</span></div><div><div class="rt">₹100 · 7 दिन</div></div><div class="ramt">₹100</div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">wifi</span></div><div><div class="rt">₹30 · 1 दिन</div><div class="rs">एक दिन भी विंडो बराबर रीसेट करता है</div></div><div class="ramt">₹30</div></div>`,
+  `<button class="abtn" data-go="checkout">आगे — चेकआउट</button>`));
+
+def('checkout','Checkout — pay','screen','#7 · D-P10',
+  scr(topb('चेकआउट'),
+  `<div class="scard"><div class="stitle"><span class="material-icons">receipt_long</span>आपका प्लान</div><div class="sr"><span class="k">₹500 · 30 दिन</span><span class="v">₹500</span></div><div class="sdiv"></div><div class="sr total"><span class="k">कुल</span><span class="v">₹500</span></div></div>
+   <div class="ah1 sm" style="margin-top:14px">पेमेंट का तरीका</div>
+   <div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">account_balance_wallet</span></div><div><div class="rt">UPI</div><div class="rs">PhonePe · GPay · Paytm</div></div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">account_balance</span></div><div><div class="rt">नेट बैंकिंग</div></div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">credit_card</span></div><div><div class="rt">कार्ड</div></div></div>
+   <div class="scard tap" data-go="paymentUnknown"><div class="sr"><span class="k" style="font-weight:700;color:#161021">demo: payment status unknown</span><span class="v" style="color:#D9008D">›</span></div></div>`,
+  `<button class="abtn" data-go="paymentReceived">₹500 का भुगतान करें</button>`));
+
+/* ===== PHASE 2 — payment confirmed → ACTIVATION_PENDING ===== */
+def('paymentReceived','Payment received — not yet active','screen','#11 · A8',
+  scr(`<div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>`,
+  `<div style="text-align:center"><div class="ahero ok"><span class="material-icons">check_circle</span></div><div class="ah1">पेमेंट मिल गया ✓</div><div class="asub">₹500 · UPI · अभी</div></div>
+   <div class="scard"><div class="sr"><span class="k">प्लान</span><span class="v">₹500 · 30 दिन</span></div><div class="sr"><span class="k">नेट</span><span class="v" style="color:#6D17CE">चालू हो रहा है…</span></div></div>
+   <div class="averify info"><span class="material-icons">schedule</span><p>अभी "नेट चालू" नहीं कहा — पहले पुष्टि होगी कि नेट सच में चालू हुआ (premature success मना · A8)।</p></div>
+   <div class="scard tap" data-go="duplicatePayment"><div class="sr"><span class="k" style="font-weight:700;color:#161021">demo: गलती से दोबारा payment</span><span class="v" style="color:#D9008D">›</span></div></div>`,
+  `<button class="abtn" data-go="proactiveChat">आगे</button>`));
+
+def('proactiveChat','Proactive — starting shortly','chat','#13-14',
+  chat('रिचार्ज हो गया · नेट चालू हो रहा है',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">bolt</span>रिचार्ज हो गया — नेट कुछ ही पल में<span class="chan">in-app + push</span></div>पेमेंट मिल गया। हम आपका नेट अभी चालू कर रहे हैं — आपको कुछ नहीं करना, अपने-आप हो जाएगा।<span class="time">proactive</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="activating">ठीक है</div></div>`));
+
+def('activating','Activating… (ACTIVATION_PENDING) ★','screen','★ new · BR-05',
+  scr(`<div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>`,
+  `<div style="text-align:center"><div class="sgauge" style="background:conic-gradient(#6D17CE 0% 100%)"><div class="si"><span class="material-icons" style="font-size:34px;color:#6D17CE">sync</span><span class="sunit">चालू हो रहा है</span></div></div>
+   <div class="ah1 sm">आपका नेट चालू हो रहा है…</div><div class="asub">कुछ ही पल — refresh/retry की ज़रूरत नहीं, अपने-आप चालू होगा।</div></div>
+   <div class="averify info"><span class="material-icons">lock_clock</span><p>नया सब-state (ACTIVATION_PENDING) · posture Deferred — कोई रिचार्ज prompt नहीं, पर रिचार्ज विकल्प खुला (BR-05)।</p></div>`,
+  `<button class="abtn" data-go="internetActive">⏩ नेट चालू हो गया (A13)</button><button class="abtn gray" data-go="watchdogWait">⏩ देर हो रही है (watchdog)</button>`));
+
+/* ===== PHASE 3 — verified LIVE ===== */
+def('internetActive','Internet is active','chat','#21 · BR-01',
+  chat('नेट चालू · प्लान अभी से शुरू',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">check_circle</span>नेट चालू है ✓ प्लान अभी से शुरू<span class="chan">in-app + push</span></div>आपका नेट चालू हो गया। प्लान अभी (इसी पल) से गिनना शुरू — पेमेंट के समय से नहीं।<span class="time">A13 · system-driven</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="activeConfirm">प्लान देखें</div></div>`));
+
+def('activeConfirm','Internet-active confirmation','screen','#18-21 · BR-02',
+  scr(`<div class="atop"><div class="alogo">W</div><div class="atitle">Wiom</div></div>`,
+  `<div style="text-align:center"><div class="ahero ok"><span class="material-icons">wifi</span></div><div class="ah1">नेट चालू है ✓</div><div class="asub">आपका प्लान अभी से शुरू।</div></div>
+   <div class="scard"><div class="sr"><span class="k">प्लान</span><span class="v">₹500 · 30 दिन</span></div><div class="sr"><span class="k">शुरू</span><span class="v">आज (A13)</span></div><div class="sr"><span class="k">खत्म</span><span class="v pos">30 दिन बाद</span></div></div>
+   <div class="averify ok"><span class="material-icons">schedule</span><p>क्लॉक A13 (verify) से शुरू — पेमेंट से नहीं। activation में जितनी देर लगी, उतना extra समय आपको मिला (D-011)।</p></div>`,
+  `<button class="abtn" data-go="captivePortal">नेट इस्तेमाल करें (शुरू से)</button>`));
+
+/* ===== branches ===== */
+def('watchdogWait','Activating, please wait (silent recovery)','chat','#22-24 · BR-08',
+  chat('पेमेंट मिला · चालू कर रहे हैं',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">hourglass_bottom</span>पेमेंट मिल गया — चालू कर रहे हैं, थोड़ा रुकें<span class="chan">in-app</span></div>नेट चालू होने में थोड़ा वक़्त लग रहा है। हमारी टीम देख रही है — आपको कुछ नहीं करना, पैसा सुरक्षित है।<span class="time">P7 · Recovery case</span></div>
+   <div class="bubble bot">कोई error/तकनीकी जानकारी नहीं दिखाई जाती — सिर्फ़ शांत भरोसा (BR-08 · C2)।
+     <div class="chat-cta" data-go="internetActive">⏩ देर से चालू हो गया (A13)</div>
+   </div>`));
+
+def('paymentUnknown','Payment status unknown (gateway timeout)','screen','ALT-02 · B6.3',
+  scr(topb('पेमेंट की स्थिति'),
+  `<div style="text-align:center"><div class="ahero gray"><span class="material-icons">help_outline</span></div><div class="ah1 sm">पेमेंट की स्थिति देख रहे हैं…</div><div class="asub">अभी पक्का नहीं — हम जाँच रहे हैं। न सफल, न असफल दिखाया जाता।</div></div>
+   <div class="averify info"><span class="material-icons">verified_user</span><p>अगर पैसा कट गया और बाद में confirm आया, तो idempotency (D-P10) double-activation रोकती है। पैसा सुरक्षित।</p></div>`,
+  `<button class="abtn ghost" data-go="captivePortal">सहायता से बात करें</button>`));
+
+def('duplicatePayment','Duplicate payment — silent refund','chat','BEC-03 · A11b',
+  chat('दोहरा पेमेंट · रिफंड हो गया',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">info</span>दोहरा पेमेंट पकड़ा गया<span class="chan">in-app + push</span></div>आपने गलती से दो बार भुगतान कर दिया। दूसरा ₹500 अपने-आप वापस कर दिया गया — नेट एक ही बार चालू होगा।<span class="time">A11b</span></div>
+   <div class="bubble bot">पहला पेमेंट वाली activation बिना रुके जारी।
+     <div class="chat-cta" data-go="activating">activation जारी देखें</div>
+   </div>`));
+/*NODES_END*/
+/* ===== router ===== */
+const phone=document.getElementById('phone'),crumb=document.getElementById('crumb');
+const backBtn=document.getElementById('backBtn'),restartBtn=document.getElementById('restartBtn');
+let cur=null,hist=[];
+function paint(){
+  phone.innerHTML=N[cur]||('<div style="padding:40px;color:#900">missing '+cur+'</div>');
+  const cb=phone.querySelector('.chat-body,.abody');if(cb)cb.scrollTop=0;
+  const k=K[cur]==='chat'?'<span class="xt chat"><span class="material-icons">chat</span>Chat</span>':'<span class="xt scr"><span class="material-icons">smartphone</span>Screen</span>';
+  crumb.innerHTML=`<span class="b5">B5 ${B5[cur]}</span><span>${T[cur]}</span>${k}`;
+  backBtn.disabled=hist.length===0;
+}
+function go(id){if(id===cur)return;if(cur!==null)hist.push(cur);cur=id;paint();}
+function back(){if(hist.length){cur=hist.pop();paint();}}
+phone.addEventListener('click',e=>{
+  const sel=e.target.closest('[data-sel]');
+  if(sel&&sel.parentElement){[...sel.parentElement.children].forEach(s=>{if(s.dataset&&s.dataset.sel)s.classList.remove('sel');});sel.classList.add('sel');}
+  const b=e.target.closest('[data-back]');if(b){back();return;}
+  const g=e.target.closest('[data-go]');if(g)go(g.dataset.go);
+});
+backBtn.onclick=back;
+restartBtn.onclick=()=>{hist=[];cur=null;go('captivePortal');};
+go('captivePortal');
+</script>
+</body>
+</html>
