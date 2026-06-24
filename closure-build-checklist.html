@@ -90,14 +90,18 @@ const DATA=[
     {id:'c1f',tag:'imp',kind:'scr',t:'Refund sent → credited states',d:'App jumps to chat after UPI — surface the explicit sent→credited lifecycle.',gr:'INV-EXIT-05'},
     {id:'c1g',tag:'add',kind:'chat',t:'Closure-concluded comm (bookend 2)',d:'<span class="hi">"सब पूरा — कनेक्शन बंद, ₹300 खाते में"</span>',gr:'INV-03'},
     {id:'c1h',tag:'imp',kind:'chat',t:'Bond write-off (UPI-not-available)',d:'App screen is bare — reframe to <span class="hi">"₹300 सुरक्षित, 60 दिन, दोबारा नेट पर फिर सक्रिय"</span>',gr:'INV-06'},
-    {id:'c1i',tag:'add',kind:'chat',t:'D-007C reply',d:'<span class="hi">"पहले refund दिखाओ"</span> ≠ refusal — surface reserved ₹300, re-attempt.',gr:'BEC-10'}
+    {id:'c1i',tag:'add',kind:'chat',t:'D-007C reply',d:'<span class="hi">"पहले refund दिखाओ"</span> ≠ refusal — surface reserved ₹300, re-attempt.',gr:'BEC-10'},
+    {id:'c1j',tag:'add',kind:'chat',t:'Reversal before pickup — welcome back',d:'Recharge/reversal pre-pickup → pickup stopped, back to active, <span class="hi">₹0 शुल्क</span>. Added by audit.',gr:'INV-04 / CRITERIA-05'}
   ]},
   {n:'2',t:'Explicit Choice',s:'Custody/UPI/refund middle reuses Case 1 — only entry + money is new',items:[
     {id:'c2a',tag:'add',kind:'scr',t:'Exit summary',d:'Pro-rata + deposit shown up front; self-return offered (NOT pre-selected); optional reason; no retention offers.',gr:'A8 / INV-EXIT-25'},
     {id:'c2b',tag:'add',kind:'scr',t:'Pro-rata shown & credited at initiation',d:'<span class="hi">"बचे 12 दिनों का ₹200 आपके UPI पर भेजा गया"</span>',gr:'INV-EXIT-25'},
     {id:'c2c',tag:'add',kind:'chat',t:'Reversal reverses pro-rata in ledger',d:'Welcome back, ₹0 fee, same SI; the credited pro-rata is clawed back.',gr:'BR-06'},
     {id:'c2d',tag:'add',kind:'scr',t:'First-class "Exit" entry',d:'App has only booking-cancel — add a service-exit entry with pro-rata.',gr:'A5'},
-    {id:'c2e',tag:'imp',kind:'scr',t:'Remove default-selection on self-return',d:'"मैं खुद लौटाऊँगा" must NOT be pre-ticked — customer chooses.',gr:'the flagged bug'}
+    {id:'c2e',tag:'imp',kind:'scr',t:'Remove default-selection on self-return',d:'"मैं खुद लौटाऊँगा" must NOT be pre-ticked — customer chooses.',gr:'the flagged bug'},
+    {id:'c2f',tag:'add',kind:'chat',t:'Chat exit-intent handler',d:'<span class="hi">"मुझे कनेक्शन बंद करना है"</span> → no retention, no offers → route to exit summary. Added by audit.',gr:'B6.1 / CRITERIA-07'},
+    {id:'c2g',tag:'add',kind:'scr',t:'Self-pickup request (locate center)',d:'First-class self-return: locate Wiom center, self-return tier (no ₹50). Added by audit.',gr:'BR-03 / Doctrine #13'},
+    {id:'c2h',tag:'imp',kind:'scr',t:'Exit summary — under threshold (no pro-rata)',d:'remaining ≤ 7d → no pro-rata, deposit still returned in full. Added by audit.',gr:'BEC-04'}
   ]},
   {n:'3',t:'Service-Unavailability',s:'Wiom-caused — apology not transaction; only handover/refund reuses Case 1',items:[
     {id:'c3a',tag:'add',kind:'chat',t:'Advance-notice apology (mandatory)',d:'Before cutoff. <span class="hi">"माफ़ी — हम आपके इलाके में नेट नहीं दे पाएंगे; यह हमारी ओर से है"</span>',gr:'BR-01 / INV-01'},
@@ -106,7 +110,14 @@ const DATA=[
     {id:'c3d',tag:'imp',kind:'scr',t:'UPI step — no "why are you leaving"',d:'Optional feedback only; never a reason-for-exit prompt (not the customer’s choice).',gr:'A8'},
     {id:'c3e',tag:'imp',kind:'scr',t:'Free Wiom-arranged pickup',d:'App deducts ₹50 — here pickup is free, full deposit regardless.',gr:'BR-05'},
     {id:'c3f',tag:'add',kind:'chat',t:'No field presence → keep device',d:'Netbox write-off, customer not penalised, full refund stands.',gr:'BEC-02'},
-    {id:'c3g',tag:'add',kind:'chat',t:'Conclusion: apology + reconnect offer',d:'<span class="hi">"इलाका लौटे तो सबसे पहले आपको जोड़ेंगे"</span> + set reconnect flag.',gr:'BR-07'}
+    {id:'c3g',tag:'add',kind:'chat',t:'Conclusion: apology + reconnect offer',d:'<span class="hi">"इलाका लौटे तो सबसे पहले आपको जोड़ेंगे"</span> + set reconnect flag.',gr:'BR-07'},
+    {id:'c3h',tag:'add',kind:'scr',t:'Reconnect opt-in confirmed',d:'Closes the loop on the advance-notice CTA — "we\'ll tell you first". Added by audit.',gr:'BR-07 / BEC-07'}
+  ]},
+  {n:'S',t:'Shared / cross-case',s:'Build once, reused across all three cases — surfaced by the audit',items:[
+    {id:'sh1',tag:'imp',kind:'scr',t:'UPI collect + verify + optional reason',d:'Refund-provision UPI step with skippable reason (Case 1 & 2). B5 names it explicitly.',gr:'BR-S1 / BR-S2'},
+    {id:'sh2',tag:'add',kind:'chat',t:'Handover confirmation reminder',d:'Pending-confirm nudge + deep link; ops-verified fallback after window so deposit never stalls.',gr:'B6.x / FM-S2'},
+    {id:'sh3',tag:'add',kind:'scr',t:'Custody dispute acknowledged',d:'"I never handed it over" → reviewing, default pro-customer, deposit safe, no blame.',gr:'S-EC-03 / CP-CLOSURE-20'},
+    {id:'sh4',tag:'imp',kind:'scr',t:'UPI failed / name mismatch — confirm payee',d:'Bad/name-mismatched VPA → re-prompt or confirm payee, bounded retries, never a forfeiture.',gr:'S-EC-07/08'}
   ]}
 ];
 const REUSE=['Choose return method (नेट-बॉक्स वापस करने का तरीका चुनें)','Self-drop sheet (Wiom Care Center · ₹300)','Pickup sheet (₹300 − ₹50 = ₹250)','UPI-ID screen + verify','UPI-app education videos','Refund tiers ₹300 / ₹250','Cancel-reason screen','Renewal / GRACE','Payment history'];
@@ -116,7 +127,7 @@ let state=JSON.parse(localStorage.getItem(KEY)||'{}');
 const main=document.getElementById('main');
 let html='';
 DATA.forEach(c=>{
-  html+=`<div class="case"><div class="case-h"><div class="cn">${c.n}</div><div><div class="ct">Case ${c.n} · ${c.t}</div><div class="cs">${c.s}</div></div><div class="cprog"><span class="cct" id="cct-${c.n}">0/${c.items.length}</span><span class="prog"><i id="cbar-${c.n}"></i></span></div></div>`;
+  html+=`<div class="case"><div class="case-h"><div class="cn">${c.n}</div><div><div class="ct">${c.n==='S'?'':'Case '}${c.n} · ${c.t}</div><div class="cs">${c.s}</div></div><div class="cprog"><span class="cct" id="cct-${c.n}">0/${c.items.length}</span><span class="prog"><i id="cbar-${c.n}"></i></span></div></div>`;
   c.items.forEach(it=>{
     html+=`<div class="item" data-id="${it.id}"><div class="cbx"><span class="material-icons">check</span></div><div class="it-main"><div class="it-row"><span class="tag ${it.tag}">${it.tag==='add'?'Add':'Improve'}</span><span class="tag ${it.kind}">${it.kind==='chat'?'Chat':'Screen'}</span><span class="it-t">${it.t}</span></div><div class="it-d">${it.d}<span class="gr">${it.gr}</span></div></div></div>`;
   });
