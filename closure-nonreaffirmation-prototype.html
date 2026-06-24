@@ -232,7 +232,8 @@ def('recover','Recover device — self-return first','screen','#12 · BR-06',
    <div class="averify gray"><span class="material-icons">event_available</span><p>जल्दबाज़ी नहीं — हम <b>45 दिन</b> तक मदद करेंगे (पहले 15 दिन नज़दीकी पॉइंट, फिर हमारी टीम)।</p></div>
    <div class="scard tap" data-go="welcomeBack"><div class="sr"><span class="k" style="font-weight:700;color:#161021">मन बदल गया — वापस आना है</span><span class="v" style="color:#D9008D">›</span></div></div>
    <div class="scard tap" data-go="refusalFilter"><div class="sr"><span class="k" style="font-weight:700;color:#161021">पहले मेरा refund दिखाओ</span><span class="v" style="color:#D9008D">›</span></div></div>
-   <div class="scard tap" data-go="notRecovered"><div class="sr"><span class="k" style="font-weight:700;color:#161021">डिवाइस लौटा नहीं पा रहा</span><span class="v" style="color:#D9008D">›</span></div></div>`,
+   <div class="scard tap" data-go="notRecovered"><div class="sr"><span class="k" style="font-weight:700;color:#161021">डिवाइस लौटा नहीं पा रहा</span><span class="v" style="color:#D9008D">›</span></div></div>
+   <div class="scard tap" data-go="lifeEvent"><div class="sr"><span class="k" style="font-weight:700;color:#161021">(edge) मृत्यु / जीवन-संकट सामने आए</span><span class="v" style="color:#D9008D">›</span></div></div>`,
   `<button class="abtn" data-go="handover">खुद लौटाना चुनें</button>`));
 
 def('welcomeBack','Reversed — welcome back, ₹0','chat','#13-16 · ALT-02',
@@ -341,6 +342,14 @@ def('refusalFilter','"पहले refund दिखाओ" — not refusal','cha
    <div class="bubble bot">यह "मना करना" नहीं माना जाता — हम पहले अपना वादा पूरा करते हैं (D-007C)।
      <div class="chat-cta" data-go="reserved">मेरा रिज़र्व ₹300 दिखाओ</div>
      <div class="chat-cta sec" data-go="recover">अब डिवाइस लौटाऊँगा</div>
+   </div>`));
+
+/* ===== life-event overlay (BEC-06 — overrides the standard path) ===== */
+def('lifeEvent','Life-event overlay — dignified','chat','BEC-06 · override',
+  chat('जीवन-घटना · पूरा रिफंड परिवार को · कोई आगे संदेश नहीं',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">volunteer_activism</span>हम आपके साथ हैं</div>हमें सूचित किया गया है। आपको कुछ नहीं करना — हम कनेक्शन शांति से बंद कर देंगे और बचा हुआ <b>पूरा पैसा + डिपॉज़िट</b> परिवार को लौटा देंगे।<span class="time">life-event overlay</span></div>
+   <div class="bubble bot">कोई win-back नहीं, आगे कोई संदेश नहीं — सिर्फ़ ज़रूरी। यह overlay सामान्य रास्ते को <b>override</b> करता है, डिवाइस वापसी zero-friction।
+     <div class="chat-cta sec" data-go="gatecheck">समझ गया</div>
    </div>`));
 
 /* ===== router ===== */

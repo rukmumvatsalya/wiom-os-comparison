@@ -250,7 +250,8 @@ def('recover','Recover — self-return first','screen','#12 · BR-03',
    <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">local_shipping</span></div><div><div class="rt">हमारी टीम पिकअप करे</div><div class="rs">घर से ले जाएंगे</div></div><div class="ramt">₹250<small>−₹50</small></div></div>
    <div class="scard tap" data-go="reversed"><div class="sr"><span class="k" style="font-weight:700;color:#161021">रुकना है — बाहर नहीं निकलना</span><span class="v" style="color:#D9008D">›</span></div></div>
    <div class="scard tap" data-go="refusalFilter"><div class="sr"><span class="k" style="font-weight:700;color:#161021">पहले मेरा refund दिखाओ</span><span class="v" style="color:#D9008D">›</span></div></div>
-   <div class="scard tap" data-go="notRecovered"><div class="sr"><span class="k" style="font-weight:700;color:#161021">डिवाइस लौटा नहीं पा रहा</span><span class="v" style="color:#D9008D">›</span></div></div>`,
+   <div class="scard tap" data-go="notRecovered"><div class="sr"><span class="k" style="font-weight:700;color:#161021">डिवाइस लौटा नहीं पा रहा</span><span class="v" style="color:#D9008D">›</span></div></div>
+   <div class="scard tap" data-go="lifeEvent"><div class="sr"><span class="k" style="font-weight:700;color:#161021">(edge) मृत्यु / जीवन-संकट सामने आए</span><span class="v" style="color:#D9008D">›</span></div></div>`,
   `<button class="abtn" data-go="handover">खुद लौटाना चुनें · पिकअप raise करें</button>`));
 
 def('refusalFilter','"पहले refund" — not refusal','chat','BEC-10 · D-007C',
@@ -265,6 +266,14 @@ def('reversed','Reversed — back, pro-rata clawed back','chat','#13-16 · BR-06
    <div class="bubble bot"><div class="b-title"><span class="material-icons">celebration</span>वापसी पर स्वागत है!</div>डिवाइस अभी उठाया नहीं गया था — पिकअप रोक दिया। सब पहले जैसा, ₹0 शुल्क।<span class="time">अभी</span></div>
    <div class="bubble bot">बचे दिनों का ₹200 जो शुरू में भेजा था, वह <b>ledger में वापस समायोजित</b> — प्लान फिर पूरा चलेगा।
      <div class="chat-cta sec" data-go="stayed">ठीक है, धन्यवाद</div>
+   </div>`));
+
+/* ===== life-event overlay (BEC-09 — overrides explicit choice) ===== */
+def('lifeEvent','Life-event overlay — dignified','chat','BEC-09 · override',
+  chat('जीवन-घटना · पूरा रिफंड परिवार को · कोई आगे संदेश नहीं',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">volunteer_activism</span>हम आपके साथ हैं</div>हमें सूचित किया गया है। आपको कुछ नहीं करना — हम कनेक्शन शांति से बंद कर देंगे और बचा हुआ <b>पूरा पैसा + डिपॉज़िट</b> परिवार को लौटा देंगे।<span class="time">life-event overlay</span></div>
+   <div class="bubble bot">कोई win-back नहीं, आगे कोई संदेश नहीं। यह overlay explicit-choice रास्ते को <b>override</b> करता है, डिवाइस वापसी zero-friction।
+     <div class="chat-cta sec" data-go="exitSummary">समझ गया</div>
    </div>`));
 
 /* ===== PHASE 4 — collected → concluded (shared spine) ===== */
