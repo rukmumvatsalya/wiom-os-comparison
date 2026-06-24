@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Case 1 Non-Reaffirmation · working prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{--brand:#D9008D;--brand-bold:#443152;--text:#161021;--text-subtle:#5C5570;--text-disabled:#A7A1B2;--stroke:#E8E4F0;--stroke-strong:#D7D3E0;--bg-subtle:#F1EDF7;--positive:#008043;--selected-bg:#FFE5F6;--r-md:12px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans Devanagari','Noto Sans',sans-serif;background:radial-gradient(1100px 560px at 50% -10%,#262a36,#1c1f26 60%);color:#e7e9ee;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .top{max-width:980px;margin:0 auto;padding:26px 24px 6px;text-align:center}
+  .eyebrow{font-family:'Noto Sans';font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#D9008D}
+  h1{font-family:'Noto Sans';font-size:22px;font-weight:700;color:#fff;margin:6px 0 4px}
+  .sub{font-family:'Noto Sans';font-size:12.5px;color:#9aa0ab;line-height:1.55;max-width:660px;margin:0 auto}
+  .sub a{color:#ff9ec8;font-weight:700}
+  .stage{display:flex;flex-direction:column;align-items:center;gap:14px;padding:18px 16px 60px}
+  .crumb{display:flex;align-items:center;gap:9px;font-family:'Noto Sans';font-size:12px;color:#c3c8d1;background:#222631;border:1px solid #343a47;border-radius:999px;padding:6px 14px;min-height:34px;flex-wrap:wrap;justify-content:center;max-width:520px}
+  .crumb .b5{font-weight:800;color:#ffd27f;background:#3a2e10;border-radius:6px;padding:1px 8px;font-size:10px}
+  .crumb .xt{font-size:9px;font-weight:800;letter-spacing:.04em;padding:2px 7px;border-radius:5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:3px}
+  .crumb .xt .material-icons{font-size:11px}
+  .crumb .xt.chat{background:#241a3a;color:#bda7ff}.crumb .xt.scr{background:#16313f;color:#7fd1ff}
+  .crumb .gr{font-size:9px;font-weight:700;color:#8fe3b0;background:#152a1c;border-radius:4px;padding:2px 6px}
+
+  .aphone{width:332px;height:684px;background:#F7F7F9;border:10px solid #11131a;border-radius:36px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .astatus{height:28px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-family:'Noto Sans';font-size:11px;font-weight:600;color:#161021;flex:0 0 auto}
+  .astatus .r .material-icons{font-size:12px;vertical-align:middle;margin-left:2px}
+  .atop{display:flex;align-items:center;padding:9px 13px;flex:0 0 auto;gap:9px}
+  .alogo{width:31px;height:31px;border-radius:8px;background:#D9008D;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex:0 0 auto}
+  .aback{color:#352d42;display:flex;align-items:center;cursor:pointer}.aback .material-icons{font-size:22px}
+  .atitle{font-family:'Noto Sans Devanagari';font-size:14px;font-weight:700;color:#161021}
+  .aact{margin-left:auto;display:flex;gap:13px;color:#352d42}.aact .material-icons{font-size:19px}
+  .abody{flex:1;overflow-y:auto;padding:10px 20px 18px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .abody.lft{align-items:stretch;text-align:left}
+  .abody::-webkit-scrollbar{width:0}
+  .ah1{font-family:'Noto Sans Devanagari';font-size:18px;font-weight:700;color:#161021;line-height:1.35;margin-top:8px}
+  .ah1.sm{font-size:15.5px}
+  .asub{font-family:'Noto Sans Devanagari';font-size:12.5px;color:#5C5570;line-height:1.5;margin-top:9px}
+  .afoot{flex:0 0 auto;width:100%;padding:8px 16px 14px;display:flex;flex-direction:column;gap:8px}
+  .abtn{width:100%;height:48px;border:none;border-radius:24px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;box-shadow:0 4px 12px rgba(217,0,141,.22)}
+  .abtn .material-icons{font-size:18px}
+  .abtn.ghost{background:transparent;color:#D9008D;box-shadow:none;font-weight:600}
+  .abtn.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D;box-shadow:none}
+  .abtn.gray{background:#EDEAF2;color:#5C5570;box-shadow:none}
+  .abtn:active{transform:scale(.98)}
+  .ahero{width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:16px auto 2px}
+  .ahero .material-icons{font-size:40px}
+  .ahero.brand{background:#FFE5F6}.ahero.brand .material-icons{color:#D9008D}
+  .ahero.ok{background:#E1FAED}.ahero.ok .material-icons{color:#008043}
+  .ahero.gray{background:#EAE7F0}.ahero.gray .material-icons{color:#5C5570}
+  .ahero.info{background:#F1E5FF}.ahero.info .material-icons{color:#6D17CE}
+  .deposit-banner{width:100%;background:linear-gradient(135deg,#FFF0F8,#FFE5F6);border:1px solid #FAC8E6;border-radius:14px;padding:14px;margin-top:6px;display:flex;gap:11px;align-items:center;text-align:left}
+  .deposit-banner .di{width:42px;height:42px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .deposit-banner .di .material-icons{color:#D9008D;font-size:23px}
+  .deposit-banner .dt{font-size:13.5px;font-weight:800;color:#161021}
+  .deposit-banner .ds{font-size:11px;color:#5C5570;margin-top:2px;line-height:1.4}
+  .scard{width:100%;background:#fff;border-radius:12px;padding:13px 15px;margin-top:13px;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:left}
+  .scard .stitle{font-size:12px;font-weight:700;color:#161021;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .scard .stitle .material-icons{font-size:16px;color:#D9008D}
+  .scard .sr{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;gap:10px}
+  .scard .sr .k{color:#5C5570}.scard .sr .v{font-weight:700;color:#161021;text-align:right}
+  .scard .sr .v.pos{color:#008043}
+  .scard.tap{cursor:pointer;border:1.5px solid #D9008D}.scard.tap:active{background:#FFF8FC}
+  .averify{display:flex;align-items:flex-start;gap:8px;border-radius:10px;padding:10px 12px;margin-top:12px;text-align:left;width:100%}
+  .averify .material-icons{font-size:16px;flex:0 0 auto;margin-top:1px}
+  .averify p{font-family:'Noto Sans Devanagari';font-size:11.5px;line-height:1.5}
+  .averify.ok{background:#E1FAED}.averify.ok .material-icons{color:#008043}.averify.ok p{color:#0a5c33}
+  .averify.info{background:#F1E5FF}.averify.info .material-icons{color:#6D17CE}.averify.info p{color:#4a1a8f}
+  .averify.gray{background:#EFEDF3}.averify.gray .material-icons{color:#5C5570}.averify.gray p{color:#3f394b}
+  .refund-opt{display:flex;align-items:flex-start;gap:11px;padding:13px;background:#fff;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);margin-top:11px;width:100%;text-align:left;cursor:pointer}
+  .refund-opt.sel{border-color:var(--brand);background:var(--selected-bg);box-shadow:0 0 0 1px var(--brand)}
+  .refund-opt .ri{width:38px;height:38px;border-radius:var(--r-md);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .refund-opt.sel .ri{background:#fff}
+  .refund-opt .ri .material-icons{font-size:20px;color:var(--brand-bold)}
+  .refund-opt .rt{font-size:13.5px;font-weight:700;color:var(--text)}
+  .refund-opt .rs{font-size:11px;color:var(--text-subtle);margin-top:2px;line-height:1.4}
+  .refund-opt .badge1{font-size:8.5px;font-weight:800;color:#008043;background:#E1FAED;padding:1px 6px;border-radius:4px;margin-top:4px;display:inline-block;text-transform:uppercase;letter-spacing:.03em}
+  .refund-opt .ramt{font-size:15px;font-weight:800;color:var(--positive);margin-left:auto;flex:0 0 auto;text-align:right}
+  .refund-opt .ramt small{display:block;font-size:9px;font-weight:600;color:#A7A1B2}
+  .track{width:100%;margin-top:13px;text-align:left}
+  .tstep{display:flex;gap:12px;position:relative}
+  .tstep .tline{position:absolute;left:14px;top:28px;bottom:-6px;width:2px;background:#E2DEEA}
+  .tstep:last-child .tline{display:none}
+  .tdot{width:29px;height:29px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#E2DEEA;color:#fff;z-index:1}
+  .tdot .material-icons{font-size:17px}
+  .tstep.done .tdot{background:#008043}.tstep.done .tline{background:#008043}
+  .tstep.cur .tdot{background:#D9008D;box-shadow:0 0 0 4px #FFE5F6}
+  .tstep.wait .tdot{background:#E2DEEA;color:#A7A1B2}
+  .tbody{padding-bottom:16px;flex:1}.tbody .tt{font-size:13px;font-weight:700;color:#161021}
+  .tstep.wait .tbody .tt{color:#A7A1B2}
+  .tbody .td{font-size:11.5px;color:#5C5570;line-height:1.4;margin-top:2px}
+  .tbody .tmeta{font-size:10.5px;font-weight:700;margin-top:3px}
+  .tstep.done .tmeta{color:#008043}.tstep.cur .tmeta{color:#D9008D}.tstep.wait .tmeta{color:#A7A1B2}
+  .field{width:100%;margin-top:13px;text-align:left}
+  .field label{font-size:12px;font-weight:700;color:#161021;display:block;margin-bottom:5px}
+  .field .inp{height:48px;border:1.5px solid #D7D3E0;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:13px;color:#161021}
+  .field .inp.ok{border-color:#008043}
+  .field .inp .vok{font-size:10.5px;font-weight:800;color:#008043;display:flex;align-items:center;gap:3px}
+  .field .inp .vok .material-icons{font-size:14px}
+  .field .hint{font-size:10.5px;color:#5C5570;margin-top:5px}
+  .ta{min-height:60px;border:1.5px solid #D7D3E0;border-radius:11px;background:#fff;padding:10px 13px;font-size:12.5px;color:#A7A1B2;width:100%;margin-top:5px}
+
+  .chat-head{display:flex;align-items:center;gap:9px;padding:8px 13px;background:#fff;border-bottom:1px solid #E8E4F0;flex:0 0 auto}
+  .chat-head .ca{width:31px;height:31px;border-radius:8px;background:#D9008D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
+  .chat-head .cn{font-size:13.5px;font-weight:700;color:#161021}
+  .chat-head .cs{font-size:10px;color:#008043;font-weight:600;display:flex;align-items:center;gap:4px}
+  .chat-head .cs::before{content:"";width:6px;height:6px;border-radius:50%;background:#008043;display:inline-block}
+  .chat-pin{flex:0 0 auto;display:flex;align-items:flex-start;gap:8px;padding:9px 13px;background:#FFF8FC;border-bottom:1px solid #F2DDED}
+  .chat-pin .material-icons{font-size:15px;color:#D9008D;flex:0 0 auto;margin-top:1px}
+  .chat-pin .csk{font-size:9px;color:#9a6a86;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+  .chat-pin .csv{font-size:12px;font-weight:700;color:#161021;line-height:1.35}
+  .chat-body{flex:1;overflow-y:auto;padding:14px 13px;display:flex;flex-direction:column;gap:11px;background:#F1EDF7}
+  .chat-body::-webkit-scrollbar{width:0}
+  .bubble{max-width:92%;padding:11px 13px;border-radius:16px;font-size:12.5px;line-height:1.5;font-family:'Noto Sans Devanagari'}
+  .bubble.bot{align-self:flex-start;background:#fff;border:1px solid #E8E4F0;border-bottom-left-radius:5px;color:#161021}
+  .bubble.me{align-self:flex-end;background:#D9008D;color:#fff;border-bottom-right-radius:5px}
+  .bubble .b-title{font-weight:700;font-size:13px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .bubble .b-title .material-icons{font-size:17px;color:#D9008D}
+  .bubble .chan{font-size:8px;font-weight:800;letter-spacing:.04em;color:#6D17CE;background:#F1E5FF;padding:1px 5px;border-radius:4px;text-transform:uppercase;margin-left:auto}
+  .bubble .time{font-size:9px;color:rgba(0,0,0,.3);margin-top:5px;display:block}
+  .msg-card{background:#F7F7F9;border-radius:10px;padding:10px 12px;margin-top:9px}
+  .msg-card .mr{display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;gap:8px}
+  .msg-card .mr .k{color:#5C5570}.msg-card .mr .v{font-weight:700;color:#161021}.msg-card .mr .v.pos{color:#008043}
+  .chat-cta{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:9px;min-height:40px;padding:9px 12px;border-radius:12px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:13px;font-weight:700;text-align:center;line-height:1.3;cursor:pointer}
+  .chat-cta.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D}
+  .chat-cta:active{transform:scale(.98)}
+  .chat-cta .material-icons{font-size:16px}
+  .chat-input{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:10px 13px;background:#fff;border-top:1px solid #E8E4F0}
+  .chat-input .box{flex:1;height:40px;border:1.5px solid #D7D3E0;border-radius:9999px;background:#FAF9FC;padding:0 15px;display:flex;align-items:center;font-size:12.5px;color:#A7A1B2}
+  .chat-input .send{width:40px;height:40px;border-radius:50%;background:#D9008D;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .chat-input .send .material-icons{color:#fff;font-size:19px}
+
+  .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .ctl{display:inline-flex;align-items:center;gap:6px;font-family:'Noto Sans';font-size:12.5px;font-weight:700;color:#c3c8d1;background:#262a32;border:1px solid #343a47;border-radius:999px;padding:9px 16px;cursor:pointer}
+  .ctl:hover{background:#2f333c;color:#fff}.ctl:disabled{opacity:.4;cursor:default}
+  .ctl .material-icons{font-size:17px}
+  .ctl.brand{background:#5a1140;border-color:#7a1257;color:#ffb3dd}
+  .hint{font-family:'Noto Sans';font-size:11.5px;color:#7a8090;text-align:center;max-width:440px}
+  .hint b{color:#c3c8d1}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="eyebrow">Wiom · Closure — Build Delta · working prototype</div>
+    <h1>Closure (reuse + deltas) — tap through the flow</h1>
+    <p class="sub">Clickable walk-through of all 3 closure cases. Existing app screens (router-recovery) are <b>reused as-is</b>; only the gaps are new. The chip above the phone shows <b>Reuse / Improve / Add</b> + B5 step. Static map: <a href="closure-build-delta.html">closure-build-delta.html</a></p>
+  </div>
+  <div class="stage">
+    <div class="crumb" id="crumb"></div>
+    <div class="aphone" id="phone"></div>
+    <div class="controls">
+      <button class="ctl" id="backBtn"><span class="material-icons">arrow_back</span>वापस</button>
+      <button class="ctl brand" id="restartBtn"><span class="material-icons">apps</span>मेन्यू</button>
+    </div>
+    <div class="hint">💡 <b>Reuse</b> = already in app (used as-is) · <b>Improve</b> = small change · <b>Add</b> = build new. Pick a case below.</div>
+  </div>
+
+<script>
+const STAT=`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>`;
+const STATON=`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>`;
+const CIN=`<div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>`;
+function cHead(){return `<div class="chat-head"><span class="aback" data-back="1"><span class="material-icons">arrow_back</span></span><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>`;}
+function pin(t){return `<div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">${t}</div></div></div>`;}
+function chat(p,b,on){return (on?STATON:STAT)+cHead()+pin(p)+`<div class="chat-body">${b}</div>`+CIN;}
+function topb(title,logo){return `<div class="atop">`+(logo?`<div class="alogo">W</div><div class="atitle">Wiom</div>`:`<span class="aback" data-back="1"><span class="material-icons">arrow_back</span></span><div class="atitle">${title}</div>`)+`</div>`;}
+function scr(top,body,foot,on){return (on?STATON:STAT)+top+`<div class="abody lft">${body}</div>`+(foot?`<div class="afoot">${foot}</div>`:'');}
+
+const N={},T={},K={},B5={},D={};
+function def(id,title,kind,b5,html,delta){N[id]=html;T[id]=title;K[id]=kind;B5[id]=b5;D[id]=delta||'';}
+/* ===== menu ===== */
+def('menu','Closure — pick a case','menu','',
+  STATON+`<div class="atop"><div class="alogo">W</div><div class="atitle">Closure · Build Delta</div></div>`+
+  `<div class="abody lft"><div class="ah1 sm" style="text-align:center">कौन सा closure case?</div><div class="asub" style="text-align:center">हरी = app में पहले से · बाकी = नई/सुधार</div>
+   <div class="menu-card" data-go="c1_1"><div class="mi"><span class="material-icons">hourglass_bottom</span></div><div><div class="mt">1 · Non-Reaffirmation</div><div class="ms">router-recovery reuse + 7 add · 2 improve</div></div><span class="material-icons go">chevron_right</span></div>
+   <div class="menu-card" data-go="c2_1"><div class="mi"><span class="material-icons">logout</span></div><div><div class="mt">2 · Explicit Choice</div><div class="ms">exit summary + pro-rata + reuse spine</div></div><span class="material-icons go">chevron_right</span></div>
+   <div class="menu-card" data-go="c3_1"><div class="mi"><span class="material-icons">location_off</span></div><div><div class="mt">3 · Service-Unavailability</div><div class="ms">apology + full refund + reuse handover</div></div><span class="material-icons go">chevron_right</span></div>
+  </div>`,'');
+
+/* ===== CASE 1 ===== */
+def('c1_1','प्लान खत्म / रिचार्ज','screen','',scr(topb('',true),
+  `<div style="text-align:center"><div class="ahero gray"><span class="material-icons">wifi_off</span></div><div class="ah1 sm">आपका प्लान खत्म हो गया</div><div class="asub">रिचार्ज करके नेट फिर चालू करें।</div><div class="scard"><div class="sr"><span class="k">स्थिति</span><span class="v" style="color:#9a7a00">GRACE</span></div></div></div>
+   <div class="reuse-src" style="margin-top:10px"><span class="material-icons">check</span>Live: ManageScreen.kt</div>`,
+  `<button class="abtn gray" data-go="c1_2">⏩ T+15 — silent</button>`,false),'reuse');
+def('c1_2','SD-first recall','chat','#4',chat('प्लान खत्म · ₹300 जमा राशि सुरक्षित',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">savings</span>आपकी जमा राशि सुरक्षित है<span class="chan">SMS+WA</span></div>प्लान खत्म हुआ, पर ₹300 डिपॉज़िट सुरक्षित है। जब चाहें रिचार्ज करें।<span class="time">10:00</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="c1_3">⏩ T+25 — कोई रिचार्ज नहीं</div></div>`),'add');
+def('c1_3','Closure initiated — bookend 1','chat','#7',chat('कनेक्शन बंद हो रहा है · ₹300 रिज़र्व',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">lock</span>₹300 रिज़र्व कर दिया गया<span class="chan">SMS+WA</span></div>रिचार्ज नहीं हुआ — कनेक्शन बंद कर रहे हैं। डिवाइस लौटाते ही ₹300 वापस।<span class="time">पहला bookend</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="c1_4">डिवाइस लौटाने का तरीका</div></div>`),'add');
+def('c1_4','Deposit reserved (Stage 2)','screen','#8',scr(topb('रिफंड की स्थिति'),
+  `<div style="text-align:center"><div class="ah1" style="font-size:24px;color:#008043">₹300</div><div class="asub">आपके नाम रिज़र्व</div></div>
+   <div class="track"><div class="tstep done"><div class="tline"></div><div class="tdot"><span class="material-icons">check</span></div><div class="tbody"><div class="tt">योग्य</div></div></div><div class="tstep cur"><div class="tline"></div><div class="tdot"><span class="material-icons">lock</span></div><div class="tbody"><div class="tt">रिज़र्व</div><div class="td">डिवाइस लौटाने पर भेजी जाएगी।</div></div></div><div class="tstep wait"><div class="tdot"><span class="material-icons">account_balance</span></div><div class="tbody"><div class="tt">खाते में</div></div></div></div>
+   <div class="averify ok"><span class="material-icons">handshake</span><p>पैसा पहले ही रिज़र्व — 524 "money held" का हल।</p></div>`,
+  `<button class="abtn" data-go="c1_5">डिवाइस लौटाने का तरीका</button>`),'add');
+def('c1_5','नेट-बॉक्स वापस करने का तरीका','screen','#12',scr(topb('नेट-बॉक्स वापस करने का तरीका चुनें'),
+  `<div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">place</span></div><div><div class="rt">खुद से जमा करें</div><div class="rs">पास के व्योम केयर सेंटर पर</div></div><div class="ramt">₹300<small>पूरी सिक्योरिटी</small></div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">local_shipping</span></div><div><div class="rt">घर से पिकअप करवाएं</div></div><div class="ramt">₹250</div></div>
+   <div class="reuse-src" style="margin-top:10px"><span class="material-icons">check</span>Live: RouterRecoveryScreen.kt</div>
+   <div class="scard tap" data-go="c1_d007c"><div class="sr"><span class="k" style="font-weight:700;color:#161021">(edge) पहले refund दिखाओ</span><span class="v" style="color:#D9008D">›</span></div></div>`,
+  `<button class="abtn" data-go="c1_6">खुद से जमा करें</button>`),'reuse');
+def('c1_6','खुद से जमा (self-drop)','screen','',scr(topb('खुद से जमा करें'),
+  `<div class="ah1 sm">आपको नेट-बॉक्स व्योम केयर सेंटर जाकर जमा करना होगा</div>
+   <div class="scard"><div class="stitle"><span class="material-icons">place</span>व्योम केयर सेंटर</div><div class="sr"><span class="k">दुकान नं. 4, मेन रोड…</span><span class="v"><span class="material-icons" style="font-size:16px;color:#D9008D">call</span></span></div></div>
+   <div class="averify ok"><span class="material-icons">info</span><p>नेट-बॉक्स वापस होते ही आपको ₹300 वापस मिल जाएंगे।</p></div>
+   <div class="reuse-src" style="margin-top:10px"><span class="material-icons">check</span>Live: SelfDropBottomSheet</div>`,
+  `<button class="abtn" data-go="c1_7">UPI ID देकर कन्फर्म करें</button>`),'reuse');
+def('c1_7','UPI ID + (exit reason)','screen','#9-10',scr(topb('अपना UPI ID यहाँ डालें'),
+  `<div class="field"><label>UPI ID</label><div class="inp ok"><span>rukmum@okhdfcbank</span><span class="vok"><span class="material-icons">check_circle</span>वेरीफाई हो गया है</span></div></div>
+   <div class="field"><label>जाने का कारण <span style="color:#A7A1B2;font-weight:600">(वैकल्पिक · नया)</span></label><div class="ta">…</div></div>
+   <div class="averify info"><span class="material-icons">add</span><p>सिर्फ़ "कारण (वैकल्पिक)" जोड़ना है — context-only (BR-S2)।</p></div>
+   <div class="scard tap" data-go="c1_bond"><div class="sr"><span class="k" style="font-weight:700;color:#161021">(edge) UPI verify न हो / न मिले</span><span class="v" style="color:#D9008D">›</span></div></div>`,
+  `<button class="abtn" data-go="c1_8">UPI ID सेव करे</button>`),'improve');
+def('c1_8','Confirm device handover','screen','#18-19',scr(topb('डिवाइस की पुष्टि करें'),
+  `<div style="text-align:center"><div class="ahero info"><span class="material-icons">fact_check</span></div><div class="ah1 sm">क्या आपने डिवाइस लौटा दिया?</div></div>
+   <div class="scard"><div class="sr"><span class="k">टीम का रिकॉर्ड</span><span class="v" style="color:#008043">ले लिया ✓</span></div></div>
+   <div class="averify gray"><span class="material-icons">schedule</span><p>दोनों तरफ़ से confirm पर ही ₹300 जाएगा (dual attestation · ops fallback)।</p></div>`,
+  `<button class="abtn" data-go="c1_9">हाँ, दे दिया</button>`),'add');
+def('c1_9','Refund sent → credited','screen','#20-21',scr(topb('रिफंड की स्थिति'),
+  `<div style="text-align:center"><span class="sok"><span class="material-icons">check_circle</span>₹300 आ गया</span></div>
+   <div class="track"><div class="tstep done"><div class="tline"></div><div class="tdot"><span class="material-icons">check</span></div><div class="tbody"><div class="tt">रिज़र्व</div></div></div><div class="tstep done"><div class="tline"></div><div class="tdot"><span class="material-icons">check</span></div><div class="tbody"><div class="tt">भेजा गया</div></div></div><div class="tstep done"><div class="tdot"><span class="material-icons">check</span></div><div class="tbody"><div class="tt">खाते में आ गया</div><div class="td">₹300 · UPI ****8842</div></div></div></div>`,
+  `<button class="abtn" data-go="c1_10">आगे</button>`),'improve');
+def('c1_10','Closure concluded — bookend 2','chat','#22',chat('कनेक्शन बंद · ₹300 खाते में',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">task_alt</span>सब पूरा हो गया<span class="chan">SMS+WA</span></div>कनेक्शन बंद हो गया और ₹300 आपके खाते में। जब दोबारा नेट चाहिए, हम यहीं हैं।<span class="time">दूसरा bookend</span></div>
+   <div class="bubble bot"><div class="chat-cta sec" data-go="menu">मेन्यू</div></div>`),'add');
+def('c1_bond','UPI not available → bond write-off','chat','#23-27',chat('₹300 सुरक्षित · भेजने की कोशिश जारी',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">savings</span>आपका ₹300 सुरक्षित है<span class="chan">SMS+WA</span></div>UPI पर नहीं पहुँचा — 60 दिन तक कोशिश (UPI दोबारा, फिर कॉल/वॉलेट)। पैसा कभी गायब नहीं; दोबारा नेट पर फिर सक्रिय।<span class="time">Bond Phase A–D</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="c1_8">सही UPI / आगे</div></div>`),'improve');
+def('c1_d007c','"पहले refund दिखाओ" (D-007C)','chat','',chat('₹300 आपके नाम रिज़र्व',
+  `<div class="bubble me">पहले मेरा ₹300 दिखाओ, फिर डिवाइस दूँगा</div>
+   <div class="bubble bot"><div class="b-title"><span class="material-icons">verified_user</span>बिल्कुल — पहले हम देंगे</div>₹300 आपके नाम रिज़र्व है — हक़, शर्त नहीं। यह "मना करना" नहीं माना जाता।<span class="time">D-007C</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="c1_4">मेरा रिज़र्व ₹300 देखें</div></div>`),'add');
+
+/* ===== CASE 2 ===== */
+def('c2_1','Exit summary (refund up front)','screen','#1-2',scr(topb('बाहर निकलें'),
+  `<div class="ah1 sm" style="text-align:center">बाहर निकलने पर यह वापस मिलेगा</div>
+   <div class="scard"><div class="sr"><span class="k">बचे दिनों का (pro-rata)</span><span class="v pos">₹200</span></div><div class="sr"><span class="k">डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="sdiv"></div><div class="sr total"><span class="k">कुल</span><span class="v pos">₹500</span></div></div>
+   <div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">directions_walk</span></div><div><div class="rt">खुद डिवाइस लौटाऊँगा</div><div class="rs">पूरा पैसा</div></div></div>
+   <div class="averify info"><span class="material-icons">handshake</span><p>कोई रोक-टोक नहीं, कोई ऑफ़र नहीं (A8)।</p></div>`,
+  `<button class="abtn" data-go="c2_2">बाहर निकलें</button><button class="abtn ghost" data-go="menu">रहने दें</button>`),'add');
+def('c2_2','Pro-rata shown & credited','screen','#6-7',scr(topb('बचे दिनों का पैसा'),
+  `<div style="text-align:center"><div class="ah1" style="font-size:24px;color:#008043">₹200</div><div class="asub">बचे 12 दिनों का — आपके UPI पर भेजा गया</div></div>
+   <div class="scard"><div class="sr"><span class="k">12 ÷ 30 × ₹500</span><span class="v pos">₹200</span></div></div>
+   <div class="averify ok"><span class="material-icons">bolt</span><p>शुरू में ही भेजा — INV-EXIT-25।</p></div>`,
+  `<button class="abtn" data-go="c2_shared">आगे — डिपॉज़िट &amp; UPI</button>`),'add');
+def('c2_shared','Shared spine (reuse)','screen','',scr(topb('shared'),
+  `<div class="ah1 sm" style="text-align:center;color:#8fe3b0">🟢 Reuse — not redrawn</div>
+   <div class="averify ok" style="text-align:left"><span class="material-icons">check_circle</span><p>Deposit reserved → नेट-बॉक्स वापस करने का तरीका → self-drop → UPI → confirm handover → refund sent→credited → bond. <b>Case 1 steps 4–9 जैसा ही</b> (Live RouterRecovery* + Case-1 deltas)।</p></div>`,
+  `<button class="abtn" data-go="menu">डिवाइस लौटाया → हो गया</button><button class="abtn ghost" data-go="c2_rev">मन बदला — reverse</button>`),'reuse');
+def('c2_rev','Reversed — pro-rata clawed back','chat','#13-16',chat('पिकअप रोका · ₹0 शुल्क',
+  `<div class="bubble me">रुकना है</div>
+   <div class="bubble bot"><div class="b-title"><span class="material-icons">celebration</span>वापसी पर स्वागत है!</div>पिकअप रोक दिया, वही प्लान, ₹0 शुल्क। बचे दिनों का ₹200 ledger में वापस समायोजित।<span class="time">RECALL_CANCELLED</span></div>
+   <div class="bubble bot"><div class="chat-cta sec" data-go="menu">मेन्यू</div></div>`),'add');
+
+/* ===== CASE 3 ===== */
+def('c3_1','Advance notice — apology','chat','#2',chat('सेवा बंद हो रही है · पूरा रिफंड · हमारी गलती',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">sentiment_dissatisfied</span>माफ़ी — हम आपके इलाके में नेट नहीं दे पाएंगे<span class="chan">SMS+WA+call</span></div>यह हमारी ओर से है, आपकी कोई गलती नहीं। पूरा पैसा वापस, डिवाइस हम ख़ुद बिना शुल्क ले जाएंगे।<span class="time">mandatory notice</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="c3_2">आगे</div></div>`),'add');
+def('c3_2','Reroute → continuity?','chat','#3-4',chat('पार्टनर खोज रहे हैं',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">sync_alt</span>नया पार्टनर खोज रहे हैं</div>अगर मिल गया तो नेट जारी रहेगा (कोई closure नहीं)।</div>
+   <div class="bubble bot"><div class="chat-cta sec" data-go="c3_2b">पार्टनर मिल गया ✓</div><div class="chat-cta" data-go="c3_3">कोई पार्टनर नहीं → बंद</div></div>`),'add');
+def('c3_2b','Continuity — service continues','chat','#3-4',chat('नेट जारी · कोई closure नहीं',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">check_circle</span>अच्छी खबर — नेट जारी रहेगा</div>नया पार्टनर मिल गया। आपके लिए कुछ नहीं बदला।<span class="time">CONNECTION_CHANGED</span></div>
+   <div class="bubble bot"><div class="chat-cta sec" data-go="menu">मेन्यू</div></div>`),'add');
+def('c3_3','Full C2 refund','screen','#7-8',scr(topb('आपका पूरा पैसा वापस'),
+  `<div style="text-align:center"><div class="ah1" style="font-size:24px;color:#008043">₹600</div><div class="asub">पूरा वापस — कुछ नहीं कटेगा</div></div>
+   <div class="scard"><div class="sr"><span class="k">डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="sr"><span class="k">बचा पूरा बैलेंस</span><span class="v pos">₹300</span></div><div class="sdiv"></div><div class="sr total"><span class="k">कुल</span><span class="v pos">₹600</span></div><div class="hint">pro-rata नहीं — पूरा (BR-02)।</div></div>`,
+  `<button class="abtn" data-go="c3_4">₹600 कहाँ भेजें — UPI दें</button>`),'add');
+def('c3_4','UPI — no reason-for-exit','screen','#9-10',scr(topb('₹600 कहाँ भेजें?'),
+  `<div class="field"><label>UPI ID</label><div class="inp ok"><span>rukmum@okhdfcbank</span><span class="vok"><span class="material-icons">check_circle</span>वेरीफाई</span></div></div>
+   <div class="averify info"><span class="material-icons">volunteer_activism</span><p>reuse UPI screen — पर "क्यों जा रहे हैं" कभी नहीं पूछना (A8)।</p></div>`,
+  `<button class="abtn" data-go="c3_5">कन्फर्म करें</button>`),'improve');
+def('c3_5','Pickup — free, Wiom-arranged','screen','#11',scr(topb('डिवाइस पिकअप'),
+  `<div class="ah1 sm" style="text-align:center">हम डिवाइस ख़ुद ले जाएंगे — बिना शुल्क</div>
+   <div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">event</span></div><div><div class="rt">कल · सुबह 10–12</div></div><div class="ramt" style="font-size:12px">मुफ़्त</div></div>
+   <div class="averify ok"><span class="material-icons">payments</span><p>कोई pickup शुल्क नहीं — पूरा ₹600 (BR-05)।</p></div>`,
+  `<button class="abtn" data-go="c3_shared">स्लॉट चुनें</button>`),'improve');
+def('c3_shared','Handover/refund (reuse)','screen','',scr(topb('shared'),
+  `<div class="ah1 sm" style="text-align:center;color:#8fe3b0">🟢 Reuse — not redrawn</div>
+   <div class="averify ok" style="text-align:left"><span class="material-icons">check_circle</span><p>Confirm device handover → refund sent→credited — Case 1 steps 8–9 जैसा ही।</p></div>`,
+  `<button class="abtn" data-go="c3_7">डिवाइस मिल गया → हो गया</button><button class="abtn ghost" data-go="c3_6">टीम न पहुँच पाए</button>`),'reuse');
+def('c3_6','No field presence — keep device','chat','#15',chat('डिवाइस लेना संभव नहीं · ₹600 आपका',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">info</span>डिवाइस की चिंता न करें</div>हमारी टीम इलाके में नहीं पहुँच पा रही — आप डिवाइस रख सकते हैं, पूरा ₹600 वैसे ही।<span class="time">netbox write-off</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="c3_7">आगे</div></div>`),'add');
+def('c3_7','Conclusion — apology + reconnect','chat','#16-17',chat('कनेक्शन बंद · पूरा ₹600 · reconnect on',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">favorite</span>एक बार फिर, हमें खेद है<span class="chan">SMS+WA</span></div>कनेक्शन बंद, पूरा ₹600 आ गया। इलाका फिर serviceable हुआ तो सबसे पहले आपको जोड़ेंगे।<span class="time">reconnect flag</span></div>
+   <div class="bubble bot"><div class="chat-cta sec" data-go="menu">मेन्यू</div></div>`),'add');
+/*NODES_END*/
+/* ===== router ===== */
+const phone=document.getElementById('phone'),crumb=document.getElementById('crumb');
+const backBtn=document.getElementById('backBtn'),restartBtn=document.getElementById('restartBtn');
+let cur=null,hist=[];
+function paint(){
+  phone.innerHTML=N[cur]||('<div style="padding:40px;color:#900">missing '+cur+'</div>');
+  const cb=phone.querySelector('.chat-body,.abody');if(cb)cb.scrollTop=0;
+  const k=K[cur]==='chat'?'<span class="xt chat"><span class="material-icons">chat</span>Chat</span>':(K[cur]==='menu'?'':'<span class="xt scr"><span class="material-icons">smartphone</span>Screen</span>');
+  const dmap={reuse:['Reuse','#15301f','#8fe3b0'],improve:['Improve','#3a2e10','#ffd27f'],add:['Add','#5a1140','#ffb3dd']};
+  const dd=dmap[D[cur]];
+  const dchip=dd?`<span style="font-size:9px;font-weight:800;letter-spacing:.04em;padding:2px 7px;border-radius:5px;text-transform:uppercase;background:${dd[1]};color:${dd[2]}">${dd[0]}</span>`:'';
+  const b5c=B5[cur]?`<span class="b5">B5 ${B5[cur]}</span>`:'';
+  crumb.innerHTML=`${dchip}${b5c}<span>${T[cur]}</span>${k}`;
+  backBtn.disabled=hist.length===0;
+}
+function go(id){if(id===cur)return;if(cur!==null)hist.push(cur);cur=id;paint();}
+function back(){if(hist.length){cur=hist.pop();paint();}}
+phone.addEventListener('click',e=>{
+  const sel=e.target.closest('[data-sel]');
+  if(sel&&sel.parentElement){[...sel.parentElement.children].forEach(s=>{if(s.dataset&&s.dataset.sel)s.classList.remove('sel');});sel.classList.add('sel');}
+  const b=e.target.closest('[data-back]');if(b){back();return;}
+  const g=e.target.closest('[data-go]');if(g)go(g.dataset.go);
+});
+backBtn.onclick=back;
+restartBtn.onclick=()=>{hist=[];cur=null;go('menu');};
+go('menu');
+</script>
+</body>
+</html>
