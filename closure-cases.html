@@ -10,11 +10,11 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{font-family:'Noto Sans',sans-serif;background:#1c1f26;color:#e7e9ee;display:flex;flex-direction:column;height:100vh;overflow:hidden}
-  .bar{flex:0 0 auto;background:#15171d;border-bottom:1px solid #2f333c;padding:0 18px;display:flex;align-items:center;gap:14px}
-  .bar .brand{font-size:13px;font-weight:800;letter-spacing:.02em;color:#fff;padding:14px 0;white-space:nowrap}
+  .bar{flex:0 0 auto;background:#15171d;border-bottom:1px solid #2f333c;padding:0 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .bar .brand{font-size:13px;font-weight:800;letter-spacing:.02em;color:#fff;padding:13px 0;white-space:nowrap}
   .bar .brand span{color:#D9008D}
   .tabs{display:flex;gap:4px;overflow-x:auto}
-  .tab{font-size:13px;font-weight:600;color:#9aa0ab;background:transparent;border:none;padding:16px 16px;cursor:pointer;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap}
+  .tab{font-size:13px;font-weight:600;color:#9aa0ab;background:transparent;border:none;padding:15px 15px;cursor:pointer;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap}
   .tab .n{font-size:10px;font-weight:800;background:#2f333c;color:#c3c8d1;border-radius:50%;width:19px;height:19px;display:flex;align-items:center;justify-content:center}
   .tab .material-icons{font-size:18px}
   .tab:hover{color:#e7e9ee}
@@ -22,10 +22,13 @@
   .tab.active .n{background:#D9008D;color:#fff}
   .tab.soon{color:#5a5f6b;cursor:default}.tab.soon:hover{color:#5a5f6b}
   .tab.soon .n{background:#262a32;color:#5a5f6b}
-  .pill{margin-left:auto;font-size:10.5px;font-weight:700;color:#7fd1ff;background:#16313f;padding:4px 10px;border-radius:6px;white-space:nowrap}
-  .frames{flex:1;position:relative}
-  iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none;background:#1c1f26}
-  iframe.active{display:block}
+  .modewrap{margin-left:auto;display:flex;align-items:center;gap:9px}
+  .seg{display:inline-flex;background:#262a32;border:1px solid #343a47;border-radius:999px;padding:3px}
+  .seg button{font-family:'Noto Sans';font-size:11.5px;font-weight:700;color:#9aa0ab;background:transparent;border:none;border-radius:999px;padding:6px 14px;cursor:pointer;display:flex;align-items:center;gap:6px}
+  .seg button .material-icons{font-size:15px}
+  .seg button.active{background:#D9008D;color:#fff}
+  .frames{flex:1;position:relative;background:#1c1f26}
+  iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#1c1f26}
 </style>
 </head>
 <body>
@@ -36,20 +39,33 @@
       <button class="tab" data-case="2"><span class="n">2</span><span class="material-icons">logout</span>Explicit Choice</button>
       <button class="tab soon" disabled><span class="n">3</span><span class="material-icons">lock_clock</span>Case 3 (soon)</button>
     </div>
-    <div class="pill">designed from B5 · guardrails from Closure OS v2.0</div>
+    <div class="modewrap">
+      <div class="seg" id="seg">
+        <button class="active" data-mode="proto"><span class="material-icons">touch_app</span>Prototype</button>
+        <button data-mode="design"><span class="material-icons">view_carousel</span>Design</button>
+      </div>
+    </div>
   </div>
   <div class="frames">
-    <iframe class="active" data-case="1" src="closure-nonreaffirmation-flow.html" title="Case 1 — Non-Reaffirmation"></iframe>
-    <iframe data-case="2" src="closure-explicit-choice-flow.html" title="Case 2 — Explicit Choice"></iframe>
+    <iframe id="frame" src="closure-nonreaffirmation-prototype.html" title="Closure case"></iframe>
   </div>
 <script>
-  const tabs=document.getElementById('tabs');
-  tabs.addEventListener('click',e=>{
+  const FILES={
+    '1':{proto:'closure-nonreaffirmation-prototype.html',design:'closure-nonreaffirmation-flow.html'},
+    '2':{proto:'closure-explicit-choice-prototype.html', design:'closure-explicit-choice-flow.html'}
+  };
+  let curCase='1', curMode='proto';
+  const frame=document.getElementById('frame');
+  function load(){frame.src=FILES[curCase][curMode];}
+  document.getElementById('tabs').addEventListener('click',e=>{
     const b=e.target.closest('.tab');if(!b||b.classList.contains('soon'))return;
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('iframe').forEach(f=>f.classList.remove('active'));
-    b.classList.add('active');
-    document.querySelector(`iframe[data-case="${b.dataset.case}"]`).classList.add('active');
+    b.classList.add('active');curCase=b.dataset.case;load();
+  });
+  document.getElementById('seg').addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    document.querySelectorAll('.seg button').forEach(t=>t.classList.remove('active'));
+    b.classList.add('active');curMode=b.dataset.mode;load();
   });
 </script>
 </body>
