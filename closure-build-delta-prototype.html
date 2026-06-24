@@ -112,6 +112,16 @@
   .chat-pin .material-icons{font-size:15px;color:#D9008D;flex:0 0 auto;margin-top:1px}
   .chat-pin .csk{font-size:9px;color:#9a6a86;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
   .chat-pin .csv{font-size:12px;font-weight:700;color:#161021;line-height:1.35}
+  .atopbar{display:flex;align-items:center;gap:9px;padding:9px 13px;background:#fff;border-bottom:1px solid #E8E4F0;flex:0 0 auto}
+  .atopbar .alg{width:28px;height:28px;border-radius:7px;background:#D9008D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;flex:0 0 auto;font-weight:800}
+  .atopbar .anm{font-size:13px;font-weight:700;color:#161021}
+  .atopbar .aic{margin-left:auto;display:flex;gap:13px;color:#352d42}.atopbar .aic .material-icons{font-size:19px}
+  .cbar{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:8px 12px;background:#FFF0F8;border-bottom:1px solid #FAD3EA}
+  .cbar .ci{width:30px;height:30px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .cbar .ci .material-icons{font-size:17px;color:#D9008D}
+  .cbar .ct{font-size:11px;font-weight:700;color:#161021;line-height:1.3}
+  .cbar .cst{font-size:10.5px;color:#5C5570;line-height:1.3}
+  .cbar .cact{margin-left:auto;font-size:10.5px;font-weight:800;color:#D9008D;background:#fff;border:1px solid #FAC8E6;border-radius:999px;padding:5px 11px;flex:0 0 auto;white-space:nowrap}
   .chat-body{flex:1;overflow-y:auto;padding:14px 13px;display:flex;flex-direction:column;gap:11px;background:#F1EDF7}
   .chat-body::-webkit-scrollbar{width:0}
   .bubble{max-width:92%;padding:11px 13px;border-radius:16px;font-size:12.5px;line-height:1.5;font-family:'Noto Sans Devanagari'}
@@ -162,8 +172,8 @@
 const STAT=`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>`;
 const STATON=`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>`;
 const CIN=`<div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>`;
-function cHead(){return `<div class="chat-head"><span class="aback" data-back="1"><span class="material-icons">arrow_back</span></span><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>`;}
-function pin(t){return `<div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">${t}</div></div></div>`;}
+function cHead(){return `<div class="atopbar"><span class="aback" data-back="1"><span class="material-icons">arrow_back</span></span><div class="alg">W</div><div class="anm">व्योम</div><div class="aic"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>`;}
+function pin(t){return `<div class="cbar"><div class="ci"><span class="material-icons">graphic_eq</span></div><div><div class="ct">घर का नेट: रमेश</div><div class="cst">स्थिति: ${t}</div></div><span class="cact">रिचार्ज करें</span></div>`;}
 function chat(p,b,on){return (on?STATON:STAT)+cHead()+pin(p)+`<div class="chat-body">${b}</div>`+CIN;}
 function topb(title,logo){return `<div class="atop">`+(logo?`<div class="alogo">W</div><div class="atitle">Wiom</div>`:`<span class="aback" data-back="1"><span class="material-icons">arrow_back</span></span><div class="atitle">${title}</div>`)+`</div>`;}
 function scr(top,body,foot,on){return (on?STATON:STAT)+top+`<div class="abody lft">${body}</div>`+(foot?`<div class="afoot">${foot}</div>`:'');}
@@ -184,9 +194,12 @@ def('c1_1','प्लान खत्म / रिचार्ज','screen','',sc
   `<div style="text-align:center"><div class="ahero gray"><span class="material-icons">wifi_off</span></div><div class="ah1 sm">आपका प्लान खत्म हो गया</div><div class="asub">रिचार्ज करके नेट फिर चालू करें।</div><div class="scard"><div class="sr"><span class="k">स्थिति</span><span class="v" style="color:#9a7a00">GRACE</span></div></div></div>
    <div class="reuse-src" style="margin-top:10px"><span class="material-icons">check</span>Live: ManageScreen.kt</div>`,
   `<button class="abtn gray" data-go="c1_2">⏩ T+15 — silent</button>`,false),'reuse');
-def('c1_2','SD-first recall','chat','#4',chat('प्लान खत्म · ₹300 जमा राशि सुरक्षित',
-  `<div class="bubble bot"><div class="b-title"><span class="material-icons">savings</span>आपकी जमा राशि सुरक्षित है<span class="chan">SMS+WA</span></div>प्लान खत्म हुआ, पर ₹300 डिपॉज़िट सुरक्षित है। जब चाहें रिचार्ज करें।<span class="time">10:00</span></div>
-   <div class="bubble bot"><div class="chat-cta" data-go="c1_3">⏩ T+25 — कोई रिचार्ज नहीं</div></div>`),'add');
+def('c1_2','R15–R18: return-by-date + recharge','chat','#4',chat('नेट रुका हुआ है',
+  `<div class="bubble bot">25 दिसंबर तक नेट-बॉक्स वापस करें और अपने <b>₹300</b> वापस पाएं।
+     <div class="chat-cta" data-go="c1_3">नेट-बॉक्स वापस करें</div>
+     <div class="chat-cta sec" data-go="c1_1">1 दिन का रिचार्ज करें (₹25)</div>
+   </div>
+   <div class="bubble bot" style="background:#FFF0F8;border-color:#FAD3EA">आपका <b>₹300 डिपॉज़िट सुरक्षित</b> है — यह सिर्फ़ जानकारी है, कोई जल्दबाज़ी नहीं।<span class="time">deposit-first · BR-03</span></div>`),'improve');
 def('c1_3','Closure initiated — bookend 1','chat','#7',chat('कनेक्शन बंद हो रहा है · ₹300 रिज़र्व',
   `<div class="bubble bot"><div class="b-title"><span class="material-icons">lock</span>₹300 रिज़र्व कर दिया गया<span class="chan">SMS+WA</span></div>रिचार्ज नहीं हुआ — कनेक्शन बंद कर रहे हैं। डिवाइस लौटाते ही ₹300 वापस।<span class="time">पहला bookend</span></div>
    <div class="bubble bot"><div class="chat-cta" data-go="c1_4">डिवाइस लौटाने का तरीका</div></div>`),'add');
@@ -196,7 +209,7 @@ def('c1_4','Deposit reserved (Stage 2)','screen','#8',scr(topb('रिफंड 
    <div class="averify ok"><span class="material-icons">handshake</span><p>पैसा पहले ही रिज़र्व — 524 "money held" का हल।</p></div>`,
   `<button class="abtn" data-go="c1_5">डिवाइस लौटाने का तरीका</button>`),'add');
 def('c1_5','नेट-बॉक्स वापस करने का तरीका','screen','#12',scr(topb('नेट-बॉक्स वापस करने का तरीका चुनें'),
-  `<div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">place</span></div><div><div class="rt">खुद से जमा करें</div><div class="rs">पास के व्योम केयर सेंटर पर</div></div><div class="ramt">₹300<small>पूरी सिक्योरिटी</small></div></div>
+  `<div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">place</span></div><div><div class="rt">खुद से जमा करें</div><div class="rs">पास के व्योम केयर सेंटर पर</div></div><div class="ramt">₹300<small>पूरी सिक्योरिटी</small></div></div>
    <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">local_shipping</span></div><div><div class="rt">घर से पिकअप करवाएं</div></div><div class="ramt">₹250</div></div>
    <div class="reuse-src" style="margin-top:10px"><span class="material-icons">check</span>Live: RouterRecoveryScreen.kt</div>
    <div class="scard tap" data-go="c1_d007c"><div class="sr"><span class="k" style="font-weight:700;color:#161021">(edge) पहले refund दिखाओ</span><span class="v" style="color:#D9008D">›</span></div></div>`,
@@ -237,7 +250,7 @@ def('c1_d007c','"पहले refund दिखाओ" (D-007C)','chat','',chat('
 def('c2_1','Exit summary (refund up front)','screen','#1-2',scr(topb('बाहर निकलें'),
   `<div class="ah1 sm" style="text-align:center">बाहर निकलने पर यह वापस मिलेगा</div>
    <div class="scard"><div class="sr"><span class="k">बचे दिनों का (pro-rata)</span><span class="v pos">₹200</span></div><div class="sr"><span class="k">डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="sdiv"></div><div class="sr total"><span class="k">कुल</span><span class="v pos">₹500</span></div></div>
-   <div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">directions_walk</span></div><div><div class="rt">खुद डिवाइस लौटाऊँगा</div><div class="rs">पूरा पैसा</div></div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">directions_walk</span></div><div><div class="rt">खुद डिवाइस लौटाऊँगा</div><div class="rs">पूरा पैसा</div></div></div>
    <div class="averify info"><span class="material-icons">handshake</span><p>कोई रोक-टोक नहीं, कोई ऑफ़र नहीं (A8)।</p></div>`,
   `<button class="abtn" data-go="c2_2">बाहर निकलें</button><button class="abtn ghost" data-go="menu">रहने दें</button>`),'add');
 def('c2_2','Pro-rata shown & credited','screen','#6-7',scr(topb('बचे दिनों का पैसा'),
@@ -274,7 +287,7 @@ def('c3_4','UPI — no reason-for-exit','screen','#9-10',scr(topb('₹600 कह
   `<button class="abtn" data-go="c3_5">कन्फर्म करें</button>`),'improve');
 def('c3_5','Pickup — free, Wiom-arranged','screen','#11',scr(topb('डिवाइस पिकअप'),
   `<div class="ah1 sm" style="text-align:center">हम डिवाइस ख़ुद ले जाएंगे — बिना शुल्क</div>
-   <div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">event</span></div><div><div class="rt">कल · सुबह 10–12</div></div><div class="ramt" style="font-size:12px">मुफ़्त</div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">event</span></div><div><div class="rt">कल · सुबह 10–12</div></div><div class="ramt" style="font-size:12px">मुफ़्त</div></div>
    <div class="averify ok"><span class="material-icons">payments</span><p>कोई pickup शुल्क नहीं — पूरा ₹600 (BR-05)।</p></div>`,
   `<button class="abtn" data-go="c3_shared">स्लॉट चुनें</button>`),'improve');
 def('c3_shared','Handover/refund (reuse)','screen','',scr(topb('shared'),
