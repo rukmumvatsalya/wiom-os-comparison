@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Closure Case 1 · Non-Reaffirmation (Passive Lapse)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{--brand:#D9008D;--brand-bold:#443152;--text:#161021;--text-subtle:#5C5570;--text-disabled:#A7A1B2;--stroke:#E8E4F0;--stroke-strong:#D7D3E0;--bg-subtle:#F1EDF7;--positive:#008043;--selected-bg:#FFE5F6;--r-md:12px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans Devanagari','Noto Sans',sans-serif;background:#1c1f26;color:#e7e9ee;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+  header.doc{padding:34px 32px 0;max-width:1520px;margin:0 auto}
+  .eyebrow{font-family:'Noto Sans';font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#D9008D}
+  h1{font-family:'Noto Sans';font-size:26px;font-weight:700;color:#fff;margin:7px 0 5px}
+  .lead{font-family:'Noto Sans';font-size:13.5px;color:#9aa0ab;line-height:1.6;max-width:1000px}
+  .lead b{color:#e7e9ee}
+  .grounded{font-family:'Noto Sans';font-size:11.5px;color:#7fd1ff;background:#16313f;display:inline-block;padding:4px 11px;border-radius:6px;margin-top:12px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0 0;font-family:'Noto Sans';font-size:12px}
+  .legend span{display:inline-flex;align-items:center;gap:6px;color:#c3c8d1}
+  .xtag{font-size:9px;font-weight:800;letter-spacing:.04em;padding:2px 7px;border-radius:5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:3px}
+  .xtag .material-icons{font-size:11px}
+  .xtag.chat{background:#241a3a;color:#bda7ff}.xtag.scr{background:#16313f;color:#7fd1ff}
+  .gr{font-family:'Noto Sans';font-size:9px;font-weight:700;letter-spacing:.02em;padding:2px 6px;border-radius:4px;background:#2a2f3a;color:#aeb4bf}
+  .gr.b5{background:#3a2e10;color:#ffd27f}.gr.br{background:#152a1c;color:#8fe3b0}.gr.inv{background:#241a3a;color:#bda7ff}
+
+  .guard{margin:14px 32px 0;max-width:1456px;background:#15251a;border:1px solid #244a30;border-radius:12px;padding:14px 18px;font-family:'Noto Sans'}
+  .guard .gt{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#8fe3b0;margin-bottom:9px;display:flex;align-items:center;gap:6px}
+  .guard .gt .material-icons{font-size:16px}
+  .guard ul{margin:0;padding-left:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:7px 22px}
+  .guard li{font-size:12px;color:#c3c8d1;line-height:1.4;display:flex;gap:7px}
+  .guard li b{color:#fff}.guard li .k{flex:0 0 auto;color:#8fe3b0;font-weight:800;font-size:10.5px;min-width:52px}
+
+  #flow{margin-top:18px}
+  .phaseband{padding:0 0 6px}
+  .phaseband.alt{background:#191d24}
+  .phasehead{padding:18px 32px 8px;display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;max-width:1520px;margin:0 auto}
+  .phasehead .pnum{font-family:'Noto Sans';font-size:18px;font-weight:800;color:#fff;background:#D9008D;border-radius:11px;min-width:42px;height:42px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .phasehead .ph-t{font-family:'Noto Sans';font-size:16.5px;font-weight:700;color:#fff}
+  .phasehead .ph-s{font-family:'Noto Sans';font-size:12px;color:#9aa0ab;margin-top:3px;max-width:880px;line-height:1.5}
+  .phasehead .ph-s b{color:#e7e9ee}
+  .phasehead .ph-codes{font-family:'Noto Sans',monospace;font-size:10.5px;color:#c9b0ff;background:#241a3a;padding:4px 10px;border-radius:6px;margin-left:auto;flex:0 0 auto;align-self:center}
+  .pdown{display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px 0 2px}
+  .pdown .material-icons{font-size:26px;color:#5a5f6b}
+  .pdown .pl{font-family:'Noto Sans';font-size:11px;font-weight:700;color:#9aa0ab;background:#222631;border:1px solid #343a47;border-radius:999px;padding:4px 13px}
+  .rail{display:flex;gap:6px;overflow-x:auto;padding:8px 32px 28px;align-items:flex-start}
+  .rail::-webkit-scrollbar{height:10px}.rail::-webkit-scrollbar-thumb{background:#3a3f4a;border-radius:10px}.rail::-webkit-scrollbar-track{background:#262a32}
+  .blane{flex:0 0 auto;align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:48px;padding-top:30px}
+  .blane .ln{flex:1;width:2px;background:#3a3f4a}
+  .blane .lbl{writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Noto Sans';font-size:10.5px;font-weight:800;letter-spacing:.05em;white-space:nowrap;color:#9aa0ab}
+  .blane.ok .lbl{color:#8fe3b0}.blane.ok .ln{background:#16463a}
+  .farrow{flex:0 0 auto;align-self:center;color:#5a5f6b;display:flex;flex-direction:column;align-items:center;gap:3px;width:32px;padding-top:30px}
+  .farrow .material-icons{font-size:25px}
+  .farrow .fl{font-size:8.5px;font-weight:700;color:#5a5f6b;text-align:center;line-height:1.2;font-family:'Noto Sans'}
+
+  .screen{flex:0 0 auto;display:flex;flex-direction:column;gap:8px;width:300px;padding:0 8px}
+  .screen-tag{display:flex;align-items:center;gap:7px;font-family:'Noto Sans';flex-wrap:wrap}
+  .screen-num{font-size:10px;font-weight:800;color:#ffb3dd;background:#5a1140;border-radius:5px;padding:2px 7px;flex:0 0 auto}
+  .screen-name{font-size:13px;font-weight:600;color:#fff}
+  .grbar{display:flex;flex-wrap:wrap;gap:4px;padding:0 1px}
+
+  /* phone */
+  .aphone{width:300px;height:604px;background:#F7F7F9;border:9px solid #11131a;border-radius:30px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 14px 40px rgba(0,0,0,.4)}
+  .astatus{height:26px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-family:'Noto Sans';font-size:10.5px;font-weight:600;color:#161021;flex:0 0 auto}
+  .astatus .r .material-icons{font-size:12px;vertical-align:middle;margin-left:2px}
+  .atop{display:flex;align-items:center;padding:8px 12px;flex:0 0 auto;gap:9px}
+  .alogo{width:30px;height:30px;border-radius:8px;background:#D9008D;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex:0 0 auto}
+  .aback{color:#352d42;display:flex;align-items:center}.aback .material-icons{font-size:21px}
+  .atitle{font-family:'Noto Sans Devanagari';font-size:13.5px;font-weight:700;color:#161021}
+  .aact{margin-left:auto;display:flex;gap:12px;color:#352d42}.aact .material-icons{font-size:18px}
+  .abody{flex:1;overflow-y:auto;padding:8px 18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .abody.lft{align-items:stretch;text-align:left}
+  .abody::-webkit-scrollbar{width:0}
+  .ah1{font-family:'Noto Sans Devanagari';font-size:16.5px;font-weight:700;color:#161021;line-height:1.35;margin-top:6px}
+  .ah1.sm{font-size:14.5px}
+  .asub{font-family:'Noto Sans Devanagari';font-size:12px;color:#5C5570;line-height:1.5;margin-top:8px}
+  .afoot{flex:0 0 auto;width:100%;padding:8px 14px 12px;display:flex;flex-direction:column;gap:7px}
+  .abtn{width:100%;height:46px;border:none;border-radius:23px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:13.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 12px rgba(217,0,141,.22)}
+  .abtn .material-icons{font-size:18px}
+  .abtn.ghost{background:transparent;color:#D9008D;box-shadow:none;font-weight:600}
+  .abtn.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D;box-shadow:none}
+  .abtn.gray{background:#EDEAF2;color:#5C5570;box-shadow:none}
+  .ahero{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:14px auto 2px}
+  .ahero .material-icons{font-size:38px}
+  .ahero.brand{background:#FFE5F6}.ahero.brand .material-icons{color:#D9008D}
+  .ahero.ok{background:#E1FAED}.ahero.ok .material-icons{color:#008043}
+  .ahero.gray{background:#EAE7F0}.ahero.gray .material-icons{color:#5C5570}
+  .ahero.info{background:#F1E5FF}.ahero.info .material-icons{color:#6D17CE}
+  .deposit-banner{width:100%;background:linear-gradient(135deg,#FFF0F8,#FFE5F6);border:1px solid #FAC8E6;border-radius:14px;padding:13px 14px;margin-top:6px;display:flex;gap:11px;align-items:center;text-align:left}
+  .deposit-banner .di{width:40px;height:40px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .deposit-banner .di .material-icons{color:#D9008D;font-size:22px}
+  .deposit-banner .dt{font-size:13px;font-weight:800;color:#161021}
+  .deposit-banner .ds{font-size:11px;color:#5C5570;margin-top:2px;line-height:1.4}
+  .scard{width:100%;background:#fff;border-radius:12px;padding:12px 14px;margin-top:12px;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:left}
+  .scard .stitle{font-size:11.5px;font-weight:700;color:#161021;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .scard .stitle .material-icons{font-size:15px;color:#D9008D}
+  .scard .sr{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;gap:10px}
+  .scard .sr .k{color:#5C5570}.scard .sr .v{font-weight:700;color:#161021;text-align:right}
+  .scard .sr .v.pos{color:#008043}
+  .scard .sdiv{border-top:1px dashed #E2DEEA;margin:6px 0}
+  .scard.tap{border:1.5px solid #D9008D}
+  .averify{display:flex;align-items:flex-start;gap:8px;border-radius:10px;padding:10px 12px;margin-top:11px;text-align:left;width:100%}
+  .averify .material-icons{font-size:15px;flex:0 0 auto;margin-top:1px}
+  .averify p{font-family:'Noto Sans Devanagari';font-size:11px;line-height:1.5}
+  .averify.ok{background:#E1FAED}.averify.ok .material-icons{color:#008043}.averify.ok p{color:#0a5c33}
+  .averify.info{background:#F1E5FF}.averify.info .material-icons{color:#6D17CE}.averify.info p{color:#4a1a8f}
+  .averify.gray{background:#EFEDF3}.averify.gray .material-icons{color:#5C5570}.averify.gray p{color:#3f394b}
+  .refund-opt{display:flex;align-items:flex-start;gap:11px;padding:12px;background:#fff;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);margin-top:10px;width:100%;text-align:left}
+  .refund-opt.sel{border-color:var(--brand);background:var(--selected-bg);box-shadow:0 0 0 1px var(--brand)}
+  .refund-opt .ri{width:36px;height:36px;border-radius:var(--r-md);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .refund-opt.sel .ri{background:#fff}
+  .refund-opt .ri .material-icons{font-size:19px;color:var(--brand-bold)}
+  .refund-opt .rt{font-size:13px;font-weight:700;color:var(--text)}
+  .refund-opt .rs{font-size:10.5px;color:var(--text-subtle);margin-top:2px;line-height:1.4}
+  .refund-opt .badge1{font-size:8.5px;font-weight:800;color:#008043;background:#E1FAED;padding:1px 6px;border-radius:4px;margin-top:4px;display:inline-block;text-transform:uppercase;letter-spacing:.03em}
+  .refund-opt .ramt{font-size:15px;font-weight:800;color:var(--positive);margin-left:auto;flex:0 0 auto;text-align:right}
+  .refund-opt .ramt small{display:block;font-size:9px;font-weight:600;color:#A7A1B2}
+  .track{width:100%;margin-top:12px;text-align:left}
+  .tstep{display:flex;gap:11px;position:relative}
+  .tstep .tline{position:absolute;left:13px;top:26px;bottom:-6px;width:2px;background:#E2DEEA}
+  .tstep:last-child .tline{display:none}
+  .tdot{width:27px;height:27px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#E2DEEA;color:#fff;z-index:1}
+  .tdot .material-icons{font-size:16px}
+  .tstep.done .tdot{background:#008043}.tstep.done .tline{background:#008043}
+  .tstep.cur .tdot{background:#D9008D;box-shadow:0 0 0 4px #FFE5F6}
+  .tstep.wait .tdot{background:#E2DEEA;color:#A7A1B2}
+  .tbody{padding-bottom:14px;flex:1}.tbody .tt{font-size:12.5px;font-weight:700;color:#161021}
+  .tstep.wait .tbody .tt{color:#A7A1B2}
+  .tbody .td{font-size:11px;color:#5C5570;line-height:1.4;margin-top:2px}
+  .tbody .tmeta{font-size:10px;font-weight:700;margin-top:3px}
+  .tstep.done .tmeta{color:#008043}.tstep.cur .tmeta{color:#D9008D}.tstep.wait .tmeta{color:#A7A1B2}
+  .field{width:100%;margin-top:12px;text-align:left}
+  .field label{font-size:11.5px;font-weight:700;color:#161021;display:block;margin-bottom:5px}
+  .field .inp{height:46px;border:1.5px solid #D7D3E0;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 13px;font-size:13px;color:#161021}
+  .field .inp.ok{border-color:#008043}
+  .field .inp .vok{font-size:10.5px;font-weight:800;color:#008043;display:flex;align-items:center;gap:3px}
+  .field .inp .vok .material-icons{font-size:14px}
+  .field .hint{font-size:10.5px;color:#5C5570;margin-top:5px}
+  .ta{height:60px;border:1.5px solid #D7D3E0;border-radius:11px;background:#fff;padding:9px 12px;font-size:12px;color:#A7A1B2;width:100%;margin-top:5px}
+
+  /* chat */
+  .chan-head{display:flex;gap:6px;padding:7px 12px;background:#fff;border-bottom:1px solid #E8E4F0;flex:0 0 auto;align-items:center}
+  .chan-head .ci{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:800;color:#6D17CE;background:#F1E5FF;padding:2px 7px;border-radius:5px;text-transform:uppercase}
+  .chan-head .ci .material-icons{font-size:11px}
+  .chat-head{display:flex;align-items:center;gap:9px;padding:7px 12px;background:#fff;border-bottom:1px solid #E8E4F0;flex:0 0 auto}
+  .chat-head .ca{width:30px;height:30px;border-radius:8px;background:#D9008D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
+  .chat-head .cn{font-size:13px;font-weight:700;color:#161021}
+  .chat-head .cs{font-size:10px;color:#008043;font-weight:600;display:flex;align-items:center;gap:4px}
+  .chat-head .cs::before{content:"";width:6px;height:6px;border-radius:50%;background:#008043;display:inline-block}
+  .chat-pin{flex:0 0 auto;display:flex;align-items:flex-start;gap:8px;padding:8px 12px;background:#FFF8FC;border-bottom:1px solid #F2DDED}
+  .chat-pin .material-icons{font-size:15px;color:#D9008D;flex:0 0 auto;margin-top:1px}
+  .chat-pin .csk{font-size:9px;color:#9a6a86;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+  .chat-pin .csv{font-size:11.5px;font-weight:700;color:#161021;line-height:1.35}
+  .chat-body{flex:1;overflow-y:auto;padding:13px 12px;display:flex;flex-direction:column;gap:10px;background:#F1EDF7}
+  .chat-body::-webkit-scrollbar{width:0}
+  .bubble{max-width:92%;padding:11px 13px;border-radius:15px;font-size:12.5px;line-height:1.5;font-family:'Noto Sans Devanagari'}
+  .bubble.bot{align-self:flex-start;background:#fff;border:1px solid #E8E4F0;border-bottom-left-radius:5px;color:#161021}
+  .bubble.me{align-self:flex-end;background:#D9008D;color:#fff;border-bottom-right-radius:5px}
+  .bubble .b-title{font-weight:700;font-size:12.5px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .bubble .b-title .material-icons{font-size:16px;color:#D9008D}
+  .bubble .chan{font-size:8px;font-weight:800;letter-spacing:.04em;color:#6D17CE;background:#F1E5FF;padding:1px 5px;border-radius:4px;text-transform:uppercase;margin-left:auto}
+  .bubble .time{font-size:9px;color:rgba(0,0,0,.3);margin-top:5px;display:block}
+  .msg-card{background:#F7F7F9;border-radius:10px;padding:9px 11px;margin-top:8px}
+  .msg-card .mr{display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;gap:8px}
+  .msg-card .mr .k{color:#5C5570}.msg-card .mr .v{font-weight:700;color:#161021}.msg-card .mr .v.pos{color:#008043}
+  .chat-cta{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:9px;min-height:40px;padding:9px 12px;border-radius:12px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:12.5px;font-weight:700;text-align:center;line-height:1.3}
+  .chat-cta.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D}
+  .chat-cta .material-icons{font-size:16px}
+  .chat-input{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:9px 12px;background:#fff;border-top:1px solid #E8E4F0}
+  .chat-input .box{flex:1;height:38px;border:1.5px solid #D7D3E0;border-radius:9999px;background:#FAF9FC;padding:0 14px;display:flex;align-items:center;font-size:12px;color:#A7A1B2}
+  .chat-input .send{width:38px;height:38px;border-radius:50%;background:#D9008D;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .chat-input .send .material-icons{color:#fff;font-size:18px}
+  @media(max-width:560px){h1{font-size:21px}}
+</style>
+</head>
+<body>
+  <header class="doc">
+    <div class="eyebrow">Wiom · Customer Closure — Case 3 of 3</div>
+    <h1>Wiom-Initiated Forced Closure — Service-Unavailability</h1>
+    <p class="lead">The customer flow designed <b>screen-by-screen from the B5 system sequence diagram</b>, checked against the Closure OS guardrails. A CSP withdraws and Wiom <b>cannot find an alternative partner</b> — service ends <b>through no fault of the customer</b>. This is <b>an apology, not a transaction</b>: mandatory advance notice, a <b>full refund (deposit + all unused balance)</b>, a <b>free Wiom-arranged pickup</b>, and an offer to reconnect if the area returns. Comms are multi-channel <b>chat/notification</b>; transactional steps are <b>Design-System screens</b>. Each surface is labelled with its B5 step and the guardrail it satisfies.</p>
+    <div class="grounded">Grounded: Forced-Closure (service-unavailability, reason 8) PRD v0.2.2 (B5 sequence, B6 UI) · Closure OS v2.0 §5.4 · Doctrine #9 · shares custody/refund spine</div>
+    <div class="legend">
+      <span><span class="xtag chat"><span class="material-icons">chat</span>Chat</span> multi-channel comm (SMS+WA+app)</span>
+      <span><span class="xtag scr"><span class="material-icons">smartphone</span>Screen</span> DS screen (transactional)</span>
+      <span><span class="gr b5">B5 #</span> sequence step</span>
+      <span><span class="gr br">BR/A8</span> business-rule guardrail</span>
+      <span><span class="gr inv">INV</span> invariant</span>
+    </div>
+    <div class="guard">
+      <div class="gt"><span class="material-icons">verified_user</span>Guardrails this flow must honour (from the OS)</div>
+      <ul>
+        <li><span class="k">BR-01 / INV-01</span><span><b>Advance notice is mandatory</b> — no <code>CLOSURE_INITIATED</code> without a recorded notification (hard guard).</span></li>
+        <li><span class="k">BR-02 / INV-02</span><span><b>Full C2 refund</b> = full deposit + <b>all unused balance</b>. Never pro-rata, never tier-reduced.</span></li>
+        <li><span class="k">BR-03</span><span>Attribution = <b>wiom-infrastructure</b> — the cause is Wiom, never the customer.</span></li>
+        <li><span class="k">BR-04 / INV-03</span><span>Trust signal = <b>NONE, always</b> — even if the device is never returned.</span></li>
+        <li><span class="k">BR-05</span><span>Pickup is <b>Wiom-arranged &amp; free</b>; full deposit returned regardless of recovery outcome.</span></li>
+        <li><span class="k">BR-06 / BEC-08</span><span><b>Reroute first</b> — declare "no alternative" only after a genuine, auditable reroute attempt.</span></li>
+        <li><span class="k">A8</span><span><b>Apology, not transaction</b> — own it; <b>never ask "why are you leaving"</b> (reason is system-known).</span></li>
+        <li><span class="k">BR-07 / INV-05</span><span>Two comms (advance notice + conclusion), never silent · conclusion = <b>apology + reconnect offer</b>.</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <div id="flow">
+  <!-- ===== PHASE 1 ===== -->
+  <div class="phaseband" id="p1">
+    <div class="phasehead"><div class="pnum">1</div><div><div class="ph-t">Withdrawal → advance notice (mandatory) → reroute first</div><div class="ph-s">B5 #1–4: Network Ops flags a <b>CSP withdrawal</b> and the affected customers. Closure OS sends a <b>mandatory advance notification</b> (BR-01) <i>before</i> anything stops, while Ops attempts a <b>reroute</b>. If a partner is found → seamless, no closure (BEC-01). Only "no alternative" reaches forced closure.</div><div class="ph-codes">N0–N1 · advance notice · reroute</div></div></div>
+    <div class="rail">
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">C1</span><span class="screen-name">Advance notice (mandatory) — apology</span> <span class="xtag chat"><span class="material-icons">chat</span>Chat</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-head"><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>
+          <div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">सेवा बंद हो रही है · पूरा रिफंड · हमारी गलती</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot"><div class="b-title"><span class="material-icons">sentiment_dissatisfied</span>माफ़ी — हम आपके इलाके में नेट नहीं दे पाएंगे<span class="chan">SMS+WA+call</span></div>यह हमारी ओर से है, <b>आपकी कोई गलती नहीं</b>। सेवा बंद होने से पहले हम आपको बता रहे हैं।<span class="time">advance notice · आज</span></div>
+            <div class="bubble bot">आपका <b>पूरा पैसा वापस</b> — जमा राशि ₹300 + बचा हुआ <b>पूरा</b> बैलेंस। डिवाइस हम ख़ुद, <b>बिना किसी शुल्क</b> के ले जाएंगे।
+              <div class="chat-cta">मेरा रिफंड देखें</div>
+              <div class="chat-cta sec">इलाका लौटे तो मुझे बताएं</div>
+            </div>
+          </div>
+          <div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #2</span><span class="gr br">BR-01 mandatory notice</span><span class="gr inv">INV-01 hard guard</span><span class="gr br">A8 apology</span></div>
+      </div>
+
+      <div class="blane ok"><div class="ln" style="background:#16463a"></div><div class="lbl" style="color:#8fe3b0">ALT-01 · reroute succeeded</div><div class="ln" style="background:#16463a"></div></div>
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">S·alt</span><span class="screen-name">Partner found — service continues</span> <span class="xtag chat"><span class="material-icons">chat</span>Chat</span> <span class="gr" style="background:#16463a;color:#8fe3b0">Continuity</span></div>
+        <div class="aphone" style="border-color:#0c5a3a">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-head"><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>
+          <div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">नेट जारी · नया पार्टनर · कुछ नहीं बदला</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot"><div class="b-title"><span class="material-icons">check_circle</span>अच्छी खबर — आपका नेट जारी रहेगा<span class="chan">WhatsApp</span></div>हमें आपके इलाके के लिए नया पार्टनर मिल गया। आपके लिए कुछ नहीं बदला — वही प्लान, कोई रुकावट नहीं। <b>कोई closure नहीं हुआ।</b><span class="time">CONNECTION_CHANGED</span></div>
+            <div class="bubble bot"><div class="chat-cta sec">बढ़िया!</div></div>
+          </div>
+          <div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #3-4</span><span class="gr br">BEC-01 reroute</span><span class="gr">CONNECTION_CHANGED · no closure</span></div>
+      </div>
+
+    </div>
+    <div class="pdown"><span class="material-icons">south</span><span class="pl">कोई पार्टनर नहीं + advance notice दी गई (guard) → forced closure</span></div>
+  </div>
+
+  <!-- ===== PHASE 2 ===== -->
+  <div class="phaseband alt" id="p2">
+    <div class="phasehead"><div class="pnum">2</div><div><div class="ph-t">Forced closure — full C2 refund, free pickup</div><div class="ph-s">B5 #5–11: no alternative + advance-notice guard verified → <code>CLOSURE_INITIATED(service-unavailability)</code>. <b>Full refund</b> (deposit + all unused balance, never pro-rata) triggered immediately; UPI captured with <b>optional feedback only — never "why are you leaving"</b>; a <b>free, Wiom-arranged pickup</b> is scheduled.</div><div class="ph-codes">N5 · full C2 · wiom-infrastructure</div></div></div>
+    <div class="rail">
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">S1</span><span class="screen-name">Full refund — deposit + balance</span> <span class="xtag scr"><span class="material-icons">smartphone</span>Screen</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">आपका पूरा पैसा वापस</div></div>
+          <div class="abody lft">
+            <div style="text-align:center"><div class="ah1" style="font-size:26px;color:#008043">₹600</div><div class="asub" style="margin-top:2px">पूरा वापस — कुछ नहीं कटेगा</div></div>
+            <div class="scard"><div class="stitle"><span class="material-icons">savings</span>पूरा रिफंड (C2)</div><div class="sr"><span class="k">सिक्योरिटी डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="sr"><span class="k">बचा हुआ पूरा बैलेंस</span><span class="v pos">₹300</span></div><div class="sdiv"></div><div class="sr total"><span class="k">कुल</span><span class="v pos">₹600</span></div><div class="hint">यह pro-rata नहीं — पूरा बचा बैलेंस, क्योंकि सेवा हमारी वजह से बंद हुई।</div></div>
+            <div class="averify ok"><span class="material-icons">bolt</span><p>रिफंड अभी भेजा जा रहा है। डिवाइस लौटे या नहीं — आपका पूरा पैसा वैसे ही मिलेगा (BR-02)।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">₹600 कहाँ भेजें — UPI दें</button></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #7-8</span><span class="gr br">BR-02 full C2</span><span class="gr inv">INV-02 no pro-rata</span></div>
+      </div>
+
+      <div class="farrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">S2</span><span class="screen-name">UPI verify — no reason-for-exit</span> <span class="xtag scr"><span class="material-icons">smartphone</span>Screen</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">₹600 कहाँ भेजें?</div></div>
+          <div class="abody lft">
+            <div class="field"><label>आपकी UPI ID</label><div class="inp ok"><span>rukmum@okhdfcbank</span><span class="vok"><span class="material-icons">check_circle</span>वेरिफ़ाइड</span></div><div class="hint">verify न हो तो दूसरे तरीके से भेजेंगे — पैसा अटकेगा नहीं।</div></div>
+            <div class="field"><label>कोई सुझाव? <span style="color:#A7A1B2;font-weight:600">(वैकल्पिक)</span></label><div class="ta">कुछ कहना चाहें तो लिखें… (छोड़ सकते हैं)</div></div>
+            <div class="averify info"><span class="material-icons">volunteer_activism</span><p>हम <b>यह नहीं पूछेंगे कि आप क्यों जा रहे हैं</b> — यह आपका फ़ैसला नहीं, हमारी मजबूरी है। बस सुझाव चाहें तो दें।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">कन्फर्म करें</button><button class="abtn ghost">छोड़ें</button></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #9-10</span><span class="gr br">A8 no "why leaving"</span><span class="gr br">BR-S1 verify first</span></div>
+      </div>
+
+      <div class="farrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">S3</span><span class="screen-name">Pickup — Wiom-arranged, free</span> <span class="xtag scr"><span class="material-icons">smartphone</span>Screen</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">डिवाइस पिकअप</div></div>
+          <div class="abody lft">
+            <div class="ah1 sm" style="text-align:center">हम डिवाइस ख़ुद ले जाएंगे — बिना शुल्क</div>
+            <div class="asub" style="text-align:center">अपने हिसाब से एक समय चुनें। आपको कहीं जाना नहीं।</div>
+            <div class="refund-opt sel"><div class="ri"><span class="material-icons">event</span></div><div><div class="rt">कल · सुबह 10–12 बजे</div><div class="rs">हमारी टीम घर आएगी</div></div><div class="ramt" style="color:#008043;font-size:12px">मुफ़्त</div></div>
+            <div class="refund-opt"><div class="ri"><span class="material-icons">event</span></div><div><div class="rt">कल · शाम 4–6 बजे</div><div class="rs">हमारी टीम घर आएगी</div></div><div class="ramt" style="color:#008043;font-size:12px">मुफ़्त</div></div>
+            <div class="averify ok"><span class="material-icons">payments</span><p>पिकअप का कोई शुल्क नहीं — और पूरा ₹600 वैसे ही आपका। (BR-05)</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">यह स्लॉट चुनें</button></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #11</span><span class="gr br">BR-05 free Wiom pickup</span></div>
+      </div>
+
+    </div>
+    <div class="pdown"><span class="material-icons">south</span><span class="pl">डिवाइस उठाया जाता है → dual-attestation (या no field presence)</span></div>
+  </div>
+
+  <!-- ===== PHASE 3 ===== -->
+  <div class="phaseband" id="p3">
+    <div class="phasehead"><div class="pnum">3</div><div><div class="ph-t">Device collected → conclusion (apology + reconnect)</div><div class="ph-s">B5 #12–17: <b>dual-attestation</b> handover (agent + customer). If there's <b>no field presence</b> in the withdrawn area, the netbox is written off as a Wiom asset loss — the customer is never penalised and the full refund stands (BEC-02). Closure is recorded as <b>wiom-infrastructure with a reconnect flag</b>; the conclusion is an <b>apology + reconnect offer</b>.</div><div class="ph-codes">N7 · CLOSURE_FINAL · reconnect flag</div></div></div>
+    <div class="rail">
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">S4</span><span class="screen-name">Confirm device handover</span> <span class="xtag scr"><span class="material-icons">smartphone</span>Screen</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>
+          <div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">डिवाइस की पुष्टि करें</div></div>
+          <div class="abody">
+            <div style="text-align:center"><div class="ahero info"><span class="material-icons">fact_check</span></div><div class="ah1 sm">क्या हमारी टीम ने डिवाइस ले लिया?</div></div>
+            <div class="scard"><div class="sr"><span class="k">हमारी टीम का रिकॉर्ड</span><span class="v" style="color:#008043">ले लिया गया ✓</span></div><div class="sr"><span class="k">समय</span><span class="v">कल, 11:00 AM</span></div></div>
+            <div class="asub">दोनों तरफ़ से पुष्टि के बाद रिकॉर्ड पूरा — पर आपका ₹600 इससे पहले ही भेजा जा चुका है।</div>
+            <div class="averify gray"><span class="material-icons">schedule</span><p>जवाब न दें तो हम ख़ुद verify कर लेंगे (ops fallback) — कुछ अटकेगा नहीं।</p></div>
+          </div>
+          <div class="afoot"><button class="abtn">हाँ, टीम ने ले लिया</button><button class="abtn ghost">नहीं, अभी नहीं आई</button></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #12-14</span><span class="gr br">BR-S3 dual attestation</span><span class="gr br">BR-S4 ops fallback</span></div>
+      </div>
+
+      <div class="blane ok"><div class="ln" style="background:#5a2748"></div><div class="lbl" style="color:#ff9ec8">no field presence (BEC-02)</div><div class="ln" style="background:#5a2748"></div></div>
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">S4'</span><span class="screen-name">No pickup possible — keep it, you're whole</span> <span class="xtag chat"><span class="material-icons">chat</span>Chat</span></div>
+        <div class="aphone add">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-head"><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>
+          <div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">डिवाइस लेना संभव नहीं · ₹600 वैसे ही आपका</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot"><div class="b-title"><span class="material-icons">info</span>डिवाइस की चिंता न करें</div>आपके इलाके में हमारी टीम अभी पहुँच नहीं पा रही, इसलिए डिवाइस लेना संभव नहीं। <b>आप उसे रख सकते हैं</b> — आप पर कोई बकाया नहीं, और आपका <b>पूरा ₹600 वैसे ही</b> मिलेगा।<span class="time">CSP_OPERATION_FAILURE</span></div>
+            <div class="bubble bot"><div class="chat-cta sec">समझ गया</div></div>
+          </div>
+          <div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #15</span><span class="gr br">BEC-02 netbox write-off</span><span class="gr inv">INV-03 trust NONE</span></div>
+      </div>
+
+      <div class="farrow"><span class="material-icons">chevron_right</span></div>
+
+      <div class="screen">
+        <div class="screen-tag"><span class="screen-num">C2</span><span class="screen-name">Conclusion — apology + reconnect</span> <span class="xtag chat"><span class="material-icons">chat</span>Chat</span></div>
+        <div class="aphone">
+          <div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>
+          <div class="chat-head"><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>
+          <div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">कनेक्शन बंद · पूरा ₹600 वापस · reconnect on</div></div></div>
+          <div class="chat-body">
+            <div class="bubble bot"><div class="b-title"><span class="material-icons">favorite</span>एक बार फिर, हमें खेद है<span class="chan">SMS+WA</span></div>आपका कनेक्शन बंद हो गया और पूरा ₹600 आपके खाते में आ गया।
+              <div class="msg-card"><div class="mr"><span class="k">डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="mr"><span class="k">बचा बैलेंस</span><span class="v pos">₹300</span></div></div>
+              <span class="time">conclusion · apology</span></div>
+            <div class="bubble bot">जब भी आपका इलाका फिर serviceable होगा, <b>हम सबसे पहले आपको जोड़ने का मौका देंगे</b>। आपकी जगह हमारे रिकॉर्ड में सुरक्षित।
+              <div class="chat-cta sec">इलाका लौटे तो मुझे बताएं</div>
+            </div>
+          </div>
+          <div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>
+        </div>
+        <div class="grbar"><span class="gr b5">B5 #16-17</span><span class="gr br">BR-07 reconnect offer</span><span class="gr inv">INV-05 conclusion comm</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+
+</body>
+</html>

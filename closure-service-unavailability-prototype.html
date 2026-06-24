@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Case 1 Non-Reaffirmation · working prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{--brand:#D9008D;--brand-bold:#443152;--text:#161021;--text-subtle:#5C5570;--text-disabled:#A7A1B2;--stroke:#E8E4F0;--stroke-strong:#D7D3E0;--bg-subtle:#F1EDF7;--positive:#008043;--selected-bg:#FFE5F6;--r-md:12px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans Devanagari','Noto Sans',sans-serif;background:radial-gradient(1100px 560px at 50% -10%,#262a36,#1c1f26 60%);color:#e7e9ee;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .top{max-width:980px;margin:0 auto;padding:26px 24px 6px;text-align:center}
+  .eyebrow{font-family:'Noto Sans';font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#D9008D}
+  h1{font-family:'Noto Sans';font-size:22px;font-weight:700;color:#fff;margin:6px 0 4px}
+  .sub{font-family:'Noto Sans';font-size:12.5px;color:#9aa0ab;line-height:1.55;max-width:660px;margin:0 auto}
+  .sub a{color:#ff9ec8;font-weight:700}
+  .stage{display:flex;flex-direction:column;align-items:center;gap:14px;padding:18px 16px 60px}
+  .crumb{display:flex;align-items:center;gap:9px;font-family:'Noto Sans';font-size:12px;color:#c3c8d1;background:#222631;border:1px solid #343a47;border-radius:999px;padding:6px 14px;min-height:34px;flex-wrap:wrap;justify-content:center;max-width:520px}
+  .crumb .b5{font-weight:800;color:#ffd27f;background:#3a2e10;border-radius:6px;padding:1px 8px;font-size:10px}
+  .crumb .xt{font-size:9px;font-weight:800;letter-spacing:.04em;padding:2px 7px;border-radius:5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:3px}
+  .crumb .xt .material-icons{font-size:11px}
+  .crumb .xt.chat{background:#241a3a;color:#bda7ff}.crumb .xt.scr{background:#16313f;color:#7fd1ff}
+  .crumb .gr{font-size:9px;font-weight:700;color:#8fe3b0;background:#152a1c;border-radius:4px;padding:2px 6px}
+
+  .aphone{width:332px;height:684px;background:#F7F7F9;border:10px solid #11131a;border-radius:36px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .astatus{height:28px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-family:'Noto Sans';font-size:11px;font-weight:600;color:#161021;flex:0 0 auto}
+  .astatus .r .material-icons{font-size:12px;vertical-align:middle;margin-left:2px}
+  .atop{display:flex;align-items:center;padding:9px 13px;flex:0 0 auto;gap:9px}
+  .alogo{width:31px;height:31px;border-radius:8px;background:#D9008D;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex:0 0 auto}
+  .aback{color:#352d42;display:flex;align-items:center;cursor:pointer}.aback .material-icons{font-size:22px}
+  .atitle{font-family:'Noto Sans Devanagari';font-size:14px;font-weight:700;color:#161021}
+  .aact{margin-left:auto;display:flex;gap:13px;color:#352d42}.aact .material-icons{font-size:19px}
+  .abody{flex:1;overflow-y:auto;padding:10px 20px 18px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .abody.lft{align-items:stretch;text-align:left}
+  .abody::-webkit-scrollbar{width:0}
+  .ah1{font-family:'Noto Sans Devanagari';font-size:18px;font-weight:700;color:#161021;line-height:1.35;margin-top:8px}
+  .ah1.sm{font-size:15.5px}
+  .asub{font-family:'Noto Sans Devanagari';font-size:12.5px;color:#5C5570;line-height:1.5;margin-top:9px}
+  .afoot{flex:0 0 auto;width:100%;padding:8px 16px 14px;display:flex;flex-direction:column;gap:8px}
+  .abtn{width:100%;height:48px;border:none;border-radius:24px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;box-shadow:0 4px 12px rgba(217,0,141,.22)}
+  .abtn .material-icons{font-size:18px}
+  .abtn.ghost{background:transparent;color:#D9008D;box-shadow:none;font-weight:600}
+  .abtn.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D;box-shadow:none}
+  .abtn.gray{background:#EDEAF2;color:#5C5570;box-shadow:none}
+  .abtn:active{transform:scale(.98)}
+  .ahero{width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:16px auto 2px}
+  .ahero .material-icons{font-size:40px}
+  .ahero.brand{background:#FFE5F6}.ahero.brand .material-icons{color:#D9008D}
+  .ahero.ok{background:#E1FAED}.ahero.ok .material-icons{color:#008043}
+  .ahero.gray{background:#EAE7F0}.ahero.gray .material-icons{color:#5C5570}
+  .ahero.info{background:#F1E5FF}.ahero.info .material-icons{color:#6D17CE}
+  .deposit-banner{width:100%;background:linear-gradient(135deg,#FFF0F8,#FFE5F6);border:1px solid #FAC8E6;border-radius:14px;padding:14px;margin-top:6px;display:flex;gap:11px;align-items:center;text-align:left}
+  .deposit-banner .di{width:42px;height:42px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .deposit-banner .di .material-icons{color:#D9008D;font-size:23px}
+  .deposit-banner .dt{font-size:13.5px;font-weight:800;color:#161021}
+  .deposit-banner .ds{font-size:11px;color:#5C5570;margin-top:2px;line-height:1.4}
+  .scard{width:100%;background:#fff;border-radius:12px;padding:13px 15px;margin-top:13px;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:left}
+  .scard .stitle{font-size:12px;font-weight:700;color:#161021;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .scard .stitle .material-icons{font-size:16px;color:#D9008D}
+  .scard .sr{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;gap:10px}
+  .scard .sr .k{color:#5C5570}.scard .sr .v{font-weight:700;color:#161021;text-align:right}
+  .scard .sr .v.pos{color:#008043}
+  .scard.tap{cursor:pointer;border:1.5px solid #D9008D}.scard.tap:active{background:#FFF8FC}
+  .averify{display:flex;align-items:flex-start;gap:8px;border-radius:10px;padding:10px 12px;margin-top:12px;text-align:left;width:100%}
+  .averify .material-icons{font-size:16px;flex:0 0 auto;margin-top:1px}
+  .averify p{font-family:'Noto Sans Devanagari';font-size:11.5px;line-height:1.5}
+  .averify.ok{background:#E1FAED}.averify.ok .material-icons{color:#008043}.averify.ok p{color:#0a5c33}
+  .averify.info{background:#F1E5FF}.averify.info .material-icons{color:#6D17CE}.averify.info p{color:#4a1a8f}
+  .averify.gray{background:#EFEDF3}.averify.gray .material-icons{color:#5C5570}.averify.gray p{color:#3f394b}
+  .refund-opt{display:flex;align-items:flex-start;gap:11px;padding:13px;background:#fff;border:1.5px solid var(--stroke-strong);border-radius:var(--r-md);margin-top:11px;width:100%;text-align:left;cursor:pointer}
+  .refund-opt.sel{border-color:var(--brand);background:var(--selected-bg);box-shadow:0 0 0 1px var(--brand)}
+  .refund-opt .ri{width:38px;height:38px;border-radius:var(--r-md);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .refund-opt.sel .ri{background:#fff}
+  .refund-opt .ri .material-icons{font-size:20px;color:var(--brand-bold)}
+  .refund-opt .rt{font-size:13.5px;font-weight:700;color:var(--text)}
+  .refund-opt .rs{font-size:11px;color:var(--text-subtle);margin-top:2px;line-height:1.4}
+  .refund-opt .badge1{font-size:8.5px;font-weight:800;color:#008043;background:#E1FAED;padding:1px 6px;border-radius:4px;margin-top:4px;display:inline-block;text-transform:uppercase;letter-spacing:.03em}
+  .refund-opt .ramt{font-size:15px;font-weight:800;color:var(--positive);margin-left:auto;flex:0 0 auto;text-align:right}
+  .refund-opt .ramt small{display:block;font-size:9px;font-weight:600;color:#A7A1B2}
+  .track{width:100%;margin-top:13px;text-align:left}
+  .tstep{display:flex;gap:12px;position:relative}
+  .tstep .tline{position:absolute;left:14px;top:28px;bottom:-6px;width:2px;background:#E2DEEA}
+  .tstep:last-child .tline{display:none}
+  .tdot{width:29px;height:29px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#E2DEEA;color:#fff;z-index:1}
+  .tdot .material-icons{font-size:17px}
+  .tstep.done .tdot{background:#008043}.tstep.done .tline{background:#008043}
+  .tstep.cur .tdot{background:#D9008D;box-shadow:0 0 0 4px #FFE5F6}
+  .tstep.wait .tdot{background:#E2DEEA;color:#A7A1B2}
+  .tbody{padding-bottom:16px;flex:1}.tbody .tt{font-size:13px;font-weight:700;color:#161021}
+  .tstep.wait .tbody .tt{color:#A7A1B2}
+  .tbody .td{font-size:11.5px;color:#5C5570;line-height:1.4;margin-top:2px}
+  .tbody .tmeta{font-size:10.5px;font-weight:700;margin-top:3px}
+  .tstep.done .tmeta{color:#008043}.tstep.cur .tmeta{color:#D9008D}.tstep.wait .tmeta{color:#A7A1B2}
+  .field{width:100%;margin-top:13px;text-align:left}
+  .field label{font-size:12px;font-weight:700;color:#161021;display:block;margin-bottom:5px}
+  .field .inp{height:48px;border:1.5px solid #D7D3E0;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:13px;color:#161021}
+  .field .inp.ok{border-color:#008043}
+  .field .inp .vok{font-size:10.5px;font-weight:800;color:#008043;display:flex;align-items:center;gap:3px}
+  .field .inp .vok .material-icons{font-size:14px}
+  .field .hint{font-size:10.5px;color:#5C5570;margin-top:5px}
+  .ta{min-height:60px;border:1.5px solid #D7D3E0;border-radius:11px;background:#fff;padding:10px 13px;font-size:12.5px;color:#A7A1B2;width:100%;margin-top:5px}
+
+  .chat-head{display:flex;align-items:center;gap:9px;padding:8px 13px;background:#fff;border-bottom:1px solid #E8E4F0;flex:0 0 auto}
+  .chat-head .ca{width:31px;height:31px;border-radius:8px;background:#D9008D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
+  .chat-head .cn{font-size:13.5px;font-weight:700;color:#161021}
+  .chat-head .cs{font-size:10px;color:#008043;font-weight:600;display:flex;align-items:center;gap:4px}
+  .chat-head .cs::before{content:"";width:6px;height:6px;border-radius:50%;background:#008043;display:inline-block}
+  .chat-pin{flex:0 0 auto;display:flex;align-items:flex-start;gap:8px;padding:9px 13px;background:#FFF8FC;border-bottom:1px solid #F2DDED}
+  .chat-pin .material-icons{font-size:15px;color:#D9008D;flex:0 0 auto;margin-top:1px}
+  .chat-pin .csk{font-size:9px;color:#9a6a86;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+  .chat-pin .csv{font-size:12px;font-weight:700;color:#161021;line-height:1.35}
+  .chat-body{flex:1;overflow-y:auto;padding:14px 13px;display:flex;flex-direction:column;gap:11px;background:#F1EDF7}
+  .chat-body::-webkit-scrollbar{width:0}
+  .bubble{max-width:92%;padding:11px 13px;border-radius:16px;font-size:12.5px;line-height:1.5;font-family:'Noto Sans Devanagari'}
+  .bubble.bot{align-self:flex-start;background:#fff;border:1px solid #E8E4F0;border-bottom-left-radius:5px;color:#161021}
+  .bubble.me{align-self:flex-end;background:#D9008D;color:#fff;border-bottom-right-radius:5px}
+  .bubble .b-title{font-weight:700;font-size:13px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .bubble .b-title .material-icons{font-size:17px;color:#D9008D}
+  .bubble .chan{font-size:8px;font-weight:800;letter-spacing:.04em;color:#6D17CE;background:#F1E5FF;padding:1px 5px;border-radius:4px;text-transform:uppercase;margin-left:auto}
+  .bubble .time{font-size:9px;color:rgba(0,0,0,.3);margin-top:5px;display:block}
+  .msg-card{background:#F7F7F9;border-radius:10px;padding:10px 12px;margin-top:9px}
+  .msg-card .mr{display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;gap:8px}
+  .msg-card .mr .k{color:#5C5570}.msg-card .mr .v{font-weight:700;color:#161021}.msg-card .mr .v.pos{color:#008043}
+  .chat-cta{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:9px;min-height:40px;padding:9px 12px;border-radius:12px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:13px;font-weight:700;text-align:center;line-height:1.3;cursor:pointer}
+  .chat-cta.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D}
+  .chat-cta:active{transform:scale(.98)}
+  .chat-cta .material-icons{font-size:16px}
+  .chat-input{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:10px 13px;background:#fff;border-top:1px solid #E8E4F0}
+  .chat-input .box{flex:1;height:40px;border:1.5px solid #D7D3E0;border-radius:9999px;background:#FAF9FC;padding:0 15px;display:flex;align-items:center;font-size:12.5px;color:#A7A1B2}
+  .chat-input .send{width:40px;height:40px;border-radius:50%;background:#D9008D;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .chat-input .send .material-icons{color:#fff;font-size:19px}
+
+  .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .ctl{display:inline-flex;align-items:center;gap:6px;font-family:'Noto Sans';font-size:12.5px;font-weight:700;color:#c3c8d1;background:#262a32;border:1px solid #343a47;border-radius:999px;padding:9px 16px;cursor:pointer}
+  .ctl:hover{background:#2f333c;color:#fff}.ctl:disabled{opacity:.4;cursor:default}
+  .ctl .material-icons{font-size:17px}
+  .ctl.brand{background:#5a1140;border-color:#7a1257;color:#ffb3dd}
+  .hint{font-family:'Noto Sans';font-size:11.5px;color:#7a8090;text-align:center;max-width:440px}
+  .hint b{color:#c3c8d1}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="eyebrow">Wiom · Closure Case 3 of 3 — working prototype</div>
+    <h1>Forced Closure (Service-Unavailability) — tap through the flow</h1>
+    <p class="sub">A clickable walk-through of the Wiom-caused forced exit, built from the B5 sequence. Tap the buttons to move through every screen; the chip above the phone shows the B5 step, surface type, and the guardrail. Static design: <a href="closure-service-unavailability-flow.html">closure-service-unavailability-flow.html</a></p>
+  </div>
+  <div class="stage">
+    <div class="crumb" id="crumb"></div>
+    <div class="aphone" id="phone"></div>
+    <div class="controls">
+      <button class="ctl" id="backBtn"><span class="material-icons">arrow_back</span>वापस</button>
+      <button class="ctl brand" id="restartBtn"><span class="material-icons">restart_alt</span>शुरू से</button>
+    </div>
+    <div class="hint">💡 शुरुआत: <b>advance notice (apology)</b>. branches: reroute (no closure), full refund, no "why leaving", free pickup, UPI-fail, dispute, ops-fallback, no-field-presence, reconnect।</div>
+  </div>
+
+<script>
+const STAT=`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi_off</span><span class="material-icons">battery_full</span></span></div>`;
+const STATON=`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">wifi</span><span class="material-icons">battery_full</span></span></div>`;
+const CIN=`<div class="chat-input"><div class="box">मैसेज लिखें…</div><div class="send"><span class="material-icons">send</span></div></div>`;
+function cHead(){return `<div class="chat-head"><span class="aback" data-back="1"><span class="material-icons">arrow_back</span></span><div class="ca">W</div><div><div class="cn">Wiom सहायता</div><div class="cs">ऑनलाइन</div></div></div>`;}
+function pin(t){return `<div class="chat-pin"><span class="material-icons">push_pin</span><div><div class="csk">अभी की स्थिति</div><div class="csv">${t}</div></div></div>`;}
+function chat(p,b,on){return (on?STATON:STAT)+cHead()+pin(p)+`<div class="chat-body">${b}</div>`+CIN;}
+function topb(title,logo){return `<div class="atop">`+(logo?`<div class="alogo">W</div><div class="atitle">Wiom</div>`:`<span class="aback" data-back="1"><span class="material-icons">arrow_back</span></span><div class="atitle">${title}</div>`)+`</div>`;}
+function scr(top,body,foot,on){return (on?STATON:STAT)+top+`<div class="abody lft">${body}</div>`+(foot?`<div class="afoot">${foot}</div>`:'');}
+
+const N={},T={},K={},B5={};
+function def(id,title,kind,b5,html){N[id]=html;T[id]=title;K[id]=kind;B5[id]=b5;}
+/* ===== PHASE 1 — withdrawal, advance notice, reroute ===== */
+def('advanceNotice','Advance notice (mandatory) — apology','chat','#2 · BR-01',
+  chat('सेवा बंद हो रही है · पूरा रिफंड · हमारी गलती',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">sentiment_dissatisfied</span>माफ़ी — हम आपके इलाके में नेट नहीं दे पाएंगे<span class="chan">SMS+WA+call</span></div>यह हमारी ओर से है, <b>आपकी कोई गलती नहीं</b>। सेवा बंद होने से पहले हम आपको बता रहे हैं।<span class="time">advance notice</span></div>
+   <div class="bubble bot">आपका <b>पूरा पैसा वापस</b> — ₹300 जमा + बचा हुआ पूरा बैलेंस। डिवाइस हम ख़ुद, <b>बिना शुल्क</b> ले जाएंगे।
+     <div class="chat-cta" data-go="fullRefund">मेरा रिफंड देखें</div>
+     <div class="chat-cta sec" data-go="rerouted">(अच्छी खबर: पार्टनर मिल जाए तो?)</div>
+   </div>`));
+
+def('rerouted','Partner found — service continues','chat','#3-4 · BEC-01',
+  chat('नेट जारी · नया पार्टनर · कुछ नहीं बदला',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">check_circle</span>अच्छी खबर — आपका नेट जारी रहेगा<span class="chan">WhatsApp</span></div>हमें आपके इलाके के लिए नया पार्टनर मिल गया। आपके लिए कुछ नहीं बदला — वही प्लान, कोई रुकावट नहीं। <b>कोई closure नहीं।</b><span class="time">CONNECTION_CHANGED</span></div>
+   <div class="bubble bot"><div class="chat-cta sec" data-go="advanceNotice">बढ़िया! (शुरू से)</div></div>`));
+
+/* ===== PHASE 2 — full refund, UPI, free pickup ===== */
+def('fullRefund','Full refund — deposit + balance','screen','#7-8 · BR-02',
+  scr(topb('आपका पूरा पैसा वापस'),
+  `<div style="text-align:center"><div class="ah1" style="font-size:26px;color:#008043">₹600</div><div class="asub" style="margin-top:2px">पूरा वापस — कुछ नहीं कटेगा</div></div>
+   <div class="scard"><div class="stitle"><span class="material-icons">savings</span>पूरा रिफंड (C2)</div><div class="sr"><span class="k">सिक्योरिटी डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="sr"><span class="k">बचा हुआ पूरा बैलेंस</span><span class="v pos">₹300</span></div><div class="sdiv"></div><div class="sr total"><span class="k">कुल</span><span class="v pos">₹600</span></div><div class="hint">pro-rata नहीं — पूरा बचा बैलेंस, क्योंकि सेवा हमारी वजह से बंद हुई।</div></div>
+   <div class="averify ok"><span class="material-icons">bolt</span><p>रिफंड अभी भेजा जा रहा है। डिवाइस लौटे या नहीं — पूरा पैसा वैसे ही मिलेगा (BR-02)।</p></div>`,
+  `<button class="abtn" data-go="upi">₹600 कहाँ भेजें — UPI दें</button>`));
+
+def('upi','UPI verify — no reason-for-exit','screen','#9-10 · A8',
+  scr(topb('₹600 कहाँ भेजें?'),
+  `<div class="field"><label>आपकी UPI ID</label><div class="inp ok"><span>rukmum@okhdfcbank</span><span class="vok"><span class="material-icons">check_circle</span>वेरिफ़ाइड</span></div><div class="hint">verify न हो तो दूसरे तरीके से भेजेंगे।</div></div>
+   <div class="field"><label>कोई सुझाव? <span style="color:#A7A1B2;font-weight:600">(वैकल्पिक)</span></label><div class="ta">कुछ कहना चाहें तो लिखें… (छोड़ सकते हैं)</div></div>
+   <div class="averify info"><span class="material-icons">volunteer_activism</span><p>हम <b>यह नहीं पूछेंगे कि आप क्यों जा रहे हैं</b> — यह आपका फ़ैसला नहीं, हमारी मजबूरी है।</p></div>
+   <div class="scard tap" data-go="upiFail"><div class="sr"><span class="k" style="font-weight:700;color:#161021">demo: UPI verify फेल होने पर</span><span class="v" style="color:#D9008D">›</span></div></div>`,
+  `<button class="abtn" data-go="pickup">कन्फर्म करें</button><button class="abtn ghost" data-go="pickup">छोड़ें</button>`));
+
+def('upiFail','UPI verify failed → retry / bond','screen','#10 else · FM-S4',
+  scr(topb('₹600 कहाँ भेजें?'),
+  `<div class="asub" style="margin-top:2px">यह UPI ID verify नहीं हो पाई।</div>
+   <div class="field"><label>आपकी UPI ID</label><div class="inp" style="border-color:#b42318"><span style="color:#b42318">ravi@okisbi</span><span class="vok" style="color:#b42318"><span class="material-icons">error</span>verify नहीं हुई</span></div><div class="hint" style="color:#b42318">सही ID दोबारा डालें।</div></div>
+   <div class="averify gray"><span class="material-icons">shield</span><p>कुछ कोशिशों के बाद भी न हो, तो पैसा दूसरे तरीके (call + वॉलेट) से भेजेंगे — पूरा ₹600, कभी forfeit नहीं।</p></div>`,
+  `<button class="abtn" data-go="pickup">सही UPI डालकर दोबारा</button><button class="abtn ghost" data-go="bondPayout">दूसरे तरीके से भेजें</button>`));
+
+def('bondPayout','Money safe — alt payout','chat','bond · INV',
+  chat('₹600 सुरक्षित · भेजने की कोशिश जारी',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">savings</span>आपका ₹600 सुरक्षित है<span class="chan">SMS+WA</span></div>UPI पर नहीं पहुँचा — हम दोबारा कोशिश करेंगे, फिर कॉल/वॉलेट से। पैसा कहीं नहीं जाएगा।<span class="time">अभी</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="pickup">सही UPI देनी है</div></div>`));
+
+def('pickup','Pickup — Wiom-arranged, free','screen','#11 · BR-05',
+  scr(topb('डिवाइस पिकअप'),
+  `<div class="ah1 sm" style="text-align:center">हम डिवाइस ख़ुद ले जाएंगे — बिना शुल्क</div><div class="asub" style="text-align:center">अपने हिसाब से समय चुनें। आपको कहीं जाना नहीं।</div>
+   <div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">event</span></div><div><div class="rt">कल · सुबह 10–12 बजे</div><div class="rs">टीम घर आएगी</div></div><div class="ramt" style="color:#008043;font-size:12px">मुफ़्त</div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">event</span></div><div><div class="rt">कल · शाम 4–6 बजे</div><div class="rs">टीम घर आएगी</div></div><div class="ramt" style="color:#008043;font-size:12px">मुफ़्त</div></div>
+   <div class="averify ok"><span class="material-icons">payments</span><p>पिकअप का कोई शुल्क नहीं — पूरा ₹600 वैसे ही आपका (BR-05)।</p></div>
+   <div class="scard tap" data-go="noFieldPresence"><div class="sr"><span class="k" style="font-weight:700;color:#161021">demo: टीम इलाके में पहुँच न पाए तो?</span><span class="v" style="color:#D9008D">›</span></div></div>`,
+  `<button class="abtn" data-go="handover">यह स्लॉट चुनें</button>`));
+
+/* ===== PHASE 3 — collected, conclusion ===== */
+def('handover','Confirm device handover','screen','#12-14 · BR-S3',
+  scr(topb('डिवाइस की पुष्टि करें'),
+  `<div style="text-align:center"><div class="ahero info"><span class="material-icons">fact_check</span></div><div class="ah1 sm">क्या हमारी टीम ने डिवाइस ले लिया?</div></div>
+   <div class="scard"><div class="sr"><span class="k">हमारी टीम का रिकॉर्ड</span><span class="v" style="color:#008043">ले लिया गया ✓</span></div><div class="sr"><span class="k">समय</span><span class="v">कल, 11:00 AM</span></div></div>
+   <div class="asub" style="text-align:center">आपका ₹600 इससे पहले ही भेजा जा चुका है।</div>
+   <div class="averify gray"><span class="material-icons">schedule</span><p>जवाब न दें तो हम ख़ुद verify कर लेंगे (ops fallback)।</p></div>`,
+  `<button class="abtn" data-go="concluded">हाँ, टीम ने ले लिया</button><button class="abtn ghost" data-go="dispute">नहीं, अभी नहीं आई</button><button class="abtn gray" data-go="opsFallback">⏩ मैंने confirm नहीं किया</button>`));
+
+def('dispute','Custody disputed','chat','BR-S3 · CP-CLOSURE-20',
+  chat('जाँच जारी · ₹600 आपका',
+  `<div class="bubble me">टीम तो अभी आई ही नहीं</div>
+   <div class="bubble bot"><div class="b-title"><span class="material-icons">fact_check</span>हम जाँच रहे हैं</div>रिकॉर्ड में फ़र्क है — हम सुलझा देंगे, शक में फ़ैसला <b>आपके पक्ष में</b>। आपका ₹600 तो वैसे भी आपका है।<span class="time">अभी</span></div>
+   <div class="bubble bot"><div class="chat-cta sec" data-go="concluded">⏩ सुलझ गया</div></div>`));
+
+def('opsFallback','No confirm → ops-verified','chat','#14 · BR-S4',
+  chat('पुष्टि बाकी · ₹600 रुका नहीं',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">verified</span>हमने ख़ुद verify कर दिया</div>आपने confirm नहीं किया, पर तय समय बीतने पर हमने ख़ुद पुष्टि कर दी। कुछ अटका नहीं।<span class="time">ops fallback</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="concluded">आगे</div></div>`));
+
+def('noFieldPresence','No pickup possible — keep it','chat','#15 · BEC-02',
+  chat('डिवाइस लेना संभव नहीं · ₹600 वैसे ही आपका',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">info</span>डिवाइस की चिंता न करें</div>आपके इलाके में हमारी टीम अभी पहुँच नहीं पा रही। <b>आप डिवाइस रख सकते हैं</b> — कोई बकाया नहीं, और आपका <b>पूरा ₹600 वैसे ही</b> मिलेगा।<span class="time">CSP_OPERATION_FAILURE · netbox written off</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="concluded">समझ गया</div></div>`));
+
+def('concluded','Conclusion — apology + reconnect','chat','#16-17 · BR-07',
+  chat('कनेक्शन बंद · पूरा ₹600 वापस · reconnect on',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">favorite</span>एक बार फिर, हमें खेद है<span class="chan">SMS+WA</span></div>आपका कनेक्शन बंद हो गया और पूरा ₹600 आपके खाते में आ गया।
+     <div class="msg-card"><div class="mr"><span class="k">डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="mr"><span class="k">बचा बैलेंस</span><span class="v pos">₹300</span></div></div><span class="time">conclusion · apology</span></div>
+   <div class="bubble bot">आपका इलाका जब फिर serviceable होगा, <b>हम सबसे पहले आपको जोड़ेंगे</b>।
+     <div class="chat-cta" data-go="reconnectOptIn">इलाका लौटे तो मुझे बताएं</div>
+     <div class="chat-cta sec" data-go="advanceNotice">शुरू से देखें</div>
+   </div>`));
+
+def('reconnectOptIn','Reconnect opt-in confirmed','screen','BR-07 · reconnect flag',
+  scr(topb('',true),
+  `<div style="text-align:center"><div class="ahero ok"><span class="material-icons">notifications_active</span></div><div class="ah1">हम आपको ज़रूर बताएंगे</div><div class="asub">जैसे ही आपका इलाका फिर serviceable होगा, सबसे पहले आपको नेट जोड़ने का मौका मिलेगा।</div></div>
+   <div class="averify ok"><span class="material-icons">place</span><p>आपकी जगह + पहचान हमारे रिकॉर्ड में सुरक्षित (reconnect flag on) — दोबारा शुरू करना एक टैप दूर होगा।</p></div>`,
+  `<button class="abtn sec" data-go="advanceNotice">शुरू से देखें</button>`,true));
+/*NODES_END*/
+/* ===== router ===== */
+const phone=document.getElementById('phone'),crumb=document.getElementById('crumb');
+const backBtn=document.getElementById('backBtn'),restartBtn=document.getElementById('restartBtn');
+let cur=null,hist=[];
+function paint(){
+  phone.innerHTML=N[cur]||('<div style="padding:40px;color:#900">missing '+cur+'</div>');
+  const cb=phone.querySelector('.chat-body,.abody');if(cb)cb.scrollTop=0;
+  const k=K[cur]==='chat'?'<span class="xt chat"><span class="material-icons">chat</span>Chat</span>':'<span class="xt scr"><span class="material-icons">smartphone</span>Screen</span>';
+  crumb.innerHTML=`<span class="b5">B5 ${B5[cur]}</span><span>${T[cur]}</span>${k}`;
+  backBtn.disabled=hist.length===0;
+}
+function go(id){if(id===cur)return;if(cur!==null)hist.push(cur);cur=id;paint();}
+function back(){if(hist.length){cur=hist.pop();paint();}}
+phone.addEventListener('click',e=>{
+  const sel=e.target.closest('[data-sel]');
+  if(sel&&sel.parentElement){[...sel.parentElement.children].forEach(s=>{if(s.dataset&&s.dataset.sel)s.classList.remove('sel');});sel.classList.add('sel');}
+  const b=e.target.closest('[data-back]');if(b){back();return;}
+  const g=e.target.closest('[data-go]');if(g)go(g.dataset.go);
+});
+backBtn.onclick=back;
+restartBtn.onclick=()=>{hist=[];cur=null;go('advanceNotice');};
+go('advanceNotice');
+</script>
+</body>
+</html>

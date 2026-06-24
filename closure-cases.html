@@ -37,7 +37,7 @@
     <div class="tabs" id="tabs">
       <button class="tab active" data-case="1"><span class="n">1</span><span class="material-icons">hourglass_bottom</span>Non-Reaffirmation</button>
       <button class="tab" data-case="2"><span class="n">2</span><span class="material-icons">logout</span>Explicit Choice</button>
-      <button class="tab soon" disabled><span class="n">3</span><span class="material-icons">lock_clock</span>Case 3 (soon)</button>
+      <button class="tab" data-case="3"><span class="n">3</span><span class="material-icons">location_off</span>Service-Unavailability</button>
     </div>
     <div class="modewrap">
       <div class="seg" id="seg">
@@ -52,7 +52,8 @@
 <script>
   const FILES={
     '1':{proto:'closure-nonreaffirmation-prototype.html',design:'closure-nonreaffirmation-flow.html'},
-    '2':{proto:'closure-explicit-choice-prototype.html', design:'closure-explicit-choice-flow.html'}
+    '2':{proto:'closure-explicit-choice-prototype.html', design:'closure-explicit-choice-flow.html'},
+    '3':{proto:'closure-service-unavailability-prototype.html', design:'closure-service-unavailability-flow.html'}
   };
   let curCase='1', curMode='proto';
   const frame=document.getElementById('frame');
