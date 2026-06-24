@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Closure: new screens to build</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{--brand:#D9008D;--text:#161021;--sub:#5C5570;--mut:#9aa0ab;--stroke:#E8E4F0;--stroke2:#D7D3E0;--bgsub:#F1EDF7;--pos:#008043;--sel:#FFE5F6}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans',sans-serif;background:#1c1f26;color:#e7e9ee;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+  header{max-width:1380px;margin:0 auto;padding:34px 28px 0}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+  h1{font-size:25px;font-weight:800;color:#fff;margin:7px 0 5px}
+  .lead{font-size:13.5px;color:var(--mut);line-height:1.6;max-width:860px}
+  .lead a{color:#ff9ec8;font-weight:700}
+  h2.case{font-size:18px;font-weight:800;color:#fff;margin:30px 0 4px;display:flex;align-items:center;gap:10px}
+  h2.case .cn{width:28px;height:28px;border-radius:8px;background:var(--brand);color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center}
+  h2.case .cc{font-size:12px;font-weight:700;color:var(--mut)}
+  .casesub{font-size:12.5px;color:var(--mut);margin:0 0 6px 38px}
+  .grid{display:flex;flex-wrap:wrap;gap:26px;padding:14px 28px 0;max-width:1440px}
+  .scell{width:300px}
+  .cap{display:flex;align-items:flex-start;gap:8px;margin-bottom:9px;flex-wrap:wrap}
+  .num{width:26px;height:26px;border-radius:7px;background:#5a1140;color:#ffb3dd;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .num.imp{background:#4a3a10;color:#ffd27f}
+  .cap .tt{font-size:13px;font-weight:700;color:#fff;line-height:1.3}
+  .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+  .tg{font-size:9px;font-weight:800;letter-spacing:.03em;padding:2px 6px;border-radius:5px;text-transform:uppercase}
+  .tg.add{background:#2a1620;color:#ff7ec8;border:1px solid #5a2748}.tg.imp{background:#26210f;color:#ffd27f;border:1px solid #4a3a10}
+  .tg.chat{background:#241a3a;color:#bda7ff}.tg.scr{background:#16313f;color:#7fd1ff}.tg.gr{background:#16243a;color:#8fb0ff}
+
+  .aphone{width:300px;height:600px;background:#F7F7F9;border:9px solid #11131a;border-radius:30px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 12px 34px rgba(0,0,0,.4)}
+  .aphone.add{border-color:#7a1257}.aphone.imp{border-color:#6b5410}
+  .astatus{height:24px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-family:'Noto Sans';font-size:10px;font-weight:600;color:#161021;flex:0 0 auto}
+  .astatus .r .material-icons{font-size:11px;vertical-align:middle;margin-left:2px}
+  /* app top bar */
+  .atopbar{display:flex;align-items:center;gap:9px;padding:8px 12px;background:#fff;border-bottom:1px solid var(--stroke);flex:0 0 auto}
+  .atopbar .alg{width:27px;height:27px;border-radius:7px;background:#D9008D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex:0 0 auto}
+  .atopbar .anm{font-size:13px;font-weight:700;color:#161021}
+  .atopbar .aback .material-icons{font-size:20px;color:#352d42}
+  .atopbar .aic{margin-left:auto;display:flex;gap:12px;color:#352d42}.atopbar .aic .material-icons{font-size:18px}
+  /* pinned status card (Figma) */
+  .cbar{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:8px 12px;background:#FFF0F8;border-bottom:1px solid #FAD3EA}
+  .cbar .ci{width:30px;height:30px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .cbar .ci .material-icons{font-size:17px;color:#D9008D}
+  .cbar .ct{font-size:11px;font-weight:700;color:#161021;line-height:1.3}
+  .cbar .cst{font-size:10.5px;color:#5C5570;line-height:1.3}
+  .cbar .cact{margin-left:auto;font-size:10px;font-weight:800;color:#D9008D;background:#fff;border:1px solid #FAC8E6;border-radius:999px;padding:5px 10px;flex:0 0 auto;white-space:nowrap}
+  .chat-body{flex:1;overflow-y:auto;padding:13px 12px;display:flex;flex-direction:column;gap:10px;background:#F1EDF7}
+  .chat-body::-webkit-scrollbar{width:0}
+  .bubble{max-width:92%;padding:10px 12px;border-radius:15px;font-size:12px;line-height:1.5;font-family:'Noto Sans Devanagari'}
+  .bubble.bot{align-self:flex-start;background:#fff;border:1px solid var(--stroke);border-bottom-left-radius:5px;color:#161021}
+  .bubble.me{align-self:flex-end;background:#D9008D;color:#fff;border-bottom-right-radius:5px}
+  .bubble .bt{font-weight:700;font-size:12px;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+  .bubble .bt .material-icons{font-size:15px;color:#D9008D}
+  .bubble .chan{font-size:8px;font-weight:800;letter-spacing:.04em;color:#6D17CE;background:#F1E5FF;padding:1px 5px;border-radius:4px;text-transform:uppercase;margin-left:auto}
+  .bubble .time{font-size:9px;color:rgba(0,0,0,.3);margin-top:5px;display:block}
+  .ccta{display:block;text-align:center;margin-top:8px;padding:9px;border-radius:11px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:12px;font-weight:700}
+  .ccta.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D}
+  .mcard{background:#F7F7F9;border-radius:9px;padding:9px 11px;margin-top:8px}
+  .mcard .mr{display:flex;justify-content:space-between;font-size:11px;padding:3px 0}.mcard .mr .k{color:#5C5570}.mcard .mr .v{font-weight:700;color:#161021}.mcard .mr .v.pos{color:#008043}
+  .clink{display:block;text-align:center;margin-top:9px;font-size:11px;font-weight:700;color:#D9008D}
+  .cin{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:9px 12px;background:#fff;border-top:1px solid var(--stroke)}
+  .cin .box{flex:1;height:36px;border:1.5px solid var(--stroke2);border-radius:999px;background:#FAF9FC;padding:0 14px;display:flex;align-items:center;font-size:11.5px;color:#A7A1B2}
+  .cin .snd{width:36px;height:36px;border-radius:50%;background:#D9008D;display:flex;align-items:center;justify-content:center;flex:0 0 auto}.cin .snd .material-icons{color:#fff;font-size:18px}
+  /* DS screen */
+  .atop{display:flex;align-items:center;padding:8px 12px;flex:0 0 auto;gap:9px}
+  .atop .aback .material-icons{font-size:20px;color:#352d42}.atop .atitle{font-family:'Noto Sans Devanagari';font-size:13.5px;font-weight:700;color:#161021}
+  .atop .alg{width:27px;height:27px;border-radius:7px;background:#D9008D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800}
+  .abody{flex:1;overflow-y:auto;padding:10px 16px 14px;display:flex;flex-direction:column;align-items:stretch;text-align:left}
+  .abody::-webkit-scrollbar{width:0}
+  .abody.ctr{align-items:center;text-align:center}
+  .ah1{font-family:'Noto Sans Devanagari';font-size:16px;font-weight:700;color:#161021;line-height:1.35;margin-top:6px}
+  .ah1.sm{font-size:14px}
+  .asub{font-family:'Noto Sans Devanagari';font-size:12px;color:#5C5570;line-height:1.5;margin-top:7px}
+  .afoot{flex:0 0 auto;padding:8px 14px 12px;display:flex;flex-direction:column;gap:7px}
+  .abtn{height:44px;border:none;border-radius:22px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(217,0,141,.22)}
+  .abtn.ghost{background:transparent;color:#D9008D;box-shadow:none}.abtn.gray{background:#EDEAF2;color:#5C5570;box-shadow:none}
+  .ahero{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:12px auto 2px}
+  .ahero .material-icons{font-size:34px}
+  .ahero.brand{background:#FFE5F6}.ahero.brand .material-icons{color:#D9008D}.ahero.ok{background:#E1FAED}.ahero.ok .material-icons{color:#008043}.ahero.info{background:#F1E5FF}.ahero.info .material-icons{color:#6D17CE}.ahero.gray{background:#EAE7F0}.ahero.gray .material-icons{color:#5C5570}
+  .scard{background:#fff;border-radius:11px;padding:11px 13px;margin-top:11px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .scard .st{font-size:11px;font-weight:700;color:#161021;margin-bottom:5px;display:flex;align-items:center;gap:6px}.scard .st .material-icons{font-size:15px;color:#D9008D}
+  .scard .sr{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;gap:8px}.scard .sr .k{color:#5C5570}.scard .sr .v{font-weight:700;color:#161021}.scard .sr .v.pos{color:#008043}
+  .sdiv{border-top:1px dashed #E2DEEA;margin:5px 0}.sr.tot .k,.sr.tot .v{font-weight:800;font-size:13px}
+  .opt{display:flex;align-items:center;gap:10px;padding:11px;background:#fff;border:1.5px solid var(--stroke2);border-radius:12px;margin-top:9px}
+  .opt.sel{border-color:#D9008D;background:var(--sel)}
+  .opt .oi{width:34px;height:34px;border-radius:10px;background:var(--bgsub);display:flex;align-items:center;justify-content:center;flex:0 0 auto}.opt .oi .material-icons{font-size:18px;color:#443152}
+  .opt .ot{font-size:12.5px;font-weight:700;color:#161021}.opt .os{font-size:10.5px;color:#5C5570;margin-top:1px}
+  .opt .oa{margin-left:auto;font-size:13px;font-weight:800;color:#008043;text-align:right}.opt .oa small{display:block;font-size:8.5px;color:#A7A1B2;font-weight:600}
+  .rad{width:18px;height:18px;border-radius:50%;border:2px solid #D7D3E0;flex:0 0 auto}
+  .field{margin-top:11px}.field label{font-size:11px;font-weight:700;color:#161021;display:block;margin-bottom:5px}
+  .inp{height:44px;border:1.5px solid var(--stroke2);border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 13px;font-size:12.5px;color:#161021}
+  .inp.ok{border-color:#008043}.inp .vok{font-size:10px;font-weight:800;color:#008043;display:flex;align-items:center;gap:3px}.inp .vok .material-icons{font-size:13px}
+  .ta{min-height:54px;border:1.5px solid var(--stroke2);border-radius:11px;background:#fff;padding:9px 12px;font-size:12px;color:#A7A1B2}
+  .hint{font-size:10px;color:#5C5570;margin-top:5px}
+  .note{display:flex;align-items:flex-start;gap:7px;border-radius:10px;padding:9px 11px;margin-top:11px}
+  .note .material-icons{font-size:15px;flex:0 0 auto;margin-top:1px}.note p{font-family:'Noto Sans Devanagari';font-size:10.5px;line-height:1.5}
+  .note.ok{background:#E1FAED}.note.ok .material-icons{color:#008043}.note.ok p{color:#0a5c33}
+  .note.info{background:#F1E5FF}.note.info .material-icons{color:#6D17CE}.note.info p{color:#4a1a8f}
+  .note.gray{background:#EFEDF3}.note.gray .material-icons{color:#5C5570}.note.gray p{color:#3f394b}
+  .track{margin-top:11px}.tstep{display:flex;gap:10px;position:relative}.tstep .tl{position:absolute;left:12px;top:24px;bottom:-4px;width:2px;background:#E2DEEA}.tstep:last-child .tl{display:none}
+  .tdot{width:25px;height:25px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#E2DEEA;color:#fff}.tdot .material-icons{font-size:15px}
+  .tstep.done .tdot{background:#008043}.tstep.done .tl{background:#008043}.tstep.cur .tdot{background:#D9008D;box-shadow:0 0 0 4px #FFE5F6}.tstep.wait .tdot{background:#E2DEEA;color:#A7A1B2}
+  .tb{padding-bottom:11px}.tb .tt{font-size:12px;font-weight:700;color:#161021}.tstep.wait .tb .tt{color:#A7A1B2}.tb .td{font-size:10.5px;color:#5C5570;margin-top:1px}
+  .pos-amt{font-size:23px;font-weight:800;color:#008043;text-align:center;margin-top:6px}
+</style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Wiom · Customer Closure — net-new screens to build</div>
+    <h1>Closure: the screens not in the live app — one by one</h1>
+    <p class="lead">Only the screens that <b>don't exist</b> in <code style="color:#ffb3dd">customer-app-kotlin</code>, designed in the Wiom style (chat = in-app status-bar comms · screen = DS). Each is numbered to the gap list, tagged Add/Improve · Chat/Screen, and carries its guardrail. Reuse screens (choose-method, self-drop, UPI, refund tiers) are not shown — they already exist. Flows: <a href="closure-build-delta-prototype.html">prototype</a> · <a href="closure-build-checklist.html">checklist</a>.</p>
+  </header>
+  <main id="main"></main>
+<script>
+const STAT=on=>`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">${on?'wifi':'wifi_off'}</span><span class="material-icons">battery_full</span></span></div>`;
+const CIN=`<div class="cin"><div class="box">यहाँ पूछें…</div><div class="snd"><span class="material-icons">send</span></div></div>`;
+function topbar(t){return `<div class="atopbar"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="alg">W</div><div class="anm">व्योम</div><div class="aic"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>`;}
+function cbar(status,act){return `<div class="cbar"><div class="ci"><span class="material-icons">graphic_eq</span></div><div><div class="ct">घर का नेट: रमेश</div><div class="cst">स्थिति: ${status}</div></div>${act?`<span class="cact">${act}</span>`:''}</div>`;}
+// chat screen: status bar (Figma) + bubbles
+function chat(status,act,body,on){return STAT(on)+topbar()+cbar(status,act)+`<div class="chat-body">${body}</div>`+CIN;}
+// DS screen
+function scr(title,body,foot,ctr,logo){const top=logo?`<div class="atop"><div class="alg">W</div><div class="atitle">${title}</div></div>`:`<div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">${title}</div></div>`;return STAT(true)+top+`<div class="abody${ctr?' ctr':''}">${body}</div>`+(foot?`<div class="afoot">${foot}</div>`:'');}
+
+const CASES=[
+ {n:'1',t:'Non-Reaffirmation',sub:'Router-recovery exists — these are the gaps before & around custody (8)',screens:[
+  {num:'1',tag:'add',kind:'chat',tt:'SD-first recall (R15)',gr:'BR-03 / A8',html:chat('नेट रुका हुआ है','रिचार्ज करें',
+    `<div class="bubble bot"><div class="bt"><span class="material-icons">savings</span>आपकी जमा राशि सुरक्षित है<span class="chan">SMS+WA</span></div>आपका प्लान खत्म हुआ, पर आपका <b>₹300 डिपॉज़िट</b> सुरक्षित है। 25 दिसंबर तक नेट-बॉक्स वापस करें और ₹300 पाएं।
+      <a class="ccta">नेट-बॉक्स वापस करें</a><a class="ccta sec">1 दिन का रिचार्ज करें (₹25)</a><span class="time">10:00 · कोई जल्दबाज़ी नहीं</span></div>`,false)},
+  {num:'2',tag:'add',kind:'chat',tt:'Closure initiated — bookend 1',gr:'INV-03',html:chat('कनेक्शन बंद हो रहा है','रिचार्ज करें',
+    `<div class="bubble bot"><div class="bt"><span class="material-icons">lock</span>₹300 रिज़र्व कर दिया गया<span class="chan">SMS+WA</span></div>रिचार्ज नहीं हुआ, इसलिए हम कनेक्शन बंद कर रहे हैं। आपका <b>₹300 डिपॉज़िट</b> डिवाइस लौटाते ही वापस।<span class="time">पहला bookend</span></div>
+     <div class="bubble bot">गलती से? अभी भी वापस आ सकते हैं।<a class="ccta sec">वापस आएं</a><a class="ccta">डिवाइस लौटाने का तरीका</a></div>`,false)},
+  {num:'3',tag:'add',kind:'scr',tt:'Deposit reserved (Stage 2)',gr:'INV-EXIT-24/27 · 524 fix',html:scr('रिफंड की स्थिति',
+    `<div class="pos-amt">₹300</div><div class="asub" style="text-align:center;margin-top:0">आपके नाम रिज़र्व</div>
+     <div class="track"><div class="tstep done"><div class="tl"></div><div class="tdot"><span class="material-icons">check</span></div><div class="tb"><div class="tt">योग्य</div></div></div>
+       <div class="tstep cur"><div class="tl"></div><div class="tdot"><span class="material-icons">lock</span></div><div class="tb"><div class="tt">रिज़र्व</div><div class="td">डिवाइस लौटाने पर भेजी जाएगी।</div></div></div>
+       <div class="tstep wait"><div class="tl"></div><div class="tdot"><span class="material-icons">send</span></div><div class="tb"><div class="tt">भेजी जा रही</div></div></div>
+       <div class="tstep wait"><div class="tdot"><span class="material-icons">account_balance</span></div><div class="tb"><div class="tt">खाते में</div></div></div></div>
+     <div class="note ok"><span class="material-icons">handshake</span><p>पैसा पहले ही आपके नाम रिज़र्व — "डिवाइस ले लिया, पैसा रुका" की दिक़्क़त यहीं ठीक होती है।</p></div>`,
+    `<button class="abtn">डिवाइस लौटाने का तरीका</button>`)},
+  {num:'4',tag:'add',kind:'scr',tt:'Confirm device handover',gr:'BR-S3 / BR-S4',html:scr('डिवाइस की पुष्टि करें',
+    `<div style="text-align:center"><div class="ahero info"><span class="material-icons">fact_check</span></div><div class="ah1 sm">क्या आपने डिवाइस लौटा दिया?</div></div>
+     <div class="scard"><div class="sr"><span class="k">हमारी टीम का रिकॉर्ड</span><span class="v" style="color:#008043">ले लिया गया ✓</span></div><div class="sr"><span class="k">समय</span><span class="v">आज, 2:15 PM</span></div></div>
+     <div class="note gray"><span class="material-icons">schedule</span><p>दोनों तरफ़ से confirm पर ही ₹300 जाएगा। जवाब न दें तो हम ख़ुद verify कर देंगे — पैसा अटकेगा नहीं।</p></div>`,
+    `<button class="abtn">हाँ, मैंने डिवाइस दे दिया</button><button class="abtn ghost">नहीं, मैंने नहीं दिया</button>`)},
+  {num:'5',tag:'imp',kind:'scr',tt:'Refund sent → credited',gr:'INV-EXIT-05',html:scr('रिफंड की स्थिति',
+    `<div style="text-align:center"><div class="ahero ok"><span class="material-icons">check_circle</span></div><div class="pos-amt">₹300 आ गया</div></div>
+     <div class="track"><div class="tstep done"><div class="tl"></div><div class="tdot"><span class="material-icons">check</span></div><div class="tb"><div class="tt">रिज़र्व</div></div></div>
+       <div class="tstep done"><div class="tl"></div><div class="tdot"><span class="material-icons">check</span></div><div class="tb"><div class="tt">भेजा गया</div></div></div>
+       <div class="tstep done"><div class="tdot"><span class="material-icons">check</span></div><div class="tb"><div class="tt">खाते में आ गया</div><div class="td">₹300 · UPI ****8842 · आज</div></div></div></div>
+     <div class="note ok"><span class="material-icons">bolt</span><p>डिवाइस मिलते ही अपने-आप भेजी गई — कोई manual मंज़ूरी नहीं, कोई पीछा नहीं।</p></div>`,
+    `<button class="abtn ghost">रसीद डाउनलोड करें</button>`)},
+  {num:'6',tag:'add',kind:'chat',tt:'Closure concluded — bookend 2',gr:'INV-03',html:chat('कनेक्शन बंद · ₹300 खाते में','',
+    `<div class="bubble bot"><div class="bt"><span class="material-icons">task_alt</span>सब पूरा हो गया<span class="chan">SMS+WA</span></div>आपका कनेक्शन बंद हो गया और ₹300 आपके खाते में आ गया। जब भी दोबारा नेट चाहिए, हम यहीं हैं।<span class="time">दूसरा bookend</span></div>`,false)},
+  {num:'7',tag:'imp',kind:'chat',tt:'Bond write-off (UPI not available)',gr:'INV-06',html:chat('₹300 सुरक्षित · भेजने की कोशिश जारी','',
+    `<div class="bubble bot"><div class="bt"><span class="material-icons">savings</span>आपका ₹300 सुरक्षित है<span class="chan">SMS+WA</span></div>UPI पर पैसा नहीं पहुँच पाया। हम 60 दिन तक कोशिश करेंगे (UPI दोबारा → कॉल → वॉलेट)। पैसा कभी गायब नहीं होगा; दोबारा नेट लेने पर फिर सक्रिय।<span class="time">Bond Phase A–D</span></div>
+     <div class="bubble bot"><a class="ccta">सही UPI ID डालें</a></div>`,true)},
+  {num:'8',tag:'add',kind:'chat',tt:'D-007C — "show my refund first"',gr:'BEC-10',html:chat('₹300 आपके नाम रिज़र्व','',
+    `<div class="bubble me">पहले मेरा ₹300 दिखाओ, फिर डिवाइस दूँगा</div>
+     <div class="bubble bot"><div class="bt"><span class="material-icons">verified_user</span>बिल्कुल — पहले हम देंगे</div>आपका ₹300 आपके नाम <b>रिज़र्व</b> है। यह आपका हक़ है, शर्त नहीं। यह "मना करना" नहीं माना जाता।<a class="ccta">मेरा रिज़र्व ₹300 देखें</a></div>`,true)}
+ ]},
+ {n:'2',t:'Explicit Choice',sub:'Custody/UPI/refund middle reuses Case 1 — only entry + money is new (4)',screens:[
+  {num:'1',tag:'add',kind:'scr',tt:'Exit summary (refund up front)',gr:'A8 / INV-EXIT-25',html:scr('बाहर निकलें',
+    `<div class="ah1 sm" style="text-align:center">बाहर निकलने पर आपको यह वापस मिलेगा</div>
+     <div class="scard"><div class="st"><span class="material-icons">calculate</span>आपका हिसाब</div><div class="sr"><span class="k">बचे दिनों का (pro-rata)</span><span class="v pos">₹200</span></div><div class="sr"><span class="k">डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="sdiv"></div><div class="sr tot"><span class="k">कुल</span><span class="v pos">₹500</span></div></div>
+     <div class="opt"><span class="rad"></span><div class="oi"><span class="material-icons">directions_walk</span></div><div><div class="ot">खुद डिवाइस लौटाऊँगा</div><div class="os">सबसे आसान · पूरा पैसा</div></div></div>
+     <div class="opt"><span class="rad"></span><div class="oi"><span class="material-icons">local_shipping</span></div><div><div class="ot">टीम पिकअप करे</div><div class="os">₹50 कम</div></div></div>
+     <div class="field"><label>जाने का कारण <span style="color:#A7A1B2">(वैकल्पिक)</span></label><div class="ta">यहाँ लिखें…</div></div>
+     <div class="note info"><span class="material-icons">block</span><p>कोई विकल्प पहले से चुना हुआ नहीं — आप चुनें। कोई रोक-टोक/ऑफ़र नहीं (A8)।</p></div>`,
+    `<button class="abtn">बाहर निकलें</button><button class="abtn ghost">रहने दें</button>`)},
+  {num:'2',tag:'add',kind:'scr',tt:'Pro-rata shown & credited',gr:'INV-EXIT-25',html:scr('बचे दिनों का पैसा',
+    `<div class="pos-amt">₹200</div><div class="asub" style="text-align:center;margin-top:0">बचे 12 दिनों का — आपके UPI पर भेजा गया</div>
+     <div class="scard"><div class="st"><span class="material-icons">calculate</span>कैसे निकला</div><div class="sr"><span class="k">प्लान</span><span class="v">₹500 · 30 दिन</span></div><div class="sr"><span class="k">बचे दिन</span><span class="v">12</span></div><div class="sr"><span class="k">12 ÷ 30 × ₹500</span><span class="v pos">₹200</span></div></div>
+     <div class="note ok"><span class="material-icons">bolt</span><p>यह <b>शुरू में ही</b> भेजा जाता है — closure खत्म होने का इंतज़ार नहीं। डिपॉज़िट ₹300 अलग, डिवाइस लौटाने पर।</p></div>`,
+    `<button class="abtn">आगे — डिपॉज़िट &amp; UPI</button>`)},
+  {num:'3',tag:'add',kind:'chat',tt:'Reversal reverses pro-rata',gr:'BR-06',html:chat('पिकअप रोका · नेट चालू · ₹0 शुल्क','',
+    `<div class="bubble me">रुकना है, बाहर नहीं निकलना</div>
+     <div class="bubble bot"><div class="bt"><span class="material-icons">celebration</span>वापसी पर स्वागत है!</div>डिवाइस अभी उठाया नहीं गया — पिकअप रोक दिया। वही account, वही प्लान, ₹0 शुल्क।</div>
+     <div class="bubble bot">बचे दिनों का जो ₹200 भेजा था, वह <b>ledger में वापस समायोजित</b> कर दिया गया — प्लान फिर पूरा चलेगा।<span class="time">RECALL_CANCELLED</span></div>`,true)},
+  {num:'4',tag:'add',kind:'scr',tt:'First-class "Exit" entry',gr:'A5',html:scr('मेरा कनेक्शन',
+    `<div class="scard"><div class="sr"><span class="k">प्लान</span><span class="v">₹500 · 30 दिन</span></div><div class="sr"><span class="k">स्थिति</span><span class="v pos">चालू · 12 दिन बचे</span></div></div>
+     <div style="margin-top:14px"></div>
+     <div class="opt"><div class="oi"><span class="material-icons">autorenew</span></div><div><div class="ot">रिचार्ज करें</div></div><span class="material-icons" style="margin-left:auto;color:#C9C3D6">chevron_right</span></div>
+     <div class="opt"><div class="oi"><span class="material-icons">logout</span></div><div><div class="ot">कनेक्शन बंद करें</div><div class="os">बचा पैसा वापस मिलेगा</div></div><span class="material-icons" style="margin-left:auto;color:#C9C3D6">chevron_right</span></div>
+     <div class="note info"><span class="material-icons">info</span><p>app में अभी सिर्फ़ "booking cancel" है — service-exit (pro-rata वाला) का first-class रास्ता नया है।</p></div>`,
+    `<button class="abtn ghost">मदद चाहिए?</button>`,false,true)}
+ ]},
+ {n:'3',t:'Service-Unavailability',sub:'Wiom-caused — apology not transaction; only handover/refund reuses Case 1 (7)',screens:[
+  {num:'1',tag:'add',kind:'chat',tt:'Advance-notice apology (mandatory)',gr:'BR-01 / INV-01',html:chat('सेवा बंद हो रही है · पूरा रिफंड','',
+    `<div class="bubble bot"><div class="bt"><span class="material-icons">sentiment_dissatisfied</span>माफ़ी — हम आपके इलाके में नेट नहीं दे पाएंगे<span class="chan">SMS+WA+call</span></div>यह हमारी ओर से है, <b>आपकी कोई गलती नहीं</b>। सेवा बंद होने से पहले बता रहे हैं। पूरा पैसा वापस, डिवाइस हम ख़ुद बिना शुल्क ले जाएंगे।
+      <a class="ccta">मेरा रिफंड देखें</a><a class="ccta sec">इलाका लौटे तो मुझे बताएं</a></div>`,true)},
+  {num:'2',tag:'add',kind:'chat',tt:'Reroute → continuity (no closure)',gr:'BEC-01',html:chat('नेट जारी · नया पार्टनर','',
+    `<div class="bubble bot"><div class="bt"><span class="material-icons">check_circle</span>अच्छी खबर — आपका नेट जारी रहेगा<span class="chan">WhatsApp</span></div>हमें आपके इलाके के लिए नया पार्टनर मिल गया। आपके लिए कुछ नहीं बदला — वही प्लान, कोई रुकावट नहीं। <b>कोई closure नहीं हुआ।</b><span class="time">CONNECTION_CHANGED</span></div>`,true)},
+  {num:'3',tag:'add',kind:'scr',tt:'Full C2 refund',gr:'BR-02 / INV-02',html:scr('आपका पूरा पैसा वापस',
+    `<div class="pos-amt">₹600</div><div class="asub" style="text-align:center;margin-top:0">पूरा वापस — कुछ नहीं कटेगा</div>
+     <div class="scard"><div class="st"><span class="material-icons">savings</span>पूरा रिफंड (C2)</div><div class="sr"><span class="k">सिक्योरिटी डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="sr"><span class="k">बचा हुआ पूरा बैलेंस</span><span class="v pos">₹300</span></div><div class="sdiv"></div><div class="sr tot"><span class="k">कुल</span><span class="v pos">₹600</span></div></div>
+     <div class="note ok"><span class="material-icons">verified_user</span><p>यह pro-rata नहीं — पूरा बचा बैलेंस, क्योंकि सेवा हमारी वजह से बंद हुई।</p></div>`,
+    `<button class="abtn">₹600 कहाँ भेजें — UPI दें</button>`)},
+  {num:'4',tag:'imp',kind:'scr',tt:'UPI — no "why are you leaving"',gr:'A8',html:scr('₹600 कहाँ भेजें?',
+    `<div class="field"><label>आपकी UPI ID</label><div class="inp ok"><span>rukmum@okhdfcbank</span><span class="vok"><span class="material-icons">check_circle</span>वेरीफाई</span></div></div>
+     <div class="field"><label>कोई सुझाव? <span style="color:#A7A1B2">(वैकल्पिक)</span></label><div class="ta">कुछ कहना चाहें तो लिखें…</div></div>
+     <div class="note info"><span class="material-icons">volunteer_activism</span><p>हम <b>यह नहीं पूछेंगे कि आप क्यों जा रहे हैं</b> — यह आपका फ़ैसला नहीं, हमारी मजबूरी है। सिर्फ़ optional सुझाव।</p></div>`,
+    `<button class="abtn">कन्फर्म करें</button>`)},
+  {num:'5',tag:'imp',kind:'scr',tt:'Free Wiom-arranged pickup',gr:'BR-05',html:scr('डिवाइस पिकअप',
+    `<div class="ah1 sm" style="text-align:center">हम डिवाइस ख़ुद ले जाएंगे — बिना शुल्क</div><div class="asub" style="text-align:center">अपने हिसाब से एक समय चुनें।</div>
+     <div class="opt sel"><div class="oi"><span class="material-icons">event</span></div><div><div class="ot">कल · सुबह 10–12 बजे</div><div class="os">हमारी टीम घर आएगी</div></div><div class="oa" style="color:#008043;font-size:11px">मुफ़्त</div></div>
+     <div class="opt"><div class="oi"><span class="material-icons">event</span></div><div><div class="ot">कल · शाम 4–6 बजे</div></div><div class="oa" style="color:#008043;font-size:11px">मुफ़्त</div></div>
+     <div class="note ok"><span class="material-icons">payments</span><p>पिकअप का कोई शुल्क नहीं — और पूरा ₹600 वैसे ही आपका (app में ₹50 कटता है; यहाँ नहीं)।</p></div>`,
+    `<button class="abtn">यह स्लॉट चुनें</button>`)},
+  {num:'6',tag:'add',kind:'chat',tt:'No field presence → keep device',gr:'BEC-02',html:chat('डिवाइस लेना संभव नहीं · ₹600 आपका','',
+    `<div class="bubble bot"><div class="bt"><span class="material-icons">info</span>डिवाइस की चिंता न करें</div>आपके इलाके में हमारी टीम अभी पहुँच नहीं पा रही, इसलिए डिवाइस लेना संभव नहीं। <b>आप उसे रख सकते हैं</b> — कोई बकाया नहीं, और आपका <b>पूरा ₹600 वैसे ही</b> मिलेगा।<span class="time">netbox written off</span></div>`,true)},
+  {num:'7',tag:'add',kind:'chat',tt:'Conclusion: apology + reconnect',gr:'BR-07',html:chat('कनेक्शन बंद · पूरा ₹600 वापस','',
+    `<div class="bubble bot"><div class="bt"><span class="material-icons">favorite</span>एक बार फिर, हमें खेद है<span class="chan">SMS+WA</span></div>आपका कनेक्शन बंद हो गया और पूरा ₹600 आपके खाते में आ गया। जब भी आपका इलाका फिर serviceable होगा, <b>हम सबसे पहले आपको जोड़ेंगे</b>।<a class="ccta sec">इलाका लौटे तो मुझे बताएं</a><span class="time">reconnect flag on</span></div>`,true)}
+ ]}
+];
+let h='';
+CASES.forEach(c=>{
+  h+=`<h2 class="case"><span class="cn">${c.n}</span>Case ${c.n} · ${c.t} <span class="cc">(${c.screens.length} new)</span></h2><div class="casesub">${c.sub}</div><div class="grid">`;
+  c.screens.forEach(s=>{
+    h+=`<div class="scell"><div class="cap"><div class="num ${s.tag==='imp'?'imp':''}">${c.n}.${s.num}</div><div><div class="tt">${s.tt}</div><div class="tags"><span class="tg ${s.tag}">${s.tag==='imp'?'Improve':'Add'}</span><span class="tg ${s.kind}">${s.kind==='chat'?'Chat':'Screen'}</span><span class="tg gr">${s.gr}</span></div></div></div><div class="aphone ${s.tag==='imp'?'imp':'add'}">${s.html}</div></div>`;
+  });
+  h+=`</div>`;
+});
+document.getElementById('main').innerHTML=h;
+</script>
+</body>
+</html>
