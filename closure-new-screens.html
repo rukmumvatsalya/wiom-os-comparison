@@ -111,7 +111,7 @@
   <header>
     <div class="eyebrow">Wiom · Customer Closure — net-new screens to build</div>
     <h1>Closure: the screens not in the live app — one by one</h1>
-    <p class="lead">Only the screens that <b>don't exist</b> in <code style="color:#ffb3dd">customer-app-kotlin</code>, designed in the Wiom style (chat = in-app status-bar comms · screen = DS). Each is numbered to the gap list, tagged Add/Improve · Chat/Screen, and carries its guardrail. Reuse screens (choose-method, self-drop, UPI, refund tiers) are not shown — they already exist. Flows: <a href="closure-build-delta-prototype.html">prototype</a> · <a href="closure-build-checklist.html">checklist</a>.</p>
+    <p class="lead">Only the screens that <b>don't exist</b> in <code style="color:#ffb3dd">customer-app-kotlin</code>, designed in the Wiom style (chat = in-app status-bar comms · screen = DS). Each is numbered to the gap list, tagged Add/Improve · Chat/Screen, and carries its guardrail. <b style="color:#ffd27f">Expanded after a full re-read of all 3 PRDs (B5 + B6):</b> added Case-1 reversal, Case-2 chat-exit / self-pickup / no-pro-rata, Case-3 reconnect opt-in, and a Shared block (UPI step, handover reminder, dispute ack, name-mismatch). Flows: <a href="closure-build-delta-prototype.html">prototype</a> · <a href="closure-build-checklist.html">checklist</a>.</p>
   </header>
   <main id="main"></main>
 <script>
@@ -125,7 +125,7 @@ function chat(status,act,body,on){return STAT(on)+topbar()+cbar(status,act)+`<di
 function scr(title,body,foot,ctr,logo){const top=logo?`<div class="atop"><div class="alg">W</div><div class="atitle">${title}</div></div>`:`<div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">${title}</div></div>`;return STAT(true)+top+`<div class="abody${ctr?' ctr':''}">${body}</div>`+(foot?`<div class="afoot">${foot}</div>`:'');}
 
 const CASES=[
- {n:'1',t:'Non-Reaffirmation',sub:'Router-recovery exists — these are the gaps before & around custody (8)',screens:[
+ {n:'1',t:'Non-Reaffirmation',sub:'Router-recovery exists — these are the gaps before & around custody (9)',screens:[
   {num:'1',tag:'add',kind:'chat',tt:'SD-first recall (R15)',gr:'BR-03 / A8',html:chat('नेट रुका हुआ है','रिचार्ज करें',
     `<div class="bubble bot"><div class="bt"><span class="material-icons">savings</span>आपकी जमा राशि सुरक्षित है<span class="chan">SMS+WA</span></div>आपका प्लान खत्म हुआ, पर आपका <b>₹300 डिपॉज़िट</b> सुरक्षित है। 25 दिसंबर तक नेट-बॉक्स वापस करें और ₹300 पाएं।
       <a class="ccta">नेट-बॉक्स वापस करें</a><a class="ccta sec">1 दिन का रिचार्ज करें (₹25)</a><span class="time">10:00 · कोई जल्दबाज़ी नहीं</span></div>`,false)},
@@ -159,9 +159,12 @@ const CASES=[
      <div class="bubble bot"><a class="ccta">सही UPI ID डालें</a></div>`,true)},
   {num:'8',tag:'add',kind:'chat',tt:'D-007C — "show my refund first"',gr:'BEC-10',html:chat('₹300 आपके नाम रिज़र्व','',
     `<div class="bubble me">पहले मेरा ₹300 दिखाओ, फिर डिवाइस दूँगा</div>
-     <div class="bubble bot"><div class="bt"><span class="material-icons">verified_user</span>बिल्कुल — पहले हम देंगे</div>आपका ₹300 आपके नाम <b>रिज़र्व</b> है। यह आपका हक़ है, शर्त नहीं। यह "मना करना" नहीं माना जाता।<a class="ccta">मेरा रिज़र्व ₹300 देखें</a></div>`,true)}
+     <div class="bubble bot"><div class="bt"><span class="material-icons">verified_user</span>बिल्कुल — पहले हम देंगे</div>आपका ₹300 आपके नाम <b>रिज़र्व</b> है। यह आपका हक़ है, शर्त नहीं। यह "मना करना" नहीं माना जाता।<a class="ccta">मेरा रिज़र्व ₹300 देखें</a></div>`,true)},
+  {num:'9',tag:'add',kind:'chat',tt:'Reversal before pickup — welcome back',gr:'INV-04 / CRITERIA-05',html:chat('वापस सक्रिय · पिकअप रोका','',
+    `<div class="bubble me">रुको, मुझे रहना है — रिचार्ज कर दिया</div>
+     <div class="bubble bot"><div class="bt"><span class="material-icons">celebration</span>वापसी पर स्वागत है!</div>पिकअप रोक दिया गया, आपका कनेक्शन फिर चालू। वही account, वही नेट-बॉक्स, <b>₹0 शुल्क</b> — कुछ नहीं बदला।<span class="time">RECALL_CANCELLED · INV-04</span></div>`,true)}
  ]},
- {n:'2',t:'Explicit Choice',sub:'Custody/UPI/refund middle reuses Case 1 — only entry + money is new (4)',screens:[
+ {n:'2',t:'Explicit Choice',sub:'Custody/UPI/refund middle reuses Case 1 — only entry + money is new (7)',screens:[
   {num:'1',tag:'add',kind:'scr',tt:'Exit summary (refund up front)',gr:'A8 / INV-EXIT-25',html:scr('बाहर निकलें',
     `<div class="ah1 sm" style="text-align:center">बाहर निकलने पर आपको यह वापस मिलेगा</div>
      <div class="scard"><div class="st"><span class="material-icons">calculate</span>आपका हिसाब</div><div class="sr"><span class="k">बचे दिनों का (pro-rata)</span><span class="v pos">₹200</span></div><div class="sr"><span class="k">डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="sdiv"></div><div class="sr tot"><span class="k">कुल</span><span class="v pos">₹500</span></div></div>
@@ -185,9 +188,21 @@ const CASES=[
      <div class="opt"><div class="oi"><span class="material-icons">autorenew</span></div><div><div class="ot">रिचार्ज करें</div></div><span class="material-icons" style="margin-left:auto;color:#C9C3D6">chevron_right</span></div>
      <div class="opt"><div class="oi"><span class="material-icons">logout</span></div><div><div class="ot">कनेक्शन बंद करें</div><div class="os">बचा पैसा वापस मिलेगा</div></div><span class="material-icons" style="margin-left:auto;color:#C9C3D6">chevron_right</span></div>
      <div class="note info"><span class="material-icons">info</span><p>app में अभी सिर्फ़ "booking cancel" है — service-exit (pro-rata वाला) का first-class रास्ता नया है।</p></div>`,
-    `<button class="abtn ghost">मदद चाहिए?</button>`,false,true)}
+    `<button class="abtn ghost">मदद चाहिए?</button>`,false,true)},
+  {num:'5',tag:'add',kind:'chat',tt:'Chat exit-intent — "I want to leave"',gr:'B6.1 modify / CRITERIA-07',html:chat('आप बाहर निकलना चाहते हैं','',
+    `<div class="bubble me">मुझे कनेक्शन बंद करना है</div>
+     <div class="bubble bot"><div class="bt"><span class="material-icons">waving_hand</span>ठीक है — बिना किसी रुकावट</div>कोई रोक-टोक नहीं, कोई ऑफ़र नहीं। आपको जो वापस मिलेगा, पहले वही दिखाते हैं — बचे दिनों का पैसा + डिपॉज़िट।<a class="ccta">बाहर निकलने का हिसाब देखें</a></div>`,true)},
+  {num:'6',tag:'add',kind:'scr',tt:'Self-pickup request (locate center)',gr:'BR-03 / Doctrine #13',html:scr('नेट-बॉक्स खुद लौटाएं',
+    `<div class="ah1 sm" style="text-align:center">सबसे आसान तरीका — पूरा पैसा वापस</div>
+     <div class="scard"><div class="st"><span class="material-icons">store</span>आपके पास का Wiom केंद्र</div><div class="sr"><span class="k">रमेश इलेक्ट्रॉनिक्स</span><span class="v">1.2 km</span></div><div class="sr"><span class="k">खुला</span><span class="v">सुबह 9 – रात 9</span></div></div>
+     <div class="note ok"><span class="material-icons">savings</span><p>खुद लौटाने पर सबसे ज़्यादा रिफंड (कोई ₹50 कटौती नहीं) — chat या app, दोनों जगह यही दर।</p></div>`,
+    `<button class="abtn">यह केंद्र चुनें</button><button class="abtn ghost">टीम पिकअप करे (₹50 कम)</button>`)},
+  {num:'7',tag:'imp',kind:'scr',tt:'Exit summary — under threshold (no pro-rata)',gr:'BEC-04',html:scr('बाहर निकलें',
+    `<div class="scard"><div class="st"><span class="material-icons">calculate</span>आपका हिसाब</div><div class="sr"><span class="k">बचे दिन</span><span class="v">5 (बहुत कम)</span></div><div class="sr"><span class="k">बचे दिनों का पैसा</span><span class="v">लागू नहीं</span></div><div class="sdiv"></div><div class="sr tot"><span class="k">डिपॉज़िट वापस</span><span class="v pos">₹300</span></div></div>
+     <div class="note info"><span class="material-icons">info</span><p>बचे दिन ₹ में बहुत कम हैं, इसलिए सिर्फ़ डिपॉज़िट लौटेगा — डिवाइस लौटाने पर पूरा ₹300।</p></div>`,
+    `<button class="abtn">बाहर निकलें</button><button class="abtn ghost">रहने दें</button>`)}
  ]},
- {n:'3',t:'Service-Unavailability',sub:'Wiom-caused — apology not transaction; only handover/refund reuses Case 1 (7)',screens:[
+ {n:'3',t:'Service-Unavailability',sub:'Wiom-caused — apology not transaction; only handover/refund reuses Case 1 (8)',screens:[
   {num:'1',tag:'add',kind:'chat',tt:'Advance-notice apology (mandatory)',gr:'BR-01 / INV-01',html:chat('सेवा बंद हो रही है · पूरा रिफंड','',
     `<div class="bubble bot"><div class="bt"><span class="material-icons">sentiment_dissatisfied</span>माफ़ी — हम आपके इलाके में नेट नहीं दे पाएंगे<span class="chan">SMS+WA+call</span></div>यह हमारी ओर से है, <b>आपकी कोई गलती नहीं</b>। सेवा बंद होने से पहले बता रहे हैं। पूरा पैसा वापस, डिवाइस हम ख़ुद बिना शुल्क ले जाएंगे।
       <a class="ccta">मेरा रिफंड देखें</a><a class="ccta sec">इलाका लौटे तो मुझे बताएं</a></div>`,true)},
@@ -212,12 +227,33 @@ const CASES=[
   {num:'6',tag:'add',kind:'chat',tt:'No field presence → keep device',gr:'BEC-02',html:chat('डिवाइस लेना संभव नहीं · ₹600 आपका','',
     `<div class="bubble bot"><div class="bt"><span class="material-icons">info</span>डिवाइस की चिंता न करें</div>आपके इलाके में हमारी टीम अभी पहुँच नहीं पा रही, इसलिए डिवाइस लेना संभव नहीं। <b>आप उसे रख सकते हैं</b> — कोई बकाया नहीं, और आपका <b>पूरा ₹600 वैसे ही</b> मिलेगा।<span class="time">netbox written off</span></div>`,true)},
   {num:'7',tag:'add',kind:'chat',tt:'Conclusion: apology + reconnect',gr:'BR-07',html:chat('कनेक्शन बंद · पूरा ₹600 वापस','',
-    `<div class="bubble bot"><div class="bt"><span class="material-icons">favorite</span>एक बार फिर, हमें खेद है<span class="chan">SMS+WA</span></div>आपका कनेक्शन बंद हो गया और पूरा ₹600 आपके खाते में आ गया। जब भी आपका इलाका फिर serviceable होगा, <b>हम सबसे पहले आपको जोड़ेंगे</b>।<a class="ccta sec">इलाका लौटे तो मुझे बताएं</a><span class="time">reconnect flag on</span></div>`,true)}
+    `<div class="bubble bot"><div class="bt"><span class="material-icons">favorite</span>एक बार फिर, हमें खेद है<span class="chan">SMS+WA</span></div>आपका कनेक्शन बंद हो गया और पूरा ₹600 आपके खाते में आ गया। जब भी आपका इलाका फिर serviceable होगा, <b>हम सबसे पहले आपको जोड़ेंगे</b>।<a class="ccta sec">इलाका लौटे तो मुझे बताएं</a><span class="time">reconnect flag on</span></div>`,true)},
+  {num:'8',tag:'add',kind:'scr',tt:'Reconnect opt-in confirmed',gr:'BR-07 / BEC-07',html:scr('हम आपको याद रखेंगे',
+    `<div style="text-align:center"><div class="ahero ok"><span class="material-icons">notifications_active</span></div><div class="ah1 sm">हम आपको सबसे पहले बताएंगे</div><div class="asub">जैसे ही आपका इलाका फिर serviceable होगा, सबसे पहले आपको जोड़ने का मौका मिलेगा।</div></div>
+     <div class="note ok"><span class="material-icons">favorite</span><p>आपका पूरा ₹600 पहले ही लौट चुका है — यह सिर्फ़ रिश्ता बनाए रखने के लिए।</p></div>`,
+    `<button class="abtn ghost">हो गया</button>`,true)}
+ ]},
+ {n:'S',t:'Shared / cross-case',sub:'Build once, reused across all three cases — surfaced by the audit (4)',screens:[
+  {num:'1',tag:'imp',kind:'scr',tt:'UPI collect + verify + optional reason',gr:'BR-S1/S2 · Case 1 & 2',html:scr('रिफंड कहाँ भेजें?',
+    `<div class="field"><label>आपकी UPI ID</label><div class="inp ok"><span>rukmum@okhdfcbank</span><span class="vok"><span class="material-icons">check_circle</span>वेरीफाई</span></div></div>
+     <div class="field"><label>जाने का कारण <span style="color:#A7A1B2">(वैकल्पिक)</span></label><div class="ta">कुछ कहना चाहें तो लिखें…</div></div>
+     <div class="note info"><span class="material-icons">lock</span><p>UPI verify होने पर ही पैसा जाता है — कारण सिर्फ़ सीखने के लिए, यह refund या exit को नहीं बदलता।</p></div>`,
+    `<button class="abtn">कन्फर्म करें</button><button class="abtn ghost">कारण छोड़ें</button>`)},
+  {num:'2',tag:'add',kind:'chat',tt:'Handover confirmation reminder',gr:'B6.x / FM-S2',html:chat('पुष्टि बाकी है','',
+    `<div class="bubble bot"><div class="bt"><span class="material-icons">notifications</span>एक छोटा सा कदम बाकी<span class="chan">app</span></div>आपका नेट-बॉक्स ले लिया गया — कृपया पुष्टि करें ताकि आपका रिफंड भेजा जा सके। (न करने पर हम 7 दिन बाद ख़ुद verify कर देंगे — पैसा नहीं अटकेगा।)<a class="ccta">पुष्टि करें</a></div>`,true)},
+  {num:'3',tag:'add',kind:'scr',tt:'Custody dispute acknowledged',gr:'S-EC-03 / CP-CLOSURE-20',html:scr('हम देख रहे हैं',
+    `<div style="text-align:center"><div class="ahero info"><span class="material-icons">gavel</span></div><div class="ah1 sm">आपकी बात दर्ज हो गई</div><div class="asub">आपने बताया कि डिवाइस नहीं दिया — हम इसे देख रहे हैं। फ़ैसला <b>आपके पक्ष में</b> डिफ़ॉल्ट रहेगा।</div></div>
+     <div class="note ok"><span class="material-icons">verified_user</span><p>जाँच पूरी होने तक आपका डिपॉज़िट सुरक्षित है। आप पर कोई दोष नहीं डाला जाएगा।</p></div>`,
+    `<button class="abtn ghost">ठीक है</button>`,true)},
+  {num:'4',tag:'imp',kind:'scr',tt:'UPI failed / name mismatch — confirm payee',gr:'S-EC-07/08',html:scr('यह UPI जाँचें',
+    `<div class="field"><label>आपकी UPI ID</label><div class="inp" style="border-color:#C9911F"><span>suresh@oksbi</span><span class="vok" style="color:#C9911F"><span class="material-icons">error_outline</span>नाम अलग</span></div></div>
+     <div class="note info"><span class="material-icons">info</span><p>इस UPI पर नाम "सुरेश" दिख रहा है, आपका नहीं। पैसा किसी और के पास न चला जाए — सही UPI डालें या पुष्टि करें कि यही सही है।</p></div>`,
+    `<button class="abtn">दूसरी UPI डालें</button><button class="abtn ghost">हाँ, इसी पर भेजें</button>`)}
  ]}
 ];
 let h='';
 CASES.forEach(c=>{
-  h+=`<h2 class="case"><span class="cn">${c.n}</span>Case ${c.n} · ${c.t} <span class="cc">(${c.screens.length} new)</span></h2><div class="casesub">${c.sub}</div><div class="grid">`;
+  h+=`<h2 class="case"><span class="cn">${c.n}</span>${c.n==='S'?'':'Case '}${c.n} · ${c.t} <span class="cc">(${c.screens.length} new)</span></h2><div class="casesub">${c.sub}</div><div class="grid">`;
   c.screens.forEach(s=>{
     h+=`<div class="scell"><div class="cap"><div class="num ${s.tag==='imp'?'imp':''}">${c.n}.${s.num}</div><div><div class="tt">${s.tt}</div><div class="tags"><span class="tg ${s.tag}">${s.tag==='imp'?'Improve':'Add'}</span><span class="tg ${s.kind}">${s.kind==='chat'?'Chat':'Screen'}</span><span class="tg gr">${s.gr}</span></div></div></div><div class="aphone ${s.tag==='imp'?'imp':'add'}">${s.html}</div></div>`;
   });
