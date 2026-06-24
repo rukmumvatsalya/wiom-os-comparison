@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Customer Closure · Cases</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:'Noto Sans',sans-serif;background:#1c1f26;color:#e7e9ee;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+  .bar{flex:0 0 auto;background:#15171d;border-bottom:1px solid #2f333c;padding:0 18px;display:flex;align-items:center;gap:14px}
+  .bar .brand{font-size:13px;font-weight:800;letter-spacing:.02em;color:#fff;padding:14px 0;white-space:nowrap}
+  .bar .brand span{color:#D9008D}
+  .tabs{display:flex;gap:4px;overflow-x:auto}
+  .tab{font-size:13px;font-weight:600;color:#9aa0ab;background:transparent;border:none;padding:16px 16px;cursor:pointer;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap}
+  .tab .n{font-size:10px;font-weight:800;background:#2f333c;color:#c3c8d1;border-radius:50%;width:19px;height:19px;display:flex;align-items:center;justify-content:center}
+  .tab .material-icons{font-size:18px}
+  .tab:hover{color:#e7e9ee}
+  .tab.active{color:#fff;border-bottom-color:#D9008D}
+  .tab.active .n{background:#D9008D;color:#fff}
+  .tab.soon{color:#5a5f6b;cursor:default}.tab.soon:hover{color:#5a5f6b}
+  .tab.soon .n{background:#262a32;color:#5a5f6b}
+  .pill{margin-left:auto;font-size:10.5px;font-weight:700;color:#7fd1ff;background:#16313f;padding:4px 10px;border-radius:6px;white-space:nowrap}
+  .frames{flex:1;position:relative}
+  iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none;background:#1c1f26}
+  iframe.active{display:block}
+</style>
+</head>
+<body>
+  <div class="bar">
+    <div class="brand">Wiom <span>Customer Closure</span></div>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-case="1"><span class="n">1</span><span class="material-icons">hourglass_bottom</span>Non-Reaffirmation</button>
+      <button class="tab" data-case="2"><span class="n">2</span><span class="material-icons">logout</span>Explicit Choice</button>
+      <button class="tab soon" disabled><span class="n">3</span><span class="material-icons">lock_clock</span>Case 3 (soon)</button>
+    </div>
+    <div class="pill">designed from B5 · guardrails from Closure OS v2.0</div>
+  </div>
+  <div class="frames">
+    <iframe class="active" data-case="1" src="closure-nonreaffirmation-flow.html" title="Case 1 — Non-Reaffirmation"></iframe>
+    <iframe data-case="2" src="closure-explicit-choice-flow.html" title="Case 2 — Explicit Choice"></iframe>
+  </div>
+<script>
+  const tabs=document.getElementById('tabs');
+  tabs.addEventListener('click',e=>{
+    const b=e.target.closest('.tab');if(!b||b.classList.contains('soon'))return;
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('iframe').forEach(f=>f.classList.remove('active'));
+    b.classList.add('active');
+    document.querySelector(`iframe[data-case="${b.dataset.case}"]`).classList.add('active');
+  });
+</script>
+</body>
+</html>
