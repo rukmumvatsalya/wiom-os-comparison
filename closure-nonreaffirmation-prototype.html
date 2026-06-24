@@ -220,7 +220,8 @@ def('upi','UPI collect + verify (+ reason)','screen','#9-10 · BR-S1',
   `<div class="asub" style="margin-top:2px">डिवाइस लौटाते ही ₹300 इसी UPI पर भेज देंगे।</div>
    <div class="field"><label>आपकी UPI ID</label><div class="inp ok"><span>rukmum@okhdfcbank</span><span class="vok"><span class="material-icons">check_circle</span>वेरिफ़ाइड</span></div><div class="hint">नाम: R. Vatsalya से मेल खाता है।</div></div>
    <div class="field"><label>जाने का कारण <span style="color:#A7A1B2;font-weight:600">(वैकल्पिक)</span></label><div class="ta">यहाँ लिखें… (छोड़ सकते हैं)</div><div class="hint">सिर्फ़ हमें बेहतर बनने के लिए — इससे रिफंड या कुछ और नहीं बदलता।</div></div>
-   <div class="averify info"><span class="material-icons">verified</span><p>UPI पहले verify होती है, तभी पैसा जाएगा। verify न हो पाए तो दूसरे तरीके से भेजेंगे — पैसा कभी अटकेगा नहीं।</p></div>`,
+   <div class="averify info"><span class="material-icons">verified</span><p>UPI पहले verify होती है, तभी पैसा जाएगा। verify न हो पाए तो दूसरे तरीके से भेजेंगे — पैसा कभी अटकेगा नहीं।</p></div>
+   <div class="scard tap" data-go="upiFail"><div class="sr"><span class="k" style="font-weight:700;color:#161021">demo: UPI verify फेल होने पर</span><span class="v" style="color:#D9008D">›</span></div></div>`,
   `<button class="abtn" data-go="recover">कन्फर्म करें</button><button class="abtn ghost" data-go="recover">कारण छोड़ें</button>`));
 
 def('recover','Recover device — self-return first','screen','#12 · BR-06',
@@ -230,6 +231,7 @@ def('recover','Recover device — self-return first','screen','#12 · BR-06',
    <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">local_shipping</span></div><div><div class="rt">हमारी टीम पिकअप करे</div><div class="rs">घर से ले जाएंगे</div></div><div class="ramt">₹250<small>−₹50</small></div></div>
    <div class="averify gray"><span class="material-icons">event_available</span><p>जल्दबाज़ी नहीं — हम <b>45 दिन</b> तक मदद करेंगे (पहले 15 दिन नज़दीकी पॉइंट, फिर हमारी टीम)।</p></div>
    <div class="scard tap" data-go="welcomeBack"><div class="sr"><span class="k" style="font-weight:700;color:#161021">मन बदल गया — वापस आना है</span><span class="v" style="color:#D9008D">›</span></div></div>
+   <div class="scard tap" data-go="refusalFilter"><div class="sr"><span class="k" style="font-weight:700;color:#161021">पहले मेरा refund दिखाओ</span><span class="v" style="color:#D9008D">›</span></div></div>
    <div class="scard tap" data-go="notRecovered"><div class="sr"><span class="k" style="font-weight:700;color:#161021">डिवाइस लौटा नहीं पा रहा</span><span class="v" style="color:#D9008D">›</span></div></div>`,
   `<button class="abtn" data-go="handover">खुद लौटाना चुनें</button>`));
 
@@ -248,7 +250,7 @@ def('handover','Confirm device handover','screen','#18-19 · BR-S3',
    <div class="scard"><div class="sr"><span class="k">हमारी टीम का रिकॉर्ड</span><span class="v" style="color:#008043">ले लिया गया ✓</span></div><div class="sr"><span class="k">समय</span><span class="v">आज, 2:15 PM</span></div></div>
    <div class="asub" style="text-align:center">आपकी पुष्टि के बाद ही ₹300 भेजा जाएगा — दोनों तरफ़ से confirm ज़रूरी है।</div>
    <div class="averify gray"><span class="material-icons">schedule</span><p>जवाब न दें तो कुछ दिन बाद हम ख़ुद verify करके पैसा भेज देंगे — आपका ₹300 कभी अटकेगा नहीं (ops fallback)।</p></div>`,
-  `<button class="abtn" data-go="credited">हाँ, मैंने डिवाइस दे दिया</button><button class="abtn ghost" data-go="dispute">नहीं, मैंने नहीं दिया</button>`));
+  `<button class="abtn" data-go="credited">हाँ, मैंने डिवाइस दे दिया</button><button class="abtn ghost" data-go="dispute">नहीं, मैंने नहीं दिया</button><button class="abtn gray" data-go="handoverReminder">⏩ मैंने confirm नहीं किया</button>`));
 
 def('dispute','Custody disputed','chat','BR-S3 · CP-CLOSURE-20',
   chat('जाँच जारी · ₹300 सुरक्षित',
@@ -300,6 +302,47 @@ def('bookend2WO','Concluded — written off, reactivates','chat','#24,27 · INV-
      <div class="chat-cta sec" data-go="recall">शुरू से देखें</div>
    </div>`));
 
+/* ===== gate check (steps 1-3) + suppression (BR-02) ===== */
+def('gatecheck','Gate check at T+15 — system','screen','#1-3 · BR-02',
+  scr(topb('',true),
+  `<div style="text-align:center"><div class="ahero info"><span class="material-icons">policy</span></div><div class="ah1 sm">T+15: बंद करने से पहले जाँच</div><div class="asub">Closure OS पहले देखता है — क्या इस connection पर कोई <b>खुला Recovery (quality) case</b> है? खराब नेट की वजह से रुका हुआ ग्राहक "lapse" नहीं है।</div></div>
+   <div class="scard"><div class="stitle"><span class="material-icons">help_outline</span>दो रास्ते</div><div class="sr"><span class="k">कोई case नहीं</span><span class="v" style="color:#008043">closure शुरू</span></div><div class="sr"><span class="k">खुला case है</span><span class="v" style="color:#9a7a00">रोका जाएगा</span></div></div>
+   <div class="averify info"><span class="material-icons">verified_user</span><p>यह demo का system step है (ग्राहक को नहीं दिखता) — पर यही guardrail तय करता है कि किसे बंद किया जाए और किसे नहीं।</p></div>`,
+  `<button class="abtn" data-go="recall">कोई case नहीं — gates clear ✓</button><button class="abtn gray" data-go="suppressed">खुला Recovery case है</button>`,true));
+
+def('suppressed','Suppressed — not an exit (BR-02)','chat','#2-3 · ALT-03',
+  chat('नेट की दिक़्क़त ठीक की जा रही है · बंद नहीं',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">build</span>हम आपकी नेट दिक़्क़त पर काम कर रहे हैं</div>आपकी रुकावट हमारी ओर से एक खुली समस्या की वजह से है। इसे पहले ठीक किया जाएगा — आपका कनेक्शन <b>बंद नहीं</b> किया जा रहा।<span class="time">अभी</span></div>
+   <div class="bubble bot"><div style="font-size:11px;color:#9a6a86;background:#FFF3CF;padding:7px 10px;border-radius:8px">⚙️ Recovery-Hold: reservation expiry रोक दी गई (BR-02)। खराब नेट से हुई चुप्पी को कभी lapse मानकर बंद नहीं किया जाता।</div>
+     <div class="chat-cta sec" data-go="gatecheck">शुरू से देखें</div>
+   </div>`));
+
+/* ===== UPI verification failure (step 10 "else bond protocol") ===== */
+def('upiFail','UPI verify failed → retry / bond','screen','#10 else · FM-S4',
+  scr(topb('₹300 कहाँ भेजें?'),
+  `<div class="asub" style="margin-top:2px">यह UPI ID verify नहीं हो पाई।</div>
+   <div class="field"><label>आपकी UPI ID</label><div class="inp" style="border-color:#b42318"><span style="color:#b42318">ravi@okisbi</span><span class="vok" style="color:#b42318"><span class="material-icons">error</span>verify नहीं हुई</span></div><div class="hint" style="color:#b42318">यह ID मौजूद/चालू नहीं लगती। सही ID दोबारा डालें।</div></div>
+   <div class="averify info"><span class="material-icons">badge</span><p>अगर UPI का नाम आपके नाम से मेल न खाए, हम पूछेंगे — पैसा किसी और के खाते में ग़लती से न चला जाए (name-mismatch जाँच)।</p></div>
+   <div class="averify gray"><span class="material-icons">shield</span><p>कुछ कोशिशों के बाद भी न हो पाए, तो हम पैसा <b>दूसरे तरीके से</b> भेजेंगे (call + वॉलेट) — ₹300 कभी forfeit नहीं होता, बस रुक सकता है।</p></div>`,
+  `<button class="abtn" data-go="recover">सही UPI ID डालकर दोबारा</button><button class="abtn ghost" data-go="notRecovered">दूसरे तरीके से भेजें</button>`));
+
+/* ===== handover non-confirmation → ops-verified fallback (step 19) ===== */
+def('handoverReminder','No confirm → ops-verified fallback','chat','#19 · BR-S4',
+  chat('डिवाइस पुष्टि बाकी · ₹300 रुका नहीं',
+  `<div class="bubble bot"><div class="b-title"><span class="material-icons">notifications_active</span>डिवाइस की पुष्टि बाकी है<span class="chan">SMS+WA</span></div>हमारी टीम ने बताया कि डिवाइस ले लिया गया। कृपया app में एक बार confirm कर दें ताकि ₹300 भेजा जा सके।<span class="time">रिमाइंडर · दिन 1</span></div>
+   <div class="bubble bot"><div class="b-title"><span class="material-icons">verified</span>हमने ख़ुद verify कर दिया</div>आपने confirm नहीं किया, पर तय समय बीतने पर हमने ख़ुद जाँच कर पुष्टि कर दी — आपका ₹300 भेजा जा रहा है। पैसा अटका नहीं।<span class="time">window बीता · ops fallback</span></div>
+   <div class="bubble bot"><div class="chat-cta" data-go="credited">मेरा रिफंड देखें</div></div>`));
+
+/* ===== D-007C refusal filter (BEC-10 / CRITERIA_08) ===== */
+def('refusalFilter','"पहले refund दिखाओ" — not refusal','chat','BEC-10 · CRITERIA_08',
+  chat('₹300 आपके नाम रिज़र्व · डिवाइस का इंतज़ार',
+  `<div class="bubble me">पहले मेरा ₹300 दिखाओ, फिर डिवाइस दूँगा</div>
+   <div class="bubble bot"><div class="b-title"><span class="material-icons">verified_user</span>बिल्कुल सही — पहले हम दिखाते हैं</div>आपका ₹300 आपके नाम पहले से <b>रिज़र्व</b> है। यह आपका हक़ है, कोई शर्त नहीं। डिवाइस लौटाते ही पैसा खाते में।<span class="time">अभी</span></div>
+   <div class="bubble bot">यह "मना करना" नहीं माना जाता — हम पहले अपना वादा पूरा करते हैं (D-007C)।
+     <div class="chat-cta" data-go="reserved">मेरा रिज़र्व ₹300 दिखाओ</div>
+     <div class="chat-cta sec" data-go="recover">अब डिवाइस लौटाऊँगा</div>
+   </div>`));
+
 /* ===== router ===== */
 const phone=document.getElementById('phone'),crumb=document.getElementById('crumb');
 const backBtn=document.getElementById('backBtn'),restartBtn=document.getElementById('restartBtn');
@@ -320,8 +363,8 @@ phone.addEventListener('click',e=>{
   const g=e.target.closest('[data-go]');if(g)go(g.dataset.go);
 });
 backBtn.onclick=back;
-restartBtn.onclick=()=>{hist=[];cur=null;go('recall');};
-go('recall');
+restartBtn.onclick=()=>{hist=[];cur=null;go('gatecheck');};
+go('gatecheck');
 </script>
 </body>
 </html>
