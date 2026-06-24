@@ -175,7 +175,7 @@ def('exitSummary','Exit summary — refund up front','screen','#1-2',
   scr(topb('बाहर निकलें'),
   `<div class="ah1 sm" style="text-align:center">बाहर निकलने पर आपको यह वापस मिलेगा</div>
    <div class="scard"><div class="stitle"><span class="material-icons">calculate</span>आपका हिसाब</div><div class="sr"><span class="k">बचे दिनों का (pro-rata)</span><span class="v pos">₹200</span></div><div class="sr"><span class="k">सिक्योरिटी डिपॉज़िट</span><span class="v pos">₹300</span></div><div class="sdiv"></div><div class="sr total"><span class="k">कुल वापस</span><span class="v pos">₹500</span></div><div class="hint">12 दिन बचे · प्लान ₹500/30 दिन · डिपॉज़िट डिवाइस लौटाने पर</div></div>
-   <div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">directions_walk</span></div><div><div class="rt">खुद डिवाइस लौटाऊँगा</div><div class="rs">सबसे आसान · पूरा पैसा</div></div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">directions_walk</span></div><div><div class="rt">खुद डिवाइस लौटाऊँगा</div><div class="rs">सबसे आसान · पूरा पैसा</div></div></div>
    <div class="field"><label>जाने का कारण <span style="color:#A7A1B2;font-weight:600">(वैकल्पिक)</span></label><div class="ta">यहाँ लिखें… (छोड़ सकते हैं)</div></div>
    <div class="averify info"><span class="material-icons">handshake</span><p>कोई रोक-टोक नहीं, कोई ऑफ़र नहीं। आपका फ़ैसला हमें मंज़ूर है — बस आपका पैसा साफ़ लौटाना है।</p></div>`,
   `<button class="abtn" data-go="bookend1">बाहर निकलें — हिसाब शुरू करें</button><button class="abtn ghost" data-go="stayed">रहने दें</button>`));
@@ -246,7 +246,7 @@ def('upiFail','UPI verify failed → retry / bond','screen','#10 else · FM-S4',
 def('recover','Recover — self-return first','screen','#12 · BR-03',
   scr(topb('डिवाइस लौटाएं'),
   `<div class="ah1 sm" style="text-align:center">डिवाइस लौटाकर ₹300 पाएं</div>
-   <div class="refund-opt sel" data-sel="1"><div class="ri"><span class="material-icons">directions_walk</span></div><div><div class="rt">खुद नज़दीकी पॉइंट पर दें</div><div class="rs">पता + Google Map</div><span class="badge1">सबसे आसान · पूरा पैसा</span></div><div class="ramt">₹300<small>self-return</small></div></div>
+   <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">directions_walk</span></div><div><div class="rt">खुद नज़दीकी पॉइंट पर दें</div><div class="rs">पता + Google Map</div><span class="badge1">सबसे आसान · पूरा पैसा</span></div><div class="ramt">₹300<small>self-return</small></div></div>
    <div class="refund-opt" data-sel="1"><div class="ri"><span class="material-icons">local_shipping</span></div><div><div class="rt">हमारी टीम पिकअप करे</div><div class="rs">घर से ले जाएंगे</div></div><div class="ramt">₹250<small>−₹50</small></div></div>
    <div class="scard tap" data-go="reversed"><div class="sr"><span class="k" style="font-weight:700;color:#161021">रुकना है — बाहर नहीं निकलना</span><span class="v" style="color:#D9008D">›</span></div></div>
    <div class="scard tap" data-go="refusalFilter"><div class="sr"><span class="k" style="font-weight:700;color:#161021">पहले मेरा refund दिखाओ</span><span class="v" style="color:#D9008D">›</span></div></div>
