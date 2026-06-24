@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Closure Build Checklist (vs live app)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{--brand:#D9008D;--bg:#15171d;--panel:#1c1f26;--line:#2f333c;--ink:#e7e9ee;--mut:#9aa0ab;
+    --add:#ff7ec8;--addbg:#2a1620;--addbd:#5a2748;--imp:#ffd27f;--impbg:#26210f;--impbd:#4a3a10;--reuse:#8fe3b0;--reusebg:#15301f;--reusebd:#244a30;--ok:#008043}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans',sans-serif;background:#15171d;color:var(--ink);-webkit-font-smoothing:antialiased;padding:0 0 80px}
+  header{max-width:980px;margin:0 auto;padding:34px 24px 0}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+  h1{font-size:25px;font-weight:800;color:#fff;margin:7px 0 5px}
+  .lead{font-size:13.5px;color:var(--mut);line-height:1.6;max-width:760px}
+  .lead code{background:#2a2f3a;color:#ffb3dd;padding:1px 6px;border-radius:5px;font-size:12px}
+  .bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:18px 0 0}
+  .ovr{font-size:12.5px;color:#c3c8d1;font-weight:700}
+  .ovr b{color:#fff}
+  .prog{flex:1;min-width:160px;height:9px;background:#262a32;border-radius:999px;overflow:hidden}
+  .prog > i{display:block;height:100%;width:0;background:linear-gradient(90deg,#D9008D,#ff7ec8);transition:width .3s}
+  .btn{font-family:inherit;font-size:11.5px;font-weight:700;color:#c3c8d1;background:#262a32;border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+  .btn:hover{background:#2f333c;color:#fff}.btn .material-icons{font-size:15px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 0;font-size:12px;color:#c3c8d1}
+  .tag{font-size:9.5px;font-weight:800;letter-spacing:.04em;padding:2px 7px;border-radius:5px;text-transform:uppercase}
+  .tag.add{background:var(--addbg);color:var(--add);border:1px solid var(--addbd)}
+  .tag.imp{background:var(--impbg);color:var(--imp);border:1px solid var(--impbd)}
+  .tag.reuse{background:var(--reusebg);color:var(--reuse);border:1px solid var(--reusebd)}
+  .tag.chat{background:#241a3a;color:#bda7ff}.tag.scr{background:#16313f;color:#7fd1ff}
+
+  main{max-width:980px;margin:0 auto;padding:8px 24px}
+  .case{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:20px;overflow:hidden}
+  .case-h{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line);background:#191d24}
+  .case-h .cn{width:30px;height:30px;border-radius:9px;background:var(--brand);color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .case-h .ct{font-size:16px;font-weight:800;color:#fff}
+  .case-h .cs{font-size:12px;color:var(--mut);margin-top:1px}
+  .case-h .cprog{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:170px}
+  .case-h .cct{font-size:11.5px;font-weight:800;color:#c3c8d1;white-space:nowrap}
+  .grp{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);padding:14px 18px 4px}
+  .item{display:flex;gap:12px;padding:11px 18px;border-top:1px solid #23272f;align-items:flex-start;cursor:pointer}
+  .item:hover{background:#191d24}
+  .cbx{width:22px;height:22px;border-radius:6px;border:2px solid #3a3f4a;flex:0 0 auto;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:.12s}
+  .cbx .material-icons{font-size:16px;color:#fff;opacity:0}
+  .item.done .cbx{background:var(--ok);border-color:var(--ok)}.item.done .cbx .material-icons{opacity:1}
+  .item.done .it-t{text-decoration:line-through;color:var(--mut)}
+  .it-main{flex:1}
+  .it-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .it-t{font-size:13.5px;font-weight:700;color:#fff}
+  .it-d{font-size:12px;color:#aeb4bf;margin-top:3px;line-height:1.5}
+  .it-d .hi{font-family:'Noto Sans Devanagari',sans-serif;color:#e7e9ee}
+  .it-d .gr{font-size:9.5px;font-weight:700;color:#8fb0ff;background:#16243a;border-radius:4px;padding:1px 6px;margin-left:4px}
+  .reuselist{padding:6px 18px 16px}
+  .reuselist .ri{display:inline-block;font-size:11.5px;color:#9fd0a8;background:#15251a;border:1px solid #244a30;border-radius:7px;padding:5px 10px;margin:4px 6px 0 0}
+  .foot{max-width:980px;margin:0 auto;padding:18px 24px;color:#6a7080;font-size:11.5px;line-height:1.6}
+</style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Wiom · Customer Closure — Build Checklist vs the live app</div>
+    <h1>Closure: what to build (not in <code>customer-app-kotlin</code>)</h1>
+    <p class="lead">Only the screens/elements that <b>do not exist</b> in the live app — per closure case. <span class="tag add">Add</span> = screen absent · <span class="tag imp">Improve</span> = screen exists, add a state/element · the rest already exist (reuse). Tick items as you build them in Figma — progress saves in this browser.</p>
+    <div class="bar">
+      <span class="ovr"><b id="ovrDone">0</b> / <span id="ovrTot">0</span> done</span>
+      <span class="prog"><i id="ovrBar"></i></span>
+      <button class="btn" id="resetBtn"><span class="material-icons">restart_alt</span>Reset</button>
+    </div>
+    <div class="legend">
+      <span><span class="tag add">Add</span> new screen</span>
+      <span><span class="tag imp">Improve</span> exists, add element/state</span>
+      <span><span class="tag chat">Chat</span> in-app comm</span>
+      <span><span class="tag scr">Screen</span> DS screen</span>
+      <span><span class="gr" style="font-size:9.5px;font-weight:700;color:#8fb0ff;background:#16243a;border-radius:4px;padding:1px 6px">GR</span> = guardrail</span>
+    </div>
+  </header>
+
+  <main id="main"></main>
+
+  <div class="foot">Source of truth: live <code>customer-app-kotlin</code> router-recovery (≈ Figma) · gaps from the 3 closure PRDs (B5 + guardrails). Shared components (build once, reused across cases): refund-lifecycle tracker · confirm-handover · bond write-off · bookend-comm template. Reference flows: <a href="closure-build-delta.html" style="color:#ff9ec8">delta design</a> · <a href="closure-build-delta-prototype.html" style="color:#ff9ec8">delta prototype</a>.</div>
+
+<script>
+const DATA=[
+  {n:'1',t:'Non-Reaffirmation',s:'Router-recovery exists — these are the gaps before & around custody',items:[
+    {id:'c1a',tag:'add',kind:'chat',t:'SD-first recall (R15)',d:'Deposit-led, no urgency/countdown. <span class="hi">"आपका ₹300 डिपॉज़िट सुरक्षित है"</span>',gr:'BR-03 / A8'},
+    {id:'c1b',tag:'add',kind:'chat',t:'Closure-initiated comm (bookend 1)',d:'At R25. <span class="hi">"रिचार्ज नहीं हुआ — कनेक्शन बंद कर रहे हैं; ₹300 लौटाने पर वापस"</span>',gr:'INV-03'},
+    {id:'c1c',tag:'add',kind:'scr',t:'Deposit RESERVED before pickup (Stage 2)',d:'Refund-status with "reserved" — app shows refund ONLY after return. The 524 "money held" fix.',gr:'INV-EXIT-24/27'},
+    {id:'c1d',tag:'imp',kind:'scr',t:'UPI screen — optional exit-reason field',d:'Add skippable <span class="hi">"जाने का कारण (वैकल्पिक)"</span>; never gates refund.',gr:'BR-S2'},
+    {id:'c1e',tag:'add',kind:'scr',t:'Confirm device handover (dual-attestation)',d:'Agent reported + customer confirms; ops-verified fallback so it never strands.',gr:'BR-S3/S4'},
+    {id:'c1f',tag:'imp',kind:'scr',t:'Refund sent → credited states',d:'App jumps to chat after UPI — surface the explicit sent→credited lifecycle.',gr:'INV-EXIT-05'},
+    {id:'c1g',tag:'add',kind:'chat',t:'Closure-concluded comm (bookend 2)',d:'<span class="hi">"सब पूरा — कनेक्शन बंद, ₹300 खाते में"</span>',gr:'INV-03'},
+    {id:'c1h',tag:'imp',kind:'chat',t:'Bond write-off (UPI-not-available)',d:'App screen is bare — reframe to <span class="hi">"₹300 सुरक्षित, 60 दिन, दोबारा नेट पर फिर सक्रिय"</span>',gr:'INV-06'},
+    {id:'c1i',tag:'add',kind:'chat',t:'D-007C reply',d:'<span class="hi">"पहले refund दिखाओ"</span> ≠ refusal — surface reserved ₹300, re-attempt.',gr:'BEC-10'}
+  ]},
+  {n:'2',t:'Explicit Choice',s:'Custody/UPI/refund middle reuses Case 1 — only entry + money is new',items:[
+    {id:'c2a',tag:'add',kind:'scr',t:'Exit summary',d:'Pro-rata + deposit shown up front; self-return offered (NOT pre-selected); optional reason; no retention offers.',gr:'A8 / INV-EXIT-25'},
+    {id:'c2b',tag:'add',kind:'scr',t:'Pro-rata shown & credited at initiation',d:'<span class="hi">"बचे 12 दिनों का ₹200 आपके UPI पर भेजा गया"</span>',gr:'INV-EXIT-25'},
+    {id:'c2c',tag:'add',kind:'chat',t:'Reversal reverses pro-rata in ledger',d:'Welcome back, ₹0 fee, same SI; the credited pro-rata is clawed back.',gr:'BR-06'},
+    {id:'c2d',tag:'add',kind:'scr',t:'First-class "Exit" entry',d:'App has only booking-cancel — add a service-exit entry with pro-rata.',gr:'A5'},
+    {id:'c2e',tag:'imp',kind:'scr',t:'Remove default-selection on self-return',d:'"मैं खुद लौटाऊँगा" must NOT be pre-ticked — customer chooses.',gr:'the flagged bug'}
+  ]},
+  {n:'3',t:'Service-Unavailability',s:'Wiom-caused — apology not transaction; only handover/refund reuses Case 1',items:[
+    {id:'c3a',tag:'add',kind:'chat',t:'Advance-notice apology (mandatory)',d:'Before cutoff. <span class="hi">"माफ़ी — हम आपके इलाके में नेट नहीं दे पाएंगे; यह हमारी ओर से है"</span>',gr:'BR-01 / INV-01'},
+    {id:'c3b',tag:'add',kind:'chat',t:'Reroute → continuity (no closure)',d:'If a partner is found → CONNECTION_CHANGED, service continues, abort closure.',gr:'BEC-01'},
+    {id:'c3c',tag:'add',kind:'scr',t:'Full C2 refund',d:'Deposit + ALL unused balance, never pro-rata. <span class="hi">"पूरा ₹600 वापस"</span>',gr:'BR-02 / INV-02'},
+    {id:'c3d',tag:'imp',kind:'scr',t:'UPI step — no "why are you leaving"',d:'Optional feedback only; never a reason-for-exit prompt (not the customer’s choice).',gr:'A8'},
+    {id:'c3e',tag:'imp',kind:'scr',t:'Free Wiom-arranged pickup',d:'App deducts ₹50 — here pickup is free, full deposit regardless.',gr:'BR-05'},
+    {id:'c3f',tag:'add',kind:'chat',t:'No field presence → keep device',d:'Netbox write-off, customer not penalised, full refund stands.',gr:'BEC-02'},
+    {id:'c3g',tag:'add',kind:'chat',t:'Conclusion: apology + reconnect offer',d:'<span class="hi">"इलाका लौटे तो सबसे पहले आपको जोड़ेंगे"</span> + set reconnect flag.',gr:'BR-07'}
+  ]}
+];
+const REUSE=['Choose return method (नेट-बॉक्स वापस करने का तरीका चुनें)','Self-drop sheet (Wiom Care Center · ₹300)','Pickup sheet (₹300 − ₹50 = ₹250)','UPI-ID screen + verify','UPI-app education videos','Refund tiers ₹300 / ₹250','Cancel-reason screen','Renewal / GRACE','Payment history'];
+
+const KEY='wiom-closure-checklist-v1';
+let state=JSON.parse(localStorage.getItem(KEY)||'{}');
+const main=document.getElementById('main');
+let html='';
+DATA.forEach(c=>{
+  html+=`<div class="case"><div class="case-h"><div class="cn">${c.n}</div><div><div class="ct">Case ${c.n} · ${c.t}</div><div class="cs">${c.s}</div></div><div class="cprog"><span class="cct" id="cct-${c.n}">0/${c.items.length}</span><span class="prog"><i id="cbar-${c.n}"></i></span></div></div>`;
+  c.items.forEach(it=>{
+    html+=`<div class="item" data-id="${it.id}"><div class="cbx"><span class="material-icons">check</span></div><div class="it-main"><div class="it-row"><span class="tag ${it.tag}">${it.tag==='add'?'Add':'Improve'}</span><span class="tag ${it.kind}">${it.kind==='chat'?'Chat':'Screen'}</span><span class="it-t">${it.t}</span></div><div class="it-d">${it.d}<span class="gr">${it.gr}</span></div></div></div>`;
+  });
+  html+=`</div>`;
+});
+html+=`<div class="case"><div class="case-h"><div class="cn" style="background:#244a30">✓</div><div><div class="ct">Already in the app — reuse (no work)</div><div class="cs">recreate faithfully where shown in a flow; do not rebuild</div></div></div><div class="reuselist">${REUSE.map(r=>`<span class="ri">${r}</span>`).join('')}</div></div>`;
+main.innerHTML=html;
+
+function refresh(){
+  let od=0,ot=0;
+  DATA.forEach(c=>{
+    let d=0;c.items.forEach(it=>{if(state[it.id]){d++;od++;}ot++;});
+    document.getElementById('cct-'+c.n).textContent=d+'/'+c.items.length;
+    document.getElementById('cbar-'+c.n).style.width=(d/c.items.length*100)+'%';
+  });
+  document.getElementById('ovrDone').textContent=od;
+  document.getElementById('ovrTot').textContent=ot;
+  document.getElementById('ovrBar').style.width=(ot?od/ot*100:0)+'%';
+  document.querySelectorAll('.item').forEach(el=>{el.classList.toggle('done',!!state[el.dataset.id]);});
+}
+main.addEventListener('click',e=>{const it=e.target.closest('.item');if(!it)return;const id=it.dataset.id;state[id]=!state[id];localStorage.setItem(KEY,JSON.stringify(state));refresh();});
+document.getElementById('resetBtn').onclick=()=>{state={};localStorage.removeItem(KEY);refresh();};
+refresh();
+</script>
+</body>
+</html>
