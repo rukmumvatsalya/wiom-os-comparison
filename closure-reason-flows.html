@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiom — Non-Reaffirmation: where to ask the reason (flow options)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{--brand:#D9008D;--text:#161021;--sub:#5C5570;--mut:#9aa0ab;--stroke:#E8E4F0;--stroke2:#D7D3E0;--bgsub:#F1EDF7;--pos:#008043;--sel:#FFE5F6}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans',sans-serif;background:#15171d;color:#e7e9ee;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+  header{max-width:1380px;margin:0 auto;padding:30px 26px 0}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+  h1{font-size:24px;font-weight:800;color:#fff;margin:7px 0 5px}
+  .lead{font-size:13.5px;color:var(--mut);line-height:1.6;max-width:880px}
+  .lead b{color:#ffd27f}.lead code{background:#2a2f3a;color:#ffb3dd;padding:1px 6px;border-radius:5px;font-size:12px}
+  .ftabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 0}
+  .ftab{font-family:inherit;font-size:12.5px;font-weight:700;color:#c3c8d1;background:#1c1f26;border:1px solid #2f333c;border-radius:999px;padding:9px 16px;cursor:pointer}
+  .ftab:hover{background:#23272f;color:#fff}
+  .ftab.active{background:var(--brand);border-color:var(--brand);color:#fff}
+  .ftab.active.rec{background:#008043;border-color:#008043}
+  main{max-width:1440px;margin:0 auto;padding:0 26px}
+  .flow{display:none}.flow.active{display:block}
+  .phil{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:14px;margin:22px 0 6px;background:#1c1f26;border:1px solid #2f333c;border-radius:14px;padding:16px 18px}
+  .phil .ph-t{font-size:16px;font-weight:800;color:#fff}
+  .phil .ph-tag{font-size:12.5px;color:#c3c8d1;line-height:1.55;margin-top:4px}
+  .phil .ph-when{font-size:11.5px;color:#9aa0ab;margin-top:8px;line-height:1.5}
+  .phil .ph-when b{color:#ffb3dd}
+  .phil .col h4{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+  .phil .col.pro h4{color:#8fe3b0}.phil .col.con h4{color:#ffd27f}
+  .phil .col ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+  .phil .col li{font-size:11.5px;line-height:1.45;color:#c3c8d1;padding-left:15px;position:relative}
+  .phil .col li::before{position:absolute;left:0;top:0}
+  .phil .col.pro li::before{content:'✓';color:#8fe3b0}.phil .col.con li::before{content:'!';color:#ffd27f;font-weight:800}
+  .recbadge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#8fe3b0;background:#15301f;border:1px solid #244a30;border-radius:5px;padding:2px 7px;margin-left:8px;vertical-align:middle}
+  .rail{display:flex;gap:0;overflow-x:auto;padding:18px 4px 22px}
+  .rail::-webkit-scrollbar{height:8px}.rail::-webkit-scrollbar-thumb{background:#2f333c;border-radius:4px}
+  .step{display:flex;align-items:center;flex:0 0 auto}
+  .scol{width:266px;flex:0 0 auto}
+  .scap{padding:0 6px 10px}
+  .scap .sidx{font-size:10px;font-weight:800;color:#6a7080}
+  .scap .stt{font-size:12.5px;font-weight:700;color:#fff;margin-top:2px;line-height:1.3}
+  .scap .stags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+  .tg{font-size:9px;font-weight:800;letter-spacing:.03em;padding:2px 6px;border-radius:5px;text-transform:uppercase}
+  .tg.chat{background:#241a3a;color:#bda7ff}.tg.scr{background:#16313f;color:#7fd1ff}
+  .tg.ask{background:#3a0f29;color:#ff9ec8;border:1px solid #5a2748}.tg.ask.none{background:#23272f;color:#7e8694;border-color:#33384200}
+  .farrow{width:34px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#4a4f5a}
+  .farrow .material-icons{font-size:26px}
+
+  .aphone{width:266px;height:536px;background:#F7F7F9;border:8px solid #11131a;border-radius:26px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 10px 28px rgba(0,0,0,.4)}
+  .aphone.chat{border-color:#3a2456}.aphone.scr{border-color:#173647}
+  .astatus{height:22px;display:flex;align-items:center;justify-content:space-between;padding:0 13px;font-size:9.5px;font-weight:600;color:#161021;flex:0 0 auto}
+  .astatus .r .material-icons{font-size:10px;vertical-align:middle;margin-left:2px}
+  .atopbar{display:flex;align-items:center;gap:8px;padding:7px 11px;background:#fff;border-bottom:1px solid var(--stroke);flex:0 0 auto}
+  .atopbar .alg{width:24px;height:24px;border-radius:6px;background:#D9008D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+  .atopbar .anm{font-size:12px;font-weight:700;color:#161021}
+  .atopbar .aback .material-icons{font-size:18px;color:#352d42}
+  .atopbar .aic{margin-left:auto;display:flex;gap:10px;color:#352d42}.atopbar .aic .material-icons{font-size:16px}
+  .cbar{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:7px 11px;background:#FFF0F8;border-bottom:1px solid #FAD3EA}
+  .cbar .ci{width:27px;height:27px;border-radius:7px;background:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .cbar .ci .material-icons{font-size:16px;color:#D9008D}
+  .cbar .ct{font-size:10.5px;font-weight:700;color:#161021;line-height:1.3}
+  .cbar .cst{font-size:9.5px;color:#5C5570;line-height:1.3}
+  .cbar .cact{margin-left:auto;font-size:9px;font-weight:800;color:#D9008D;background:#fff;border:1px solid #FAC8E6;border-radius:999px;padding:4px 9px;flex:0 0 auto;white-space:nowrap}
+  .chat-body{flex:1;overflow-y:auto;padding:11px 11px;display:flex;flex-direction:column;gap:9px;background:#F1EDF7}
+  .chat-body::-webkit-scrollbar{width:0}
+  .bubble{max-width:93%;padding:9px 11px;border-radius:14px;font-size:11.5px;line-height:1.5;font-family:'Noto Sans Devanagari'}
+  .bubble.bot{align-self:flex-start;background:#fff;border:1px solid var(--stroke);border-bottom-left-radius:5px;color:#161021}
+  .bubble.me{align-self:flex-end;background:#D9008D;color:#fff;border-bottom-right-radius:5px}
+  .bubble .bt{font-weight:700;font-size:11.5px;margin-bottom:3px;display:flex;align-items:center;gap:5px}
+  .bubble .bt .material-icons{font-size:14px;color:#D9008D}
+  .bubble .chan{font-size:7.5px;font-weight:800;letter-spacing:.04em;color:#6D17CE;background:#F1E5FF;padding:1px 5px;border-radius:4px;text-transform:uppercase;margin-left:auto}
+  .bubble .time{font-size:8.5px;color:rgba(0,0,0,.3);margin-top:5px;display:block}
+  .ccta{display:block;text-align:center;margin-top:7px;padding:8px;border-radius:10px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:11.5px;font-weight:700}
+  .ccta.sec{background:#fff;color:#D9008D;border:1.5px solid #D9008D}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .chip{font-family:'Noto Sans Devanagari';font-size:10.5px;font-weight:600;color:#443152;background:#fff;border:1.5px solid var(--stroke2);border-radius:999px;padding:6px 11px}
+  .skip{display:block;text-align:center;margin-top:9px;font-size:10.5px;font-weight:700;color:#8a8397}
+  .cin{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:8px 11px;background:#fff;border-top:1px solid var(--stroke)}
+  .cin .box{flex:1;height:33px;border:1.5px solid var(--stroke2);border-radius:999px;background:#FAF9FC;padding:0 13px;display:flex;align-items:center;font-size:10.5px;color:#A7A1B2}
+  .cin .snd{width:33px;height:33px;border-radius:50%;background:#D9008D;display:flex;align-items:center;justify-content:center;flex:0 0 auto}.cin .snd .material-icons{color:#fff;font-size:16px}
+  /* DS screen */
+  .atop{display:flex;align-items:center;padding:7px 11px;flex:0 0 auto;gap:8px}
+  .atop .aback .material-icons{font-size:18px;color:#352d42}.atop .atitle{font-family:'Noto Sans Devanagari';font-size:12.5px;font-weight:700;color:#161021}
+  .abody{flex:1;overflow-y:auto;padding:9px 14px 12px;display:flex;flex-direction:column;align-items:stretch}
+  .abody::-webkit-scrollbar{width:0}.abody.ctr{align-items:center;text-align:center}
+  .ah1{font-family:'Noto Sans Devanagari';font-size:14.5px;font-weight:700;color:#161021;line-height:1.35;margin-top:5px}
+  .ah1.sm{font-size:13px}
+  .asub{font-family:'Noto Sans Devanagari';font-size:11px;color:#5C5570;line-height:1.5;margin-top:6px}
+  .afoot{flex:0 0 auto;padding:7px 13px 11px;display:flex;flex-direction:column;gap:6px}
+  .abtn{height:40px;border:none;border-radius:20px;background:#D9008D;color:#fff;font-family:'Noto Sans Devanagari';font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(217,0,141,.2)}
+  .abtn.ghost{background:transparent;color:#D9008D;box-shadow:none}
+  .ahero{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:10px auto 2px}
+  .ahero .material-icons{font-size:30px}
+  .ahero.brand{background:#FFE5F6}.ahero.brand .material-icons{color:#D9008D}.ahero.ok{background:#E1FAED}.ahero.ok .material-icons{color:#008043}
+  .opt{display:flex;align-items:center;gap:9px;padding:10px;background:#fff;border:1.5px solid var(--stroke2);border-radius:11px;margin-top:8px}
+  .opt.first{border-color:#D9008D;background:#FFF6FB}
+  .opt .oi{width:31px;height:31px;border-radius:9px;background:var(--bgsub);display:flex;align-items:center;justify-content:center;flex:0 0 auto}.opt .oi .material-icons{font-size:17px;color:#443152}
+  .opt .ot{font-size:11.5px;font-weight:700;color:#161021}.opt .os{font-size:9.5px;color:#5C5570;margin-top:1px}
+  .opt .oa{margin-left:auto;font-size:12px;font-weight:800;color:#008043;text-align:right}.opt .oa small{display:block;font-size:8px;color:#A7A1B2;font-weight:600}
+  .first-pill{font-size:8px;font-weight:800;color:#fff;background:#D9008D;border-radius:4px;padding:1px 5px;margin-left:6px;text-transform:uppercase;letter-spacing:.03em}
+  .field{margin-top:9px}.field label{font-size:10.5px;font-weight:700;color:#161021;display:block;margin-bottom:5px}
+  .inp{height:40px;border:1.5px solid var(--stroke2);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:11.5px;color:#161021}
+  .inp.ok{border-color:#008043}.inp .vok{font-size:9.5px;font-weight:800;color:#008043;display:flex;align-items:center;gap:3px}.inp .vok .material-icons{font-size:12px}
+  .ta{min-height:48px;border:1.5px solid var(--stroke2);border-radius:10px;background:#fff;padding:8px 11px;font-size:11px;color:#A7A1B2}
+  .note{display:flex;align-items:flex-start;gap:7px;border-radius:9px;padding:8px 10px;margin-top:9px}
+  .note .material-icons{font-size:14px;flex:0 0 auto;margin-top:1px}.note p{font-family:'Noto Sans Devanagari';font-size:10px;line-height:1.5}
+  .note.ok{background:#E1FAED}.note.ok .material-icons{color:#008043}.note.ok p{color:#0a5c33}
+  .note.info{background:#F1E5FF}.note.info .material-icons{color:#6D17CE}.note.info p{color:#4a1a8f}
+  .note.amber{background:#FFF6E0}.note.amber .material-icons{color:#C9911F}.note.amber p{color:#7a5a0f}
+  .track{margin-top:9px}.tstep{display:flex;gap:9px;position:relative}.tstep .tl{position:absolute;left:11px;top:22px;bottom:-4px;width:2px;background:#E2DEEA}.tstep:last-child .tl{display:none}
+  .tdot{width:23px;height:23px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#E2DEEA;color:#fff}.tdot .material-icons{font-size:14px}
+  .tstep.done .tdot{background:#008043}.tstep.done .tl{background:#008043}.tstep.cur .tdot{background:#D9008D;box-shadow:0 0 0 4px #FFE5F6}
+  .tb{padding-bottom:9px}.tb .tt{font-size:11px;font-weight:700;color:#161021}.tb .td{font-size:9.5px;color:#5C5570;margin-top:1px}
+  .pos-amt{font-size:21px;font-weight:800;color:#008043;text-align:center;margin-top:5px}
+  .askwhere{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:800;color:#ff9ec8;background:#3a0f29;border:1px solid #5a2748;border-radius:6px;padding:3px 8px;margin:8px auto 0}
+  .askwhere .material-icons{font-size:12px}
+  .foot{max-width:1440px;margin:0 auto;padding:14px 26px;color:#6a7080;font-size:11.5px;line-height:1.6}
+  .foot b{color:#ffb3dd}
+</style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Wiom · Non-Reaffirmation closure — where to ask "why are you leaving?"</div>
+    <h1>Return the netbox → get ₹300: where does the reason go?</h1>
+    <p class="lead">Same spine in every option — <code>recall → choose return method → UPI verify → handover → ₹300</code>. Two things are fixed by spec: <b>UPI</b> asked once (before money can move, BR-S1) and the <b>reason</b> is always optional, skippable, and never gates the refund (BR-S2, Q-07). The only variable is <b>where the reason sits</b>. The reason step is highlighted with a <span class="tg ask" style="vertical-align:middle">ask: reason</span> tag. Source: non-reaffirmation PRD.</p>
+    <div class="ftabs" id="ftabs"></div>
+  </header>
+  <main id="main"></main>
+  <div class="foot">All flows respect Wiom terminology (नेट-बॉक्स, not router/wifi) and the no-dark-pattern rule. Reason copy never uses "आप क्यों जा रहे हैं?" (presumes a decision a passive lapser never made) — it is framed as feedback. Sibling pages: <a href="closure-new-screens.html" style="color:#ff9ec8">net-new screens</a> · <a href="closure-build-checklist.html" style="color:#ff9ec8">build checklist</a>.</div>
+<script>
+const STAT=on=>`<div class="astatus"><span>9:41</span><span class="r"><span class="material-icons">signal_cellular_alt</span><span class="material-icons">${on?'wifi':'wifi_off'}</span><span class="material-icons">battery_full</span></span></div>`;
+const CIN=`<div class="cin"><div class="box">यहाँ पूछें…</div><div class="snd"><span class="material-icons">send</span></div></div>`;
+const topbar=()=>`<div class="atopbar"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="alg">W</div><div class="anm">व्योम</div><div class="aic"><span class="material-icons">call</span><span class="material-icons">more_vert</span></div></div>`;
+const cbar=(s,a)=>`<div class="cbar"><div class="ci"><span class="material-icons">graphic_eq</span></div><div><div class="ct">घर का नेट: रमेश</div><div class="cst">स्थिति: ${s}</div></div>${a?`<span class="cact">${a}</span>`:''}</div>`;
+const chat=(s,a,body,on=false)=>STAT(on)+topbar()+cbar(s,a)+`<div class="chat-body">${body}</div>`+CIN;
+const scr=(title,body,foot,ctr=false)=>STAT(true)+`<div class="atop"><span class="aback"><span class="material-icons">arrow_back</span></span><div class="atitle">${title}</div></div>`+`<div class="abody${ctr?' ctr':''}">${body}</div>`+(foot?`<div class="afoot">${foot}</div>`:'');
+
+// ---- reusable screens ----
+const sRecall=()=>chat('नेट रुका हुआ है','रिचार्ज करें',
+  `<div class="bubble bot"><div class="bt"><span class="material-icons">savings</span>आपका ₹300 डिपॉज़िट सुरक्षित है<span class="chan">SMS+WA</span></div>प्लान खत्म हुआ, पर डिपॉज़िट सुरक्षित है। नेट-बॉक्स वापस करें और ₹300 पाएं — कोई जल्दबाज़ी नहीं।
+    <a class="ccta">नेट-बॉक्स वापस करें</a><a class="ccta sec">1 दिन का रिचार्ज (₹25)</a></div>`);
+const sMethod=()=>scr('नेट-बॉक्स कैसे लौटाएं?',
+  `<div class="ah1 sm" style="text-align:center">सबसे आसान तरीका चुनें</div>
+   <div class="opt first"><div class="oi"><span class="material-icons">directions_walk</span></div><div><div class="ot">खुद लौटाऊँगा<span class="first-pill">सुझाव</span></div><div class="os">पास के Wiom केंद्र पर</div></div><div class="oa">₹300<small>पूरा</small></div></div>
+   <div class="opt"><div class="oi"><span class="material-icons">local_shipping</span></div><div><div class="ot">टीम घर से ले जाए</div><div class="os">सुविधाजनक</div></div><div class="oa">₹250<small>₹50 कम</small></div></div>
+   <div class="note ok"><span class="material-icons">savings</span><p>खुद लौटाने पर पूरा ₹300 — कोई कटौती नहीं।</p></div>`,
+  `<button class="abtn">आगे बढ़ें</button>`);
+const sUpi=(withReason)=>scr('₹300 कहाँ भेजें?',
+  `<div class="field"><label>आपकी UPI ID</label><div class="inp ok"><span>ramesh@okhdfcbank</span><span class="vok"><span class="material-icons">check_circle</span>वेरीफाई</span></div></div>
+   ${withReason?`<div class="field"><label>कुछ बताना चाहेंगे? <span style="color:#A7A1B2">(वैकल्पिक)</span></label><div class="ta">इससे हम बेहतर बन पाएंगे…</div></div>`:''}
+   <div class="note info"><span class="material-icons">lock</span><p>UPI verify होने पर ही पैसा जाता है। नेट-बॉक्स मिलते ही ₹300 यहीं आएगा।${withReason?' कारण सिर्फ़ सीखने के लिए — refund नहीं बदलता।':''}</p></div>
+   ${withReason?'<div class="askwhere"><span class="material-icons">flag</span>reason asked HERE — bundled on the money screen</div>':''}`,
+  `<button class="abtn">कन्फर्म करें</button>${withReason?'<button class="abtn ghost">कारण छोड़ें</button>':''}`);
+const sHandover=()=>scr('डिवाइस की पुष्टि करें',
+  `<div style="text-align:center"><div class="ahero brand"><span class="material-icons">fact_check</span></div><div class="ah1 sm">नेट-बॉक्स लौटा दिया?</div></div>
+   <div class="note ok"><span class="material-icons">verified_user</span><p>दोनों तरफ़ से पुष्टि पर ₹300 तुरंत भेजा जाएगा। जवाब न दें तो हम ख़ुद verify कर देंगे — पैसा नहीं अटकेगा।</p></div>`,
+  `<button class="abtn">हाँ, दे दिया</button><button class="abtn ghost">नहीं दिया</button>`);
+const sCredited=()=>chat('कनेक्शन बंद · ₹300 खाते में','',
+  `<div class="bubble bot"><div class="bt"><span class="material-icons">task_alt</span>₹300 आपके खाते में आ गया<span class="chan">SMS+WA</span></div>नेट-बॉक्स मिल गया, ₹300 भेज दिया। जब भी दोबारा नेट चाहिए, हम यहीं हैं।</div>`);
+const sFeedback=(refined)=>chat('धन्यवाद · ₹300 भेजा गया','',
+  `<div class="bubble bot"><div class="bt"><span class="material-icons">favorite</span>${refined?'हम बेहतर कैसे कर सकते थे?':'एक छोटा सा सवाल'}</div>${refined?'आपका पैसा भेज दिया। अगर बताना चाहें — क्या वजह रही? इससे हम और बेहतर बनेंगे। (वैकल्पिक)':'अगर बताना चाहें तो — कुछ कहना है? (वैकल्पिक)'}
+    <div class="chips"><span class="chip">घर बदला</span><span class="chip">खर्च</span><span class="chip">स्पीड</span><span class="chip">अभी ज़रूरत नहीं</span></div>
+    <a class="skip">छोड़ें</a></div>
+   <div class="askwhere"><span class="material-icons">flag</span>reason asked HERE — after the money, as feedback</div>`);
+const sFrontChips=()=>scr('जाने से पहले — एक छोटी बात',
+  `<div class="ah1 sm" style="text-align:center">कुछ बताना चाहेंगे? <span style="color:#A7A1B2;font-weight:600">(वैकल्पिक)</span></div>
+   <div class="chips" style="justify-content:center;margin-top:14px"><span class="chip">घर बदला</span><span class="chip">खर्च</span><span class="chip">स्पीड</span><span class="chip">अभी ज़रूरत नहीं</span><span class="chip">कुछ और</span></div>
+   <div class="note amber"><span class="material-icons">info</span><p>यह वैकल्पिक है और आपके रिफंड या वापसी को नहीं रोकता।</p></div>
+   <div class="askwhere"><span class="material-icons">flag</span>reason asked HERE — up front, before value</div>`,
+  `<button class="abtn">आगे</button><button class="abtn ghost">छोड़ें</button>`);
+const sSilentEnd=()=>chat('कनेक्शन बंद · ₹300 खाते में','',
+  `<div class="bubble bot"><div class="bt"><span class="material-icons">task_alt</span>₹300 आपके खाते में आ गया<span class="chan">SMS+WA</span></div>नेट-बॉक्स मिल गया, ₹300 भेज दिया। जब भी दोबारा नेट चाहिए, हम यहीं हैं।</div>
+   <div class="bubble bot" style="opacity:.85">कुछ कहना हो तो यहीं लिख दें — हम सुन रहे हैं।</div>
+   <div class="askwhere"><span class="material-icons">flag</span>no explicit ask — captured only if the customer volunteers</div>`,true);
+
+const FLOWS=[
+ {id:'ideal',name:'Ideal',rec:true,t:'Ideal — reason last, money never blocked',
+  tag:'Deliver the ₹300 first, then ask — as a thank-you, not a toll. UPI sits right after they pick a return method so it has purpose ("so the moment you hand over the box, ₹300 lands").',
+  when:'Recall: <b>nothing</b> · Method: <b>return method</b> · UPI: <b>UPI only</b> · Handover: <b>confirm</b> · Credited: <b>nothing</b> · End: <b>reason (optional feedback)</b>',
+  pros:['Zero friction on the money path','Reason reads as feedback, not a gate — highest dignity','Best data quality (asked after goodwill is earned)','Honest for a passive lapse — no presumptuous "why leaving"'],
+  cons:['Slightly lower capture than front-loading','Needs the chat to re-engage after refund'],
+  steps:[
+   {t:'Deposit-first recall',k:'chat',ask:'—',s:sRecall()},
+   {t:'Choose return method',k:'scr',ask:'return method',s:sMethod()},
+   {t:'UPI + verify',k:'scr',ask:'UPI only',s:sUpi(false)},
+   {t:'Confirm handover',k:'scr',ask:'confirm device',s:sHandover()},
+   {t:'₹300 credited',k:'chat',ask:'—',s:sCredited()},
+   {t:'Optional feedback',k:'chat',ask:'reason',s:sFeedback(true)}
+  ]},
+ {id:'a',name:'A · Bundled',t:'A — reason bundled on the UPI screen (spec literal default)',
+  tag:'One step: the reason field sits below UPI, optional. This is exactly what BR-S2 says verbatim — "capture the exit reason bundled with the UPI step".',
+  when:'Recall: <b>nothing</b> · Method: <b>return method</b> · UPI: <b>UPI + reason together</b> · Handover: <b>confirm</b> · Credited: <b>nothing</b>',
+  pros:['Single screen, fewest steps','Spec-compliant literally','One reliable engagement point'],
+  cons:['On a money screen, an extra field reads as a gate even when optional','Customer is focused on the ₹300 → skips/ignores reason → weak data'],
+  steps:[
+   {t:'Deposit-first recall',k:'chat',ask:'—',s:sRecall()},
+   {t:'Choose return method',k:'scr',ask:'return method',s:sMethod()},
+   {t:'UPI + reason',k:'scr',ask:'UPI + reason',s:sUpi(true)},
+   {t:'Confirm handover',k:'scr',ask:'confirm device',s:sHandover()},
+   {t:'₹300 credited',k:'chat',ask:'—',s:sCredited()}
+  ]},
+ {id:'b',name:'B · Tail feedback',t:'B — reason at the very end, as plain feedback',
+  tag:'Same as ideal but without the inference layer — just move the reason to after the refund. Textbook "ask once the job is done".',
+  when:'Recall: <b>nothing</b> · Method: <b>return method</b> · UPI: <b>UPI only</b> · Handover: <b>confirm</b> · Credited: <b>nothing</b> · End: <b>reason (feedback)</b>',
+  pros:['Money path stays clean','Reason clearly a feedback ask','Simple to build'],
+  cons:['Some customers leave after refund → lower capture','No structured signal-inference fallback'],
+  steps:[
+   {t:'Deposit-first recall',k:'chat',ask:'—',s:sRecall()},
+   {t:'Choose return method',k:'scr',ask:'return method',s:sMethod()},
+   {t:'UPI + verify',k:'scr',ask:'UPI only',s:sUpi(false)},
+   {t:'Confirm handover',k:'scr',ask:'confirm device',s:sHandover()},
+   {t:'₹300 credited',k:'chat',ask:'—',s:sCredited()},
+   {t:'Optional feedback',k:'chat',ask:'reason',s:sFeedback(false)}
+  ]},
+ {id:'c',name:'C · Front chips',t:'C — reason up front, quick chips',
+  tag:'Ask the reason as fast tap-chips right after the recall, before they pick a method — while engagement is highest.',
+  when:'Recall: <b>nothing</b> · <b>Reason (chips)</b> · Method: <b>return method</b> · UPI: <b>UPI only</b> · Handover: <b>confirm</b> · Credited: <b>nothing</b>',
+  pros:['Chips are fast, low effort','Captured while fully engaged','Highest raw capture rate'],
+  cons:['Front-loads a question before delivering value (breaks benefit-first)','For a passive lapser it can feel like "justify yourself before we return your money"'],
+  steps:[
+   {t:'Deposit-first recall',k:'chat',ask:'—',s:sRecall()},
+   {t:'Reason chips (optional)',k:'scr',ask:'reason',s:sFrontChips()},
+   {t:'Choose return method',k:'scr',ask:'return method',s:sMethod()},
+   {t:'UPI + verify',k:'scr',ask:'UPI only',s:sUpi(false)},
+   {t:'Confirm handover',k:'scr',ask:'confirm device',s:sHandover()},
+   {t:'₹300 credited',k:'chat',ask:'—',s:sCredited()}
+  ]},
+ {id:'d',name:'D · Silent / listen',t:'D — no explicit ask; infer + listen',
+  tag:'Never ask "why". Infer from signals (self-return vs pickup, recharge history) and capture a reason only if the customer volunteers it in chat. The most honest reading of Q-07.',
+  when:'Recall: <b>nothing</b> · Method: <b>return method</b> · UPI: <b>UPI only</b> · Handover: <b>confirm</b> · End: <b>nothing — listen only</b>',
+  pros:['Most honest for a passive lapse — they never declared an exit','Truly zero friction','No presumptuous question, ever'],
+  cons:['Little structured learning — relies on aggregate signals','Reason data is sparse / unprompted'],
+  steps:[
+   {t:'Deposit-first recall',k:'chat',ask:'—',s:sRecall()},
+   {t:'Choose return method',k:'scr',ask:'return method',s:sMethod()},
+   {t:'UPI + verify',k:'scr',ask:'UPI only',s:sUpi(false)},
+   {t:'Confirm handover',k:'scr',ask:'confirm device',s:sHandover()},
+   {t:'₹300 + listen',k:'chat',ask:'—',s:sSilentEnd()}
+  ]}
+];
+
+const tabs=document.getElementById('ftabs'), main=document.getElementById('main');
+tabs.innerHTML=FLOWS.map((f,i)=>`<button class="ftab${i===0?' active':''}${f.rec?' rec':''}" data-i="${i}">${f.name}${f.rec?' ★':''}</button>`).join('');
+main.innerHTML=FLOWS.map((f,i)=>{
+  const rail=f.steps.map((s,j)=>`<div class="step"><div class="scol"><div class="scap"><div class="sidx">STEP ${j+1}</div><div class="stt">${s.t}</div><div class="stags"><span class="tg ${s.k}">${s.k==='chat'?'Chat':'Screen'}</span><span class="tg ask${s.ask==='—'?' none':''}">${s.ask==='—'?'no ask':'ask: '+s.ask}</span></div></div><div class="aphone ${s.k}">${s.s}</div></div>${j<f.steps.length-1?'<div class="farrow"><span class="material-icons">east</span></div>':''}</div>`).join('');
+  return `<section class="flow${i===0?' active':''}" data-i="${i}">
+    <div class="phil"><div><div class="ph-t">${f.t}${f.rec?'<span class="recbadge">recommended</span>':''}</div><div class="ph-tag">${f.tag}</div><div class="ph-when">${f.when}</div></div>
+      <div class="col pro"><h4>Pros</h4><ul>${f.pros.map(p=>`<li>${p}</li>`).join('')}</ul></div>
+      <div class="col con"><h4>Watch-outs</h4><ul>${f.cons.map(c=>`<li>${c}</li>`).join('')}</ul></div></div>
+    <div class="rail">${rail}</div></section>`;
+}).join('');
+tabs.addEventListener('click',e=>{const b=e.target.closest('.ftab');if(!b)return;const i=b.dataset.i;
+  tabs.querySelectorAll('.ftab').forEach(x=>x.classList.toggle('active',x.dataset.i===i));
+  main.querySelectorAll('.flow').forEach(x=>x.classList.toggle('active',x.dataset.i===i));
+  window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>
